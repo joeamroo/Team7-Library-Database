@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Catalog</title>
+    <link rel="stylesheet" href="catalog.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="library-name"><a href="home.html">Cougar Chronicles</a></h1>
+            <nav>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="sidebar">
+        <h2>Narrow your search</h2>
+        <div class="dropdown">
+            <button class="dropbtn" onclick="toggleDropdown('availability')">Availability</button>
+            <div class="dropdown-content" id="availability">
+                <input type="checkbox" id="available" name="available">
+                <label for="available">Available now</label><br>
+
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn" onclick="toggleDropdown('genre')">Genre</button>
+            <div class="dropdown-content" id="genre">
+                <input type="checkbox" id="fiction" name="fiction">
+                <label for="fiction">Fiction</label><br>
+                <input type="checkbox" id="historical" name="historical">
+                <label for="historical">Historical</label><br>
+                <input type="checkbox" id="mystery" name="mystery">
+                <label for="mystery">Mystery</label><br>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn" onclick="toggleDropdown('language')">Language</button>
+            <div class="dropdown-content" id="language">
+                <input type="checkbox" id="english" name="english">
+                <label for="english">English</label><br>
+                <input type="checkbox" id="spanish" name="spanish">
+                <label for="spanish">Spanish</label><br>
+                <input type="checkbox" id="french" name="french">
+                <label for="french">French</label><br>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn" onclick="toggleDropdown('year-published')">Year-published</button>
+            <div class="dropdown-content" id="year-published">
+                <input type="checkbox" id="yr1971" name="yr1971">
+                <label for="yr1971">1971</label><br>
+                <input type="checkbox" id="2002" name="2002">
+                <label for="2002">2002</label><br>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn" onclick="toggleDropdown('brand')">Brand</button>
+            <div class="dropdown-content" id="brand">
+                <input type="checkbox" id="apple" name="apple">
+                <label for="apple">Apple</label><br>
+                <input type="checkbox" id="samsung" name="samsung">
+                <label for="samsung">Samsung</label><br>
+                <input type="checkbox" id="motorola" name="motorola">
+                <label for="motorola">Motorola</label><br>
+            </div>
+        </div>
+    </div>
+
+    <div class="search-container">
+        <div class="search-options">
+            <label for="keyword">Keyword search for:</label>
+            <input type="text" id="keyword" name="keyword">
+            <button id="search-btn"><img src="magnifying-glass.png" alt="Search"></button>
+        </div>
+        <div class="search-options">
+            <label for="search-by">Search by:</label>
+            <select id="search-by" name="search-by">
+                <option value="book">Any Field</option>
+                <option value="title">Title</option>
+                <option value="author">Author</option>
+                <option value="any">Any</option>
+            </select>
+        </div>
+        <div class="search-options">
+            <label for="limit-by">Limit by:</label>
+            <select id="limit-by" name="limit-by">
+                <option value="book">Unlimited</option>
+                <option value="book">Book</option>
+                <option value="movie">Movie</option>
+                <option value="device">Device</option>
+            </select>
+        </div>
+        
+    </div>
+
+    <div class="catalog-container">
+        <!-- Book listings will go here -->
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Cougar Chronicles. All rights reserved.</p>
+    </footer>
+    
+</body>
+</html>
