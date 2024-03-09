@@ -18,7 +18,7 @@ body {
 
 
 .container {
-    width: 95%;
+    width: 99%;
     margin: 0 auto;
     overflow: hidden;
 }
@@ -39,9 +39,8 @@ header .library-name {
 
 h2 {
     font-size: 30px;
-    margin-top: -2px;
-    padding: 10px;
-    margin-left: 22px;
+    margin-top: 0.1rem;
+    padding: 0.5rem;
 }
 
 header nav {
@@ -116,6 +115,21 @@ header nav ul li a:hover {
     color: var(--color-white); 
     font-size: 18px; 
     cursor: pointer; 
+}
+
+/* ================= Connector to Member Login ================= */
+
+#login-connect {
+    float: right;
+    margin-top: -4.5rem;
+    margin-right: 40rem;
+    color: black;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#login-connect:hover {
+    color: var(--mainColor);
 }
 
 /* ================= Bottom Section ================= */
