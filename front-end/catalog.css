@@ -16,10 +16,11 @@ body, h1, h2, h3, h4, h5, h6, p, ul, li {
 body {
     display: grid;
     grid-template-columns: auto 1fr; 
-    grid-template-rows: auto 1fr; 
+    grid-template-rows: auto 1fr auto; 
     grid-template-areas:
         "header header"
-        "sidebar content"; 
+        "sidebar content"
+        "footer footer"; 
     height: 100vh; 
     margin: 0;
 }
@@ -68,7 +69,7 @@ header nav ul li a:hover {
 /* ================= Sidebar ================= */
 
 .sidebar {
-    height: 175px;
+    height: 325px;
 }
 
 .sidebar {
@@ -77,25 +78,34 @@ header nav ul li a:hover {
     padding: 1.5rem;
     margin-top: 1.25rem; 
     margin-right: 1rem;
-    margin-left: 9rem;
+    margin-left: 8rem;
     transition: height 0.6s ease;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     margin-bottom: 50px;
-    overflow: visible;
-    width: 200px;
+    overflow: hidden;
+    width: 250px;
 }
 
 .dropbtn {
-    margin-bottom: 6px;
-    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-top: 15px;
+    font-size: 15px;
     border-radius: 2px;
- 
+    background-color: white;
+    border: none;
+    padding: 10px 20px;
+    width: 100%;
+    text-align: left;
+}
+
+.icon {
+    float: right;
 }
 
 .sidebar h2 {
     margin-bottom: 0.5rem;
-    font-size: 20px;
+    font-size: 25px;
 }
 
 .dropdown-content {
@@ -104,8 +114,9 @@ header nav ul li a:hover {
     background-color: #9EBE9B;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     padding: 12px 16px;
+    margin-top: -5px;
     z-index: 1;
-    border-radius: 7px;
+   
 }
 
 .show {
@@ -160,12 +171,11 @@ header nav ul li a:hover {
 /* ================= Footer Section ================= */
 
 footer {
+    grid-area: footer;
     background-color: var(--colorLight);
     color: #fff;
     text-align: center;
     padding: 10px 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+    position: relative;
     z-index: 1000;
 }

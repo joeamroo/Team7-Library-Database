@@ -22,7 +22,7 @@
     <div class="sidebar">
         <h2>Narrow your search</h2>
         <div class="dropdown">
-            <button class="dropbtn" onclick="toggleDropdown('availability')">Availability</button>
+            <button class="dropbtn" onclick="toggleDropdown('availability')">Availability <span class="icon">&#x25BC;</span></button>
             <div class="dropdown-content" id="availability">
                 <input type="checkbox" id="available" name="available">
                 <label for="available">Available now</label><br>
@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="dropdown">
-            <button class="dropbtn" onclick="toggleDropdown('genre')">Genre</button>
+            <button class="dropbtn" onclick="toggleDropdown('genre')">Genre<span class="icon">&#x25BC;</span></button>
             <div class="dropdown-content" id="genre">
                 <input type="checkbox" id="fiction" name="fiction">
                 <label for="fiction">Fiction</label><br>
@@ -38,10 +38,12 @@
                 <label for="historical">Historical</label><br>
                 <input type="checkbox" id="mystery" name="mystery">
                 <label for="mystery">Mystery</label><br>
+                <input type="checkbox" id="scifi" name="scifi">
+                <label for="scifi">Science fiction</label><br>
             </div>
         </div>
         <div class="dropdown">
-            <button class="dropbtn" onclick="toggleDropdown('language')">Language</button>
+            <button class="dropbtn" onclick="toggleDropdown('language')">Language<span class="icon">&#x25BC;</span></button>
             <div class="dropdown-content" id="language">
                 <input type="checkbox" id="english" name="english">
                 <label for="english">English</label><br>
@@ -54,7 +56,7 @@
             </div>
         </div>
         <div class="dropdown">
-            <button class="dropbtn" onclick="toggleDropdown('year-published')">Year-published</button>
+            <button class="dropbtn" onclick="toggleDropdown('year-published')">Year-published<span class="icon">&#x25BC;</span></button>
             <div class="dropdown-content" id="year-published">
                 <input type="checkbox" id="2001" name="2001">
                 <label for="2001">2001</label><br>
@@ -67,7 +69,7 @@
             </div>
         </div>
         <div class="dropdown">
-            <button class="dropbtn" onclick="toggleDropdown('brand')">Brand</button>
+            <button class="dropbtn" onclick="toggleDropdown('brand')">Brand<span class="icon">&#x25BC;</span></button>
             <div class="dropdown-content" id="brand">
                 <input type="checkbox" id="apple" name="apple">
                 <label for="apple">Apple</label><br>
@@ -110,10 +112,8 @@
         <!--Item listing-->
     </div>
 
-    <footer>
-        <p>&copy; 2024 Cougar Chronicles. All rights reserved.</p>
-    </footer>
-
+    <footer>&copy; 2024 Cougar Chronicles. All rights reserved.</footer>
+   
     <script src="catalog.js"></script>
 </body>
 </html>
