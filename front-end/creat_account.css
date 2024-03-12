@@ -80,7 +80,6 @@ header nav ul li a:hover {
     padding: 20px; 
     width: 400px; 
     margin: 0 auto;
-    margin-bottom: 80px;
     box-shadow: 0 0 10px rgb(0,0,0, 0.3);
 }
 
@@ -105,6 +104,7 @@ header nav ul li a:hover {
     text-align: center; 
 }
 
+
 .new-account-form input[type="submit"] {
     width: 50%; 
     margin-top: 20px;
@@ -117,13 +117,16 @@ header nav ul li a:hover {
     cursor: pointer; 
 }
 
+
 /* ================= Connector to Member Login ================= */
 
 #login-connect {
-    float: right;
-    margin-top: -4.5rem;
-    margin-right: 40rem;
-    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    margin-bottom: 100px;
+    color: blue;
     cursor: pointer;
     font-size: 16px;
 }
@@ -132,9 +135,8 @@ header nav ul li a:hover {
     color: var(--mainColor);
 }
 
+
 /* ================= Bottom Section ================= */
-
-
 
 footer {
     background-color: var(--colorLight);
