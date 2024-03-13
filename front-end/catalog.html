@@ -114,7 +114,13 @@
     <div class="catalog-container">
         <div class="top-bar">
             <label for="limit">LIMIT PER PAGE:</label>
-            <input type="number" id="limit" name="limit" min="1" max="10">
+            <select id="limit-select">
+                <option value="3">3</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+            </select>
         </div>
 
         <div class="catalog-results">
@@ -124,7 +130,7 @@
                     <p id="author">by Roald Dahl</p>
                     <p id="medium">Type: Book</p>
                     <p id="isbn">ISBN 123456789123</p>
-                    <p id="yearRels">Year Released: 1950</p>
+                    <p id="yearPub">Year Published: 1950</p>
                     <p id="lang">Language: English, Spanish</p>
                     <p id="currHolds"> Current Holds: 0</p>
                     <p id="availableItems">System availability: 3 (of 4)</p>
@@ -140,7 +146,7 @@
                     <p id="author">by Rick Riordan</p>
                     <p id="medium">Type: Book</p>
                     <p id="isbn">ISBN 1222333444555</p>
-                    <p id="yearRels">Year Released: 2005</p>
+                    <p id="yearPub">Year Published: 2005</p>
                     <p id="lang">Language: English</p>
                     <p id="currHolds"> Current Holds: 7</p>
                     <p id="availableItems">System availability: 0 (of 5)</p>
@@ -156,7 +162,7 @@
                     <p id="author">by John Ronald Reuel Tolkien</p>
                     <p id="medium">Type: Book</p>
                     <p id="isbn">ISBN 16777888999222</p>
-                    <p id="yearRels">Year Released: 1937</p>
+                    <p id="yearPub">Year Published: 1937</p>
                     <p id="lang">Language: English, French</p>
                     <p id="currHolds"> Current Holds: 0</p>
                     <p id="availableItems">System availability: 0 (of 3)</p>
@@ -165,7 +171,23 @@
                     <button class="hold-btn">Place Hold</button>
                     <button class="checkout-btn">Add to Checkout</button>
                 </div>
-            </div>                                 
+            </div> 
+            <div class="catalog-item">
+                <div class="catalog-item-info">
+                    <h3>The Very Hungry Caterpillar</h3>
+                    <p id="author">by Eric Carle</p>
+                    <p id="medium">Type: Book</p>
+                    <p id="isbn">ISBN 22299990000333</p>
+                    <p id="yearPub">Year Published: 2011</p>
+                    <p id="lang">Language: English, Spanish, French</p>
+                    <p id="currHolds"> Current Holds: 3</p>
+                    <p id="availableItems">System availability: 0 (of 7)</p>
+                </div>
+                <div class="item-buttons">
+                    <button class="hold-btn">Place Hold</button>
+                    <button class="checkout-btn">Add to Checkout</button>
+                </div>
+            </div>                              
         </div>
     </div>
 

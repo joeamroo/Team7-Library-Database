@@ -197,7 +197,7 @@ header nav ul li a:hover {
     margin-top: 1rem; 
     margin-left: 1rem;
     margin-right: 8rem;
-    height: 300px;
+    height: 825px;
     margin-bottom: 50px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
@@ -255,6 +255,7 @@ header nav ul li a:hover {
     color: white;
     cursor: pointer;
 }
+
 
 /* ================= Footer Section ================= */
 
