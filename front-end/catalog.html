@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library Catalog</title>
     <link rel="stylesheet" href="catalog.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
 </head> 
 <body>
     <header>
@@ -19,6 +20,8 @@
             </nav>
         </div>
     </header>
+
+    <!--Additional search restrictions-->
     <div class="sidebar">
         <h2>Narrow your search</h2>
         <div class="dropdown">
@@ -84,8 +87,8 @@
     <div class="search-container">
         <div class="search-options">
             <label for="keyword">Keyword search for:</label>
-            <input type="text" id="keyword" name="keyword">
-            <button id="search-btn"><img src="magnifying-glass.png" alt="Search"></button>
+            <input type="text" id="keyword" name="keyword" autocomplete="off">
+            <button id="search-btn"><i class="uil uil-search"></i></button>
         </div>
         <div class="search-options">
             <label for="search-by">Search by:</label>
@@ -93,7 +96,7 @@
                 <option value="book">Any Field</option>
                 <option value="title">Title</option>
                 <option value="author">Author</option>
-                <option value="any">Any</option>
+                <option value="publisher">Publisher</option>
             </select>
         </div>
         <div class="search-options">
@@ -109,7 +112,61 @@
     </div>
 
     <div class="catalog-container">
-        <!--Item listing-->
+        <div class="top-bar">
+            <label for="limit">LIMIT PER PAGE:</label>
+            <input type="number" id="limit" name="limit" min="1" max="10">
+        </div>
+
+        <div class="catalog-results">
+            <div class="catalog-item">
+                <div class="catalog-item-info">
+                    <h3>Matilda</h3>
+                    <p id="author">by Roald Dahl</p>
+                    <p id="medium">Type: Book</p>
+                    <p id="isbn">ISBN 123456789123</p>
+                    <p id="yearRels">Year Released: 1950</p>
+                    <p id="lang">Language: English, Spanish</p>
+                    <p id="currHolds"> Current Holds: 0</p>
+                    <p id="availableItems">System availability: 3 (of 4)</p>
+                </div>
+                <div class="item-buttons">
+                    <button class="hold-btn">Place Hold</button>
+                    <button class="checkout-btn">Add to Checkout</button>
+                </div>
+            </div>
+            <div class="catalog-item">
+                <div class="catalog-item-info">
+                    <h3>The Lightning Thief</h3>
+                    <p id="author">by Rick Riordan</p>
+                    <p id="medium">Type: Book</p>
+                    <p id="isbn">ISBN 1222333444555</p>
+                    <p id="yearRels">Year Released: 2005</p>
+                    <p id="lang">Language: English</p>
+                    <p id="currHolds"> Current Holds: 7</p>
+                    <p id="availableItems">System availability: 0 (of 5)</p>
+                </div>
+                <div class="item-buttons">
+                    <button class="hold-btn">Place Hold</button>
+                    <button class="checkout-btn">Add to Checkout</button>
+                </div>
+            </div> 
+            <div class="catalog-item">
+                <div class="catalog-item-info">
+                    <h3>The Hobbit</h3>
+                    <p id="author">by John Ronald Reuel Tolkien</p>
+                    <p id="medium">Type: Book</p>
+                    <p id="isbn">ISBN 16777888999222</p>
+                    <p id="yearRels">Year Released: 1937</p>
+                    <p id="lang">Language: English, French</p>
+                    <p id="currHolds"> Current Holds: 0</p>
+                    <p id="availableItems">System availability: 0 (of 3)</p>
+                </div>
+                <div class="item-buttons">
+                    <button class="hold-btn">Place Hold</button>
+                    <button class="checkout-btn">Add to Checkout</button>
+                </div>
+            </div>                                 
+        </div>
     </div>
 
     <footer>&copy; 2024 Cougar Chronicles. All rights reserved.</footer>

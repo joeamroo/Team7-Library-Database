@@ -1,3 +1,4 @@
+// Function to dynamically change sidebar height based on open or closed buttons
 function adjustSidebarHeight() {
     var sidebar = document.querySelector('.sidebar');
     var dropdowns = document.getElementsByClassName("dropdown-content");
@@ -13,7 +14,7 @@ function adjustSidebarHeight() {
 }
 
 
-
+// Drop down menu
 function toggleDropdown(dropdownId) {
     var dropdownContent = document.getElementById(dropdownId);
     var dropdownButton = dropdownContent.previousElementSibling;
@@ -32,4 +33,18 @@ function toggleDropdown(dropdownId) {
     }
         
 }
+
+
+function setCatalogContHeight() {
+    const catalogContainer = document.querySelector('.catalog-container');
+    const catalogResults = document.querySelector('.catalog-results');
+    const itemHeight = 275;
+    const itemCount = catalogResults.children.length;
+    const minHeight = 275; 
+
+    const containerHeight = Math.max(minHeight, itemHeight *itemCount);
+
+    catalogContainer.style.height = containerHeight + 'px';
+}
+setCatalogContHeight();
 
