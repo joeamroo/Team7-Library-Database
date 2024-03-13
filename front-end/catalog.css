@@ -219,6 +219,7 @@ header nav ul li a:hover {
     font-size: 12px;
 }
 
+
 .catalog-item {
     margin-left: 3rem;
     margin-right: 3rem;
@@ -229,6 +230,17 @@ header nav ul li a:hover {
     border-bottom: 1px solid #ccc;
     padding-bottom: 20px;
     font-size: 20px;
+}
+
+.catalog-item-info {
+    display: flex;
+    align-items: flex-start;
+}
+
+.catalog-item-info img {
+    width: 125px;
+    height: auto;
+    margin-right: 25px;
 }
 
 #author, #yearRels {
