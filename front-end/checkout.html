@@ -3,10 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Library Transaction</title>
+    <title>Checkout Items</title>
+    <link rel="stylesheet" href="checkout.css">
 </head>
 <body>
-    This is a transaction
-    
+    <header>
+        <h1>Checkout Summary</h1>
+    </header>
+
+    <div class="selected-items">
+        <div class="checkout-summary">
+            <h2>Checkout Summary</h2>
+            <ul id="checkout-list">
+                <!-- Items added to checkout will be listed here -->
+            </ul>
+        </div>
+    </div>
+
+    <div class="transaction-details">
+        <div class="member-info">
+            <h2>Member Information</h2>
+            <p>Member ID .............................................................. <span id="mem-id">1234567</span></p>
+        </div>
+        <div class="currentInfo">
+            <h2>Transaction Details</h2>
+            <p>Location ............................................. <span id="curr-location">Cougar Valley Library</span></p>
+            <p>Date ......................................................................... <span id="current-date">03/18/24</span></p>
+            <p>Due Date ................................................................. <span id="due-date"> 04/01/24</span></p>
+        </div>
+        <button id="finalize-btn">Confirm Checkout</button>
+    </div>
+
+    <footer>&copy; 2024 Cougar Chronicles. All rights reserved.</footer>
 </body>
 </html>
