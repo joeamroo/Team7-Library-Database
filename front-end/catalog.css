@@ -24,6 +24,7 @@ body {
         "footer footer"; 
     height: 100vh; 
     margin: 0;
+    background-color: var(--background);
 }
 
 header {
@@ -243,7 +244,7 @@ header nav ul li a:hover {
     margin-right: 25px;
 }
 
-#author, #yearRels {
+#author, #yearPub {
     padding-bottom: 10px;
 }
 

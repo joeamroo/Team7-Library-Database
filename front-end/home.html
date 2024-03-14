@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cougar Chronicles</title>
     <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
 </head>
 <body>
     <header>
@@ -13,6 +14,7 @@
         <div class="managementButtons">
             <a href="login.html" class="button">Login/My Account</a>
             <a href="branchInfo.html" class="button">Locations / Hours</a>
+            <a href="checkout.html"><i id="checkout-cart" class="uil uil-shopping-cart"></i></a>
         </div>
       </div>
 
@@ -44,7 +46,7 @@
 
             <div class="branch-hours">
                 <div class="branch-hours-name"><h3>Library Hours</h3></div>
-                <ul>
+                <ul id="curr-branch-schedule">
                     <li><strong>Mon </strong>12 PM - 9 PM</li>
                     <li><strong>Tue </strong>10 AM - 9 PM</li>
                     <li><strong>Wed </strong>10 AM - 6 PM</li>
