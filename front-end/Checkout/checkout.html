@@ -9,14 +9,8 @@
 </head>
 <body>
     <header>
-        <h1 id="summary">Checkout</h1>
-        <nav>
-            <ul>
-                <li><a href="\front-end\home\home.html">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
+        <div><h1 id="summary"><a href="\front-end\home\home.html"><i id="home-arr" class="uil uil-arrow-circle-left"></i>Return home</a></h1></div>
+        <div><h1 id="title">Checkout</h1></div>
     </header>
 
     <div class="selected-items">
@@ -77,17 +71,18 @@
     </div>
 
     <div class="transaction-details">
-            <h2>Transaction Recap</h2>
+            <h2>Checkout Summary</h2>
             <p>Member ID .............................................................. <span id="mem-id">1234567</span></p>
 
             <p>Location ............................................. <span id="curr-location">Cougar Valley Library</span></p>
             <p>Date ......................................................................... <span id="current-date">03/18/24</span></p>
             <p>Due Date ................................................................. <span id="due-date">04/01/24</span></p>
             <p>Due Date ................................................................. <span id="due-date">04/01/24</span></p>
-            <p id="total-items-line">Total Items : <span id="total-items">4</span></p>
+            <p id="total-items-line">Total Items : <span id="total-items">0</span></p>
         <button id="finalize-btn"><a href="\front-end\Login\member-login.html">Confirm Checkout</a></button>
     </div>
 
     <footer>&copy; 2024 Cougar Chronicles. All rights reserved.</footer>
+    <script src="\front-end\checkout\checkout.js"></script>
 </body>
 </html>

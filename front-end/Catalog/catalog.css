@@ -42,42 +42,29 @@ header {
     grid-area: header; 
     background-color: var(--colorLight);
     padding: 15px;
+    display: flex;
+    justify-content: space-between;
 }
 
-
-header .library-name {
+header #summary a {
     float: left;  
-}
-
-.library-name a {
-    font-size: 40px;
+    font-size: 30px;
     text-decoration: none; 
     color: var(--color-white);
+    margin-left: 30px;
 }
 
-
-
-header nav {
-    float: right;
+header #summary a:hover {
+    text-decoration: underline;
 }
 
-header nav ul {
-    list-style-type: none;
+#home-arr {
+    margin-right: 5px;
 }
 
-header nav ul li {
-    display: inline;
-    margin-left: 20px;
-}
-
-header nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 26px;
-}
-
-header nav ul li a:hover {
-    color: var(--mainColor);
+header #title {
+    margin-right: 50px;
+    color: var(--color-white);
 }
 
 /* ================= Sidebar ================= */

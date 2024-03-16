@@ -25,40 +25,34 @@ body {
 header {
     grid-area: header; 
     background-color: var(--colorLight);
-    padding: 5px;
+
+    display: flex;
+    justify-content: space-between;
 }
 
 
-header #summary {
+header #summary a {
     float: left;  
-    font-size: 40px;
+    font-size: 30px;
     text-decoration: none; 
     color: var(--color-white);
-    margin-left: 30px;
+    margin-left: 40px;
 }
 
-header nav {
-    float: right;
+
+header #summary a:hover {
+    text-decoration: underline;
 }
 
-header nav ul {
-    list-style-type: none;
+#home-arr {
+    margin-right: 5px;
 }
 
-header nav ul li {
-    display: inline;
-    margin-right: 30px;
+header #title {
+    margin-right: 70px;
+    color: var(--color-white);
 }
 
-header nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 26px;
-}
-
-header nav ul li a:hover {
-    color: var(--mainColor);
-}
 
 
 /* =============== Selected Items from Catalog =============== */
@@ -67,8 +61,8 @@ header nav ul li a:hover {
     grid-area: items;
     margin-top: 42px;
     justify-content: center;
-    margin-right: 110px;
-    margin-left: 12rem;
+    margin-right: 120px;
+    margin-left: 11rem;
     width: 70%;
     gap: 20px;
 }
@@ -163,14 +157,17 @@ header nav ul li a:hover {
 .transaction-details {
     grid-area: details;
     margin-top: 45px; 
-    margin-left: 10px;
+    margin-left: 5px;
     margin-right: 5rem;
-    background-color: var(--background);
+    background-color: #ECEBEB;
     width: 400px;
     height: 375px;
-    padding: 20px; 
+    padding-top: 10px; 
+    padding-left: 20px;
+    padding-right: 20px;
     text-align: left;
-    border-radius: 10px; 
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); 
 }
 
 #total-items-line {
@@ -190,6 +187,7 @@ header nav ul li a:hover {
     cursor: pointer;
     display: block;
     margin: 0 auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); 
 }
 #finalize-btn a {
     text-decoration: none;
