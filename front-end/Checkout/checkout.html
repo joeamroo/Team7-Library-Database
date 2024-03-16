@@ -5,33 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout Items</title>
     <link rel="stylesheet" href="checkout.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
 </head>
 <body>
     <header>
-        <h1>Checkout Summary</h1>
+        <h1 id="summary">Checkout</h1>
+        <nav>
+            <ul>
+                <li><a href="\front-end\home\home.html">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
     </header>
 
     <div class="selected-items">
-        <div class="checkout-summary">
-            <h2>Checkout Summary</h2>
-            <ul id="checkout-list">
-                <!-- Items added to checkout will be listed here -->
-            </ul>
+        <div class="top-bar">
+            <p>Products</p>
+            <p id="catalog-redirect"><a href="\front-end\catalog\catalog.html"><i class="uil uil-angle-left-b"></i>Continue browsing</a></p>
+        </div>
+        <div class="chosen-items">
+            <div class="transac-item">
+                <div class="catalog-item-info">
+                    <img src="https://i0.wp.com/bookjotter.com/wp-content/uploads/2018/10/matilda-cover.jpg?resize=300%2C457&ssl=1">
+                    <div class="info">
+                        <h3>Matilda</h3>
+                        <p>Author: <span id="author"> Roald Dahl</span></p>
+                        <p>Type: <span id="medium">Book</span></p>
+                        <p>ISBN:<span id="isbn">123456789123</span></p>
+                    </div>
+                </div>
+                <button class="remove-btn"><i class="uil uil-trash-alt"></i>Remove</button>
+            </div>
+            <div class="transac-item">
+                <div class="catalog-item-info">
+                    <img src="https://i0.wp.com/recaptains.co.uk/wp-content/uploads/2013/02/893174.jpg?fit=200%2C300&ssl=1">
+                    <div class="info">
+                        <h3>The Lightning Thief</h3>
+                        <p>Author: <span id="author"> Rick Riordan</span></p>
+                        <p>Type: <span id="medium">Book</span></p>
+                        <p>ISBN:<span id="isbn">1222333444555</span></p>
+                    </div>
+                </div>
+                <button class="remove-btn"><i class="uil uil-trash-alt"></i>Remove</button>
+            </div>
+            <div class="transac-item">
+                <div class="catalog-item-info">
+                    <img src="https://aesopsfable.com/cdn/shop/products/91b0C2YNSrL_1653x.jpg?v=1548261914">
+                    <div class="info">
+                        <h3>The Hobbit</h3>
+                        <p>Author: <span id="author"> John Ronald Reuel Tolkien</span></p>
+                        <p>Type: <span id="medium">Book</span></p>
+                        <p>ISBN:<span id="isbn">16777888999222</span></p>
+                    </div>
+                </div>
+                <button class="remove-btn"><i class="uil uil-trash-alt"></i>Remove</button>
+            </div>
+            <div class="transac-item">
+                <div class="catalog-item-info">
+                    <img src="https://m.media-amazon.com/images/I/61n2olkhm8L._AC_UF1000,1000_QL80_.jpg">
+                    <div class="info">
+                        <h3>The Cat in the Hat</h3>
+                        <p>Author: <span id="author">Dr.Seuss</span></p>
+                        <p>Type: <span id="medium">Book</span></p>
+                        <p>ISBN:<span id="isbn">22299990000333</span></p>
+                    </div>
+                </div>
+                <button class="remove-btn"><i class="uil uil-trash-alt"></i>Remove</button>
+            </div>
         </div>
     </div>
 
     <div class="transaction-details">
-        <div class="member-info">
-            <h2>Member Information</h2>
+            <h2>Transaction Recap</h2>
             <p>Member ID .............................................................. <span id="mem-id">1234567</span></p>
-        </div>
-        <div class="currentInfo">
-            <h2>Transaction Details</h2>
+
             <p>Location ............................................. <span id="curr-location">Cougar Valley Library</span></p>
             <p>Date ......................................................................... <span id="current-date">03/18/24</span></p>
-            <p>Due Date ................................................................. <span id="due-date"> 04/01/24</span></p>
-        </div>
-        <button id="finalize-btn">Confirm Checkout</button>
+            <p>Due Date ................................................................. <span id="due-date">04/01/24</span></p>
+            <p>Due Date ................................................................. <span id="due-date">04/01/24</span></p>
+            <p id="total-items-line">Total Items : <span id="total-items">4</span></p>
+        <button id="finalize-btn"><a href="\front-end\Login\member-login.html">Confirm Checkout</a></button>
     </div>
 
     <footer>&copy; 2024 Cougar Chronicles. All rights reserved.</footer>
