@@ -6,7 +6,9 @@
     --colorLight: #1e1918; 
     --background: #F0F0F0;
 }
-
+*{
+    font-family: 'Times New Roman', Times, serif
+}
 body, h1, h2, h3, h4, h5, h6, p, ul, li {
     margin: 0;
     padding: 0;
@@ -23,13 +25,13 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
 }
 
 .library-name a {
     font-size: 40px;
     text-decoration: none;
     color: var(--mainColor);
+    font-family: 'Times New Roman', Times, serif;
 }
 
 .managementButtons {
@@ -95,7 +97,6 @@ nav {
 }
 
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
@@ -139,9 +140,7 @@ a {
     text-decoration: none;
 }
 
-a:hover {
-    text-decoration: underline;
-}
+
 .container {
     display: flex;
     flex-direction: column; /* Change from row to column */
@@ -167,7 +166,6 @@ footer {
     background-color: var(--colorLight);
     color: #fff;
     text-align: center;
-    padding: 10px 0;
     /* position: fixed;
     bottom: 0; */
     width: 100%;
