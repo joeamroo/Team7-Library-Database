@@ -2,7 +2,7 @@
 function adjustSidebarHeight() {
     var sidebar = document.querySelector('.sidebar');
     var dropdowns = document.getElementsByClassName("dropdown-content");
-    var totalHeight = 325;
+    var totalHeight = 375;
 
     for (var i = 0; i < dropdowns.length; i ++) {
         if (dropdowns[i].classList.contains('show')) {
