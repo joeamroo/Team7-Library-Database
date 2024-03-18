@@ -127,8 +127,7 @@ nav {
 .branch-info {
     max-width: calc(100% - 40px);
     margin: 0 auto;
-    padding: 10px;
-    margin-left: 20px;
+    padding-left: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -137,7 +136,7 @@ nav {
 }
 
 .branch-details p {
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .branch-details {
@@ -155,6 +154,8 @@ nav {
     position: relative;
     top: 0;
     bottom: auto;
+    margin-bottom: 50px;
+    margin-top: -5px;
 }
 
 .branch-hours ul {
@@ -187,7 +188,7 @@ nav {
     bottom: 50px; 
 }
 
-.button.create-account,
+.button.return-items,
 .button.search-catalog,
 .button.checkout {
     display: inline-block; 
@@ -202,13 +203,13 @@ nav {
     font-size: 30px;
 }
 
-.button.create-account:not(:last-child),
+.button.return-items:not(:last-child),
 .button.search-catalog:not(:last-child),
 .button.button.checkout:not(:last-child) {
     margin-right: 100px; 
 }
 
-.button.create-account:hover, 
+.button.return-items:hover, 
 .button.search-catalog:hover, 
 .button.checkout:hover {
     background-color: var(--colorLight);
