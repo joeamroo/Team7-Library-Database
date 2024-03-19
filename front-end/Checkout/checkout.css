@@ -121,7 +121,7 @@ header #title {
     color: var(--color-black);
 }
 
-#isbn {
+#isbn, #movie-id, #serial-num {
     color: #2c98ff;
 }
 
