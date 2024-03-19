@@ -27,53 +27,66 @@
             </div>
         </div>
         <div class="dropdown">
-            <button class="dropbtn" onclick="toggleDropdown('genre')">Genre<span class="icon">&#x25BC;</span></button>
-            <div class="dropdown-content" id="genre">
-                <input type="checkbox" id="fiction" name="fiction">
-                <label for="fiction">Fiction</label><br>
-                <input type="checkbox" id="historical" name="historical">
-                <label for="historical">Historical</label><br>
-                <input type="checkbox" id="mystery" name="mystery">
-                <label for="mystery">Mystery</label><br>
-                <input type="checkbox" id="scifi" name="scifi">
-                <label for="scifi">Science fiction</label><br>
+            <button class="dropbtn" onclick="toggleDropdown('bgenre')">Book Genres<span class="icon">&#x25BC;</span></button>
+            <div class="dropdown-content" id="bgenre">
+                <input type="checkbox">
+                <label for="bgenreOpt">Fiction</label><br>
+                <input type="checkbox">
+                <label for="bgenreOpt">Historical</label><br>
+                <input type="checkbox">
+                <label for="bgenreOpt">Mystery</label><br>
+                <input type="checkbox">
+                <label for="bgenreOpt">Science fiction</label><br>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn" onclick="toggleDropdown('mgenre')">Movie Genres<span class="icon">&#x25BC;</span></button>
+            <div class="dropdown-content" id="mgenre">
+                <input type="checkbox">
+                <label for="mgenreOpt">Thriller</label><br>
+                <input type="checkbox">
+                <label for="mgenreOpt">Romance</label><br>
+                <input type="checkbox">
+                <label for="mgenreOpt">Horror</label><br>
+                <input type="checkbox">
+                <label for="mgenreOpt">Western</label><br>
             </div>
         </div>
         <div class="dropdown">
             <button class="dropbtn" onclick="toggleDropdown('language')">Language<span class="icon">&#x25BC;</span></button>
             <div class="dropdown-content" id="language">
-                <input type="checkbox" id="english" name="english">
-                <label for="english">English</label><br>
-                <input type="checkbox" id="spanish" name="spanish">
-                <label for="spanish">Spanish</label><br>
-                <input type="checkbox" id="french" name="french">
-                <label for="french">French</label><br>
-                <input type="checkbox" id="portg" name="portg">
-                <label for="portg">Portuguese</label><br>
+                <input type="checkbox">
+                <label for="langOpt">English</label><br>
+                <input type="checkbox">
+                <label for="langOpt">Spanish</label><br>
+                <input type="checkbox">
+                <label for="langOpt">French</label><br>
+                <input type="checkbox">
+                <label for="langOpt">Portuguese</label><br>
             </div>
         </div>
         <div class="dropdown">
             <button class="dropbtn" onclick="toggleDropdown('year-published')">Year-published<span class="icon">&#x25BC;</span></button>
             <div class="dropdown-content" id="year-published">
-                <input type="checkbox" id="2001" name="2001">
-                <label for="2001">2001</label><br>
-                <input type="checkbox" id="2002" name="2002">
-                <label for="2002">2002</label><br>
-                <input type="checkbox" id="2005" name="2005">
-                <label for="2005">2005</label><br>
-                <input type="checkbox" id="2012" name="2012">
-                <label for="2012">2012</label><br>
+                <input type="checkbox">
+                <label for="yearOpt">2001</label><br>
+                <input type="checkbox">
+                <label for="yearOpt">2002</label><br>
+                <input type="checkbox">
+                <label for="yearOpt">2005</label><br>
+                <input type="checkbox">
+                <label for="yearOpt">2012</label><br>
             </div>
         </div>
         <div class="dropdown">
             <button class="dropbtn" onclick="toggleDropdown('brand')">Brand<span class="icon">&#x25BC;</span></button>
             <div class="dropdown-content" id="brand">
-                <input type="checkbox" id="apple" name="apple">
-                <label for="apple">Apple</label><br>
-                <input type="checkbox" id="samsung" name="samsung">
-                <label for="samsung">Samsung</label><br>
-                <input type="checkbox" id="motorola" name="motorola">
-                <label for="motorola">Motorola</label><br>
+                <input type="checkbox">
+                <label for="brndOpt">Apple</label><br>
+                <input type="checkbox">
+                <label for="brndOpt">Samsung</label><br>
+                <input type="checkbox">
+                <label for="brndOpt">Motorola</label><br>
             </div>
         </div>
     </div>
@@ -84,6 +97,7 @@
             <input type="text" id="keyword" name="keyword" autocomplete="off">
             <button id="search-btn"><i class="uil uil-search"></i></button>
         </div>
+        <!--Add static values that represent attributes in tables-->
         <div class="search-options">
             <label for="search-by">Search by:</label>
             <select id="search-by" name="search-by">
@@ -122,13 +136,13 @@
                 <div class="catalog-item-info">
                     <img src="https://i0.wp.com/bookjotter.com/wp-content/uploads/2018/10/matilda-cover.jpg?resize=300%2C457&ssl=1">
                     <div class="info">
-                        <h3>Matilda</h3>
-                        <p id="author">by Roald Dahl</p>
-                        <p id="medium">Type: Book</p>
-                        <p id="isbn">ISBN 123456789123</p>
-                        <p id="yearPub">Year Published: 1950</p>
-                        <p id="currHolds"> Current Holds: 0</p>
-                        <p id="availableItems">System availability: 3 (of 4)</p>
+                        <h3 id="title">Matilda</h3>
+                        <p id="author-place">by <span id="author">Roald Dahl</span></p>
+                        <p>Type: <span id="medium">Book</span></p>
+                        <p>ISBN <span id="isbn">12345678912377</span></p>
+                        <p id="year-place">Year Published: <span id="yearPub">1950</span></p>
+                        <p>Current Holds: <span id="currHolds">0</span></p>
+                        <p>System availability: <span id="availableItems">3 (of 4)</span></p>
                     </div>
                 </div>
                 <div class="item-buttons">
@@ -140,13 +154,13 @@
                 <div class="catalog-item-info">
                     <img src="https://i0.wp.com/recaptains.co.uk/wp-content/uploads/2013/02/893174.jpg?fit=200%2C300&ssl=1">
                     <div class="info">
-                        <h3>The Lightning Thief</h3>
-                        <p id="author">by Rick Riordan</p>
-                        <p id="medium">Type: Book</p>
-                        <p id="isbn">ISBN 1222333444555</p>
-                        <p id="yearPub">Year Published: 2005</p>
-                        <p id="currHolds"> Current Holds: 7</p>
-                        <p id="availableItems">System availability: 0 (of 5)</p>
+                        <h3 id="title">The Lightning Thief</h3>
+                        <p id="author-place">by <span id="author">Rick Riordan</span></p>
+                        <p>Type: <span id="medium">Book</span></p>
+                        <p>ISBN <span id="isbn">1222333444555</span></p>
+                        <p id="year-place">Year Published: <span id="yearPub">2005</span></p>
+                        <p>Current Holds: <span id="currHolds">7</span></p>
+                        <p>System availability: <span id="availableItems">0 (of 5)</span></p>
                     </div>
                 </div>
                 <div class="item-buttons">
@@ -154,11 +168,12 @@
                     <button class="checkout-btn">Add to Checkout</button>
                 </div>
             </div> 
+            <!--Continue here and add movie and device-->
             <div class="catalog-item">
                 <div class="catalog-item-info">
-                    <img src="https://aesopsfable.com/cdn/shop/products/91b0C2YNSrL_1653x.jpg?v=1548261914">
+                    <img src="https://m.media-amazon.com/images/I/91+KChuGmDL._AC_UF894,1000_QL80_.jpg">
                     <div class="info">
-                        <h3>The Hobbit</h3>
+                        <h3>The Hobbit: An Unexpected Journey</h3>
                         <p id="author">by John Ronald Reuel Tolkien</p>
                         <p id="medium">Type: Book</p>
                         <p id="isbn">ISBN 16777888999222</p>

@@ -35,7 +35,7 @@ body {
     z-index: -1;
     background-image: url("/front-end/Login/Library.jpg");
     background-size: cover;
-    filter: blur(5px);
+    filter: blur(10px);
 }
 
 header {
@@ -70,7 +70,7 @@ header #title {
 /* ================= Sidebar ================= */
 
 .sidebar {
-    height: 325px;
+    height: 375px;
 }
 
 .sidebar {
@@ -244,7 +244,7 @@ header #title {
     margin-right: 25px;
 }
 
-#author, #yearPub {
+#author-place, #year-place {
     padding-bottom: 10px;
 }
 

@@ -1,0 +1,236 @@
+:root {
+  --mainColor: #841717;
+  --variantColor: #F9CBC5;
+  --color-black: #000000;
+  --color-white: #FFFFFF;
+  --colorLight: #1e1918;
+  --background: #F0F0F0;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+    background: var(--background);
+    background-size: cover;
+    overflow-x: hidden;
+}
+
+header {
+  width: 100%;
+}
+
+/* ===================== Top Bar ===================== */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+.library-name a {
+  font-size: 40px;
+  text-decoration: none;
+  color: var(--mainColor);
+}
+
+.managementButtons {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.button {
+  padding: 12px 24px;
+  border-radius: 20px;
+  background-color: var(--mainColor);
+  color: var(--color-white);
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.button:hover {
+  background-color: var(--colorLight);
+}
+
+#checkout-cart {
+  font-size: 40px;
+  padding-left: 5px;
+  color: var(--mainColor);
+}
+
+#checkout-cart:hover {
+  cursor: pointer;
+  color: var(--colorLight);
+}
+
+
+
+/* ===================== Nav Bar ===================== */
+nav {
+  background-color: var(--colorLight);
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+nav ul li {
+  display: inline;
+}
+
+nav ul li a {
+  color: var(--color-white);
+  text-decoration: none;
+  padding: 10px 20px;
+  font-size: 25px;
+}
+
+nav ul li a:hover {
+  background-color: var(--mainColor);
+}
+
+nav {
+  float: left;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  color: #333;
+  background: var(--background);
+  background-size: cover;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 80%;
+
+}
+
+.content {
+  padding: 20px;
+}
+
+.classes {
+  margin-top: 20px;
+}
+
+.class-info {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #333;
+  /* Dark background for class info */
+  border-radius: 5px;
+}
+
+.class-info h3 {
+  color: #841717;
+  /* White class name text */
+  margin-top: 0;
+  font-size: 24px;
+}
+
+.class-info p {
+  color: #fff;
+  /* White class info text */
+  margin-bottom: 10px;
+}
+
+.class-info img {
+  float: right;
+  width: 30%;
+  /* Set a fixed width for the images */
+  margin-left: 20px;
+  /* Add space between the class info and the image */
+}
+
+.signup-button {
+  display: block;
+  margin-top: 10px;
+  padding: 8px 15px;
+  background-color: #841717;
+  /* Dark red button background */
+  color: #fff;
+  /* White button text */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.signup-button:hover {
+  background-color: #6d1414;
+  /* Darker shade of red on button hover */
+}
+
+.class-info h3 strong,
+.class-info p strong {
+  font-weight: bold;
+}
+
+h1 {
+  color: var(--mainColor);
+  text-align: center;
+  margin: 20px 0px 20px 0px;
+
+}
+
+h2 {
+  color: var(--mainColor);
+  margin: 20px 0px 20px 0px;
+}
+
+p {
+  line-height: 2.0;
+}
+
+a {
+  color: var(--mainColor);
+  text-decoration: none;
+}
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  /* Change from row to column */
+  align-items: center;
+  /* Center items horizontally */
+  gap: 20px;
+  padding-bottom: 20px;
+}
+
+footer {
+  background-color: var(--colorLight);
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+  /* position: fixed;
+    bottom: 0; */
+  width: 100%;
+}

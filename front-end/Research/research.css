@@ -23,6 +23,7 @@ header {
 /* ===================== Top Bar ===================== */
 .top-bar {
     display: flex;
+    padding-left: 20px;
     justify-content: space-between;
     align-items: center;
     padding-left: 20px;
@@ -56,7 +57,8 @@ header {
 
 #checkout-cart {
     font-size: 40px;
-    padding-left: 10px;
+    padding-left: 5px;
+    padding-right: 10px; 
     color: var(--mainColor);
 }
 
@@ -163,7 +165,6 @@ h1 {
     color: var(--mainColor);
     text-align: center;
     margin: 20px 0px 20px 0px;
-    font-size: 32px;
 
 }
 
