@@ -7,24 +7,15 @@
   --background: #F0F0F0;
 }
 
-body,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-ul,
-li {
+body,h1,h2,h3,h4,h5,h6,p,ul,li {
   margin: 0;
   padding: 0;
 }
 
 body {
-    background: var(--background);
-    background-size: cover;
-    overflow-x: hidden;
+  background: var(--background);
+  background-size: cover;
+  overflow-x: hidden;
 }
 
 header {
@@ -36,7 +27,8 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding-right: 20px;
+  padding-left: 20px;
 }
 
 .library-name a {
