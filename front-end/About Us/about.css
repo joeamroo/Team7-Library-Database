@@ -26,6 +26,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding-left: 20px;
+
 }
 
 .library-name a {
@@ -97,44 +98,27 @@ nav {
     width: 100%;
 }
 
-.get-in-touch, .support, .help, .teaching-learning {
+.our-mission, .our-history, .our-collections, .our-services, .our-team, .visit-us {
     position: relative;
     margin-bottom: 10px;
 }
+.our-mission::after, .our-history::after, .our-collections::after, .our-services::after, .our-team::after, .visit-us::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;    
+    width: 32%;
+    height: 5px; 
+    background-color: var(--mainColor);
+}
+footer {
+    background-color: var(--colorLight);
+    color: #fff;
+    text-align: center;
+    /* position: fixed;
+    bottom: 0; */
+    width: 100%;
+}
 
-.help::after{
-    content: '';
-    position: absolute;
-    bottom: -5px;    
-    width: 55%;
-    height: 5px; 
-    background-color: var(--mainColor);
-}
-.support::after{
-    content: '';
-    position: absolute;
-    bottom: -5px;    
-    width: 70%;
-    height: 5px; 
-    background-color: var(--mainColor);
-
-}
-.get-in-touch::after{
-    content: '';
-    position: absolute;
-    bottom: -5px;    
-    width: 23%;
-    height: 5px; 
-    background-color: var(--mainColor);
-}
-.teaching-learning::after{
-    content: '';
-    position: absolute;
-    bottom: -5px;    
-    width: 37%;
-    height: 5px; 
-    background-color: var(--mainColor);
-}
 
 body {
     margin: 0;
@@ -163,14 +147,14 @@ h1 {
     color: var(--mainColor);
     text-align: center;
     margin: 20px 0px 20px 0px;
-    font-size: 32px;
+    font-size: 35px;
 
 }
 
 h2 {
     color: var(--color-black);
     margin: 20px 0px 20px 0px;
-    font-size: 28px;
+    font-size: 30px;
 }
 
 p {
@@ -189,27 +173,5 @@ a {
     flex-direction: column; 
     align-items: center; 
     gap: 20px;
-    padding-bottom: 20px;
-}
-
-.image-container {
-    flex: 1; 
-    max-width: 50%; 
-    padding: 30px;
-}
-
-.library-image {
-    width: 600px; 
-    height: auto; 
-    object-fit: cover; 
-}
-
-
-footer {
-    background-color: var(--colorLight);
-    color: #fff;
-    text-align: center;
-    /* position: fixed;
-    bottom: 0; */
-    width: 100%;
+    padding: 35px 0px;
 }
