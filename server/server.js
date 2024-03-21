@@ -21,20 +21,6 @@ const server = http.createServer((req, res) => {
     if (req.url === '/') {
         servePage(res);
     } 
-    else if (req.url === '/trialCatalog.html') {
-        servePage('./trialCatalog', res);
-    } 
-    else if (req.url === '/trialCatalog.css') {
-        serveStaticFile('./trialCatalog.css', 'text/css', res);
-    } 
-    else if (req.url === '/script.js') {
-        // Serve JavaScript file
-        serveStaticFile('./script.js', 'text/javascript', res);
-    } 
-    else {
-        // Handle other requests
-        serve404(res);
-    }
 });
 
 
