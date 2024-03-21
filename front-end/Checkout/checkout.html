@@ -91,10 +91,19 @@
             <p>Due Date ................................................................. <span id="due-date">04/01/24</span></p>
             <p>Due Date ................................................................. <span id="due-date">04/01/24</span></p>
             <p id="total-items-line">Total Items : <span id="total-items">0</span></p>
-        <button id="finalize-btn"><a href="\front-end\Login\member-login.html">Confirm Checkout</a></button>
+        <button id="finalize-btn">Confirm Checkout</button>
+    </div>
+
+    <div id="remove-modal" class="modal">
+        <div class="modal-content">
+            <p id="messg">Are you sure you want to remove this item?</p>
+            <button id="cancel-return">Cancel</button>
+            <button id="confirm-return">Confirm</button>
+        </div>
     </div>
 
     <footer>&copy; 2024 Cougar Chronicles. All rights reserved.</footer>
     <script src="\front-end\checkout\checkout.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </body>
 </html>

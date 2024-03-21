@@ -215,6 +215,53 @@ input[type="text"] {
     background-color: #0056b3;
 }
 
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+  }
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    font-family: sans-serif;
+  }
+
+  #messg {
+    margin-left: 2.5rem;
+  }
+
+  #cancel-return {
+    margin-left: 8.5rem;
+  }
+
+  #confirm-return, #cancel-return {
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    font-size: 15px;
+    border: none;
+    padding: 7px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  }
+
+  #confirm-return:hover, #cancel-return:hover {
+    background-color: #0056b3;
+    color: white;
+  }
+  
+
 
 /* =============== Footer Section =============== */
 

@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const addBtns = document.querySelectorAll('.add-btn');
     const transactionDetails = document.getElementById('items-to-return');
     const detailsContainer = document.querySelector('.transaction-details');
+    const finalizeBtn = document.getElementById('finalize-btn');
     let addedItems = new Map();
 
 
@@ -65,4 +66,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
         details.style.height = newHeight + 'px';
     }
+
+});
+
+document.addEventListener('DOMContentLoaded', function() {  
+    const finalizeBtn = document.getElementById('finalize-btn');
+    const modal = document.getElementById('myModal');
+    const confirmReturnBtn = document.getElementById('confirm-return');
+    const cancelReturnBtn = document.getElementById('cancel-return');
+  
+    finalizeBtn.addEventListener('click', function() {
+      modal.style.display = 'block';
+    });
+  
+    confirmReturnBtn.addEventListener('click', function() {
+      modal.style.display = 'none';
+    });
+
+    cancelReturnBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+  
+    window.addEventListener('click', function(event) {
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    });
 });
