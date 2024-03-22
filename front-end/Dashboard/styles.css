@@ -1,0 +1,310 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --mainColor: #841717;
+  --variantColor: #F9CBC5;
+  --color-black: #000000;
+  --color-white: #FFFFFF;
+  --colorLight: #1e1918; 
+  --background: #F0F0F0;
+  --darkGray: #1e1918;
+  --color-background: #f6f6f9;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+}
+
+body{
+  width: 100vw;
+  height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.88rem;
+  user-select: none;
+  overflow-x: hidden;
+  color: var(--color-dark);
+  background: linear-gradient(to bottom, #ffffff 0%, #f9f9f9 100%);
+}
+
+header {
+  width: 100%;
+}
+
+.th {
+  text-align: center;
+}
+
+
+
+/* ===================== Top Bar ===================== */
+.top-bar {
+  display: flex;
+  background-color: var(-color-background);
+  margin-left: 50px;
+  align-items: relative;
+  padding: 17px;
+}
+
+.library-name a {
+  font-size: 40px;
+  text-decoration: none;
+  color: var(--mainColor);
+  
+}
+
+.managementButtons {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.button {
+  position: relative;;
+  padding: 12px 24px;
+  border-radius: 20px;
+  background-color: var(--mainColor);
+  color: var(--color-white);
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.button:hover {
+  background-color: var(--colorLight);
+}
+
+#checkout-cart {
+  font-size: 40px;
+  padding-left: 5px;
+  color: var(--mainColor);
+}
+
+#checkout-cart:hover {
+  cursor: pointer;
+  color: var(--colorLight);
+}
+
+/* ===================== Top Bar Ends ===================== */
+
+  .container {
+    display: grid;
+    width: 96%;
+    margin: 0 auto;
+    gap: 1.8rem;
+    grid-template-columns: 12rem auto 23rem;
+    position: relative;
+  }
+
+  .wrapper {
+    display: flex;
+  }
+
+
+  .wrapper .sidebar ul li{
+    padding: 15px;
+    border-bottom: 1px solid #bdb8d7;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }    
+
+  .wrapper .sidebar ul li a{
+    color: var(--color-white);
+    display: block;
+  }
+
+  .wrapper .sidebar h2, h3 {
+    letter-spacing: 0.9px;
+    text-transform: uppercase;
+    position: relative;
+    text-align: center;
+    color: var(--color-white);
+  }
+
+  .top {
+    font-size: 15px;
+    position: relative;
+    padding: 20px;  
+  }
+
+  .managementButtons {
+    display: fixed;
+    gap: 10px;
+}
+
+/* ===================== Side Pannel Starts ===================== */
+  #highlight {
+    color: red;
+  }
+
+  #dashboard {
+    font-size: 15px;
+  }
+
+  #avatar {
+    position: center;
+    margin-left: 22px;
+  }
+
+ #logout {
+  padding-top: 350%;
+ }
+
+ #logout:hover {
+    transition-property: transform;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    transform: translateY(-1px);
+ }
+
+
+
+ .logout-icon {
+  position: relative;
+ }
+
+
+
+ 
+
+  .user-greet {
+    font-size: xx-large;
+    margin-left: 80px;
+  }
+
+  .sidebar {
+    display: flex;
+    border-radius: 15px;
+    flex-direction: column;
+    top:5rem;
+    height: 90vh;
+    position: relative;
+    left: 20px;
+    background-color: var(--darkGray);
+    padding: 30px 0;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  }
+
+  .sidebar a {
+    text-align: center;
+  }
+
+  .h3 {
+    font-size: 0.5px;
+  }
+
+
+  .menu-item {
+    padding: 15px 20px;
+    list-style: none;
+    position: relative;
+  }
+
+  .menu-item a {
+    color: var(--color-white);
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+    display: block; /* Make the links fill the entire list item area for better clickability */
+  }
+
+  .menu-item::after {
+    content: ''; /*Enables effect*/
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: red;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.5s ease-out;
+  }
+
+  .menu-item:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+
+  .menu-item:hover a {
+    color: #555;
+  }
+
+
+  /*Outer Rectangle*/
+  .rounded-rectangle {
+    background-color: var(--f9f9f9);
+    border-radius: 20px; /* Adjust the px value to increase or decrease the roundness */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    height: 94.5%;
+    width: 90%;
+    margin: 20px auto;
+  }
+
+  /* ===================== Recent Order Starts ===================== */
+
+  .order-title {
+    font-size: x-large;
+  }
+
+ 
+
+  .recent-orders {
+    width: 80%;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+
+  .recent-orders table {
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .recent-orders th, .recent-orders td {
+    text-align: left;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .recent-orders th {
+    background-color: #fafafa;
+    color: var(--color-black);
+  }
+
+  .recent-orders td {
+    color: var(--color-black);
+  }
+
+  .recent-orders .status {
+    font-weight: bold;
+  }
+
+  .recent-orders .purchased {
+    color: green;
+  }
+
+  .recent-orders .declined {
+    color: red;
+  }
+
+  .recent-orders .active {
+    color: green;
+  }
+
+  .recent-orders .details {
+    color: #0056b3;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+/* ===================== Recent Order Ends ===================== */
