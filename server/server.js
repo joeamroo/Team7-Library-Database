@@ -1,48 +1,51 @@
 const http = require('http');
+const url = require('url');
+const { getInitialCatalogInfo } = require('./routes/catalog');
 const fs = require('fs');
 const mysql = require('mysql');
-
-// Create MySQL connection
-const connection = mysql.createConnection({
-    host: 'library-database-sytem.mysql.database.azure.com',
-    user: 'lbrGuest',
-    password: 'gu3st@cces$',
-    database: 'librarydev'
-});
-
-// Connect to MySQL
-connection.connect((err) => {
-    if (err) throw err;
-    console.log('Connected to LibraryDev database');
-});
-
-// Create HTTP server
-const server = http.createServer((req, res) => {
-    if (req.url === '/') {
-        servePage(res);
-    } 
-});
 
 
 // Function to serve static files (CSS, JavaScript)
 function serveStaticFile(filePath, contentType, res) {
     fs.readFile(filePath, (err, data) => {
         if (err) {
+            res.writeHead(500);
+            res.end('Server error');
             serve404(res);
-        } else {
+        } 
+        else {
             res.writeHead(200, { 'Content-Type': contentType });
-            res.end(data);
+            res.end(data, 'utf-8');
         }
     });
 }
 
-// Function to handle 404 Not Found
-function serve404(res) {
-    res.writeHead(404);
-    res.end('Page not found');
-}
+const server = http.createServer((request, res) => {
+    const pathname = url.parse(request.url).pathname;
 
-// Start the server
+    switch(pathname) {
+        case '/':
+            serveStaticFile('./front-end/home/home.html', 'text/html', res);
+            break;
+        case '/home.css':
+            serveStaticFile('./front-end/home/home.css', 'text/css', res);
+            break;
+        case '/home.js':
+            serveStaticFile('./front-end/home/home.js', 'application/javascript', res);
+            break;
+        case '/catalog':
+            getInitialCatalogInfo(res); 
+            break;
+        case '/catalog.css':
+            serveStaticFile('./front-end/catalog/catalog.css', 'text/css', res);
+            break;
+        default:
+            res.writeHead(404);
+            res.end('Not Found');
+    }
+});
+
+
 const port = 3000;
 server.listen(port, () => {
     console.log(`Server is running on port ${port}`);
