@@ -39,6 +39,9 @@ const server = http.createServer((request, res) => {
         case '/catalog.css':
             serveStaticFile('./front-end/catalog/catalog.css', 'text/css', res);
             break;
+        case '/catalog.js':
+            serveStaticFile('./front-end/catalog/catalog.js', 'application/javascript', res);
+            break;
         default:
             res.writeHead(404);
             res.end('Not Found');
