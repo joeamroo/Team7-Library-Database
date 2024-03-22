@@ -14,7 +14,7 @@ connection.connect((err) => {
 });
 
 function getInitialCatalogInfo(response) {
-    const query = 'SELECT * FROM catalog_view LIMIT 3';
+    const query = 'SELECT * FROM catalog_view LIMIT 4';
 
     connection.query(query, (err, results) => {
         if (err) {
