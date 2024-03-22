@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="admin.css"> 
+  </head>
+
+  <body>
+    <header>
+      <div class="top-bar">
+        <h1 class="library-name"><a href="\front-end\home\home.html">Cougar Chronicles</a></h1>
+        <div class="managementButtons">
+          <a href="\front-end\login\member-login.html" class="button">Login/My Account</a>
+          <a href="\front-end\hours\hours.html" class="button">Locations/Hours</a>
+          <a href="\front-end\checkout\checkout.html"><i id="checkout-cart" class="uil uil-shopping-cart"></i></a>
+        </div>
+      </div>
+
+      <nav>
+        <ul>
+          <li><a href="\front-end\catalog\catalog.html">Catalog</a></li>
+          <li><a href="\front-end\classes\classes.html">Classes and Events</a></li>
+          <li><a href="\front-end\Research\research.html">Research</a></li>
+          <li><a href="#">Writer's Corner</a></li>
+          <li><a href="\front-end\about us\about.html">About us</a></li>
+        </ul>
+      </nav>
+    </header>
+
+
+    <main>
+      <section id="account-management">
+        <h2>Account Management</h2>
+        <button id="createAccountBtn">Create Account</button>
+        <button id="editAccountBtn">Edit Account</button>
+        <button id="deleteAccountBtn">Delete Account</button>
+
+        <script>
+          $(document).ready(function() {
+            // Event listener for creating an account
+            $('#createAccountBtn').click(function() {
+              // Replace the URL with the actual endpoint on your server
+              const url = '/accounts';
+              const data = {
+                username: 'example_username',
+                password: 'example_password',
+                email: 'example@example.com',
+                role: 'user' // or any other role you want to assign
+              };
+
+              // Send POST request to create account
+              sendRequest('POST', url, data, 'Account created successfully!');
+            });
+
+            // Event listener for editing an account
+            $('#editAccountBtn').click(function() {
+              // Replace the URL with the actual endpoint on your server
+              const accountId = prompt('Enter account ID to edit:');
+              if (!accountId) return;
+
+              const url = `/accounts/${accountId}`;
+              const data = {
+                username: 'new_username',
+                password: 'new_password',
+                email: 'new_email@example.com',
+                role: 'admin' // or any other role you want to assign
+              };
+
+              // Send PUT request to edit account
+              sendRequest('PUT', url, data, 'Account edited successfully!');
+            });
+
+            // Event listener for deleting an account
+            $('#deleteAccountBtn').click(function() {
+              // Replace the URL with the actual endpoint on your server
+              const accountId = prompt('Enter account ID to delete:');
+              if (!accountId) return;
+
+              const url = `/accounts/${accountId}`;
+
+              // Send DELETE request to delete account
+              sendRequest('DELETE', url, null, 'Account deleted successfully!');
+            });
+
+            // Function to send HTTP requests
+            function sendRequest(method, url, data, successMessage) {
+              $.ajax({
+                type: method,
+                url: url,
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                success: function(response) {
+                  // Handle successful response
+                  console.log('Response:', response);
+                  alert(successMessage);
+                },
+                error: function(xhr, status, error) {
+                  // Handle error response
+                  console.error('Error:', error);
+                  alert('Failed to perform action');
+                }
+              });
+            }
+          });
+
+        </script>
+      </section>
+
+      <section id="borrowing-rules">
+        <h2>Borrowing Rules</h2>
+        <button id="setRulesBtn">Set Borrowing Rules</button>
+
+        <script>
+          $(document).ready(function() {
+            $('#setRulesBtn').click(function() {
+              const borrowingRules = prompt('Enter borrowing rules (e.g., maximum number of books allowed per user):');
+              const fines = prompt('Enter fines (e.g., fine amount per day late):');
+              const loanPeriods = prompt('Enter loan periods (e.g., loan period for each type of item):');
+
+              // Prepare data to send to server
+              const data = {
+                borrowingRules: borrowingRules,
+                fines: fines,
+                loanPeriods: loanPeriods
+              };
+
+              // Replace the URL with the actual endpoint on your server
+              const url = '/library/rules';
+
+              // Send PUT request to set or modify borrowing rules
+              sendRequest('PUT', url, data, 'Borrowing rules updated successfully!');
+            });
+
+            // Function to send HTTP requests
+            function sendRequest(method, url, data, successMessage) {
+              $.ajax({
+                type: method,
+                url: url,
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                success: function(response) {
+                  // Handle successful response
+                  console.log('Response:', response);
+                  alert(successMessage);
+                },
+                error: function(xhr, status, error) {
+                  // Handle error response
+                  console.error('Error:', error);
+                  alert('Failed to perform action');
+                }
+              });
+            }
+          });
+
+        </script>
+      </section>
+
+      <section id="communication">
+        <h2>Communication with Users</h2>
+        <div class="dropdown">
+          <button class="dropbtn">Send Message</button>
+          <div class="dropdown-content">
+            <a href="#" id="memberMessageBtn">Send Message to Members</a>
+            <a href="#" id="staffMessageBtn">Send Message to Staff</a>
+            <a href="#" id="adminMessageBtn">Send Message to Admins</a>
+            <a href="#" id="allUsersMessageBtn">Send Message to All Users</a>
+          </div>
+          <script>
+            $(document).ready(function() {
+              $('#memberMessageBtn').click(function() {
+                const message = prompt('Enter message for members:');
+                sendMessage('member', message);
+              });
+
+              $('#staffMessageBtn').click(function() {
+                const message = prompt('Enter message for staff:');
+                sendMessage('staff', message);
+              });
+
+              $('#adminMessageBtn').click(function() {
+                const message = prompt('Enter message for admins:');
+                sendMessage('admin', message);
+              });
+
+              $('#allUsersMessageBtn').click(function() {
+                const message = prompt('Enter message for all users:');
+                sendMessage('all', message); // Pass 'all' as role
+              });
+
+              // Function to send message to users based on role
+              function sendMessage(role, message) {
+                // Replace the URL with the actual endpoint on your server
+                const url = `/users/message/${role}`;
+                const data = {
+                  message: message
+                };
+
+                // Send POST request to send message
+                sendRequest('POST', url, data, 'Message sent successfully!');
+              }
+
+              // Function to send HTTP requests
+              function sendRequest(method, url, data, successMessage) {
+                $.ajax({
+                  type: method,
+                  url: url,
+                  data: JSON.stringify(data),
+                  contentType: 'application/json',
+                  success: function(response) {
+                    // Handle successful response
+                    console.log('Response:', response);
+                    alert(successMessage);
+                  },
+                  error: function(xhr, status, error) {
+                    // Handle error response
+                    console.error('Error:', error);
+                    alert('Failed to send message');
+                  }
+                });
+              }
+            });
+
+          </script>
+        </div>
+      </section>
+
+      <div id="eventModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Manage Library Events</h2>
+          <button id="addEventBtn">Add Event</button>
+          <button id="editEventBtn">Edit Event</button>
+          <button id="deleteEventBtn">Delete Event</button>
+        </div>
+      </div>
+
+      <script>
+        $(document).ready(function() {
+          $('#manageEventsBtn').click(function() {
+            // Show the modal when the button is clicked
+            $('#eventModal').show();
+          });
+
+          // Close the modal when the close button is clicked
+          $('.close').click(function() {
+            $('#eventModal').hide();
+          });
+
+          // Event listener for adding an event
+          $('#addEventBtn').click(function() {
+            // Perform action for adding an event (e.g., open a form)
+            alert('Add Event button clicked');
+          });
+
+          // Event listener for editing an event
+          $('#editEventBtn').click(function() {
+            // Perform action for editing an event (e.g., open a form with event details)
+            alert('Edit Event button clicked');
+          });
+
+          // Event listener for deleting an event
+          $('#deleteEventBtn').click(function() {
+            // Perform action for deleting an event (e.g., show a list of events with delete buttons)
+            alert('Delete Event button clicked');
+          });
+        });
+
+      </script>
+    </main>
+
+    <footer>
+      <p>&copy; 2024 Cougar Chronicles. All rights reserved.</p>
+    </footer>
+  </body>
+
+</html>
