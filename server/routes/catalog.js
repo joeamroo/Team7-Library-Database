@@ -15,7 +15,7 @@ connection.connect((err) => {
 
 function createBookItem(item) {
     let bookHtml = '';
-    bookHtml += `<img src="https://m.media-amazon.com/images/I/318nujF5v5L._SY445_SX342_.jpg">`;
+    bookHtml += `<img src="${item.image_address}">`;
     bookHtml += `<div class="info">`;
     bookHtml += `<h3 id = "title">${item.book_movie_title_model}</h3>`;
     bookHtml += `<p id="author-place">by <span id="author">${item.authors}</span></p>`;
