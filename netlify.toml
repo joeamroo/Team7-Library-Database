@@ -3,7 +3,7 @@
   publish = "front-end"      
 
 [dev]
-  command = "npm run start" 
+  command = "npm run dev" 
 
 [functions]
   directory = "netlify/functions"  
