@@ -184,6 +184,10 @@ header #title {
     font-size: 15px; 
 }
 
+#search-btn a {
+    color: white;
+}
+
 #search-btn:hover {
     background-color: #56290b;
 }
@@ -267,6 +271,13 @@ header #title {
     background-color: #48494A;
     color: white;
     cursor: pointer;
+}
+
+.no-results {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666;
+    margin-top: 2rem;
 }
 
 

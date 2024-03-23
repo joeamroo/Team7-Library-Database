@@ -10,8 +10,6 @@
 <body>
     <div class="background-img"></div>
 
-    <!--DATA_PLACEHOLDER-->
-
     <header>
         <div><h1 id="summary"><a href="/"><i id="home-arr" class="uil uil-arrow-circle-left"></i>Return home</a></h1></div>
         <div><h1 id="title">Catalog</h1></div>
@@ -97,22 +95,23 @@
         <div class="search-options">
             <label for="keyword">Keyword search for:</label>
             <input type="text" id="keyword" name="keyword" autocomplete="off">
-            <button id="search-btn"><i class="uil uil-search"></i></button>
+            <button id="search-btn"><i class="uil uil-search"></i></a></button>
         </div>
         <!--Add static values that represent attributes in tables-->
         <div class="search-options">
             <label for="search-by">Search by:</label>
             <select id="search-by" name="search-by">
-                <option value="book">Any Field</option>
+                <option value="any">Any Field</option>
                 <option value="title">Title</option>
                 <option value="author">Author</option>
-                <option value="publisher">Publisher</option>
+                <option value="director">Director</option>
+                <option value="brand">Brand</option>
             </select>
         </div>
         <div class="search-options">
             <label for="limit-by">Limit by:</label>
             <select id="limit-by" name="limit-by">
-                <option value="book">Unlimited</option>
+                <option value="unlimited">Unlimited</option>
                 <option value="book">Book</option>
                 <option value="movie">Movie</option>
                 <option value="device">Device</option>

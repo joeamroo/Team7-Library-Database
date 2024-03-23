@@ -86,3 +86,34 @@ document.getElementById('limit-select').addEventListener('change', function() {
     setCatalogContHeight();
 });
 
+document.getElementById('search-btn').addEventListener('click', function(event) {
+    event.preventDefault(); 
+    
+    const keyword = document.getElementById('keyword').value;
+    const searchBy = document.getElementById('search-by').value;
+    const limitBy = document.getElementById('limit-by').value;
+
+    
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/catalog'); 
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            const catalogResultsDiv = document.querySelector('.catalog-results');
+            catalogResultsDiv.innerHTML = xhr.responseText;
+        } 
+        else {
+            console.error('Error:', xhr.statusText);
+        }
+    };
+
+    xhr.onerror = function() {
+        console.error('Network error');
+    };
+
+    const data = JSON.stringify({ keyword: keyword, searchBy: searchBy, limitBy: limitBy });
+
+    xhr.send(data);
+});
+
