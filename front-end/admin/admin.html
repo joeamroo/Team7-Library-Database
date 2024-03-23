@@ -39,24 +39,19 @@
 
         <script>
           $(document).ready(function() {
-            // Event listener for creating an account
             $('#createAccountBtn').click(function() {
-              // Replace the URL with the actual endpoint on your server
               const url = '/accounts';
               const data = {
                 username: 'example_username',
                 password: 'example_password',
                 email: 'example@example.com',
-                role: 'user' // or any other role you want to assign
+                role: 'user' 
               };
 
-              // Send POST request to create account
               sendRequest('POST', url, data, 'Account created successfully!');
             });
 
-            // Event listener for editing an account
             $('#editAccountBtn').click(function() {
-              // Replace the URL with the actual endpoint on your server
               const accountId = prompt('Enter account ID to edit:');
               if (!accountId) return;
 
@@ -65,26 +60,21 @@
                 username: 'new_username',
                 password: 'new_password',
                 email: 'new_email@example.com',
-                role: 'admin' // or any other role you want to assign
+                role: 'admin' 
               };
 
-              // Send PUT request to edit account
               sendRequest('PUT', url, data, 'Account edited successfully!');
             });
 
-            // Event listener for deleting an account
             $('#deleteAccountBtn').click(function() {
-              // Replace the URL with the actual endpoint on your server
               const accountId = prompt('Enter account ID to delete:');
               if (!accountId) return;
 
               const url = `/accounts/${accountId}`;
 
-              // Send DELETE request to delete account
               sendRequest('DELETE', url, null, 'Account deleted successfully!');
             });
 
-            // Function to send HTTP requests
             function sendRequest(method, url, data, successMessage) {
               $.ajax({
                 type: method,
@@ -92,12 +82,10 @@
                 data: JSON.stringify(data),
                 contentType: 'application/json',
                 success: function(response) {
-                  // Handle successful response
                   console.log('Response:', response);
                   alert(successMessage);
                 },
                 error: function(xhr, status, error) {
-                  // Handle error response
                   console.error('Error:', error);
                   alert('Failed to perform action');
                 }
@@ -119,21 +107,17 @@
               const fines = prompt('Enter fines (e.g., fine amount per day late):');
               const loanPeriods = prompt('Enter loan periods (e.g., loan period for each type of item):');
 
-              // Prepare data to send to server
               const data = {
                 borrowingRules: borrowingRules,
                 fines: fines,
                 loanPeriods: loanPeriods
               };
 
-              // Replace the URL with the actual endpoint on your server
               const url = '/library/rules';
 
-              // Send PUT request to set or modify borrowing rules
               sendRequest('PUT', url, data, 'Borrowing rules updated successfully!');
             });
 
-            // Function to send HTTP requests
             function sendRequest(method, url, data, successMessage) {
               $.ajax({
                 type: method,
@@ -141,12 +125,10 @@
                 data: JSON.stringify(data),
                 contentType: 'application/json',
                 success: function(response) {
-                  // Handle successful response
                   console.log('Response:', response);
                   alert(successMessage);
                 },
                 error: function(xhr, status, error) {
-                  // Handle error response
                   console.error('Error:', error);
                   alert('Failed to perform action');
                 }
@@ -186,22 +168,18 @@
 
               $('#allUsersMessageBtn').click(function() {
                 const message = prompt('Enter message for all users:');
-                sendMessage('all', message); // Pass 'all' as role
+                sendMessage('all', message); 
               });
 
-              // Function to send message to users based on role
               function sendMessage(role, message) {
-                // Replace the URL with the actual endpoint on your server
                 const url = `/users/message/${role}`;
                 const data = {
                   message: message
                 };
 
-                // Send POST request to send message
                 sendRequest('POST', url, data, 'Message sent successfully!');
               }
 
-              // Function to send HTTP requests
               function sendRequest(method, url, data, successMessage) {
                 $.ajax({
                   type: method,
@@ -209,12 +187,10 @@
                   data: JSON.stringify(data),
                   contentType: 'application/json',
                   success: function(response) {
-                    // Handle successful response
                     console.log('Response:', response);
                     alert(successMessage);
                   },
                   error: function(xhr, status, error) {
-                    // Handle error response
                     console.error('Error:', error);
                     alert('Failed to send message');
                   }
@@ -239,30 +215,22 @@
       <script>
         $(document).ready(function() {
           $('#manageEventsBtn').click(function() {
-            // Show the modal when the button is clicked
             $('#eventModal').show();
           });
 
-          // Close the modal when the close button is clicked
           $('.close').click(function() {
             $('#eventModal').hide();
           });
 
-          // Event listener for adding an event
           $('#addEventBtn').click(function() {
-            // Perform action for adding an event (e.g., open a form)
             alert('Add Event button clicked');
           });
 
-          // Event listener for editing an event
           $('#editEventBtn').click(function() {
-            // Perform action for editing an event (e.g., open a form with event details)
             alert('Edit Event button clicked');
           });
 
-          // Event listener for deleting an event
           $('#deleteEventBtn').click(function() {
-            // Perform action for deleting an event (e.g., show a list of events with delete buttons)
             alert('Delete Event button clicked');
           });
         });
