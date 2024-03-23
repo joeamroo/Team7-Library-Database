@@ -5,7 +5,8 @@ const connection = mysql.createConnection({
     host: 'library-database-sytem.mysql.database.azure.com',
     user: 'lbrGuest',
     password: 'gu3st@cces$',
-    database: 'librarydev'
+    database: 'librarydev',
+    port:3306
 });
 
 connection.connect((err) => {
