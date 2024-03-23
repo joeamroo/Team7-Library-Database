@@ -1,14 +1,13 @@
-name: Node.js CI
+name: CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
+
   build:
     runs-on: ubuntu-latest
 
@@ -17,14 +16,18 @@ jobs:
         node-version: [20.x]
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Set up working directory
-        run: cd server
-      - name: Install dependencies
-        run: npm install
-      - name: Start server
-        run: node server.js
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        
+    - name: Install server dependencies
+      run: |
+        cd server
+        npm ci
+        
+    - name: Start server
+      run: |
+        cd server
+        node server.js
