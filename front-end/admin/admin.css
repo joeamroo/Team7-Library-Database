@@ -130,7 +130,6 @@ body {
 .branch {
   margin-bottom: 40px;
   justify-content: space-between;
-  /* Space elements evenly */
 }
 
 .branch h3 {
@@ -150,7 +149,6 @@ body {
   width: 70%;
   display: flex;
   flex-direction: column;
-  /* Stack hours vertically */
 }
 
 .branch-image {
@@ -195,7 +193,6 @@ a {
   padding-bottom: 20px;
 }
 
-/* Style for buttons */
 button {
   padding: 10px 20px;
   margin: 5px;
@@ -210,7 +207,6 @@ button:hover {
   background-color: #45a049;
 }
 
-/* Style for dropdown menu */
 .dropdown {
   position: relative;
   display: inline-block;
