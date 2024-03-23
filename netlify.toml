@@ -9,7 +9,7 @@
   directory = "netlify/functions"  
 
 [context.production.environment]
-  NODE_VERSION = "14"  
+  NODE_VERSION = "20.11.1"  
 
 [context.production]
   command = "node server/server.js" 
