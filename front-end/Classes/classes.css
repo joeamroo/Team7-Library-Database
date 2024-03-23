@@ -136,29 +136,24 @@ body {
   margin-bottom: 20px;
   padding: 15px;
   background-color: #333;
-  /* Dark background for class info */
   border-radius: 5px;
 }
 
 .class-info h3 {
   color: #841717;
-  /* White class name text */
   margin-top: 0;
   font-size: 24px;
 }
 
 .class-info p {
   color: #fff;
-  /* White class info text */
   margin-bottom: 10px;
 }
 
 .class-info img {
   float: right;
   width: 30%;
-  /* Set a fixed width for the images */
   margin-left: 20px;
-  /* Add space between the class info and the image */
 }
 
 .signup-button {
@@ -166,9 +161,7 @@ body {
   margin-top: 10px;
   padding: 8px 15px;
   background-color: #841717;
-  /* Dark red button background */
   color: #fff;
-  /* White button text */
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -177,7 +170,6 @@ body {
 
 .signup-button:hover {
   background-color: #6d1414;
-  /* Darker shade of red on button hover */
 }
 
 .class-info h3 strong,
@@ -210,9 +202,7 @@ a {
 .container {
   display: flex;
   flex-direction: column;
-  /* Change from row to column */
   align-items: center;
-  /* Center items horizontally */
   gap: 20px;
   padding-bottom: 20px;
 }
@@ -222,7 +212,5 @@ footer {
   color: #fff;
   text-align: center;
   padding: 10px 0;
-  /* position: fixed;
-    bottom: 0; */
   width: 100%;
 }
