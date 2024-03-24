@@ -201,6 +201,7 @@ nav {
     border: none; 
     border-radius: 10px; 
     font-size: 30px;
+    margin-bottom: 30px;
 }
 
 .button.return-items:not(:last-child),
@@ -225,6 +226,16 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
+}
+
+#admin_link a {
+    color: white;
+    text-decoration: none;
+}
+
+#admin_link a:hover {
+    text-decoration: underline;
+    color: rgb(7, 80, 197);
 }
 
 
