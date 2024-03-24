@@ -148,7 +148,6 @@ input[type=checkbox] {
 /* For arrow back key */
 
 .arrow.clicked {
-    cursor: pointer;
     filter: invert(8%) sepia(61%) 
     saturate(6300%) hue-rotate(356deg) 
     brightness(96%) contrast(86%);
@@ -165,6 +164,7 @@ input[type=checkbox] {
 }
 
 .arrow:hover {
+    cursor: pointer;
     transform: translateX(-1px);
     filter: invert(8%) sepia(61%) 
     saturate(6300%) hue-rotate(356deg) 
