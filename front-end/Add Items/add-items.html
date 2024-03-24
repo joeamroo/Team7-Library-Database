@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="add-items.css">
+   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+   <title>Add Items</title>
+</head>
+
+<body>
+    <header>
+        <div class="top-bar">
+          <h1 class="library-name"><a href="\front-end\home\home.html">Cougar Chronicles</a></h1>
+        </div>
+    </header>
+<body>
+    <div class="form-container">
+        <h2>Add New Item</h2>
+        <form>
+            <div class="form-group">
+                <label for="itemType">Item Type:</label>
+                <select id="itemType" name="itemType">
+                    <option value="book">Book</option>
+                    <option value="movie">Movie</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title">
+            </div>
+            <div class="form-group">
+                <label for="authorDirector">Author/Director:</label>
+                <input type="text" id="authorDirector" name="authorDirector">
+            </div>
+            <div class="form-group">
+                <label for="isbn">ISBN/UPC:</label>
+                <input type="text" id="isbn" name="isbn">
+            </div>
+            <div class="form-group">
+                <label for="category">Category:</label>
+                <input type="category" name="category">
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="publisherProducer">Publisher/Producer:</label>
+                <input type="text" id="publisherProducer" name="publisherProducer">
+            </div>
+            <div class="form-group">
+                <label for="publicationReleaseDate">Publication/Release Date:</label>
+                <input type="date" id="publicationReleaseDate" name="publicationReleaseDate">
+            </div>
+            <button type="submit">Add Item</button>
+        </form>
+    </div>
+</body>
+</html>
