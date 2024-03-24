@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="Renew.css">
+   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+   <title>Renew Items and Manage Holds</title>
+</head>
+<body>
+    <header>
+        <div class="top-bar">
+          <h1 class="library-name"><a href="\front-end\home\home.html">Cougar Chronicles</a></h1>
+        </div>
+    </header>
+    <div class="form-container">
+        <div style="display:flex; flex-direction: row;">  
+            <button id="RenewButton" style="margin-right: 10px; transition: background-color 2s;">Renew Items</button>
+            <button id="ManageButton" style="margin-left: 10px; transition: background-color 2s;">Manage Holds</button>
+        </div>
+        <br> 
+        <div class="tab" id="tab1" style="display:block;"> 
+            <form>
+                <div class="form-group">
+                    <label for="memberId">Member ID:</label>
+                    <input type="text" id="memberId" name="memberId">
+                </div>
+                <div class="form-group">
+                    <label for="itemId">Item ID:</label>
+                    <input type="text" id="itemId" name="itemId">
+                </div>
+                <div class="form-group">
+                    <label for="Renew For">Renew For:</label>
+                    <div class="form-group">
+                        <input type="number" id="RenewFor" name="RenewFor" min="1" step="1" max="31">
+                    </div>
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        <div class="tab" id="tab2" style="display:none;">
+            <form>
+                <div class="form-group">
+                    <label for="memberId">Member ID:</label>
+                    <input type="text" id="memberId" name="memberId">
+                </div>
+                <div class="form-group">
+                    <label for="itemId">Item ID:</label>
+                    <input type="text" id="itemId" name="itemId">
+                </div>
+                <button type="submit">Hold This Item</button>
+            </form>
+            </div>
+    </div>
+    <script src="Renew.js"></script>
+</body>
