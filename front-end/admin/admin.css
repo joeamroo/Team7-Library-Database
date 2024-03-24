@@ -237,6 +237,7 @@ button:hover {
 }
 
 footer {
+  position: relative;
   background-color: var(--colorLight);
   color: #fff;
   text-align: center;
