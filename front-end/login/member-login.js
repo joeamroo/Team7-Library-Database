@@ -46,6 +46,12 @@ function homepage() {
     window.location.href = '../Home/home.html';
 }
     
-
-
- 
+// Function for Checklist 3 buttons
+function checklist3() {
+    var buttonId = event.target.id;
+    if (buttonId === 'staff-page-access') {
+        window.location = "..//Staff Page/staff.html";
+    } else if (buttonId === 'member-page-access') {
+        window.location = "..//Dashboard/index.html";
+    }
+}
