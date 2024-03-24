@@ -43,7 +43,7 @@ function toggleSwitch() {
 
 /* Login/Registration to Homepage*/
 function homepage() {
-    window.location.href = '/front-end/Home/home.html';
+    window.location.href = '../Home/home.html';
 }
     
 
