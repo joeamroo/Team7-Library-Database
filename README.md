@@ -21,7 +21,7 @@ So in our server.js we will be handling static files (such as html, css, js for 
 backend development. 
 
 ## !!!Important!!!
-Right now we are hosting our front end in vercel using local pathways to display basic html BUT as we start to create routes to the pages on the server, vercel will no longer render does pages. What I mean by that is that right now for example if I want to navigate from the homepage to the Classes and Research page, I follow the pathway
+Right now we are hosting our front end in vercel using local pathways to display basic html BUT as we start to create routes to the pages on the server, vercel will no longer render those pages. What I mean by that is that right now for example if I want to navigate from the homepage to the Classes and Research page, I follow the pathway
 ```
 ../Classes/classes.html
 ```
