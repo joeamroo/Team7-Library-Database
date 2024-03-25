@@ -35,7 +35,6 @@ function toggleDropdown(dropdownId) {
 }
 
 
-
 // Setting the catalog container based on how many catalog items the user wants to display 
 function setCatalogContHeight() {
     const catalogContainer = document.querySelector('.catalog-container');
@@ -47,7 +46,6 @@ function setCatalogContHeight() {
 
     catalogContainer.style.height = containerHeight + 'px';
 }
-
 
 function updateItemsShownOnPage(limit) {
     const catalogItem = document.querySelectorAll('.catalog-item');
@@ -86,7 +84,10 @@ document.getElementById('limit-select').addEventListener('change', function() {
     setCatalogContHeight();
 });
 
-document.getElementById('search-btn').addEventListener('click', function(event) {
+
+// Backend functions
+
+/*document.getElementById('search-btn').addEventListener('click', function(event) {
     event.preventDefault(); 
     
     const keyword = document.getElementById('keyword').value;
@@ -115,5 +116,87 @@ document.getElementById('search-btn').addEventListener('click', function(event) 
     const data = JSON.stringify({ keyword: keyword, searchBy: searchBy, limitBy: limitBy });
 
     xhr.send(data);
-});
+}); */
 
+
+function getInitialInfo() {
+    fetch('/api/get-catalog')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Process the data and append new HTML content
+        data.forEach(item => {
+            const itemHtml = '';
+            if (item.asset_type === 'book') {
+                itemHtml = createBookItem(item);
+            }
+            else if (item.asset_type === 'movie') {
+                itemHtml = createMovieItem(item);
+            }
+            else if (item.asset_type === 'device') {
+                itemHtml = createDeviceItem(item);
+            }
+            appendCatalogItem(itemHtml);
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching initial data:', error);
+      });
+  }
+  
+  // Function to create HTML for a catalog item
+  function createBookItem(item) {
+    return `
+    <img src="${item.image_address}">
+    <div class="info">
+        <h3 id = "title">${item.book_movie_title_model}</h3>
+        <p id="author-place">by <span id="author">${item.authors}</span></p>
+        <p>Type: <span id="medium">Book</span></p>
+        <p>ISBN <span id="isbn">${item.isbn}</span></p>
+        <p id="year-place">Year Published: <span id="yearPub">${item.year_released}</span></p>
+        <p>Current Holds: <span id="currHolds">${item.current_holds}</span></p>
+        <p>System availability: <span id="availableItems">${item.available_copies} (of ${item.total_copies})</span></p>
+    </div>
+    `;
+  }
+
+  function createMovieItem(item) {
+    return `
+    <img src="${item.image_address}">
+    <div class="info">
+        <h3 id = "title">${item.book_movie_title_model}</h3>
+        <p id="author-place">by <span id="author">${item.authors}</span></p>
+        <p>Type: <span id="medium">Book</span></p>
+        <p>ISBN <span id="isbn">${item.isbn}</span></p>
+        <p id="year-place">Year Published: <span id="yearPub">${item.year_released}</span></p>
+        <p>Current Holds: <span id="currHolds">${item.current_holds}</span></p>
+        <p>System availability: <span id="availableItems">${item.available_copies} (of ${item.total_copies})</span></p>
+    </div>
+    `;
+  }
+
+  function createDeviceItem(item) {
+    return `
+    <img src="${item.image_address}">
+    <div class="info">
+        <h3 id = "title">${item.book_movie_title_model}</h3>
+        <p id="author-place">by <span id="author">${item.authors}</span></p>
+        <p>Type: <span id="medium">Book</span></p>
+        <p>ISBN <span id="isbn">${item.isbn}</span></p>
+        <p id="year-place">Year Published: <span id="yearPub">${item.year_released}</span></p>
+        <p>Current Holds: <span id="currHolds">${item.current_holds}</span></p>
+        <p>System availability: <span id="availableItems">${item.available_copies} (of ${item.total_copies})</span></p>
+    </div>
+    `;
+  }
+
+  function appendCatalogItem(html) {
+    const catalogContainer = document.querySelector('.catalog-results');
+    catalogContainer.insertAdjacentHTML('beforeend', html);
+  }
+  
+  window.addEventListener('load', fetchInitialData);
