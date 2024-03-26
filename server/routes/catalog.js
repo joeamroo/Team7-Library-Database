@@ -101,7 +101,7 @@ function getInitialCatalogInfo(response) {
     });
 }
 
-function getCatalogSearchWithRestrictions(response, keyword, searchBy, limitBy) {
+function getCatalogSearchWithRestrictions(response, keyword, searchBy, limitBy, availability, genre) {
     let query = 'SELECT * FROM catalog_view WHERE ';
 
 
@@ -125,11 +125,17 @@ function getCatalogSearchWithRestrictions(response, keyword, searchBy, limitBy) 
         }
     }
 
+    if (availability) {
+        query += ' AND available_copies > 0';
+    }
+
+    if (genre !== '') {
+        query += ' AND genres'
+    }
+
     if (limitBy && limitBy !== 'unlimited') {
         query += ` AND asset_type = '${limitBy}'`;
     }
-
-    console.log(query);
 
     connection.query(query, (err, results) => {
         if (err) {

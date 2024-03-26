@@ -94,6 +94,15 @@ document.getElementById('search-btn').addEventListener('click', function(event) 
     const searchBy = document.getElementById('search-by').value;
     const limitBy = document.getElementById('limit-by').value;
 
+    const availability = document.getElementById('available').checked;
+    const bgenreOpts = document.querySelectorAll('label[for="bgenreOpt"]');
+    let bgenre = '';
+    bgenreOpts.forEach(option => {
+        if (option.querySelector('input').checked) {
+            bgenre = option.textContent.trim();
+        }
+    });
+
     
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/catalog'); 
@@ -113,7 +122,7 @@ document.getElementById('search-btn').addEventListener('click', function(event) 
         console.error('Network error');
     };
 
-    const data = JSON.stringify({ keyword: keyword, searchBy: searchBy, limitBy: limitBy });
+    const data = JSON.stringify({ keyword: keyword, searchBy: searchBy, limitBy: limitBy, availability: availability, bgenre: bgenre });
 
     xhr.send(data);
 }); 
