@@ -1,7 +1,7 @@
 const http = require('http');
 const url = require('url');
 const fs = require('fs');
-const { getInitialCatalogInfo, getCatalogSearchWithRestrictions } = require('./routes/catalog');
+const { getInitialCatalogInfo, getCatalogSearchWithRestrictions, insertDataToDatabase } = require('./routes/catalog');
 const { getDash } = require('./routes/dashboard');
 const { getCredentials } = require('./routes/login');
 
@@ -91,6 +91,23 @@ const server = http.createServer((request, res) => {
                     }
                 });
             } 
+            else if (pathname === '/catalog-hold') {
+                let body = '';
+                request.on('data', (chunk) => {
+                    body += chunk.toString();
+                });
+                request.on('end', () => {
+                    try {
+                        const postData = JSON.parse(body);
+                        console.log(postData);
+                        insertDataToDatabase(res, postData.itemTitle);
+                    } 
+                    catch (error) {
+                        console.error('Error parsing JSON:', error);
+                        serve404(res);
+                    }
+                });
+            }
             else {
                 serve404(res);
             }

@@ -165,3 +165,31 @@ document.getElementById('search-btn').addEventListener('click', function(event) 
 
     xhr.send(data);
 }); 
+
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('hold-btn')) {
+        const itemTitle = event.target.parentElement.parentElement.querySelector('.catalog-item-info h3').textContent;
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/catalog-hold'); 
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                console.log('Data inserted successfully');
+                // Optionally, you can update the UI or perform other actions after successful insertion
+            } else {
+                console.error('Error:', xhr.statusText);
+            }
+        };
+
+        xhr.onerror = function() {
+            console.error('Network error');
+        };
+
+        const data = JSON.stringify({ 
+            itemTitle: itemTitle
+        });
+        
+        xhr.send(data);
+    }
+});

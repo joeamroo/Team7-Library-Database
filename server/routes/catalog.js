@@ -193,4 +193,40 @@ function getCatalogSearchWithRestrictions(response, keyword, searchBy, limitBy, 
     });
 }
 
-module.exports = { getInitialCatalogInfo, getCatalogSearchWithRestrictions };
+function insertDataToDatabase(response, itemTitle) {
+    const getInfo = 'SELECT asset_type, isbn, asset_id from catalog_view where book_movie_title_model = ?';
+    const member_id = 1002000;
+
+    connection.query(getInfo, [itemTitle], (err, results) => {
+        const { asset_type, isbn, asset_id } = results[0];
+
+        let insertQuery;
+        let values;
+
+        if (asset_type === 'book') {
+            insertQuery = 'INSERT INTO hold_request (member_id, item_name, isbn) VALUES (?, ?, ?)';
+            values = [member_id, itemTitle, isbn];
+        } 
+        else if (asset_type === 'movie') {
+            insertQuery = 'INSERT INTO hold_request (member_id, item_name, movie_id) VALUES (?, ?, ?)';
+            values = [member_id, itemTitle, asset_id];
+        }
+        else if (asset_type === 'device') {
+            insertQuery = 'INSERT INTO hold_request (member_id, item_name, device_id) VALUES (?, ?, ?)';
+            values = [member_id, itemTitle, asset_id];
+        }
+
+        connection.query(insertQuery, values, (err, result) => {
+            if (err) {
+                console.error('Error inserting data into other table:', err);
+                response.writeHead(500);
+                response.end('Server error');
+                return;
+            }
+
+            console.log('Data inserted into other table successfully');
+        });
+    });
+}
+
+module.exports = { getInitialCatalogInfo, getCatalogSearchWithRestrictions, insertDataToDatabase };
