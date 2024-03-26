@@ -146,12 +146,13 @@ header {
   }
 
   #avatar {
-    position: center;
-    margin-left: 22px;
+    position: relative;
+    margin-left: 150px;
+    right: 75px;
   }
 
  #logout {
-  padding-top: 350%;
+  padding-top: 230%;
  }
 
  #logout:hover {
@@ -167,9 +168,6 @@ header {
   position: relative;
  }
 
-
-
- 
 
   .user-greet {
     font-size: xx-large;
@@ -251,8 +249,6 @@ header {
   .order-title {
     font-size: x-large;
   }
-
- 
 
   .recent-orders {
     width: 80%;
