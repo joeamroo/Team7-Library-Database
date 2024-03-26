@@ -1,7 +1,8 @@
 const http = require('http');
 const url = require('url');
-const { getInitialCatalogInfo, getCatalogSearchWithRestrictions } = require('./routes/catalog');
 const fs = require('fs');
+const { getInitialCatalogInfo, getCatalogSearchWithRestrictions } = require('./routes/catalog');
+const { getReturns } = require('./routes/dashboard');
 
 
 // Function to serve static files (CSS, JavaScript)
@@ -47,6 +48,12 @@ const server = http.createServer((request, res) => {
                 case '/catalog.js':
                     serveStaticFile('./front-end/catalog/catalog.js', 'application/javascript', res);
                     break;
+                case '/dashboard':
+                    getReturns(res);
+                    break;
+                case '/index.css':
+                    serveStaticFile('./front-end/dashboard/dashboard.css', 'text/css', res);
+                    break;
                 default:
                     serve404(res);
             }
@@ -72,6 +79,7 @@ const server = http.createServer((request, res) => {
                 serve404(res);
             }
             break;
+        
     }
 });
 
