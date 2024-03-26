@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Library Dashboard</title>
-	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="dashboard.css">
 	<!--<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>-->
 </head>
 <body>
@@ -24,7 +24,7 @@
       <div class="sidebar">
           <div class="top">
             <div class = "reading">
-              <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+              <?xml version="1.0" encoding="utf-8"?>
               <svg id = "avatar" fill="#ffffff" width="100px" height="100px" viewBox="0 0 50 50" version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" overflow="inherit"><path d="M25.154 17.347c3.953 0 7.144-3.217 7.144-7.183 0-3.958-3.19-7.164-7.144-7.164-3.948 0-7.153 3.207-7.153 7.164 0 3.965 3.206 7.183 7.153 7.183zm6.951 1.653c3.271 0 4.644 2.794 4.644 2.794l10.557 14.545c.437.649.694 1.443.694 2.3 0 2.26-1.828 4.097-4.081 4.097-.539 0-1.061-.117-1.519-.295l-6.4-1.774v6.333h-22v-6.333l-6.402 1.777c-.45.176-.968.296-1.509.296-2.251 0-4.088-1.83-4.088-4.09 0-.856.253-1.637.706-2.288l10.55-14.568s1.372-2.794 4.629-2.794h14.219zm-7.099 23.588l8.246-2.74-.179-.05c-5.705-1.672-3.518-9.228 2.173-7.537l.754.268v-8.521l-10.989 3.623-11.011-3.623v8.521l.754-.269c5.688-1.69 7.898 5.865 2.197 7.537l-.2.05 8.255 2.741z"/></svg>
             </div>
             <h2>My<span id="highlight">Library</span></h2>
@@ -32,18 +32,20 @@
           </div>
           
           <ul>
-              <li class="menu-item"><a href="#">Home</a></li>
               <li class="menu-item"><a href="#">Profile</a></li>
               <li class="menu-item"><a href="#">Orders</a></li>
-              <!--bug exists here-->
               <li class="menu-item"><a href="#">Holds</a></li>
+              <!--bug exists here-->
+              <li class="menu-item"><a href="#">Waitlist</a></li>
               
 
               <li class="menu-item logout" id="logout"><a href="#">
               <div class="logout-icon">
-                <object>
-                  <embed src="Logout.svg">
-                </object>
+                <img src = "data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjZmZmIiBoZWlnaHQ9IjE1IiB3aWR0aD0icHgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDMyMC4wMDIgMzIwLjAwMiI+PHBhdGggZD0iTTUxLjIxMyAxNzUuMDAxaDE3My43ODVjOC4yODQgMCAxNS02LjcxNiAxNS0xNSAwLTguMjg0LTYuNzE2LTE1LTE1LTE1SDUxLjIxM2wxOS4zOTQtMTkuMzk0YzUuODU4LTUuODU4IDUuODU4LTE1LjM1NSAwLTIxLjIxMy01Ljg1Ny01Ljg1OC0xNS4zNTUtNS44NTgtMjEuM
+                jEzIDBMNC4zOTYgMTQ5LjM5M2MtLjM1MS4zNTEtLjY4My43MTktLjk5NyAxLjEwMy0uMTM3LjE2Ny0uMjU2LjM0NC0uMzg1LjUxNS0uMTY1LjIyLS4zMzUuNDM1LS40ODguNjY0LS4xNC4yMDktLjI2MS40MjYtLjM4OS42NC0uMTIzLjIwNi0uMjUyLjQwNy0uMzY1LjYxOS0uMTE4LjIyLS4yMTcuNDQ2LS4zMjMuNjctLjEwNC4yMTktLjIxMy40MzUtLjMwNi42NTktLjA5LjIxOS0uMTY0LjQ0Mi0uMjQzLjY2NC0uMDg3LjI0LS4xNzkuNDc3LS4yNTMuNzIyLS4wNjcuMjIyLS4xMTYuNDQ3LS4xNzIuNjcyLS4wNjMuMjQ5LS4xMzM
+                uNDk3LS4xODMuNzUxLS4wNTEuMjU5LS4wODIuNTIxLS4xMTkuNzgyLS4wMzIuMjIzLS4wNzUuNDQzLS4wOTcuNjY5YTE1LjA5IDE1LjA5IDAgMDAtLjA3NCAxLjQ1N2wtLjAwMS4wMjIuMDAxLjAyMmMuMDAxLjQ4Ny4wMjYuOTczLjA3NCAxLjQ1OC4wMjIuMjIzLjA2NC40NC4wOTUuNjYxLjAzOC4yNjQuMDY5LjUyOC4xMjEuNzkuMDUuMjUyLjExOS40OTYuMTgyLjc0My4wNTcuMjI3LjEwNy40NTYuMTc1LjY4MS4wNzMuMjQxLjE2NC40NzQuMjQ4LjcxLjA4MS4yMjYuMTU1LjQ1My4yNDcuNjc1LjA5MS4yMi4xOTguNDMxLjMuN
+                jQ2LjEwOC4yMjkuMjEuNDYuMzMuNjg1LjExLjIwNS4yMzUuNC4zNTQuNTk5LjEzMS4yMjEuMjU2LjQ0NC40LjY1OS4xNDYuMjE5LjMwOS40MjQuNDY2LjYzNS4xMzYuMTgxLjI2Mi4zNjguNDA3LjU0NC4yOTkuMzY0LjYxNi43MTMuOTQ3IDEuMDQ4LjAxNi4wMTYuMDI5LjAzNC4wNDUuMDVsNDUgNDUuMDAxQTE0Ljk1NiAxNC45NTYgMCAwMDYwIDIyMC4wMDNhMTQuOTYgMTQuOTYgMCAwMDEwLjYwNi00LjM5M2M1Ljg1OC01Ljg1OCA1Ljg1OC0xNS4zNTUuMDAxLTIxLjIxM2wtMTkuMzk0LTE5LjM5NnoiLz48cGF0aCBkPSJNMzA
+                1LjAwMiAyNWgtMTkwYy04LjI4NCAwLTE1IDYuNzE2LTE1IDE1djYwYzAgOC4yODQgNi43MTYgMTUgMTUgMTVzMTUtNi43MTYgMTUtMTVWNTVoMTYwdjIxMC4wMDFoLTE2MFYyMjBjMC04LjI4NC02LjcxNi0xNS0xNS0xNXMtMTUgNi43MTYtMTUgMTV2NjAuMDAxYzAgOC4yODQgNi43MTYgMTUgMTUgMTVoMTkwYzguMjg0IDAgMTUtNi43MTYgMTUtMTVWNDBjMC04LjI4NC02LjcxNi0xNS0xNS0xNXoiLz48L3N2Zz4=">
                 </div>
               <div>
                 Logout</a></li>
@@ -65,7 +67,7 @@
     </div>
   </div>
 
-  <a class="user-greet">Welcome, Kevin!</a>
+  <a class="user-greet">Welcome, User!</a>
 
   <div class="rounded-rectangle">
 
@@ -86,30 +88,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td><img src="https://shorturl.at/qrtU4" width=70px height=80px </image></td>
-            <td>The Ligthning Thief</td>
-            <td>Rick Riordan</td>
-            <td>1222333444555</td>
-            <td class="status purchased">03/21/2024</td>
-            <td class="details">Details</td>
-          </tr>
-          <tr>
-            <td><img src="https://shorturl.at/qrtU4" width=70px height=80px </image></td>
-            <td>The Ligthning Thief</td>
-            <td>Rick Riordan</td>
-            <td>1222333444555</td>
-            <td class="status declined">Declined</td>
-            <td class="details">Details</td>
-          </tr>
-          <tr>
-            <td><img src="https://shorturl.at/qrtU4" width=70px height=80px </image></td>
-            <td>The Ligthning Thief</td>
-            <td>Rick Riordan</td>
-            <td>1222333444555</td>
-            <td class="status purchased">03/21/2024</td>
-            <td class="details">Details</td>
-          </tr>
+          <!--returns-->
           
         </tbody>
       </table>

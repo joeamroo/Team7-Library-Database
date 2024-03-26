@@ -55,3 +55,17 @@ function checklist3() {
         window.location = "..//Dashboard/index.html";
     }
 }
+
+// Hash passwords before sending it to the server
+function hashPassword(auth) {
+    var salt = crypto.randomBytes(128).toString('base64');
+    var iterations = 10000;
+    var hash = pbkdf2(auth, salt, iterations);
+
+    return {
+        salt: salt,
+        hash: hash,
+        iterations: iterations
+    };
+}
+

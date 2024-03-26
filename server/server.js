@@ -1,7 +1,9 @@
 const http = require('http');
 const url = require('url');
-const { getInitialCatalogInfo, getCatalogSearchWithRestrictions } = require('./routes/catalog');
 const fs = require('fs');
+const { getInitialCatalogInfo, getCatalogSearchWithRestrictions } = require('./routes/catalog');
+const { getDash } = require('./routes/dashboard');
+const { getCredentials } = require('./routes/login');
 
 
 // Function to serve static files (CSS, JavaScript)
@@ -18,13 +20,15 @@ function serveStaticFile(filePath, contentType, res) {
     });
 }
 
-function serve404(res) {
+function serve404(res, attemptedPath) {
     res.writeHead(404, { 'Content-Type': 'text/html' });
     res.end('Not Found');
+    console.log(`404 Not Found: ${attemptedPath}`);
 }
 
 const server = http.createServer((request, res) => {
-    const pathname = url.parse(request.url).pathname;
+    //const pathname = url.parse(request.url).pathname;
+    const pathname = new URL(request.url, `http://${request.headers.host}`).pathname;
 
     switch (request.method) {
         case 'GET':
@@ -47,8 +51,27 @@ const server = http.createServer((request, res) => {
                 case '/catalog.js':
                     serveStaticFile('./front-end/catalog/catalog.js', 'application/javascript', res);
                     break;
+                case '/dashboard':
+                    getDash(res);
+                    break;
+                case '/dashboard.css':
+                    serveStaticFile('./front-end/dashboard/dashboard.css', 'text/css', res);
+                    break;
+                case '/login':
+                    getCredentials(res);
+                    break;
+                case '/member-login.html':
+                    serveStaticFile('./front-end/login/member-login.html', 'text/html', res);
+                    break;
+                case '/member-login.css':
+                    serveStaticFile('./front-end/login/member-login.css', 'text/css', res);
+                    break;
+                case '/member-login.js':
+                    serveStaticFile('./front-end/login/member-login.js', 'application/javascript', res);
+                    break;
                 default:
-                    serve404(res);
+                    // outputs error code along with details
+                    serve404(res, pathname);
             }
             break;
         case 'POST':
@@ -72,6 +95,7 @@ const server = http.createServer((request, res) => {
                 serve404(res);
             }
             break;
+        
     }
 });
 
