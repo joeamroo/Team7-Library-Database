@@ -61,7 +61,7 @@ const server = http.createServer((request, res) => {
                     try {
                         const postData = JSON.parse(body);
                         console.log(postData);
-                        getCatalogSearchWithRestrictions(res, postData.keyword, postData.searchBy, postData.limitBy);
+                        getCatalogSearchWithRestrictions(res, postData.keyword, postData.searchBy, postData.limitBy, postData.availability, postData.genres, postData.langs, postData.years, postData.brands);
                     } catch (error) {
                         console.error('Error parsing JSON:', error);
                         serve404(res);

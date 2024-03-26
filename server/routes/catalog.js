@@ -101,9 +101,9 @@ function getInitialCatalogInfo(response) {
     });
 }
 
-function getCatalogSearchWithRestrictions(response, keyword, searchBy, limitBy, availability, genre) {
-    let query = 'SELECT * FROM catalog_view WHERE ';
+function getCatalogSearchWithRestrictions(response, keyword, searchBy, limitBy, availability, genres, langs, years, brands) {
 
+    let query = 'SELECT * FROM catalog_view WHERE ';
 
     if (searchBy === 'any') {
         query += `(book_movie_title_model LIKE '%${keyword}%' OR authors LIKE '%${keyword}%' OR director_brand LIKE '%${keyword}%')`;
@@ -125,12 +125,28 @@ function getCatalogSearchWithRestrictions(response, keyword, searchBy, limitBy, 
         }
     }
 
-    if (availability) {
+    if (availability === 'on') {
         query += ' AND available_copies > 0';
     }
 
-    if (genre !== '') {
-        query += ' AND genres'
+    if (genres && Array.isArray(genres) && genres.length > 0) {
+        const genresCondition = genres.map(genre => `genres LIKE '%${genre}%'`).join(' OR ');
+        query += ` AND (${genresCondition})`;
+    }
+
+    if (langs && Array.isArray(langs) && langs.length > 0) {
+        const langsCond = langs.map(language => `languages LIKE '%${language}%'`).join(' OR ');
+        query += ` AND (${langsCond})`;
+    }
+
+    if (years && Array.isArray(years) && years.length > 0) {
+        const yearsCond = years.map(year => `year_released LIKE '%${year}%'`).join(' OR ');
+        query += ` AND (${yearsCond})`;
+    }
+
+    if (brands && Array.isArray(brands) && brands.length > 0) {
+        const brandsCond = brands.map(brand => `director_brand LIKE '%${brand}%'`).join(' OR ');
+        query += ` AND (${brandsCond})`;
     }
 
     if (limitBy && limitBy !== 'unlimited') {
