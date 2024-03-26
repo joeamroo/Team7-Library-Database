@@ -13,7 +13,7 @@ const link = mysql.createConnection({
 
 
 
-function getReturns(response) {
+function getDash(response) {
     const sql_query = 'SELECT * FROM book';
     
     link.query(sql_query, (err, results) => {
@@ -45,4 +45,4 @@ function getReturns(response) {
 
 
 
-module.exports = { getReturns };
+module.exports = { getDash };
