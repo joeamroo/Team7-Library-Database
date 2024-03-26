@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="member-login.css">
-    <title>Member Login Page</title>
+    <link rel="stylesheet" href="member-img.css">
+     <title>Member Login Page</title>
 </head>
 
 <body>
@@ -16,15 +17,15 @@
             <form>
                 <h1>Create Account</h1>
                 <span>Account Information</span>
-                <input type="first_name" placeholder="First Name">
-                <input type="last_name" placeholder="Last Name">
-                <input type="address" placeholder="Address">
-                <input type="city_addr" placeholder="City">
-                <input type="state_addr" placeholder="State">
-                <input type="zipcode_addr" placeholder="Zip Code">
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Password">
-                <button class="sign_up">Sign Up</button>
+                <input type="first_name" id="first_name" placeholder="First Name">
+                <input type="last_name" id="last_name" placeholder="Last Name">
+                <input type="address" id = "address" placeholder="Address">
+                <input type="city_addr" id = "city_addr" placeholder="City">
+                <input type="state_addr" id = "state_addr" placeholder="State">
+                <input type="zipcode_addr" id = "zipcode_addr" placeholder="Zip Code">
+                <input type="email" id = "email" placeholder="Email">
+                <input type="password" id = "password" placeholder="Password">
+                <button class="sign_up" onClick="inputValidation()">Sign Up</button>
             </form>
         </div>
         
@@ -56,12 +57,9 @@
                 <label class="toggle-switch">
                 <input type="checkbox" id="toggle-switch" onclick="toggleSwitch()">
                 </label>
-                 
-                
-                
-                
             </form>
         </div>
+    <
 
 
 
@@ -81,7 +79,11 @@
         </div>
     </div>
 
+
+
     <script src="member-login.js"></script>
 </body>
+
+
 
 </html>
