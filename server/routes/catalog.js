@@ -197,7 +197,7 @@ function getCatalogSearchWithRestrictions(response, keyword, searchBy, limitBy, 
 
 function insertDataToDatabase(response, itemTitle) {
     const getInfo = 'SELECT asset_type, isbn, asset_id from catalog_view where book_movie_title_model = ?';
-    const member_id = 1002000;
+    const member_id = 1002001;
 
     connection.query(getInfo, [itemTitle], (err, results) => {
         const { asset_type, isbn, asset_id } = results[0];
