@@ -75,7 +75,7 @@ const server = http.createServer((request, res) => {
             }
             break;
         case 'POST':
-            if (pathname === 'api/catalog') {
+            if (pathname === '/catalog') {
                 let body = '';
                 request.on('data', (chunk) => {
                     body += chunk.toString();
@@ -91,7 +91,7 @@ const server = http.createServer((request, res) => {
                     }
                 });
             } 
-            else if (pathname === 'api/catalog-hold') {
+            else if (pathname === '/catalog-hold') {
                 let body = '';
                 request.on('data', (chunk) => {
                     body += chunk.toString();
