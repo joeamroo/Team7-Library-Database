@@ -95,9 +95,6 @@ function getInitialCatalogInfo(response) {
             catalogHtml += `</div>`;
         });
 
-        const initialCatalogHtml = fs.readFileSync('./front-end/catalog/catalog.html', 'utf8');
-        const finalHtml = initialCatalogHtml.replace('<!--Catalog items-->', catalogHtml);
-
         response.writeHead(200, { 'Content-Type': 'text/html' });
         response.end(catalogHtml, 'utf-8');
     });
