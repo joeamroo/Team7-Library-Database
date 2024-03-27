@@ -33,7 +33,7 @@ body {
     width: 100%;
     height: 100%;
     z-index: -1;
-    background-image: url("/front-end/Login/Library.jpg");
+    background-image: url("https://img.tineye.com/result/4d5d1fdc17905b7112bff6553739fbe9b12b5a9d556f5c445931321a8bbee246-3?size=160");
     background-size: cover;
     filter: blur(10px);
 }
@@ -45,6 +45,7 @@ header {
     display: flex;
     justify-content: space-between;
 }
+
 
 header #summary a {
     float: left;  
@@ -64,7 +65,19 @@ header #summary a:hover {
 
 header #title {
     margin-right: 50px;
+    margin-top: -5px;
     color: var(--color-white);
+}
+
+#checkout-cart {
+    font-size: 35px;
+    padding-left: 15px;
+    color: var(--color-white);
+}
+
+#checkout-cart:hover {
+    cursor: pointer;
+    color: var(--mainColor);
 }
 
 /* ================= Sidebar ================= */
