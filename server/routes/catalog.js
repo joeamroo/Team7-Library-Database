@@ -99,7 +99,7 @@ function getInitialCatalogInfo(response) {
         const finalHtml = initialCatalogHtml.replace('<!--Catalog items-->', catalogHtml);
 
         response.writeHead(200, { 'Content-Type': 'text/html' });
-        response.end(finalHtml, 'utf-8');
+        response.end(catalogHtml, 'utf-8');
     });
 }
 

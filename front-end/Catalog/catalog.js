@@ -102,10 +102,22 @@ observer.observe(document.querySelector('.catalog-container'), {
 // Sending data to the backend for insertion and querying
 
 const backendUrl = 'https://cougarchronicles.onrender.com'; 
+const initialCatalogUrl = `${backendUrl}/initial-catalog`;
 const catalogUrl = `${backendUrl}/catalog`;
 const catalogHoldUrl = `${backendUrl}/catalog-hold`;
 
+document.addEventListener('DOMContentLoaded', function() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', initialCatalogUrl);
 
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            const catalogResultsDiv = document.querySelector('.catalog-results');
+            catalogResultsDiv.innerHTML = xhr.responseText;
+        } 
+    };
+    xhr.send();
+});
 
 document.getElementById('search-btn').addEventListener('click', function(event) {
     event.preventDefault(); 
