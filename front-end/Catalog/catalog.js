@@ -106,6 +106,25 @@ const catalogUrl = `${backendUrl}/catalog`;
 const catalogHoldUrl = `${backendUrl}/catalog-hold`;
 
 
+function getInitialCatalogData() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', `${backendUrl}/initial-catalog`); 
+    
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            const catalogResultsDiv = document.querySelector('.catalog-results');
+            catalogResultsDiv.innerHTML = xhr.responseText;
+
+        } 
+    };
+    
+    xhr.send();
+}
+
+document.addEventListener('DOMContentLoaded', getInitialCatalogData);
+
+
+
 document.getElementById('search-btn').addEventListener('click', function(event) {
     event.preventDefault(); 
     

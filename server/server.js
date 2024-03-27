@@ -32,7 +32,6 @@ function serve404(res, attemptedPath) {
 }
 
 const server = http.createServer((request, res) => {
-    //const pathname = url.parse(request.url).pathname;
     const pathname = new URL(request.url, `http://${request.headers.host}`).pathname;
 
     setCorsHeaders(res);
@@ -46,7 +45,7 @@ const server = http.createServer((request, res) => {
     switch (request.method) {
         case 'GET':
             switch (pathname) {
-                case '/catalog':
+                case '/initial-catalog':
                     getInitialCatalogInfo(res);
                     break;
                 case '/dashboard':
