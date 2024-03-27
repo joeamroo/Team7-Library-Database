@@ -6,7 +6,7 @@ const { getDash } = require('./routes/dashboard');
 const { getCredentials } = require('./routes/login');
 
 function setCorsHeaders(res) {
-    res.setHeader('Access-Control-Allow-Origin', 'https://cougar-chronicles.vercel.app/');
+    res.setHeader('Access-Control-Allow-Origin', 'https://cougar-chronicles.vercel.app');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
