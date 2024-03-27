@@ -75,6 +75,9 @@ const server = http.createServer((request, res) => {
                 case '/member-login.css':
                     serveStaticFile('./front-end/login/member-login.css', 'text/css', res);
                     break;
+                case '/member-img.css':
+                    serveStaticFile('./front-end/login/member-img.css', 'text/css', res);
+                    break;
                 case '/member-login.js':
                     serveStaticFile('./front-end/login/member-login.js', 'application/javascript', res);
                     break;

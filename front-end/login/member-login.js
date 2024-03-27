@@ -5,7 +5,32 @@ const staff = document.getElementById('toggle-switch');
 const svgIcon = document.querySelector('.arrow');
 const ArrowLink = document.getElementById('ArrowLink');
 const link = document.createElement('a');
+const textboxes = container.querySelectorAll('input[type=""]');
 var staffCheck = document.querySelector('.toggle-switch');
+
+// Input Fields
+const firstName = document.getElementById('first_name').value.trim();
+const lastName = document.getElementById('last_name').value.trim();
+const address = document.getElementById('address').value.trim();
+const city = document.getElementById('city_addr').value.trim();
+const state = document.getElementById('state_addr').value.trim();
+const zipCode = document.getElementById('zipcode_addr').value.trim();
+const email = document.getElementById('email').value.trim();
+const password = document.getElementById('password').value.trim();
+
+
+function inputValidation() {
+
+    if (firstName.value != "" || lastName.value != ""
+        || address.value != "" || city.value != "" 
+        || state.value != "" || zipCode.value != ""
+        || zipCode.value != "" || email.value != ""
+        || password.value != "") {
+            shake()
+    }
+
+}
+
 
 /* If the register button is clicked, it enables
    the register portion */
@@ -41,9 +66,21 @@ function toggleSwitch() {
     }
 }
 
+
+function shake() {
+    // Optionally, remove the class after the animation ends to allow re-triggering
+    form.classList.className = "shake";
+
+    setTimeout(() => {
+        form.classList.className = "form";
+    }, 600);
+}
+
+
+
 /* Login/Registration to Homepage*/
 function homepage() {
-    window.location.href = '../Home/home.html';
+    window.location.href = '/';
 }
     
 // Function for Checklist 3 buttons
