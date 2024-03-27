@@ -101,6 +101,12 @@ observer.observe(document.querySelector('.catalog-container'), {
 });
 
 // Sending data to the backend for insertion and querying
+
+const backendUrl = 'https://cougarchronicles.onrender.com'; // Update with your actual Render backend URL
+const catalogUrl = `${backendUrl}/catalog`;
+const catalogHoldUrl = `${backendUrl}/catalog-hold`;
+
+
 document.getElementById('search-btn').addEventListener('click', function(event) {
     event.preventDefault(); 
     
@@ -131,7 +137,7 @@ document.getElementById('search-btn').addEventListener('click', function(event) 
     });
     
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/catalog'); 
+    xhr.open('POST', catalogUrl); 
     xhr.setRequestHeader('Content-Type', 'application/json');
 
     xhr.onload = function() {
@@ -169,7 +175,7 @@ document.addEventListener('click', function(event) {
     if (event.target.classList.contains('hold-btn')) {
         const itemTitle = event.target.parentElement.parentElement.querySelector('.catalog-item-info h3').textContent;
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/catalog-hold'); 
+        xhr.open('POST', catalogHoldUrl); 
         xhr.setRequestHeader('Content-Type', 'application/json');
 
         xhr.onload = function() {
