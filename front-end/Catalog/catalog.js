@@ -90,7 +90,6 @@ document.getElementById('limit-select').addEventListener('change', function() {
 const observer = new MutationObserver(function(mutations) {
     mutations.forEach(function(mutation) {
       if (mutation.addedNodes.length > 0) {
-        // Newly added nodes detected
         setCatalogContHeight();
       }
     });
@@ -102,7 +101,7 @@ observer.observe(document.querySelector('.catalog-container'), {
 
 // Sending data to the backend for insertion and querying
 
-const backendUrl = 'https://cougarchronicles.onrender.com'; // Update with your actual Render backend URL
+const backendUrl = 'https://cougarchronicles.onrender.com'; 
 const catalogUrl = `${backendUrl}/catalog`;
 const catalogHoldUrl = `${backendUrl}/catalog-hold`;
 

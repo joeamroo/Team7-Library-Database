@@ -5,6 +5,11 @@ const { getInitialCatalogInfo, getCatalogSearchWithRestrictions, insertDataToDat
 const { getDash } = require('./routes/dashboard');
 const { getCredentials } = require('./routes/login');
 
+function setCorsHeaders(res) {
+    res.setHeader('Access-Control-Allow-Origin', 'https://cougarchronicles.vercel.app/');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+}
 
 // Function to serve static files (CSS, JavaScript)
 function serveStaticFile(filePath, contentType, res) {
@@ -29,6 +34,14 @@ function serve404(res, attemptedPath) {
 const server = http.createServer((request, res) => {
     //const pathname = url.parse(request.url).pathname;
     const pathname = new URL(request.url, `http://${request.headers.host}`).pathname;
+
+    setCorsHeaders(res);
+
+    if (request.method === 'OPTIONS') {
+      res.writeHead(200);
+      res.end();
+      return;
+    }
 
     switch (request.method) {
         case 'GET':
@@ -99,6 +112,8 @@ const server = http.createServer((request, res) => {
                 serve404(res);
             }
             break;
+        default:
+            serve404(res, pathname);
         
     }
 });
