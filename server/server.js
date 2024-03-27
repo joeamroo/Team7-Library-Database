@@ -33,32 +33,8 @@ const server = http.createServer((request, res) => {
     switch (request.method) {
         case 'GET':
             switch (pathname) {
-                case '/':
-                    serveStaticFile('./front-end/home/home.html', 'text/html', res);
-                    break;
-                case '/home.css':
-                    serveStaticFile('./front-end/home/home.css', 'text/css', res);
-                    break;
-                case '/home.js':
-                    serveStaticFile('./front-end/home/home.js', 'application/javascript', res);
-                    break;
                 case '/catalog':
                     getInitialCatalogInfo(res);
-                    break;
-                case '/catalog.css':
-                    serveStaticFile('./front-end/catalog/catalog.css', 'text/css', res);
-                    break;
-                case '/catalog.js':
-                    serveStaticFile('./front-end/catalog/catalog.js', 'application/javascript', res);
-                    break;
-                case '/checkout':
-                    serveStaticFile('./front-end/checkout/checkout.html', 'text/html', res);
-                    break;
-                case '/checkout.css':
-                    serveStaticFile('./front-end/checkout/checkout.css', 'text/css', res);
-                    break;
-                case '/checkout.js':
-                    serveStaticFile('./front-end/checkout/checkout.js','application/javascript', res);
                     break;
                 case '/dashboard':
                     getDash(res);
@@ -86,7 +62,7 @@ const server = http.createServer((request, res) => {
             }
             break;
         case 'POST':
-            if (pathname === '/catalog') {
+            if (pathname === 'api/catalog') {
                 let body = '';
                 request.on('data', (chunk) => {
                     body += chunk.toString();
@@ -102,7 +78,7 @@ const server = http.createServer((request, res) => {
                     }
                 });
             } 
-            else if (pathname === '/catalog-hold') {
+            else if (pathname === 'api/catalog-hold') {
                 let body = '';
                 request.on('data', (chunk) => {
                     body += chunk.toString();
