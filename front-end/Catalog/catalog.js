@@ -100,8 +100,7 @@ observer.observe(document.querySelector('.catalog-container'), {
     childList: true
 });
 
-
-
+// Sending data to the backend for insertion and querying
 document.getElementById('search-btn').addEventListener('click', function(event) {
     event.preventDefault(); 
     
@@ -176,7 +175,6 @@ document.addEventListener('click', function(event) {
         xhr.onload = function() {
             if (xhr.status === 200) {
                 console.log('Data inserted successfully');
-                // Optionally, you can update the UI or perform other actions after successful insertion
             } else {
                 console.error('Error:', xhr.statusText);
             }
@@ -193,3 +191,78 @@ document.addEventListener('click', function(event) {
         xhr.send(data);
     }
 });
+
+// Event listener for locally gathering the items being checked out before inserting into
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('checkout-btn')) {
+        const itemContainer = event.target.closest('.catalog-item');
+
+        if (itemContainer) {
+            const itemInfo = itemContainer.querySelector('.info');
+            const itemType = itemInfo.querySelector('#medium').textContent.toLowerCase();
+            
+            const itemHtml = generateItemHtml(itemInfo, itemType);
+            let chosenItems = JSON.parse(localStorage.getItem('chosenItems')) || [];
+            chosenItems.push(itemHtml);
+            localStorage.setItem('chosenItems', JSON.stringify(chosenItems));
+        } 
+        else {
+            console.error('Error: Item container not found');
+        }
+    }
+});
+
+
+function generateItemHtml(itemInfo, itemType) {
+    let checkoutItemHtml = '<div class="transac-item">';
+    checkoutItemHtml += '<div class="catalog-item-info">';
+    const imgSrc = itemInfo.parentNode.querySelector('img').src;
+    checkoutItemHtml += `<img src="${imgSrc}">`;
+    checkoutItemHtml += `<div class="info">`;
+
+    const title = itemInfo.querySelector('#title');
+    if (title) {
+        checkoutItemHtml += `<h3 id="title">${title.textContent}</h3>`;
+    } 
+    else {
+        const model = itemInfo.querySelector('#model');
+        checkoutItemHtml += `<h3 id="model">${model.textContent}</h3>`;
+    }
+    
+    const author = itemInfo.querySelector('#author');
+    if (author && itemType === 'book') {
+        checkoutItemHtml += `<p>Author: <span id="author">${author.textContent}</span></p>`;
+    }
+    
+    const director = itemInfo.querySelector('#director');
+    if (director && itemType === 'movie') {
+        checkoutItemHtml += `<p>Director: <span id="director">${director.textContent}</span></p>`;
+    }
+    
+    const brand = itemInfo.querySelector('#brand');
+    if (brand && itemType === 'device') {
+        checkoutItemHtml += `<p>Brand: <span id="brand">${brand.textContent}</span></p>`;
+    }
+    
+    checkoutItemHtml += `<p>Type: <span id="medium">${itemType.charAt(0).toUpperCase() + itemType.slice(1)}</span></p>`;
+    
+    const isbn = itemInfo.querySelector('#isbn');
+    if (isbn && itemType === 'book') {
+        checkoutItemHtml += `<p>ISBN: <span id="isbn">${isbn.textContent}</span></p>`;
+    }
+    
+    const movieId = itemInfo.querySelector('#mov_asset_id');
+    if (movieId && itemType === 'movie') {
+        checkoutItemHtml += `<p>ID: <span id="movie-id">${movieId.textContent}</span></p>`;
+    }
+    
+    const deviceId = itemInfo.querySelector('#dev_asset_id');
+    if (deviceId && itemType === 'device') {
+        checkoutItemHtml += `<p>ID: <span id="device_id">${deviceId.textContent}</span></p>`;
+    }
+    
+    checkoutItemHtml += '</div></div>';
+    checkoutItemHtml += '<button class="remove-btn"><i class="uil uil-trash-alt"></i>Remove</button></div>';
+    
+    return checkoutItemHtml;
+}

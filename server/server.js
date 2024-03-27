@@ -51,6 +51,15 @@ const server = http.createServer((request, res) => {
                 case '/catalog.js':
                     serveStaticFile('./front-end/catalog/catalog.js', 'application/javascript', res);
                     break;
+                case '/checkout':
+                    serveStaticFile('./front-end/checkout/checkout.html', 'text/html', res);
+                    break;
+                case '/checkout.css':
+                    serveStaticFile('./front-end/checkout/checkout.css', 'text/css', res);
+                    break;
+                case '/checkout.js':
+                    serveStaticFile('./front-end/checkout/checkout.js','application/javascript', res);
+                    break;
                 case '/dashboard':
                     getDash(res);
                     break;
@@ -70,7 +79,6 @@ const server = http.createServer((request, res) => {
                     serveStaticFile('./front-end/login/member-login.js', 'application/javascript', res);
                     break;
                 default:
-                    // outputs error code along with details
                     serve404(res, pathname);
             }
             break;

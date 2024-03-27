@@ -35,6 +35,7 @@ function createMovieItem(item) {
     movieHtml += `<div class="info">`;
     movieHtml += `<h3 id = "title">${item.book_movie_title_model}</h3>`;
     movieHtml += `<p id="director-place">Director: <span id="director">${item.director_brand}</span></p>`;
+    movieHtml += `<p>ID: <span id="mov_asset_id">${item.asset_id}</span></p>`;
     movieHtml += `<p>Type: <span id="medium">Movie</span></p>`;
     movieHtml += `<p>Rating: <span id="rating">${item.rating}</span></p>`;
     movieHtml += `<p id="year-place">Year Released: <span id="yearPub">${item.year_released}</span></p>`;
@@ -50,6 +51,7 @@ function createDeviceItem(item) {
     deviceHtml += `<div class="info">`;
     deviceHtml += `<h3 id = "title">${item.book_movie_title_model}</h3>`;
     deviceHtml += `<p id="brand-place">by <span id="director">${item.director_brand}</span></p>`;
+    deviceHtml += `<p>ID: <span id="dev_asset_id">${item.asset_id}</span></p>`;
     deviceHtml += `<p>Type: <span id="medium">Device</span></p>`;
     deviceHtml += `<p>Serial number: <span id="serial-num">${item.serial_number}</span></p>`;
     deviceHtml += `<p id="cond-place">Condition: <span id="condition">${item.asset_condition}</span></p>`;
