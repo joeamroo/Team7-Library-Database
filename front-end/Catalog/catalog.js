@@ -114,6 +114,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (xhr.status === 200) {
             const catalogResultsDiv = document.querySelector('.catalog-results');
             catalogResultsDiv.innerHTML = xhr.responseText;
+
+            const limit = parseInt(document.getElementById('limit-select').value);
+            updateItemsShownOnPage(limit);
         } 
     };
     xhr.send();
