@@ -269,7 +269,7 @@ function updateButtonStates() {
       } 
       else {
         checkoutBtn.textContent = 'Add to cart';
-        checkoutBtn.innerHTML = '';
+        checkoutBtn.innerHTML = 'Add to Checkout';
       }
     });
 }
