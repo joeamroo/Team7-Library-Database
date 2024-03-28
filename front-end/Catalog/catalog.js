@@ -117,6 +117,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const limit = parseInt(document.getElementById('limit-select').value);
             updateItemsShownOnPage(limit);
+
+            updateButtonStates();
         } 
     };
     xhr.send();
@@ -224,13 +226,23 @@ document.addEventListener('click', function(event) {
             
             const itemHtml = generateItemHtml(itemInfo, itemType);
             let chosenItems = JSON.parse(localStorage.getItem('chosenItems')) || [];
-            chosenItems.push(itemHtml);
+
+            if (chosenItems.includes(itemHtml)) {
+                chosenItems = chosenItems.filter(item => item !== itemHtml);
+                event.target.textContent = 'Add to cart';
+                event.target.innerHTML = ''; 
+            } 
+            else {
+                chosenItems.push(itemHtml);
+                event.target.textContent = ' Added to cart';
+                const icon = document.createElement('i');
+                icon.className = "uil uil-check";
+                event.target.prepend(icon);
+            }
+
             localStorage.setItem('chosenItems', JSON.stringify(chosenItems));
 
-            event.target.textContent = ' Added to cart';
-            const icon = document.createElement('i');
-            icon.className = "uil uil-check";
-            event.target.prepend(icon);
+            updateButtonStates();
         } 
         else {
             console.error('Error: Item container not found');
@@ -238,6 +250,29 @@ document.addEventListener('click', function(event) {
     }
 });
 
+
+function updateButtonStates() {
+    const chosenItems = JSON.parse(localStorage.getItem('chosenItems')) || [];
+    const catalogItems = document.querySelectorAll('.catalog-item');
+  
+    catalogItems.forEach(item => {
+      const checkoutBtn = item.querySelector('.checkout-btn');
+      const itemInfo = item.querySelector('.info');
+      const itemType = itemInfo.querySelector('#medium').textContent.toLowerCase();
+      const itemHtml = generateItemHtml(itemInfo, itemType);
+  
+      if (chosenItems.includes(itemHtml)) {
+        checkoutBtn.textContent = ' Added to cart';
+        const icon = document.createElement('i');
+        icon.className = "uil uil-check";
+        checkoutBtn.prepend(icon);
+      } 
+      else {
+        checkoutBtn.textContent = 'Add to cart';
+        checkoutBtn.innerHTML = '';
+      }
+    });
+}
 
 function generateItemHtml(itemInfo, itemType) {
     let checkoutItemHtml = '<div class="transac-item">';
