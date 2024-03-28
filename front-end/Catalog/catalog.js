@@ -239,12 +239,12 @@ function showNotification(message) {
     const notif = document.createElement('div');
     notif.classList.add('notif');
     notif.textContent = message;
-    document.body.appendChild(notification);
+    document.body.appendChild(notif);
   
     setTimeout(() => {
-      notification.classList.add('hide');
+      notif.classList.add('hide');
       setTimeout(() => {
-        document.body.removeChild(notification);
+        document.body.removeChild(notif);
       }, 500); 
     }, 3000); 
 }
