@@ -252,8 +252,7 @@ document.addEventListener('click', function(event) {
 });
 
 
-// NEED to delete and remove chosen items once confirm checkout is called
-// localStorage.removeItem('chosenItems');
+
 function updateButtonStates() {
     const chosenItems = JSON.parse(localStorage.getItem('chosenItems')) || [];
     const catalogItems = document.querySelectorAll('.catalog-item');
