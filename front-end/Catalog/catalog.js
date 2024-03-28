@@ -227,7 +227,7 @@ document.addEventListener('click', function(event) {
             chosenItems.push(itemHtml);
             localStorage.setItem('chosenItems', JSON.stringify(chosenItems));
 
-            event.target.textContent = 'Remove';
+            event.target.textContent = ' Added to cart';
             const icon = document.createElement('i');
             icon.className = "uil uil-check";
             event.target.prepend(icon);
