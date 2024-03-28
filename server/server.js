@@ -111,7 +111,7 @@ const server = http.createServer((request, res) => {
                 serve404(res);
             }
             break;
-        default:
+            default:
             serve404(res, pathname);
         
     }
