@@ -39,8 +39,8 @@ function toggleDropdown(dropdownId) {
 function setCatalogContHeight() {
     const catalogContainer = document.querySelector('.catalog-container');
     const catalogItems = document.querySelectorAll('.catalog-item[style="display: flex;"]');
-    const itemHeight = 260; // Height of each catalog item
-    const minHeight = 300; // Minimum height of the catalog container
+    const itemHeight = 280; // Height of each catalog item
+    const minHeight = 260; // Minimum height of the catalog container
 
     const containerHeight = Math.max(minHeight, itemHeight * catalogItems.length);
 
