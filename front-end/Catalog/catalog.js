@@ -227,18 +227,27 @@ document.addEventListener('click', function(event) {
             chosenItems.push(itemHtml);
             localStorage.setItem('chosenItems', JSON.stringify(chosenItems));
 
-            const notif = document.createElement('div');
-            notif.classList.add('notification');
-            notif.textContent = 'Item added to cart!';
-            document.body.appendChild(notif);
-
-            setTimeout(() => {notif.remove();}, 3000);
+            showNotification('Item added to cart!');
         } 
         else {
             console.error('Error: Item container not found');
         }
     }
 });
+
+function showNotification(message) {
+    const notif = document.createElement('div');
+    notif.classList.add('notif');
+    notif.textContent = message;
+    document.body.appendChild(notification);
+  
+    setTimeout(() => {
+      notification.classList.add('hide');
+      setTimeout(() => {
+        document.body.removeChild(notification);
+      }, 500); 
+    }, 3000); 
+}
 
 
 function generateItemHtml(itemInfo, itemType) {
