@@ -17,7 +17,7 @@ const route2Url = `${backendUrl}/route2`;
 ```
 You will most likely make as many route#Url (make the name have meaning to the page/function/purpose) as the number of routes you need to address in your front-end/backend.
 
-Then comes the part of making a request by using HttpRequest. The following code is an example of a 'GET' request from my catalog.js file
+Then comes the part of making a request by using XMLHttpRequest. The following code is an example of a 'GET' request from my catalog.js file
 ```
 document.addEventListener('DOMContentLoaded', function() {
     const xhr = new XMLHttpRequest();
@@ -41,18 +41,25 @@ In this code I am indicating that I am making a GET request to the following rou
 
 Now you handle the incoming request from the front-end in the server folder. So modify the switch(request.method) within server.js based on the request. If its a 'GET' request then you modify the switch table to include your route
 ```
-case 'GET':
+switch (request.method) {
+        case 'GET':
             switch (pathname) {
                 case '/initial-catalog':
                     getInitialCatalogInfo(res);
                     break;
-       ------------------ Additional routes ---------------
+            ------------- Additional routes ---------------    
             }
             break;
+        case 'POST':
+            if (pathname === '/route2') {
+            ------------- Logic ---------------
+            }
+}
+
 ```
 and if its a 'POST' request then you also modify this accordingly. Now here you will notice that I defined the route called '/initial-catalog' (which is the one I need to indicate in my front-end js) and it calls the getInitialCatalogInfo, which is a function inside of my catalog.js file (./server/routes/catalog.js). So if you are calling a function create a relevant js file in the routes folder and define your logic there and boom! Your front-end page should be getting/returning information from/to the backend.
 
 ## Additional
-I should warn you the way that Render handles our server folder is a bit weird since i have to manually deploy the server everytime there is a change to the repo so I am trying to change that now, but as of rn its not an automatic deployment based on modification. 
+I should warn you the way that Render handles our server folder is a bit weird since i have to manually deploy the server every time there is a change to the repo so I am trying to change that now, but as of rn its not an automatic deployment based on modification. 
 
 
