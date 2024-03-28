@@ -227,27 +227,16 @@ document.addEventListener('click', function(event) {
             chosenItems.push(itemHtml);
             localStorage.setItem('chosenItems', JSON.stringify(chosenItems));
 
-            showNotification('Item added to cart!');
+            event.target.textContent = 'Remove';
+            const icon = document.createElement('i');
+            icon.className = "uil uil-check";
+            event.target.prepend(icon);
         } 
         else {
             console.error('Error: Item container not found');
         }
     }
 });
-
-function showNotification(message) {
-    const notif = document.createElement('div');
-    notif.classList.add('notif');
-    notif.textContent = message;
-    document.body.appendChild(notif);
-  
-    setTimeout(() => {
-      notif.classList.add('hide');
-      setTimeout(() => {
-        document.body.removeChild(notif);
-      }, 500); 
-    }, 3000); 
-}
 
 
 function generateItemHtml(itemInfo, itemType) {
