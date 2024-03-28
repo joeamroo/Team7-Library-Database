@@ -11,19 +11,6 @@ function setCorsHeaders(res) {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
 
-// Function to serve static files (CSS, JavaScript)
-function serveStaticFile(filePath, contentType, res) {
-    fs.readFile(filePath, (err, data) => {
-        if (err) {
-            res.writeHead(500);
-            res.end('Server error');
-        } 
-        else {
-            res.writeHead(200, { 'Content-Type': contentType });
-            res.end(data, 'utf-8');
-        }
-    });
-}
 
 function serve404(res, attemptedPath) {
     res.writeHead(404, { 'Content-Type': 'text/html' });

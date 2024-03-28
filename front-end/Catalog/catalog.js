@@ -226,6 +226,13 @@ document.addEventListener('click', function(event) {
             let chosenItems = JSON.parse(localStorage.getItem('chosenItems')) || [];
             chosenItems.push(itemHtml);
             localStorage.setItem('chosenItems', JSON.stringify(chosenItems));
+
+            const notif = document.createElement('div');
+            notif.classList.add('notification');
+            notif.textContent = 'Item added to cart!';
+            document.body.appendChild(notif);
+
+            setTimeout(() => {notif.remove();}, 3000);
         } 
         else {
             console.error('Error: Item container not found');
