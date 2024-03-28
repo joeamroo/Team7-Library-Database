@@ -251,28 +251,40 @@ document.addEventListener('click', function(event) {
     }
 });
 
+window.addEventListener('beforeunload', function() {
+    localStorage.removeItem('chosenItems');
+});
 
 function updateButtonStates() {
     const chosenItems = JSON.parse(localStorage.getItem('chosenItems')) || [];
     const catalogItems = document.querySelectorAll('.catalog-item');
   
-    catalogItems.forEach(item => {
-      const checkoutBtn = item.querySelector('.checkout-btn');
-      const itemInfo = item.querySelector('.info');
-      const itemType = itemInfo.querySelector('#medium').textContent.toLowerCase();
-      const itemHtml = generateItemHtml(itemInfo, itemType);
-  
-      if (chosenItems.includes(itemHtml)) {
-        checkoutBtn.textContent = ' Added to cart';
-        const icon = document.createElement('i');
-        icon.className = "uil uil-check";
-        checkoutBtn.prepend(icon);
-      } 
-      else {
-        checkoutBtn.textContent = 'Add to cart';
-        checkoutBtn.innerHTML = 'Add to Checkout';
-      }
-    });
+    if (chosenItems.length === 0) {
+        catalogItems.forEach(item => {
+          const checkoutBtn = item.querySelector('.checkout-btn');
+          checkoutBtn.textContent = 'Add to cart';
+          checkoutBtn.innerHTML = 'Add to checkout'; 
+        });
+    }
+    else {
+        catalogItems.forEach(item => {
+            const checkoutBtn = item.querySelector('.checkout-btn');
+            const itemInfo = item.querySelector('.info');
+            const itemType = itemInfo.querySelector('#medium').textContent.toLowerCase();
+            const itemHtml = generateItemHtml(itemInfo, itemType);
+            
+            if (chosenItems.includes(itemHtml)) {
+                checkoutBtn.textContent = ' Added to cart';
+                const icon = document.createElement('i');
+                icon.className = "uil uil-check";
+                checkoutBtn.prepend(icon);
+            } 
+            else {
+                checkoutBtn.textContent = 'Add to cart';
+                checkoutBtn.innerHTML = 'Add to checkout';
+            }
+        });
+    }
 }
 
 function generateItemHtml(itemInfo, itemType) {
