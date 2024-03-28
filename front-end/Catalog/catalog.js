@@ -164,6 +164,7 @@ document.getElementById('search-btn').addEventListener('click', function(event) 
 
             const limit = parseInt(document.getElementById('limit-select').value);
             updateItemsShownOnPage(limit);
+            updateButtonStates();
         } 
         else {
             console.error('Error:', xhr.statusText);
