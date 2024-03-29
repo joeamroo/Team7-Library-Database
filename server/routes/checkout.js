@@ -17,7 +17,7 @@ function insertTransactionInfo(response, memberId, checkout_items) {
     const insertQuery = 'INSERT INTO transaction (member_id) values (?)';
     connection.query(insertQuery, [memberId], (err, result) => {
         if (err) {
-            if (err.code === 'ER_SIGNLA_EXCEPTION' && err.sqlMessage.includes('Member has fine. Transaction Denied')) {
+            if (err.code === 'ER_SIGNAL_EXCEPTION' && err.sqlMessage.includes('Member has fine. Transaction Denied')) {
                 response.statusCode = 403;
                 response.setHeader('Content-Type', 'application/json');
                 response.end(JSON.stringify({message: 'Member has a fine. Transaction Denied.'}));
