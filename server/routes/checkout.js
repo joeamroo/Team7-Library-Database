@@ -24,7 +24,13 @@ function insertTransactionInfo(response, memberId, checkout_items) {
         }
 
         const transactionId = result.insertId;
-        console.log(transactionId);
+
+        checkout_items.forEach(item => {
+            const {type, id} = item;
+            const bridgeTable = `${type}_transaction`;
+            const insertBridgeQuery = `INSERT INTO ${bridgeTable} (transaction_id, ${type}_id) VALUES (?, ?)`;
+            connection.query(insertBridgeQuery, [transactionId, id]);
+        });
 
         response.statusCode = 200;
         response.setHeader('Content-Type', 'application/json');
