@@ -74,6 +74,10 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.removeItem('chosenItems');
             setTimeout(function() {window.location.reload();}, 300);
         } 
+        else if (xhr.status === 403) {
+            const response = JSON.parse(xhr.responseText);
+            alert(response.message);
+        }
         else {
           console.error('Error inserting data:', xhr.statusText);
         }
@@ -81,7 +85,6 @@ document.addEventListener('DOMContentLoaded', function() {
       xhr.send(JSON.stringify(data));
     });
 });
-
 
 
 // Getting catalog items from local storage that will be used to make insertion for transaction

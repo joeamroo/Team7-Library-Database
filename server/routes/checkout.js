@@ -17,9 +17,16 @@ function insertTransactionInfo(response, memberId, checkout_items) {
     const insertQuery = 'INSERT INTO transaction (member_id) values (?)';
     connection.query(insertQuery, [memberId], (err, result) => {
         if (err) {
-            console.error('Error inserting tuple into transaction table:', err);
-            response.statusCode = 500;
-            response.end('Internal Server Error');
+            if (err.code === 'ER_SIGNLA_EXCEPTION' && err.sqlMessage.includes('Member has fine. Transaction Denied')) {
+                response.statusCode = 403;
+                response.setHeader('Content-Type', 'application/json');
+                response.end(JSON.stringify({message: 'Member has a fine. Transaction Denied.'}));
+            }
+            else {
+                console.error('Error inserting tuple into transaction table:', err);
+                response.statusCode = 500;
+                response.end('Internal Server Error');
+            }
             return;
         }
 
@@ -51,6 +58,5 @@ function insertTransactionInfo(response, memberId, checkout_items) {
     });
 }
 
-// Handle availabiluty for catalog!!!
 // Remember to handle the hold requests 
 module.exports = { insertTransactionInfo };

@@ -60,6 +60,15 @@ switch (request.method) {
 and if its a 'POST' request then you also modify this accordingly. Now here you will notice that I defined the route called '/initial-catalog' (which is the one I need to indicate in my front-end js) and it calls the getInitialCatalogInfo, which is a function inside of my catalog.js file (./server/routes/catalog.js). So if you are calling a function create a relevant js file in the routes folder and define your logic there and boom! Your front-end page should be getting/returning information from/to the backend.
 
 ## Additional
-I should warn you the way that Render handles our server folder is a bit weird since i have to manually deploy the server every time there is a change to the repo so I am trying to change that now, but as of rn its not an automatic deployment based on modification. 
+I should warn you the way that I have hosted the front-end and back-end using the forked repo off of our original, they are usually in-sync but most times they need to be manually synced, you can do this by clicking on forks within the repo and syncing it up. This will automatically trigger a new deployment to Render and Vercel so you will be able to see the changes. Mainly this is if u want to see how your backend code is working, if you mainly want to modify and see the changes to your front-end then just check the preview.
+
+Also, for testing purposes we have two members right now (fake members)
+
+ID: 1002001 Name: John Smith - has a fine 
+ID: 1002002 Name: Sara Johnson - does not have a fine
+
+I created these mainly to check the triggers but use them to test any insertions, updates, etc. And create data as needed.
+
+TIP: If you are having issues with getting/receiving info from the backend i reccomend you add messages to ur code that will be printed to the console so you have a good idea of where its failing. Also, really really reccomend analyzing the network and application tabs to see any errors. 
 
 
