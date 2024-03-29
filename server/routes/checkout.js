@@ -1,8 +1,21 @@
-const pool = require('./dbConnection');
+const mysql = require('mysql');
+
+const connection = mysql.createConnection({
+    host: 'library-database-sytem.mysql.database.azure.com',
+    user: 'lbrGuest',
+    password: 'gu3st@cces$',
+    database: 'librarydev',
+    port:3306
+});
+
+connection.connect((err) => {
+    if (err) throw err;
+    console.log('Connected to LibraryDev database');
+});
 
 function insertTransactionInfo(response, memberId, checkout_items) {
     const insertQuery = 'INSERT INTO transaction (member_id) values (?)';
-    pool.query(insertQuery, [memberId], (err, result) => {
+    connection.query(insertQuery, [memberId], (err, result) => {
         if (err) {
             console.error('Error inserting tuple into transaction table:', err);
             response.statusCode = 500;

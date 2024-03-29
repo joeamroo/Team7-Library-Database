@@ -1,5 +1,18 @@
 
-const pool = require('./dbConnection');
+const mysql = require('mysql');
+
+const connection = mysql.createConnection({
+    host: 'library-database-sytem.mysql.database.azure.com',
+    user: 'lbrGuest',
+    password: 'gu3st@cces$',
+    database: 'librarydev',
+    port:3306
+});
+
+connection.connect((err) => {
+    if (err) throw err;
+    console.log('Connected to LibraryDev database');
+});
 
 function createBookItem(item) {
     let bookHtml = '';
@@ -51,7 +64,7 @@ function createDeviceItem(item) {
 function getInitialCatalogInfo(response) {
     const query = 'SELECT * FROM catalog_view LIMIT 4';
 
-    pool.query(query, (err, results) => {
+    connection.query(query, (err, results) => {
         if (err) {
             console.error('Error querying catalog data:', err);
             response.writeHead(500);
@@ -139,7 +152,7 @@ function getCatalogSearchWithRestrictions(response, keyword, searchBy, limitBy, 
         query += ` AND asset_type = '${limitBy}'`;
     }
 
-    pool.query(query, (err, results) => {
+    connection.query(query, (err, results) => {
         if (err) {
             console.error('Error querying catalog data:', err);
             response.writeHead(500);
@@ -183,7 +196,7 @@ function insertDataToDatabase(response, itemTitle) {
     const getInfo = 'SELECT asset_type, isbn, asset_id from catalog_view where book_movie_title_model = ?';
     const member_id = 1002001;
 
-    pool.query(getInfo, [itemTitle], (err, results) => {
+    connection.query(getInfo, [itemTitle], (err, results) => {
         const { asset_type, isbn, asset_id } = results[0];
 
         let insertQuery;
@@ -202,7 +215,7 @@ function insertDataToDatabase(response, itemTitle) {
             values = [member_id, itemTitle, asset_id];
         }
 
-        pool.query(insertQuery, values, (err, result) => {
+        connection.query(insertQuery, values, (err, result) => {
             if (err) {
                 console.error('Error inserting data into other table:', err);
                 response.writeHead(500);
