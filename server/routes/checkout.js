@@ -30,6 +30,9 @@ function insertTransactionInfo(response, memberId, checkout_items) {
             const bridgeTable = `${type}_transaction`;
             const insertBridgeQuery = `INSERT INTO ${bridgeTable} (transaction_id, ${type}_id) VALUES (?, ?)`;
             connection.query(insertBridgeQuery, [transactionId, id]);
+
+            const updateAvailableCopies = `UPDATE ${type} SET available_copies = available_copies - 1 WHERE ${type}_id = ?`;
+            connection.query(updateAvailableCopies, [id]);
         });
 
         response.statusCode = 200;
@@ -38,4 +41,6 @@ function insertTransactionInfo(response, memberId, checkout_items) {
     });
 }
 
+// Handle availabiluty for catalog!!!
+// Remember to handle the hold requests 
 module.exports = { insertTransactionInfo };
