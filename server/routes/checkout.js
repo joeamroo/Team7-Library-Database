@@ -1,8 +1,8 @@
-const connection = require('./dbConnection');
+const pool = require('./dbConnection');
 
 function insertTransactionInfo(response, memberId, checkout_items) {
     const insertQuery = 'INSERT INTO transaction (member_id) values (?)';
-    connection.query(insertQuery, [memberId], (err, result) => {
+    pool.query(insertQuery, [memberId], (err, result) => {
         if (err) {
             console.error('Error inserting tuple into transaction table:', err);
             response.statusCode = 500;

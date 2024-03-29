@@ -1,5 +1,5 @@
 
-const connection = require('./dbConnection');
+const pool = require('./dbConnection');
 
 function createBookItem(item) {
     let bookHtml = '';
@@ -51,7 +51,7 @@ function createDeviceItem(item) {
 function getInitialCatalogInfo(response) {
     const query = 'SELECT * FROM catalog_view LIMIT 4';
 
-    connection.query(query, (err, results) => {
+    pool.query(query, (err, results) => {
         if (err) {
             console.error('Error querying catalog data:', err);
             response.writeHead(500);
@@ -139,7 +139,7 @@ function getCatalogSearchWithRestrictions(response, keyword, searchBy, limitBy, 
         query += ` AND asset_type = '${limitBy}'`;
     }
 
-    connection.query(query, (err, results) => {
+    pool.query(query, (err, results) => {
         if (err) {
             console.error('Error querying catalog data:', err);
             response.writeHead(500);
@@ -183,7 +183,7 @@ function insertDataToDatabase(response, itemTitle) {
     const getInfo = 'SELECT asset_type, isbn, asset_id from catalog_view where book_movie_title_model = ?';
     const member_id = 1002001;
 
-    connection.query(getInfo, [itemTitle], (err, results) => {
+    pool.query(getInfo, [itemTitle], (err, results) => {
         const { asset_type, isbn, asset_id } = results[0];
 
         let insertQuery;
@@ -202,7 +202,7 @@ function insertDataToDatabase(response, itemTitle) {
             values = [member_id, itemTitle, asset_id];
         }
 
-        connection.query(insertQuery, values, (err, result) => {
+        pool.query(insertQuery, values, (err, result) => {
             if (err) {
                 console.error('Error inserting data into other table:', err);
                 response.writeHead(500);
