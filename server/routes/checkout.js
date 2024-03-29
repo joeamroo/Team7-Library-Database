@@ -31,8 +31,18 @@ function insertTransactionInfo(response, memberId, checkout_items) {
             const insertBridgeQuery = `INSERT INTO ${bridgeTable} (transaction_id, ${type}_id) VALUES (?, ?)`;
             connection.query(insertBridgeQuery, [transactionId, id]);
 
-            const updateAvailableCopies = `UPDATE ${type} SET available_copies = available_copies - 1 WHERE ${type}_id = ?`;
-            connection.query(updateAvailableCopies, [id]);
+            if (type === 'book') {
+                const updateAvailableCopiesQuery = 'UPDATE book SET available_copies = available_copies - 1 WHERE isbn = ?';
+                connection.query(updateAvailableCopiesQuery, [id]);
+            } 
+            else if (type === 'movie') {
+                const updateAvailableCopiesQuery = 'UPDATE movie SET available_copies = available_copies - 1 WHERE movie_id = ?';
+                connection.query(updateAvailableCopiesQuery, [id]);
+            } 
+            else if (type === 'device') {
+                const updateAvailableCopiesQuery = 'UPDATE device SET available_copies = available_copies - 1 WHERE device_id = ?';
+                connection.query(updateAvailableCopiesQuery, [id]);
+            }
         });
 
         response.statusCode = 200;
