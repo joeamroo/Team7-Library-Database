@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
         items: chosenItems.map(itemHtml => {
             const itemInfo = new DOMParser().parseFromString(itemHtml, 'text/html').querySelector('.info');
             const itemType = itemInfo.querySelector('#medium').textContent.toLowerCase();
-            console.log(itemType);
             let itemId = '';
             const potentialIdElements = {
                 book: itemInfo.querySelector('#isbn'),
@@ -73,15 +72,12 @@ document.addEventListener('DOMContentLoaded', function() {
             html2pdf().from(content).save('checkout_receipt.pdf');
 
             localStorage.removeItem('chosenItems');
-            const totalItemsSpan = document.getElementById('total-item');
-            totalItemsSpan.textContent = '0';
+            setTimeout(function() {window.location.reload();}, 300);
         } 
         else {
           console.error('Error inserting data:', xhr.statusText);
         }
       };
-  
-      console.log(JSON.stringify(data));
       xhr.send(JSON.stringify(data));
     });
 });

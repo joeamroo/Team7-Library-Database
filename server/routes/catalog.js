@@ -62,7 +62,7 @@ function createDeviceItem(item) {
 }
 
 function getInitialCatalogInfo(response) {
-    const query = 'SELECT * FROM catalog_view LIMIT 4';
+    const query = 'SELECT * FROM catalog_view';
 
     connection.query(query, (err, results) => {
         if (err) {
