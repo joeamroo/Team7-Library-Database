@@ -75,8 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {window.location.reload();}, 300);
         } 
         else if (xhr.status === 403) {
-            const response = JSON.parse(xhr.responseText);
-            alert(response.message);
+            alert('Transaction denied. You have an outstanding fine. Please pay your fine to proceed with the checkout');
         }
         else {
           console.error('Error inserting data:', xhr.statusText);

@@ -19,8 +19,6 @@ function insertTransactionInfo(response, memberId, checkout_items) {
         if (err) {
             if (err.code === 'ER_SIGNAL_EXCEPTION' && err.sqlMessage.includes('Member has fine. Transaction Denied')) {
                 response.statusCode = 403;
-                response.setHeader('Content-Type', 'application/json');
-                response.end(JSON.stringify({message: 'Member has a fine. Transaction Denied.'}));
             }
             else {
                 console.error('Error inserting tuple into transaction table:', err);
