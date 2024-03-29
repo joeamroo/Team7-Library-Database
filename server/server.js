@@ -1,9 +1,9 @@
 const http = require('http');
-const url = require('url');
-const fs = require('fs');
 const { getInitialCatalogInfo, getCatalogSearchWithRestrictions, insertDataToDatabase } = require('./routes/catalog');
+const { insertTransactionInfo } = require('./routes/checkout');
 const { getDash } = require('./routes/dashboard');
 const { getCredentials } = require('./routes/login');
+const path = require('path');
 
 function setCorsHeaders(res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -94,7 +94,25 @@ const server = http.createServer((request, res) => {
                     }
                 });
             }
+            else if (pathname === '/checkout-insert') {
+                let body = '';
+                request.on('data', (chunk) => {
+                    body += chunk.toString();
+                });
+                request.on('end', () => {
+                    try {
+                        const postData = JSON.parse(body);
+                        console.log(postData);
+                        insertTransactionInfo(res, postData.memberID, postData.items);
+                    } 
+                    catch (error) {
+                        console.error('Error parsing JSON:', error);
+                        serve404(res);
+                    }
+                });
+            }
             else {
+                console.log('NOT FINDING PATH');
                 serve404(res);
             }
             break;

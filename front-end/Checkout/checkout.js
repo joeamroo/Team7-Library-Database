@@ -1,5 +1,10 @@
 // NEED to delete and remove chosen items once confirm checkout is called
 // localStorage.removeItem('chosenItems');
+
+const backendUrl = 'https://cougarchronicles.onrender.com'; 
+const checkoutInsertUrl = `${backendUrl}/checkout-insert`;
+const checkoutTransacIdUrl = `${backendUrl}/checkout-transacID`;
+
 document.addEventListener('DOMContentLoaded', function() {
     const finalizeBtn = document.getElementById('finalize-btn');
     const totalItemsSpan = document.getElementById('total-items');
@@ -12,33 +17,76 @@ document.addEventListener('DOMContentLoaded', function() {
       const totalItems = totalItemsSpan.textContent;
       const chosenItems = JSON.parse(localStorage.getItem('chosenItems')) || [];
   
-      // Generate the PDF content
-      let content = `<div style="padding-left: 25px;">
-        <h2>Checkout Receipt</h2>
-        <p>Member ID: ${memberID}</p>
-        <p>Location: ${location}</p>
-        <p>Date: ${currentDate}</p>
-        <p>Due Date: ${dueDate}</p>
-        <p>Total Items: ${totalItems}</p>
-      `;
-  
-      if (chosenItems.length > 0) {
-        content += '<h3>Chosen Items:</h3><div style="padding-left: 25px;">';
-        chosenItems.forEach(itemHtml => {
-          const itemInfo = new DOMParser().parseFromString(itemHtml, 'text/html').querySelector('.info');
-          const title = itemInfo.querySelector('#title') || itemInfo.querySelector('#model');
-          const titleTextWithAsterisk = '- ' + title.textContent; 
-          const medium = itemInfo.querySelector('#medium').textContent;
-  
-          content += `<div><h4>${titleTextWithAsterisk}</h4><div style="padding-left: 25px;">`;
-          content += `<p>Type: ${medium}</p></div>`;
-        });
-      }
-  
+      
+      const data = {
+        memberID: memberID,
+        items: chosenItems.map(itemHtml => {
+            const itemInfo = new DOMParser().parseFromString(itemHtml, 'text/html').querySelector('.info');
+            const itemType = itemInfo.querySelector('#medium').textContent.toLowerCase();
+            console.log(itemType);
+            let itemId = '';
+            const potentialIdElements = {
+                book: itemInfo.querySelector('#isbn'),
+                movie: itemInfo.querySelector('#movie-id'),
+                device: itemInfo.querySelector('#device_id'),
+            };
+            const itemIdElement = potentialIdElements[itemType];
+            itemId = itemIdElement?.textContent ?? '';
+            return { type: itemType, id: itemId };
+        })
+      };
 
-      html2pdf().from(content).save('checkout_receipt.pdf');
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', checkoutInsertUrl);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            const transactionId = response.transactionId;
+
+            let content = `
+                <div style="padding-left: 25px;">
+                  <h2>Checkout Receipt</h2>
+                  <p>Transaction ID: ${transactionId}</p>
+                  <p>Member ID: ${memberID}</p>
+                  <p>Location: ${location}</p>
+                  <p>Date: ${currentDate}</p>
+                  <p>Due Date: ${dueDate}</p>
+                  <p>Total Items: ${totalItems}</p>
+            `;
+  
+            if (chosenItems.length > 0) {
+                content += '<h3>Chosen Items:</h3><div style="padding-left: 25px;">';
+                chosenItems.forEach(itemHtml => {
+                  const itemInfo = new DOMParser().parseFromString(itemHtml, 'text/html').querySelector('.info');
+                  const title = itemInfo.querySelector('#title') || itemInfo.querySelector('#model');
+                  const titleTextWithAsterisk = '- ' + title.textContent;
+                  const medium = itemInfo.querySelector('#medium').textContent;
+                  content += `<div><h4>${titleTextWithAsterisk}</h4><div style="padding-left: 25px;">`;
+                  content += `<p>Type: ${medium}</p></div>`;
+                });
+            }
+  
+            content += '</div>';
+  
+            html2pdf().from(content).save('checkout_receipt.pdf');
+
+            localStorage.removeItem('chosenItems');
+            const totalItemsSpan = document.getElementById('total-item');
+            totalItemsSpan.textContent = '0';
+        } 
+        else {
+          console.error('Error inserting data:', xhr.statusText);
+        }
+      };
+  
+      console.log(JSON.stringify(data));
+      xhr.send(JSON.stringify(data));
     });
 });
+
+
 
 // Getting catalog items from local storage that will be used to make insertion for transaction
 // ADD localStorage.removeItem('chosenItems')  after the checkout button is clicked 
