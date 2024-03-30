@@ -41,7 +41,7 @@ function getTransactionItems(response, transactionId) {
                         else {
                             results.forEach(book => {
                                 transactionInfoHtml += '<div class="transac-item"><div class="catalog-item-info>';
-                                transactionInfoHtml += `<img src="${book.image_address}">`;
+                                transactionInfoHtml += `<img src="${book.image_address}" onload="this.style.display='block'">`;
                                 transactionInfoHtml += '<div class="info">';
                                 transactionInfoHtml += `<h3 id="btitle">${book.book_movie_title_model}</h3>`;
                                 transactionInfoHtml += `<p>Author: <span id="author">${book.authors}</span></p>`;
@@ -65,12 +65,12 @@ function getTransactionItems(response, transactionId) {
                         else {
                             results.forEach(movie => {
                                 transactionInfoHtml += '<div class="transac-item"><div class="catalog-item-info>';
-                                transactionInfoHtml += `<img src="${movie.image_address}">`;
+                                transactionInfoHtml += `<img src="${movie.image_address}" onload="this.style.display='block'">`; 
                                 transactionInfoHtml += '<div class="info">';
                                 transactionInfoHtml += `<h3 id="mtitle">${movie.book_movie_title_model}</h3>`;
                                 transactionInfoHtml += `<p>Director: <span id="director">${movie.director_brand}</span></p>`;
                                 transactionInfoHtml += `<p>Type: <span id="medium">${type}</span></p>`;
-                                transactionInfoHtml += `<p>movie ID: <span id="item_id">${item_id}</span></p>`;
+                                transactionInfoHtml += `<p>Movie ID: <span id="item_id">${item_id}</span></p>`;
                                 transactionInfoHtml += '</div></div>';
                                 transactionInfoHtml += '<button class="add-btn" id="addBtn"><i class="add-icon uil uil-plus"></i>Return</button>';
                                 transactionInfoHtml += '</div>';
@@ -88,7 +88,7 @@ function getTransactionItems(response, transactionId) {
                         else {
                             results.forEach(device => {
                                 transactionInfoHtml += '<div class="transac-item"><div class="catalog-item-info>';
-                                transactionInfoHtml += `<img src="${device.image_address}">`;
+                                transactionInfoHtml += `<img src="${device.image_address}" onload="this.style.display='block'">`;
                                 transactionInfoHtml += '<div class="info">';
                                 transactionInfoHtml += `<h3 id="model">${device.book_movie_title_model}</h3>`;
                                 transactionInfoHtml += `<p>Brand: <span id="brand">${device.director_brand}</span></p>`;
