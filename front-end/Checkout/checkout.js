@@ -76,7 +76,16 @@ document.addEventListener('DOMContentLoaded', function() {
         } 
         else if (xhr.status === 403) {
             const response = JSON.parse(xhr.responseText);
-            alert(response.message);
+            const trigger_modal = document.getElementById('fine-trigger');
+            const trigger_message = document.getElementById('trigger-msg');
+
+            trigger_message.textContent = response.message;
+            trigger_modal.style.display = 'block';
+
+            const acceptBtn = document.getElementById('accept-msg');
+            acceptBtn.addEventListener('click', function() {
+                trigger_modal.style.display = 'none';
+            });
         }
         else {
           console.error('Error inserting data:', xhr.statusText);
