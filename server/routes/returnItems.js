@@ -10,13 +10,13 @@ const connection = mysql.createConnection({
 
 connection.connect((err) => {
     if (err) throw err;
-    console.log('Connected to LibraryDev database');
+    console.log('Connected to LibraryDev database - return items');
 });
 
 
 function getTransactionItems(response, transactionId) {
     console.log('Entered the function hereeeeee');
-    const transactionQuery = 'SELECT * FROM transaction_view where transaction_id = ?';
+    const transactionQuery = 'SELECT * FROM transaction_view where transaction_id = (?)';
 
     let transactionInfoHtml = '';
     connection.query(transactionQuery, [transactionId], (err, results) => {
@@ -37,7 +37,7 @@ function getTransactionItems(response, transactionId) {
             transactionInfoHtml += '<div class="transac-item"><div class="catalog-item-info>';
 
             if (item.asset_type === 'book') {
-                connection.query('SELECT book_movie_title_model, authors, image_address FROM catalog_view WHERE isbn = ?', [item_id], (bookErr, results) => {
+                connection.query('SELECT book_movie_title_model, authors, image_address FROM catalog_view WHERE isbn = (?)', [item_id], (bookErr, results) => {
                     if (bookErr) {
                         console.error('Error getting book item:', bookErr);
                     }
@@ -53,7 +53,7 @@ function getTransactionItems(response, transactionId) {
                 transactionInfoHtml += `<p>ISBN: <span id="isbn">${item_id}</span></p>`;
             }
             else if (item.asset_type === 'movie') {
-                connection.query('SELECT book_movie_title_model, director_brand, image_address FROM catalog_view WHERE asset_id = ?', [item_id], (movieErr, results) => {
+                connection.query('SELECT book_movie_title_model, director_brand, image_address FROM catalog_view WHERE asset_id = (?)', [item_id], (movieErr, results) => {
                     if (movieErr) {
                         console.error('Error getting movie item:', movieErr);
                     }
@@ -69,7 +69,7 @@ function getTransactionItems(response, transactionId) {
                 transactionInfoHtml += `<p>Movie ID: <span id="isbn">${item_id}</span></p>`;
             }
             else if (item.asset_type === 'device') {
-                connection.query('SELECT book_movie_title_model, director_brand, image_address FROM catalog_view WHERE asset_id = ?', [item_id], (deviceErr, results) => {
+                connection.query('SELECT book_movie_title_model, director_brand, image_address FROM catalog_view WHERE asset_id = (?)', [item_id], (deviceErr, results) => {
                     if (deviceErr) {
                         console.error('Error getting device item:', deviceErr);
                     }
