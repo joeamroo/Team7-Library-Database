@@ -32,7 +32,6 @@ function getTransactionItems(response, transactionId) {
                 let type = item.asset_type;
                 let item_id = item.itemId;
 
-                transactionInfoHtml += '<div class="transac-item"><div class="catalog-item-info>';
                 if (type === 'book') {
                     connection.query('SELECT book_movie_title_model, authors, image_address FROM catalog_view WHERE isbn = (?)', [item_id], (bookErr, results) => {
                         if (bookErr) {
@@ -41,6 +40,7 @@ function getTransactionItems(response, transactionId) {
                         }
                         else {
                             results.forEach(book => {
+                                transactionInfoHtml += '<div class="transac-item"><div class="catalog-item-info>';
                                 transactionInfoHtml += `<img src="${book.image_address}">`;
                                 transactionInfoHtml += '<div class="info">';
                                 transactionInfoHtml += `<h3 id="btitle">${book.book_movie_title_model}</h3>`;
@@ -64,6 +64,7 @@ function getTransactionItems(response, transactionId) {
                         }
                         else {
                             results.forEach(movie => {
+                                transactionInfoHtml += '<div class="transac-item"><div class="catalog-item-info>';
                                 transactionInfoHtml += `<img src="${movie.image_address}">`;
                                 transactionInfoHtml += '<div class="info">';
                                 transactionInfoHtml += `<h3 id="mtitle">${movie.book_movie_title_model}</h3>`;
@@ -86,6 +87,7 @@ function getTransactionItems(response, transactionId) {
                         }
                         else {
                             results.forEach(device => {
+                                transactionInfoHtml += '<div class="transac-item"><div class="catalog-item-info>';
                                 transactionInfoHtml += `<img src="${device.image_address}">`;
                                 transactionInfoHtml += '<div class="info">';
                                 transactionInfoHtml += `<h3 id="model">${device.book_movie_title_model}</h3>`;
