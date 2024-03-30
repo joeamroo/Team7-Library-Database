@@ -109,7 +109,7 @@ const server = http.createServer((request, res) => {
                     }
                 });
             }
-            else if (pathname === '/transaction-retrieval') {
+            else if (pathname === '/getTransaction') {
                 let body = '';
                 request.on('data', (chunk) => {
                     body += chunk.toString();
