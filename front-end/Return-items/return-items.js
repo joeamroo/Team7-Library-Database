@@ -150,6 +150,19 @@ function sendReturnedItems() {
             console.log(xhr.responseText);
             localStorage.removeItem('itemsReturning');
             localStorage.removeItem('transactionId');
+
+            const modal = document.getElementById('successful-return');
+            const message = document.getElementById('return-msg');
+            message.textContent = 'Items returned successfully!';
+            modal.style.display = 'block';
+
+            const acceptBtn = document.getElementById('accept-msg');
+            acceptBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+                removeTransacItems();
+                window.location.reload();
+            });
+
         }
         else {
             console.log('Error returning items:', xhr.statusText);
@@ -157,4 +170,9 @@ function sendReturnedItems() {
     }
 
     xhr.send(JSON.stringify(dataToSend));
+}
+
+function removeTransacItems() {
+    const transacItems = document.querySelectorAll('.transac-item');
+    transacItems.forEach(item => item.remove());
 }
