@@ -29,11 +29,13 @@ function getTransactionItems(response, transactionId) {
 
         results.forEach(item => {
             let type = item.asset_type;
+            console.log(type);
             let item_id = item.itemId;
 
             transactionInfoHtml += '<div class="transac-item"><div class="catalog-item-info>';
 
             if (type === 'book') {
+                console.log('This is a book!!!!');
                 connection.query('SELECT book_movie_title_model, authors, image_address FROM catalog_view WHERE isbn = (?)', [item_id], (bookErr, results) => {
                     if (bookErr) {
                         console.error('Error getting book item:', bookErr);
