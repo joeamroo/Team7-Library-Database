@@ -42,8 +42,11 @@ function getTransactionItems(response, transactionId) {
                         console.error('Error getting book item:', bookErr);
                     }
                     author_director_brand = results[0].authors;
+                    console.log(author_director_brand);
                     title_model = results[0].title;
+                    console.log(title_model);
                     img = results[0].img_address
+                    console.log(img);
                 });
                 transactionInfoHtml += `<img src="${img}">`;
                 transactionInfoHtml += '<div class="info">';
@@ -57,7 +60,7 @@ function getTransactionItems(response, transactionId) {
                     if (movieErr) {
                         console.error('Error getting movie item:', movieErr);
                     }
-                    author_director_brand = director_brand;
+                    author_director_brand = results[0].director_brand;
                     title_model = results[0].title;
                     img = results[0].img_address
                 });
@@ -73,7 +76,7 @@ function getTransactionItems(response, transactionId) {
                     if (deviceErr) {
                         console.error('Error getting device item:', deviceErr);
                     }
-                    author_director_brand = director_brand;
+                    author_director_brand = results[0].director_brand;
                     title_model = results[0].title;
                     img = results[0].img_address
                 });
