@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const addBtns = document.querySelectorAll('.add-btn');
     const transactionDetails = document.getElementById('items-to-return');
     const detailsContainer = document.querySelector('.transaction-details');
-    const finalizeBtn = document.getElementById('finalize-btn');
     let addedItems = new Map();
 
 
@@ -91,5 +90,36 @@ document.addEventListener('DOMContentLoaded', function() {
       if (event.target == modal) {
         modal.style.display = 'none';
       }
+    });
+});
+
+
+// Interacting with backend
+
+const backendUrl = 'https://cougarchronicles.onrender.com'; 
+const getTransactionInfo = `${backendUrl}/transaction-retrieval`;
+
+document.addEventListener('DOMContentLoaded', function() {
+    const searchBtn = document.getElementById('search-btn');
+
+    searchBtn.addEventListener('click', function() {
+        const transactionId = document.getElementById('transactionID').value;
+
+        const data = JSON.stringify({ transactionId:transactionId });
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', getTransactionInfo);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                const transacResultsDiv = document.querySelector('.chosen-items');
+                transacResultsDiv.innerHTML = xhr.responseText;
+            }
+            else {
+                console.error('Error getting transaction information:', xhr.statusText);
+            }
+        };
+        xhr.send(data);
     });
 });

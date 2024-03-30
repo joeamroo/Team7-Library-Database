@@ -1,6 +1,7 @@
 const http = require('http');
 const { getInitialCatalogInfo, getCatalogSearchWithRestrictions, insertDataToDatabase } = require('./routes/catalog');
 const { insertTransactionInfo } = require('./routes/checkout');
+const { getTransactionItems } = require('./routes/returnItems');
 const { getDash } = require('./routes/dashboard');
 const { getCredentials } = require('./routes/login');
 const path = require('path');
@@ -69,7 +70,6 @@ const server = http.createServer((request, res) => {
                 request.on('end', () => {
                     try {
                         const postData = JSON.parse(body);
-                        console.log(postData);
                         getCatalogSearchWithRestrictions(res, postData.keyword, postData.searchBy, postData.limitBy, postData.availability, postData.genres, postData.langs, postData.years, postData.brands);
                     } catch (error) {
                         console.error('Error parsing JSON:', error);
@@ -85,7 +85,6 @@ const server = http.createServer((request, res) => {
                 request.on('end', () => {
                     try {
                         const postData = JSON.parse(body);
-                        console.log(postData);
                         insertDataToDatabase(res, postData.itemTitle);
                     } 
                     catch (error) {
@@ -102,8 +101,24 @@ const server = http.createServer((request, res) => {
                 request.on('end', () => {
                     try {
                         const postData = JSON.parse(body);
-                        console.log(postData);
                         insertTransactionInfo(res, postData.memberID, postData.items);
+                    } 
+                    catch (error) {
+                        console.error('Error parsing JSON:', error);
+                        serve404(res);
+                    }
+                });
+            }
+            else if (pathname === '/transaction-retrieval') {
+                let body = '';
+                request.on('data', (chunk) => {
+                    body += chunk.toString();
+                });
+                request.on('end', () => {
+                    try {
+                        const postData = JSON.parse(body);
+                        console.log(postData);
+                        getTransactionItems(res, postData.transactionId);
                     } 
                     catch (error) {
                         console.error('Error parsing JSON:', error);
