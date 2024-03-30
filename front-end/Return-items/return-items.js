@@ -114,6 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
         xhr.onload = function() {
             if (xhr.status === 200) {
                 const transacResultsDiv = document.querySelector('.chosen-items');
+                console.log(xhr.responseText);
                 transacResultsDiv.innerHTML = xhr.responseText;
             }
             else {

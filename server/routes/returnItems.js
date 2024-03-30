@@ -47,13 +47,14 @@ function getTransactionItems(response, transactionId) {
                     console.log(title_model);
                     img = results[0].img_address
                     console.log(img);
+
+                    transactionInfoHtml += `<img src="${img}">`;
+                    transactionInfoHtml += '<div class="info">';
+                    transactionInfoHtml += `<h3 id="btitle">${title_model}</h3>`;
+                    transactionInfoHtml += `<p>Author: <span id="author">${author_director_brand}</span></p>`;
+                    transactionInfoHtml += `<p>Type: <span id="medium">${type}</span></p>`;
+                    transactionInfoHtml += `<p>ISBN: <span id="isbn">${item_id}</span></p>`;
                 });
-                transactionInfoHtml += `<img src="${img}">`;
-                transactionInfoHtml += '<div class="info">';
-                transactionInfoHtml += `<h3 id="btitle">${title_model}</h3>`;
-                transactionInfoHtml += `<p>Author: <span id="author">${author_director_brand}</span></p>`;
-                transactionInfoHtml += `<p>Type: <span id="medium">${type}</span></p>`;
-                transactionInfoHtml += `<p>ISBN: <span id="isbn">${item_id}</span></p>`;
             }
             else if (item.asset_type === 'movie') {
                 connection.query('SELECT book_movie_title_model, director_brand, image_address FROM catalog_view WHERE asset_id = (?)', [item_id], (movieErr, results) => {
