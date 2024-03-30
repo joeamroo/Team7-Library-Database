@@ -124,14 +124,43 @@ function getTransactionItems(response, transactionId) {
 function returnItems(response, items) {
     const transactionId = items[0].transactionId;
     const returnableItems = items.slice(1);
+    const updatePromises = [];
 
     returnableItems.forEach(item => {
         const { medium, itemId } = item;
-        console.log(`Returning ${medium} with Id ${itemId}`);
+        let returnQuery = '';
+        let updateCopiesQuery = '';
+
+        if (medium === 'book') {
+            returnQuery = 'UPDATE book_transaction SET returned = 1 WHERE item_id = ? AND transaction_id = ?';
+            updateCopiesQuery = 'UPDATE book SET available_copies = available_copies + 1 where isbn = ?';
+        }
+        else if (medium === 'movie') {
+            returnQuery = 'UPDATE movie_transaction SET returned = 1 WHERE item_id = ? AND transaction_id = ?';
+            updateCopiesQuery = 'UPDATE movie SET available_copies = available_copies + 1 where movie_id = ?';
+        }
+        else if (medium === 'device') {
+            returnQuery = 'UPDATE device_transaction SET returned = 1 WHERE item_id = ? AND transaction_id = ?';
+            updateCopiesQuery = 'UPDATE device SET available_copies = available_copies + 1 where device_id = ?';
+        }
+
+        if (returnQuery && updateCopiesQuery) {
+            updatePromises.push(
+                connection.query(returnQuery, [itemId, transactionId]),
+                connection.query(updateCopiesQuery, [itemId])
+            );
+        }
     });
     
-    response.writeHead(200, { 'Content-type': 'application/json' });
-    response.end(JSON.stringify({message: 'Items returned successfully'}));
+    Promise.all(updatePromises).then(() => {
+        response.writeHead(200, { 'Content-Type': 'application/json' });
+        response.end(JSON.stringify({ message: 'Items returned successfully' }));
+    })
+    .catch(error => {
+        console.error('Error updating returned status and available copies:', error);
+        response.writeHead(500, { 'Content-Type': 'application/json' });
+        response.end(JSON.stringify({ message: 'Error processing your request' }));
+    });
 }
 
 module.exports = { getTransactionItems, returnItems };
