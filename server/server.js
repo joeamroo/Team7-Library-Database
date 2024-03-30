@@ -62,6 +62,7 @@ const server = http.createServer((request, res) => {
             }
             break;
         case 'POST':
+            setCorsHeaders(res);
             if (pathname === '/catalog') {
                 let body = '';
                 request.on('data', (chunk) => {
