@@ -41,6 +41,8 @@ function getTransactionItems(response, transactionId) {
                         console.error('Error getting book item:', bookErr);
                     }
                     results.forEach(book => {
+                        console.log('Getting results from catalogviewww');
+                        console.log(book.image_address);
                         transactionInfoHtml += `<img src="${book.image_address}">`;
                         transactionInfoHtml += '<div class="info">';
                         transactionInfoHtml += `<h3 id="btitle">${book.book_movie_title_model}</h3>`;
