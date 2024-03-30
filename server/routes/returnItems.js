@@ -15,6 +15,7 @@ connection.connect((err) => {
 
 
 function getTransactionItems(response, transactionId) {
+    console.log('Entered the function hereeeeee');
     const transactionQuery = 'SELECT * FROM transaction_view where transaction_id = ?';
 
     let transactionInfoHtml = '';
