@@ -91,7 +91,7 @@ function getTransactionItems(response, transactionId) {
         });
 
         response.writeHead(200, { 'Content-Type': 'text/html' });
-        response.end(catalogHtml, 'utf-8');
+        response.end(transactionInfoHtml, 'utf-8');
     });
 }
 
