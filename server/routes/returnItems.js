@@ -121,5 +121,18 @@ function getTransactionItems(response, transactionId) {
     });
 }
 
-module.exports = { getTransactionItems };
+function returnItems(response, items) {
+    const transactionId = items[0].transactionId;
+    const returnableItems = items.slice(1);
+
+    returnableItems.forEach(item => {
+        const { medium, itemId } = item;
+        console.log(`Returning ${medium} with Id ${itemId}`);
+    });
+    
+    response.writeHead(200, { 'Content-type': 'application/json' });
+    response.end(JSON.stringify({message: 'Items returned successfully'}));
+}
+
+module.exports = { getTransactionItems, returnItems };
 

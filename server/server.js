@@ -1,7 +1,7 @@
 const http = require('http');
 const { getInitialCatalogInfo, getCatalogSearchWithRestrictions, insertDataToDatabase } = require('./routes/catalog');
 const { insertTransactionInfo } = require('./routes/checkout');
-const { getTransactionItems } = require('./routes/returnItems');
+const { getTransactionItems, returnItems } = require('./routes/returnItems');
 const { getDash } = require('./routes/dashboard');
 const { getCredentials } = require('./routes/login');
 const path = require('path');
@@ -117,8 +117,24 @@ const server = http.createServer((request, res) => {
                 request.on('end', () => {
                     try {
                         const postData = JSON.parse(body);
-                        console.log(postData.transactionId);
                         getTransactionItems(res, postData.transactionId);
+                    } 
+                    catch (error) {
+                        console.error('Error parsing JSON:', error);
+                        serve404(res);
+                    }
+                });
+            }
+            else if (pathname === '/sendReturn') {
+                let body = '';
+                request.on('data', (chunk) => {
+                    body += chunk.toString();
+                });
+                request.on('end', () => {
+                    try {
+                        const postData = JSON.parse(body);
+                        console.log(postData);
+                        returnItems(res, postData);
                     } 
                     catch (error) {
                         console.error('Error parsing JSON:', error);
