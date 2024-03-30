@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Interacting with backend
 
 const backendUrl = 'https://cougarchronicles.onrender.com'; 
-const getTransactionInfo = `${backendUrl}/transaction-retrieval`;
+const getTransactionInfoUrl = `${backendUrl}/transaction-retrieval`;
 
 document.addEventListener('DOMContentLoaded', function() {
     const searchBtn = document.getElementById('search-btn');
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const data = JSON.stringify({ transactionId:transactionId });
 
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', getTransactionInfo);
+        xhr.open('POST', getTransactionInfoUrl);
         xhr.setRequestHeader('Content-Type', 'application/json');
 
         xhr.onload = function() {

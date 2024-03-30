@@ -62,7 +62,6 @@ const server = http.createServer((request, res) => {
             }
             break;
         case 'POST':
-            setCorsHeaders(res);
             if (pathname === '/catalog') {
                 let body = '';
                 request.on('data', (chunk) => {
@@ -118,7 +117,7 @@ const server = http.createServer((request, res) => {
                 request.on('end', () => {
                     try {
                         const postData = JSON.parse(body);
-                        console.log(postData);
+                        console.log(postData.transactionId);
                         getTransactionItems(res, postData.transactionId);
                     } 
                     catch (error) {
