@@ -88,10 +88,10 @@ function getTransactionItems(response, transactionId) {
                     });
                 });
             }
-            
-            response.writeHead(200, { 'Content-Type': 'text/html' });
-            response.end(transactionInfoHtml, 'utf-8');
+
         });
+        response.writeHead(200, { 'Content-Type': 'text/html' });
+        response.end(transactionInfoHtml, 'utf-8');
     });
 }
 
