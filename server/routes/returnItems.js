@@ -28,11 +28,8 @@ function getTransactionItems(response, transactionId) {
         }
 
         results.forEach(item => {
-            let title_model;
-            let author_director_brand;
             let type = item.asset_type;
             let item_id = item.itemId;
-            let img;
 
             transactionInfoHtml += '<div class="transac-item"><div class="catalog-item-info>';
 
@@ -41,57 +38,56 @@ function getTransactionItems(response, transactionId) {
                     if (bookErr) {
                         console.error('Error getting book item:', bookErr);
                     }
-                    author_director_brand = results[0].authors;
-                    console.log(author_director_brand);
-                    title_model = results[0].title;
-                    console.log(title_model);
-                    img = results[0].img_address
-                    console.log(img);
-
-                    transactionInfoHtml += `<img src="${img}">`;
-                    transactionInfoHtml += '<div class="info">';
-                    transactionInfoHtml += `<h3 id="btitle">${title_model}</h3>`;
-                    transactionInfoHtml += `<p>Author: <span id="author">${author_director_brand}</span></p>`;
-                    transactionInfoHtml += `<p>Type: <span id="medium">${type}</span></p>`;
-                    transactionInfoHtml += `<p>ISBN: <span id="isbn">${item_id}</span></p>`;
+                    results.forEach(book => {
+                        transactionInfoHtml += `<img src="${book.image_address}">`;
+                        transactionInfoHtml += '<div class="info">';
+                        transactionInfoHtml += `<h3 id="btitle">${book.book_movie_title_model}</h3>`;
+                        transactionInfoHtml += `<p>Author: <span id="author">${book.authors}</span></p>`;
+                        transactionInfoHtml += `<p>Type: <span id="medium">${type}</span></p>`;
+                        transactionInfoHtml += `<p>ISBN: <span id="item_id">${item_id}</span></p>`;
+                        transactionInfoHtml += '</div></div>';
+                        transactionInfoHtml += '<button class="add-btn" id="addBtn"><i class="add-icon uil uil-plus"></i>Return</button>';
+                        transactionInfoHtml += '</div>';
+                    });
                 });
+                
             }
             else if (item.asset_type === 'movie') {
                 connection.query('SELECT book_movie_title_model, director_brand, image_address FROM catalog_view WHERE asset_id = (?)', [item_id], (movieErr, results) => {
                     if (movieErr) {
                         console.error('Error getting movie item:', movieErr);
                     }
-                    author_director_brand = results[0].director_brand;
-                    title_model = results[0].title;
-                    img = results[0].img_address
+                    results.forEach(movie => {
+                        transactionInfoHtml += `<img src="${movie.image_address}">`;
+                        transactionInfoHtml += '<div class="info">';
+                        transactionInfoHtml += `<h3 id="mtitle">${movie.book_movie_title_model}</h3>`;
+                        transactionInfoHtml += `<p>Director: <span id="director">${movie.director_brand}</span></p>`;
+                        transactionInfoHtml += `<p>Type: <span id="medium">${type}</span></p>`;
+                        transactionInfoHtml += `<p>movie ID: <span id="item_id">${item_id}</span></p>`;
+                        transactionInfoHtml += '</div></div>';
+                        transactionInfoHtml += '<button class="add-btn" id="addBtn"><i class="add-icon uil uil-plus"></i>Return</button>';
+                        transactionInfoHtml += '</div>';
+                    });
                 });
-                transactionInfoHtml += `<img src="${img}">`;
-                transactionInfoHtml += '<div class="info">';
-                transactionInfoHtml += `<h3 id="mtitle">${title_model}</h3>`;
-                transactionInfoHtml += `<p>Director: <span id="director">${author_director_brand}</span></p>`;
-                transactionInfoHtml += `<p>Type: <span id="medium">${type}</span></p>`;
-                transactionInfoHtml += `<p>Movie ID: <span id="isbn">${item_id}</span></p>`;
             }
             else if (item.asset_type === 'device') {
                 connection.query('SELECT book_movie_title_model, director_brand, image_address FROM catalog_view WHERE asset_id = (?)', [item_id], (deviceErr, results) => {
                     if (deviceErr) {
                         console.error('Error getting device item:', deviceErr);
                     }
-                    author_director_brand = results[0].director_brand;
-                    title_model = results[0].title;
-                    img = results[0].img_address
+                    results.forEach(device => {
+                        transactionInfoHtml += `<img src="${device.image_address}">`;
+                        transactionInfoHtml += '<div class="info">';
+                        transactionInfoHtml += `<h3 id="model">${device.book_movie_title_model}</h3>`;
+                        transactionInfoHtml += `<p>Brand: <span id="brand">${device.director_brand}</span></p>`;
+                        transactionInfoHtml += `<p>Type: <span id="medium">${type}</span></p>`;
+                        transactionInfoHtml += `<p>Device ID: <span id="item_id">${item_id}</span></p>`;
+                        transactionInfoHtml += '</div></div>';
+                        transactionInfoHtml += '<button class="add-btn" id="addBtn"><i class="add-icon uil uil-plus"></i>Return</button>';
+                        transactionInfoHtml += '</div>';
+                    });
                 });
-                transactionInfoHtml += `<img src="${img}">`;
-                transactionInfoHtml += '<div class="info">';
-                transactionInfoHtml += `<h3 id="model">${title_model}</h3>`;
-                transactionInfoHtml += `<p>Brand: <span id="director">${author_director_brand}</span></p>`;
-                transactionInfoHtml += `<p>Type: <span id="medium">${type}</span></p>`;
-                transactionInfoHtml += `<p>Device ID: <span id="isbn">${item_id}</span></p>`;
             }
-
-            transactionInfoHtml += '</div></div>';
-            transactionInfoHtml += '<button class="add-btn" id="addBtn"><i class="add-icon uil uil-plus"></i>Return</button>';
-            transactionInfoHtml += '</div>';
         });
 
         response.writeHead(200, { 'Content-Type': 'text/html' });
