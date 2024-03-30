@@ -33,7 +33,7 @@ function getTransactionItems(response, transactionId) {
 
             transactionInfoHtml += '<div class="transac-item"><div class="catalog-item-info>';
 
-            if (item.asset_type === 'book') {
+            if (type === 'book') {
                 connection.query('SELECT book_movie_title_model, authors, image_address FROM catalog_view WHERE isbn = (?)', [item_id], (bookErr, results) => {
                     if (bookErr) {
                         console.error('Error getting book item:', bookErr);
@@ -52,7 +52,7 @@ function getTransactionItems(response, transactionId) {
                 });
                 
             }
-            else if (item.asset_type === 'movie') {
+            else if (type === 'movie') {
                 connection.query('SELECT book_movie_title_model, director_brand, image_address FROM catalog_view WHERE asset_id = (?)', [item_id], (movieErr, results) => {
                     if (movieErr) {
                         console.error('Error getting movie item:', movieErr);
@@ -70,7 +70,7 @@ function getTransactionItems(response, transactionId) {
                     });
                 });
             }
-            else if (item.asset_type === 'device') {
+            else if (type === 'device') {
                 connection.query('SELECT book_movie_title_model, director_brand, image_address FROM catalog_view WHERE asset_id = (?)', [item_id], (deviceErr, results) => {
                     if (deviceErr) {
                         console.error('Error getting device item:', deviceErr);
