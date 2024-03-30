@@ -29,20 +29,16 @@ function getTransactionItems(response, transactionId) {
 
         results.forEach(item => {
             let type = item.asset_type;
-            console.log(type);
             let item_id = item.itemId;
 
             transactionInfoHtml += '<div class="transac-item"><div class="catalog-item-info>';
 
             if (type === 'book') {
-                console.log('This is a book!!!!');
                 connection.query('SELECT book_movie_title_model, authors, image_address FROM catalog_view WHERE isbn = (?)', [item_id], (bookErr, results) => {
                     if (bookErr) {
                         console.error('Error getting book item:', bookErr);
                     }
                     results.forEach(book => {
-                        console.log('Getting results from catalogviewww');
-                        console.log(book.image_address);
                         transactionInfoHtml += `<img src="${book.image_address}">`;
                         transactionInfoHtml += '<div class="info">';
                         transactionInfoHtml += `<h3 id="btitle">${book.book_movie_title_model}</h3>`;
@@ -92,10 +88,10 @@ function getTransactionItems(response, transactionId) {
                     });
                 });
             }
+            
+            response.writeHead(200, { 'Content-Type': 'text/html' });
+            response.end(transactionInfoHtml, 'utf-8');
         });
-
-        response.writeHead(200, { 'Content-Type': 'text/html' });
-        response.end(transactionInfoHtml, 'utf-8');
     });
 }
 
