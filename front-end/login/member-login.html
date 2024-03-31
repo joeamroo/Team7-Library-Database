@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <div class="unshaked">
+    <div class="begin">
     <div class="container" id="container">
         <div class="form-container sign-up">
             <form>
@@ -19,12 +19,12 @@
                 <span>Account Information</span>
                 <input type="first_name" id="first_name" placeholder="First Name">
                 <input type="last_name" id="last_name" placeholder="Last Name">
-                <input type="address" id = "address" placeholder="Address">
-                <input type="city_addr" id = "city_addr" placeholder="City">
-                <input type="state_addr" id = "state_addr" placeholder="State">
-                <input type="zipcode_addr" id = "zipcode_addr" placeholder="Zip Code">
-                <input type="email" id = "email" placeholder="Email">
-                <input type="password" id = "password" placeholder="Password">
+                <input type="address" id="address" placeholder="Address">
+                <input type="city_addr" id="city_addr" placeholder="City">
+                <input type="state_addr" id="state_addr" placeholder="State">
+                <input type="zipcode_addr" id="zipcode_addr" placeholder="Zip Code">
+                <input type="email" id="email" placeholder="Email">
+                <input type="password" id="password" placeholder="Password">
             </form>
         </div>
         
@@ -45,10 +45,10 @@
                 </div>-->
                 <h1>Sign In</h1>
                 <span></span>
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Password">
-                <a href="#">Forgot password?</a>
-                <button class="sign-in">Sign In</button>
+                <input type="email" id="member-email" placeholder="Email">
+                <input type="password" id="member-password" placeholder="Password">
+                <a href="#" id="forgot-password" onclick="forgotPass()">Forgot password?</a>
+                <button class="sign-in" id="sign-in">Sign In</button>
                 <br>
                 <!-- for toggle button -->
 

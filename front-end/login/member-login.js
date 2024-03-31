@@ -1,23 +1,19 @@
 const container = document.getElementById('container');
 const registerBtn = document.getElementById('register');
-const signUpBtn = document.getElementById('sign-up');
 const loginBtn = document.getElementById('login');
+const signinBtn = document.getElementById('sign-in')
 const staff = document.getElementById('toggle-switch');
 const svgIcon = document.querySelector('.arrow');
 const ArrowLink = document.getElementById('ArrowLink');
+const forgot = document.getElementById('forgot-password');
 const link = document.createElement('a');
-const textboxes = container.querySelectorAll('input[type=""]');
+const shakeEvent = document.querySelector('.begin');
 var staffCheck = document.querySelector('.toggle-switch');
 
-// Input Fields
-const firstName = document.getElementById('first_name').value.trim();
-const lastName = document.getElementById('last_name').value.trim();
-const address = document.getElementById('address').value.trim();
-const city = document.getElementById('city_addr').value.trim();
-const state = document.getElementById('state_addr').value.trim();
-const zipCode = document.getElementById('zipcode_addr').value.trim();
-const email = document.getElementById('email').value.trim();
-const password = document.getElementById('password').value.trim();
+/* --------------------------------------- */
+/* ----- Adds a Sign Up Button ----- */
+/* ----- and validates input   ----- */
+/* --------------------------------------- */
 
 // Get a reference to the form over which you want to overlay the button
 const form = document.querySelector('form');
@@ -33,7 +29,7 @@ overlayButton.style.position = 'absolute';
 overlayButton.style.top = '93%'; // Adjust as necessary
 overlayButton.style.left = '50%'; // Adjust as necessary
 overlayButton.style.transform = 'translate(-50%, -50%)';
-overlayButton.style.zIndex = '2'; // Ensure it's above other items
+overlayButton.style.zIndex = '10'; // Ensure it's above other items
 
 // Append the button to the form
 form.style.position = 'relative'; // Make sure the form is positioned
@@ -44,27 +40,33 @@ overlayButton.addEventListener('click', function(event) {
     // Prevent the default form submission if necessary
     event.preventDefault();
     
-    // Add logic for what should happen when the button is clicked
-let validReg = inputValidation(firstName, lastName, address, city, state,
-                                zipCode, email, password);
-                                
-window.alert(validReg.toString());
+    const allFieldsFilled = [
+        'first_name', 'last_name', 'address', 'city_addr', 
+        'state_addr', 'zipcode_addr', 'email', 'password'
+    ].every(id => document.getElementById(id).value.trim() !== "");
+
+    allFieldsFilled? console.log("true") : shake(600);
 });
+/* --------------------------------------- */
 
 
-/* If the register button is clicked, it enables
-   the register portion */
+/* The Register Button on the Gray Area */
 registerBtn.addEventListener('click', () => {
     container.classList.add("active");
 });
 
-/* If the login button is clicked, it disables
-   the register portion */
+/* The Login Button on the Gray Area */
 loginBtn.addEventListener('click', () => {
     container.classList.remove("active");
 });
 
+signinBtn.addEventListener('click', () => {
+    loginValidation();
+})
 
+
+
+/* --------------------------------------- */
 
 svgIcon.addEventListener('click', function() {
     // Moves the arrow key left when clicked
@@ -79,18 +81,6 @@ svgIcon.addEventListener('click', function() {
     homepage();
 });
 
-function inputValidation(a, b, c, d, e, f, g) {
-   // makes sure none of them are empty
-   if ((a.value.length === 0) || (b.value.length === 0) ||
-   (c.value.length === 0) || (d.value.length === 0) ||
-   (e.value.length === 0) || (f.value.length === 0) ||
-   (g.value.length === 0)) {
-
-        return false;
-   } else {
-        return true;
-   }
-}
 
 function toggleSwitch() {
     if (staff.checked == true) {
@@ -101,15 +91,24 @@ function toggleSwitch() {
         //container.classList.add("active");
     }
 }
+/* --------------------------------------- */
 
+function shake(time) {
 
-function shake() {
-    // Optionally, remove the class after the animation ends to allow re-triggering
-    form.classList.className = "shake";
+    const shakeEvent = document.querySelector('.begin');
+    console.log("shake");
 
+    shakeEvent.classList.add('shake');
+  
     setTimeout(() => {
-        form.classList.className = "form";
-    }, 600);
+        shakeEvent.classList.remove('shake');
+    }, time);
+}
+/* --------------------------------------- */
+
+function forgotPass() {
+    console.log("We ran out of time for this implementation.");
+    window.alert("Please contact your nearest librarian for help.");
 }
 
 
@@ -118,16 +117,7 @@ function shake() {
 function homepage() {
     window.location.href = '/';
 }
-    
-// Function for Checklist 3 buttons
-function checklist3() {
-    var buttonId = event.target.id;
-    if (buttonId === 'staff-page-access') {
-        window.location = "..//Staff Page/staff.html";
-    } else if (buttonId === 'member-page-access') {
-        window.location = "..//Dashboard/dashboard.html";
-    }
-}
+
 
 // Hash passwords before sending it to the server 
 // Registration purposes
@@ -145,6 +135,14 @@ function hashPassword(auth) {
     };
 }
 
+function loginValidation() {
+    const allLoginFields = [
+        'member-email', 'member-password'
+    ].every(id => document.getElementById(id).value.trim() !== "");
+
+    allLoginFields? console.log("true") : shake(800);
+}
+
 function loginRequest(auth) {
     // Hashes the password inputed by user
     const reqHash = hashPassword(auth);
@@ -153,3 +151,13 @@ function loginRequest(auth) {
 
 }
 
+    
+// Function for Checklist 3 buttons
+/*function checklist3() {
+    var buttonId = event.target.id;
+    if (buttonId === 'staff-page-access') {
+        window.location = "..//Staff Page/staff.html";
+    } else if (buttonId === 'member-page-access') {
+        window.location = "..//Dashboard/dashboard.html";
+    }
+}*/
