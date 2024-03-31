@@ -9,8 +9,7 @@ const forgot = document.getElementById('forgot-password');
 const link = document.createElement('a');
 const shakeEvent = document.querySelector('.begin');
 var staffCheck = document.querySelector('.toggle-switch');
-var username = '';
-var password = '';
+
 
 /* --------------------------------------- */
 /* ----- Adds a Sign Up Button ----- */
@@ -136,10 +135,10 @@ function loginValidation() {
 }
 
 function loginRequest() {
-    
+    const usertext = document.getElementById('member-email');
     const ciphertext = hashPassword(document.getElementById('member-password').value.trim());
     
-    console.log(ciphertext);
+    sendRequest(ciphertext);
   
 
 }
@@ -159,9 +158,18 @@ async function hashPassword(password) {
     return hashHex;
 }
 
-function sendRequest() {
-    // Sends encrypted password to server
+function sendRequest(pass) {
+    console.log(pass);
+    const backendUrl = 'https://cougarchronicles.onrender.com';
+    const loginUrl = '${backendUrl}/login';
 
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', loginUrl);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    const data = JSON.stringify(pass);
+
+    xhr.send(data);
 }
 
     

@@ -13,31 +13,39 @@ const link = mysql.createConnection({
 });
   
 
-function authValidation(hash, salt, iterations, attempts) {
-    const keylength = 64;
-    const digest = 'sha512';
-    const isHash = crypto.pbkdf2Sync(attempts, salt, iterations, digest).toString('base64');
-    return hash == isHash;
+
+
+function verifyPassword(receivedHashedPassword, storedHashedPassword) {
+    // Compare the received hashed password with the stored one
+    return receivedHashedPassword === storedHashedPassword;
 }
 
-function getCredentials(response) {
-    const filePath = './front-end/login/member-login.html';
-    
-    fs.readFile(filePath, 'utf-8', (err, content) => {
-        if (err) {
-            // If there's an error reading the file, send a 500 Internal Server Error response
-            console.error('Error reading file:', err);
-            response.writeHead(500, { 'Content-Type': 'text/plain' });
-            response.end('Internal server error');
-            return;
-        }
+// Example usage with a hypothetical user login function
+function loginUser(username, receivedHashedPassword) {
+    // Placeholder for retrieving the stored hashed password for a user
+    const storedHashedPassword = getUserStoredPassword(username);
 
-        // If the file is read successfully, send a 200 OK response with the file's content
-        response.writeHead(200, { 'Content-Type': 'text/html' });
-        response.end(content, 'utf-8');
-    });
+    if (verifyPassword(receivedHashedPassword, storedHashedPassword)) {
+        console.log('Login successful');
+        // Proceed with login process
+    } else {
+        console.log('Login failed: Incorrect password');
+        // Handle login failure
+    }
+}
+
+function getUserStoredPassword(username) {
+    // Placeholder function for fetching the stored hashed password
+    // In a real application, this would query your database
+    // For this example, let's assume the stored password is 'exampleHashedPassword'
+    return 'd033e22ae348aeb5660fc2140aec35850c4da997';
 }
 
 
 
-module.exports = { getCredentials };
+// Simulate a login attempt
+//loginUser('john_doe', receivedHashedPassword);
+
+
+
+module.exports = { verifyPassword };

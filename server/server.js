@@ -3,7 +3,7 @@ const { getInitialCatalogInfo, getCatalogSearchWithRestrictions, insertDataToDat
 const { insertTransactionInfo } = require('./routes/checkout');
 const { getTransactionItems, returnItems } = require('./routes/returnItems');
 const { getDash } = require('./routes/dashboard');
-const { getCredentials } = require('./routes/login');
+const { verifyPassword } = require('./routes/login');
 const path = require('path');
 
 function setCorsHeaders(res) {
