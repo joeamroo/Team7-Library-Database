@@ -241,11 +241,38 @@ function insertDataToDatabase(response, itemTitle) {
                     }
                     else {
                         console.log('Current holds updated successfully');
+                        let getUpdatedHoldsQuery;
+                        if (asset_type === 'book') {
+                            getUpdatedHoldsQuery = 'SELECT current_holds FROM book WHERE isbn = ?';
+                        } 
+                        else if (asset_type === 'movie') {
+                            getUpdatedHoldsQuery = 'SELECT current_holds FROM movie WHERE movie_id = ?';
+                        } 
+                        else if (asset_type === 'device') {
+                            getUpdatedHoldsQuery = 'SELECT current_holds FROM device WHERE device_id = ?';
+                        }
+
+                        connection.query(getUpdatedHoldsQuery, [updValues[0]], (getError, getResults) => {
+                            if (getError) {
+                              console.error('Error getting updated holds:', getError);
+                              response.writeHead(500);
+                              response.end('Server error');
+                            } 
+                            else {
+                              if (getResults.length > 0) {
+                                const updatedHolds = getResults[0].current_holds;
+                                response.writeHead(200, { 'Content-Type': 'application/json' });
+                                response.end(JSON.stringify({ updatedHolds }));
+                              } 
+                              else {
+                                response.writeHead(404);
+                                response.end('No data found');
+                              }
+                            }
+                        });
                     }
                 });
             }
-            response.writeHead(200);
-            console.log('Data inserted into other table successfully');
         });
     });
 }

@@ -218,7 +218,8 @@ document.addEventListener('click', function(event) {
 
             xhr.onload = function() {
                 if (xhr.status === 200) {
-                    console.log('Data inserted successfully');
+                    const responseData = JSON.parse(xhr.responseText);
+                    console.log('Updated current_holds:', responseData.updatedHolds);
                     window.location.reload();
                 } 
                 else {
