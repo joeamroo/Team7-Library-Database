@@ -229,6 +229,12 @@ document.addEventListener('click', function(event) {
                             const updatedHolds = JSON.parse(getHoldsXhr.responseText);
                             console.log('Updated current_holds:', updatedHolds);
                         }
+                        else if (getHoldsXhr.status === 404) {
+                            console.log('No data found for current holds');
+                        } 
+                        else {
+                            console.error('Error:', getHoldsXhr.statusText);
+                        }
                     };
 
                     const data = JSON.stringify({

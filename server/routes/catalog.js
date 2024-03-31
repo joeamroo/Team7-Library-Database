@@ -271,6 +271,10 @@ function getCurrentHolds(response, medium, itemId) {
                 response.writeHead(200, { 'Content-Type': 'application/json' });
                 response.end(JSON.stringify(currentHolds));
             }
+            else {
+                response.statusCode = 404;
+                response.end('No data found');
+            }
         }
     });
 }
