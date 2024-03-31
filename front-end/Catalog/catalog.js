@@ -218,7 +218,8 @@ document.addEventListener('click', function(event) {
 
             xhr.onload = function() {
                 if (xhr.status === 200) {
-                    console.log('Data inserted successfully');
+                    const responseData = JSON.parse(xhr.responseText);
+                    console.log('Updated current_holds:', responseData.updatedHolds);
                 } 
                 else {
                     console.error('Error :', xhr.statusText);
@@ -232,26 +233,6 @@ document.addEventListener('click', function(event) {
             const data = JSON.stringify({ itemTitle: itemTitle });
             xhr.send(data);
 
-
-            const getHoldsXhr = new XMLHttpRequest();
-            getHoldsXhr.open('POST', getCurrentHoldsUrl);
-            getHoldsXhr.setRequestHeader('Content-Type', 'application/json');
-
-            getHoldsXhr.onload = function() {
-                if (getHoldsXhr.status == 200) {
-                    const updatedHolds = JSON.parse(getHoldsXhr.responseText);
-                    console.log('Updated current_holds:', updatedHolds);
-                }
-                else if (getHoldsXhr.status === 404) {
-                    console.log('No data found for current holds');
-                } 
-                else {
-                    console.error('Error happensss:', getHoldsXhr.statusText);
-                }
-            };
-
-            const holdData = JSON.stringify({ medium: medium, itemId : itemId });
-            getHoldsXhr.send(holdData);
         }
         else {
            const isAvailModal = document.getElementById('itemIsAvail');
