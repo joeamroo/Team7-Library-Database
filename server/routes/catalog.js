@@ -23,7 +23,7 @@ function createBookItem(item) {
     bookHtml += `<p>ISBN <span id="isbn">${item.isbn}</span></p>`;
     bookHtml += `<p id="year-place">Year Published: <span id="yearPub">${item.year_released}</span></p>`;
     bookHtml += `<p>Current Holds: <span id="currHolds">${item.current_holds}</span></p>`;
-    bookHtml += `<p>System availability: <span id="availableItems">${item.available_copies} (of <span id="totalAvail">${item.total_copies}</span>)</span></p>`;
+    bookHtml += `<p>System availability: <span id="availableItems"><span id="currAvail">${item.available_copies}</span> (of ${item.total_copies})</span></p>`;
     bookHtml += `</div>`;
     return bookHtml;
 }
@@ -39,7 +39,7 @@ function createMovieItem(item) {
     movieHtml += `<p>Rating: <span id="rating">${item.rating}</span></p>`;
     movieHtml += `<p id="year-place">Year Released: <span id="yearPub">${item.year_released}</span></p>`;
     movieHtml += `<p>Current Holds: <span id="currHolds">${item.current_holds}</span></p>`;
-    movieHtml += `<p>System availability: <span id="availableItems">${item.available_copies} (of <span id="totalAvail">${item.total_copies}</span>)</span></p>`;
+    movieHtml += `<p>System availability: <span id="availableItems"><span id="currAvail">${item.available_copies}</span> (of <span id="totalAvail">${item.total_copies}</span>)</span></p>`;
     movieHtml += `</div>`;
     return movieHtml;
 }
@@ -55,7 +55,7 @@ function createDeviceItem(item) {
     deviceHtml += `<p>Serial number: <span id="serial-num">${item.serial_number}</span></p>`;
     deviceHtml += `<p id="cond-place">Condition: <span id="condition">${item.asset_condition}</span></p>`;
     deviceHtml += `<p>Current Holds: <span id="currHolds">${item.current_holds}</span></p>`;
-    deviceHtml += `<p>System availability: <span id="availableItems">${item.available_copies} (of <span id="totalAvail">${item.total_copies}</span>)</span></p>`;
+    deviceHtml += `<p>System availability: <span id="availableItems"><span id="currAvail">${item.available_copies}</span> (of <span id="totalAvail">${item.total_copies}</span>)</span></p>`;
     deviceHtml += `</div>`;
     return deviceHtml;
 }
