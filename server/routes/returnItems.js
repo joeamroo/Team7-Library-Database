@@ -143,11 +143,13 @@ function returnItems(response, items) {
             returnQuery = 'UPDATE device_transaction SET returned = 1 WHERE device_id = ? AND transaction_id = ?';
             updateCopiesQuery = 'UPDATE device SET available_copies = available_copies + 1 where device_id = ?';
         }
+        updateReturnDateQuery = 'UPDATE transaction SET return_date = NOW() WHERE transaction_id = ?';
 
         if (returnQuery && updateCopiesQuery) {
             updatePromises.push(
                 connection.query(returnQuery, [itemId, transactionId]),
-                connection.query(updateCopiesQuery, [itemId])
+                connection.query(updateCopiesQuery, [itemId]),
+                connection.query(updateReturnDateQuery, [transactionId])
             );
         }
     });

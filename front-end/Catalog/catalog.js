@@ -220,7 +220,10 @@ document.addEventListener('click', function(event) {
                 if (xhr.status === 200) {
                     const responseData = JSON.parse(xhr.responseText);
                     console.log('Updated current_holds:', responseData.updatedHolds);
-                    window.location.reload();
+                    const button = event.target.closest('.hold-btn');
+                    if (button) {
+                        button.innerHTML = '<i class="uil uil-check"></i> Hold Placed';
+                    }
                 } 
                 else {
                     console.error('Error :', xhr.statusText);
