@@ -214,6 +214,8 @@ document.addEventListener('click', function(event) {
             xhr.open('POST', catalogHoldUrl); 
             xhr.setRequestHeader('Content-Type', 'application/json');
 
+            console.log('sending hold req');
+
             xhr.onload = function() {
                 if (xhr.status === 200) {
                     console.log('Data inserted successfully');

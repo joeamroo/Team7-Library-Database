@@ -244,6 +244,7 @@ function insertDataToDatabase(response, itemTitle) {
                     }
                 });
             }
+            response.writeHead(200);
             console.log('Data inserted into other table successfully');
         });
     });
