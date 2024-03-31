@@ -153,7 +153,7 @@ function sendReturnedItems() {
 
             const modal = document.getElementById('successful-return');
             const message = document.getElementById('return-msg');
-            message.textContent = 'Items returned successfully!';
+            message.textContent = 'Item(s) returned successfully!';
             modal.style.display = 'block';
 
             const acceptBtn = document.getElementById('accept-msg');

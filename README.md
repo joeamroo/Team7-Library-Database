@@ -57,10 +57,10 @@ switch (request.method) {
 }
 
 ```
-and if its a 'POST' request then you also modify this accordingly. Now here you will notice that I defined the route called '/initial-catalog' (which is the one I need to indicate in my front-end js) and it calls the getInitialCatalogInfo, which is a function inside of my catalog.js file (./server/routes/catalog.js). So if you are calling a function create a relevant js file in the routes folder and define your logic there and boom! Your front-end page should be getting/returning information from/to the backend.
+and if its a 'POST' request then you also modify this accordingly. Now here you will notice that I defined the route called '/initial-catalog' (which is the one I need to indicate in my front-end js) and it calls the getInitialCatalogInfo, which is a function inside of my catalog.js file (./server/routes/catalog.js). So if you are calling a function create a relevant js file in the routes folder and define your logic there and boom! Your front-end page should be getting/returning information from/to the backend. I WOULD HIGHLY RECCOMEND YOU USE POST REQUEST SPECIALLY IF ITS DB INFO (also u kind of have to).
 
 ## Additional
-I should warn you the way that I have hosted the front-end and back-end using the forked repo off of our original, they are usually in-sync but most times they need to be manually synced, you can do this by clicking on forks within the repo and syncing it up. This will automatically trigger a new deployment to Render and Vercel so you will be able to see the changes. Mainly this is if u want to see how your backend code is working, if you mainly want to modify and see the changes to your front-end then just check the preview.
+I should warn you the way that I have hosted the front-end and back-end using the forked repo off of our original, they are supposed to be in-sync but most times they need to be manually synced, you can do this by clicking on forks within the repo and syncing it up. This will automatically trigger a new deployment to Render and Vercel so you will be able to see the changes. ALSO, RENDER SOMETIMES TAKES 3-5 minutes to load up again with a new deployment so you might have to wait that in order to see changes to the backend. Mainly this is if u want to see how your backend code is working, if you mainly want to modify and see the changes to your front-end then just check the preview.
 
 Also, for testing purposes we have two members right now (fake members)
 
