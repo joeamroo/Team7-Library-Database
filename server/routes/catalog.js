@@ -202,16 +202,16 @@ function insertDataToDatabase(response, itemTitle) {
         let values;
 
         if (asset_type === 'book') {
-            insertQuery = 'INSERT INTO hold_request (member_id, item_name, isbn) VALUES (?, ?, ?)';
-            values = [member_id, itemTitle, isbn];
+            insertQuery = 'INSERT INTO hold_request (member_id, item_name, isbn, status, request_date) VALUES (?, ?, ?, ?, NOW())';
+            values = [member_id, itemTitle, isbn, 'active'];
         } 
         else if (asset_type === 'movie') {
-            insertQuery = 'INSERT INTO hold_request (member_id, item_name, movie_id) VALUES (?, ?, ?)';
-            values = [member_id, itemTitle, asset_id];
+            insertQuery = 'INSERT INTO hold_request (member_id, item_name, movie_id, request_date) VALUES (?, ?, ?, ?, NOW())';
+            values = [member_id, itemTitle, asset_id, 'active'];
         }
         else if (asset_type === 'device') {
-            insertQuery = 'INSERT INTO hold_request (member_id, item_name, device_id) VALUES (?, ?, ?)';
-            values = [member_id, itemTitle, asset_id];
+            insertQuery = 'INSERT INTO hold_request (member_id, item_name, device_id, request_date) VALUES (?, ?, ?, ?, NOW())';
+            values = [member_id, itemTitle, asset_id, 'active'];
         }
 
         connection.query(insertQuery, values, (err, result) => {

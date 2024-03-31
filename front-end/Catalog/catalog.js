@@ -191,28 +191,40 @@ document.getElementById('search-btn').addEventListener('click', function(event) 
 
 document.addEventListener('click', function(event) {
     if (event.target.classList.contains('hold-btn')) {
-        const itemTitle = event.target.parentElement.parentElement.querySelector('.catalog-item-info h3').textContent;
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', catalogHoldUrl); 
-        xhr.setRequestHeader('Content-Type', 'application/json');
+        const currAvail = parseInt(event.target.closest('.catalog-item').querySelector('#currAvail').textContent);
+        console.log(parseInt(currAvail));
+        if (parseInt(currAvail) == 0) {
+            const itemTitle = event.target.parentElement.parentElement.querySelector('.catalog-item-info h3').textContent;
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', catalogHoldUrl); 
+            xhr.setRequestHeader('Content-Type', 'application/json');
 
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                console.log('Data inserted successfully');
-            } else {
-                console.error('Error:', xhr.statusText);
-            }
-        };
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    console.log('Data inserted successfully');
+                } else {
+                    console.error('Error:', xhr.statusText);
+                }
+            };
 
-        xhr.onerror = function() {
-            console.error('Network error');
-        };
+            xhr.onerror = function() {
+                console.error('Network error');
+            };
 
-        const data = JSON.stringify({ 
-            itemTitle: itemTitle
-        });
-        
-        xhr.send(data);
+            const data = JSON.stringify({ 
+                itemTitle: itemTitle
+            });
+            
+            xhr.send(data);
+        }
+        else {
+           const isAvailModal = document.getElementById('itemIsAvail');
+           isAvailModal.style.display = 'block';
+           const acceptBtn =  isAvailModal.querySelector('#accept-msg');
+           acceptBtn.addEventListener('click', function() {
+            isAvailModal.style.display = 'none';
+           });
+        }        
     }
 });
 
