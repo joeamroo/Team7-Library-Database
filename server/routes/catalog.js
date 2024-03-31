@@ -212,14 +212,14 @@ function insertDataToDatabase(response, itemTitle) {
             updValues = [isbn];
         } 
         else if (asset_type === 'movie') {
-            insertQuery = 'INSERT INTO hold_request (member_id, item_name, movie_id, request_date) VALUES (?, ?, ?, ?, NOW())';
+            insertQuery = 'INSERT INTO hold_request (member_id, item_name, movie_id, status, request_date) VALUES (?, ?, ?, ?, NOW())';
             values = [member_id, itemTitle, asset_id, 'active'];
 
             updateHoldQuery = 'UPDATE movie SET current_holds = current_holds + 1 WHERE movie_id = ?';
             updValues = [asset_id];
         }
         else if (asset_type === 'device') {
-            insertQuery = 'INSERT INTO hold_request (member_id, item_name, device_id, request_date) VALUES (?, ?, ?, ?, NOW())';
+            insertQuery = 'INSERT INTO hold_request (member_id, item_name, device_id, status, request_date) VALUES (?, ?, ?, ?, NOW())';
             values = [member_id, itemTitle, asset_id, 'active'];
 
             updateHoldQuery = 'UPDATE device SET current_holds = current_holds + 1 WHERE device_id = ?';
