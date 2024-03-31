@@ -9,6 +9,8 @@ const forgot = document.getElementById('forgot-password');
 const link = document.createElement('a');
 const shakeEvent = document.querySelector('.begin');
 var staffCheck = document.querySelector('.toggle-switch');
+var username = '';
+var password = '';
 
 /* --------------------------------------- */
 /* ----- Adds a Sign Up Button ----- */
@@ -119,35 +121,46 @@ function homepage() {
 }
 
 
-// Hash passwords before sending it to the server 
-// Registration purposes
-function hashPassword(auth) {
-    const salt = crypto.randomBytes(128).toString('base64');
-    const iterations = 10000;
-    const keyLength = 64; 
-    const digest = 'sha512';
-    const hash = pbkdf2(auth, salt, iterations, keyLength, digest).toString('base64');
-
-    return {
-        salt: salt,
-        hash: hash,
-        iterations: iterations
-    };
-}
+/* --------------------------------------- */
+/* ------    Login Section   ------ */
+/* --------------------------------------- */
 
 function loginValidation() {
     const allLoginFields = [
         'member-email', 'member-password'
     ].every(id => document.getElementById(id).value.trim() !== "");
 
-    allLoginFields? console.log("true") : shake(800);
+    // Makes sure all fields are field; otherwise,
+    // the user's form will shake.
+    allLoginFields?  loginRequest() : shake(800);
 }
 
-function loginRequest(auth) {
-    // Hashes the password inputed by user
-    const reqHash = hashPassword(auth);
+function loginRequest() {
+    
+    const ciphertext = hashPassword(document.getElementById('member-password').value.trim());
+    
+    console.log(ciphertext);
+  
 
-    // Compares the hash with the one stored in the server
+}
+
+
+async function hashPassword(password) {
+    // Encode the password as UTF-8
+    const msgBuffer = new TextEncoder().encode(password); 
+
+    // Hash the password
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+
+    // Convert the ArrayBuffer to hex string
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    
+    return hashHex;
+}
+
+function sendRequest() {
+    // Sends encrypted password to server
 
 }
 
@@ -161,3 +174,5 @@ function loginRequest(auth) {
         window.location = "..//Dashboard/dashboard.html";
     }
 }*/
+
+
