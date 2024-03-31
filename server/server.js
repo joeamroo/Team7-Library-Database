@@ -1,5 +1,5 @@
 const http = require('http');
-const { getInitialCatalogInfo, getCatalogSearchWithRestrictions, insertDataToDatabase } = require('./routes/catalog');
+const { getInitialCatalogInfo, getCatalogSearchWithRestrictions, insertDataToDatabase, getCurrentHolds } = require('./routes/catalog');
 const { insertTransactionInfo } = require('./routes/checkout');
 const { getTransactionItems, returnItems } = require('./routes/returnItems');
 const { getDash } = require('./routes/dashboard');
@@ -135,6 +135,23 @@ const server = http.createServer((request, res) => {
                         const postData = JSON.parse(body);
                         console.log(postData);
                         returnItems(res, postData);
+                    } 
+                    catch (error) {
+                        console.error('Error parsing JSON:', error);
+                        serve404(res);
+                    }
+                });
+            }
+            else if (pathname === '/get-current-holds') {
+                let body = '';
+                request.on('data', (chunk) => {
+                    body += chunk.toString();
+                });
+                request.on('end', () => {
+                    try {
+                        const postData = JSON.parse(body);
+                        console.log(postData);
+                        getCurrentHolds(res, postData.medium, postData.itemId);
                     } 
                     catch (error) {
                         console.error('Error parsing JSON:', error);

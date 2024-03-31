@@ -105,6 +105,7 @@ const backendUrl = 'https://cougarchronicles.onrender.com';
 const initialCatalogUrl = `${backendUrl}/initial-catalog`;
 const catalogUrl = `${backendUrl}/catalog`;
 const catalogHoldUrl = `${backendUrl}/catalog-hold`;
+const getCurrentHoldsUrl = `${backendUrl}/get-current-holds`;
 
 document.addEventListener('DOMContentLoaded', function() {
     const xhr = new XMLHttpRequest();
@@ -192,7 +193,21 @@ document.getElementById('search-btn').addEventListener('click', function(event) 
 document.addEventListener('click', function(event) {
     if (event.target.classList.contains('hold-btn')) {
         const currAvail = parseInt(event.target.closest('.catalog-item').querySelector('#currAvail').textContent);
-        console.log(parseInt(currAvail));
+        const medium = event.target.closest('.catalog-item').querySelector('#medium').textContent;
+
+        let itemId;
+
+        if (medium == 'book') {
+            itemId = event.target.closest('.catalog-item').querySelector('#isbn').textContent;
+        }
+        else if (medium == 'movie') {
+            itemId = event.target.closest('.catalog-item').querySelector('#mov_asset_id').textContent;
+        }
+        else if (medium == 'device') {
+            itemId = event.target.closest('.catalog-item').querySelector('#dev_asset_id').textContent;
+        }
+
+        
         if (parseInt(currAvail) == 0) {
             const itemTitle = event.target.parentElement.parentElement.querySelector('.catalog-item-info h3').textContent;
             const xhr = new XMLHttpRequest();
@@ -202,8 +217,27 @@ document.addEventListener('click', function(event) {
             xhr.onload = function() {
                 if (xhr.status === 200) {
                     console.log('Data inserted successfully');
-                } else {
-                    console.error('Error:', xhr.statusText);
+
+                    const getHoldsXhr = new XMLHttpRequest();
+                    getHoldsXhr.open('POST', getCurrentHoldsUrl);
+                    getHoldsXhr.setRequestHeader('Content-Type', 'application/json');
+
+                    getHoldsXhr.onload = function() {
+                        if (getHoldsXhr.status == 200) {
+                            const updatedHolds = JSON.parse(getHoldsXhr.responseText);
+                            console.log('Updated current_holds:', updatedHolds);
+                        }
+                    };
+
+                    const data = JSON.stringify({
+                        medium: medium,
+                        itemId : itemId
+
+                    });
+                    getHoldsXhr.send(data);
+                } 
+                else {
+                    console.error('Error :', xhr.statusText);
                 }
             };
 
