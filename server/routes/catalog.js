@@ -212,14 +212,14 @@ function insertDataToDatabase(response, itemTitle) {
             updValues = [isbn];
         } 
         else if (asset_type === 'movie') {
-            insertQuery = 'INSERT INTO hold_request (member_id, item_name, movie_id, request_date) VALUES (?, ?, ?, ?, NOW())';
+            insertQuery = 'INSERT INTO hold_request (member_id, item_name, movie_id, status, request_date) VALUES (?, ?, ?, ?, NOW())';
             values = [member_id, itemTitle, asset_id, 'active'];
 
             updateHoldQuery = 'UPDATE movie SET current_holds = current_holds + 1 WHERE movie_id = ?';
             updValues = [asset_id];
         }
         else if (asset_type === 'device') {
-            insertQuery = 'INSERT INTO hold_request (member_id, item_name, device_id, request_date) VALUES (?, ?, ?, ?, NOW())';
+            insertQuery = 'INSERT INTO hold_request (member_id, item_name, device_id, status, request_date) VALUES (?, ?, ?, ?, NOW())';
             values = [member_id, itemTitle, asset_id, 'active'];
 
             updateHoldQuery = 'UPDATE device SET current_holds = current_holds + 1 WHERE device_id = ?';
@@ -241,38 +241,41 @@ function insertDataToDatabase(response, itemTitle) {
                     }
                     else {
                         console.log('Current holds updated successfully');
+                        let getUpdatedHoldsQuery;
+                        if (asset_type === 'book') {
+                            getUpdatedHoldsQuery = 'SELECT current_holds FROM book WHERE isbn = ?';
+                        } 
+                        else if (asset_type === 'movie') {
+                            getUpdatedHoldsQuery = 'SELECT current_holds FROM movie WHERE movie_id = ?';
+                        } 
+                        else if (asset_type === 'device') {
+                            getUpdatedHoldsQuery = 'SELECT current_holds FROM device WHERE device_id = ?';
+                        }
+
+                        connection.query(getUpdatedHoldsQuery, [updValues[0]], (getError, getResults) => {
+                            if (getError) {
+                              console.error('Error getting updated holds:', getError);
+                              response.writeHead(500);
+                              response.end('Server error');
+                            } 
+                            else {
+                              if (getResults.length > 0) {
+                                const updatedHolds = getResults[0].current_holds;
+                                response.writeHead(200, { 'Content-Type': 'application/json' });
+                                response.end(JSON.stringify({ updatedHolds }));
+                              } 
+                              else {
+                                response.writeHead(404);
+                                response.end('No data found');
+                              }
+                            }
+                        });
                     }
                 });
             }
-            response.writeHead(200);
-            console.log('Data inserted into other table successfully');
         });
     });
 }
 
-function getCurrentHolds(response, medium, itemId) {
-    let query;
-    if (medium === 'book') {
-        query = 'SELECT current_holds FROM catalog_view WHERE asset_type = ? AND isbn = ?';
-    }
-    else if (medium === 'movie' || medium === 'device') {
-        query = 'SELECT current_holds FROM catalog_view WHERE asset_type = ? AND asset_id = ?';
-    }
 
-    connection.query(query, [medium,itemId], (error, results) => {
-        if (error) {
-            console.error('Error getting current holds from view:', error);
-            response.writeHead(500);
-            response.end('Server error');
-        }
-        else {
-            if (results.length > 0) {
-                const currentHolds = results[0].current_holds;
-                response.writeHead(200, { 'Content-Type': 'application/json' });
-                response.end(JSON.stringify(currentHolds));
-            }
-        }
-    });
-}
-
-module.exports = { getInitialCatalogInfo, getCatalogSearchWithRestrictions, insertDataToDatabase, getCurrentHolds };
+module.exports = { getInitialCatalogInfo, getCatalogSearchWithRestrictions, insertDataToDatabase };
