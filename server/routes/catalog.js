@@ -268,7 +268,8 @@ function getCurrentHolds(response, medium, itemId) {
         else {
             if (results.length > 0) {
                 const currentHolds = results[0].current_holds;
-                response.writeHead(200, { 'Content-Type': 'application/json' });
+                response.statusCode = 200;
+                response.setHeader('Content-Type', 'application/json');
                 response.end(JSON.stringify(currentHolds));
             }
             else {
