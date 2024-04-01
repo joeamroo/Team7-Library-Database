@@ -22,13 +22,3 @@ function getUser(response, user) {
 }
 
 module.exports = { getUser };
-
-
-
-
-
-
-
-
-
-module.exports = { getDash };
