@@ -37,32 +37,25 @@ function insertTransactionInfo(response, memberId, checkout_items) {
             const {type, id} = item;
             const bridgeTable = `${type}_transaction`;
             const insertBridgeQuery = `INSERT INTO ${bridgeTable} (transaction_id, ${type}_id) VALUES (?, ?)`;
-            updatePromises.push(connection.query(insertBridgeQuery, [transactionId, id]));
+            connection.query(insertBridgeQuery, [transactionId, id]);
 
             if (type === 'book') {
                 const updateAvailableCopiesQuery = 'UPDATE book SET available_copies = available_copies - 1 WHERE isbn = ?';
-                updatePromises.push(connection.query(updateAvailableCopiesQuery [id]));
+                connection.query(updateAvailableCopiesQuery, [id]);
             } 
             else if (type === 'movie') {
                 const updateAvailableCopiesQuery = 'UPDATE movie SET available_copies = available_copies - 1 WHERE movie_id = ?';
-                updatePromises.push(connection.query(updateAvailableCopiesQuery [id]));
+                connection.query(updateAvailableCopiesQuery, [id]);
             } 
             else if (type === 'device') {
                 const updateAvailableCopiesQuery = 'UPDATE device SET available_copies = available_copies - 1 WHERE device_id = ?';
-                updatePromises.push(connection.query(updateAvailableCopiesQuery [id]));
+                connection.query(updateAvailableCopiesQuery, [id]);
             }
         });
 
-        Promise.all(updatePromises)
-            .then(() => {
-                response.writeHead(200, { 'Content-Type': 'application/json' });
-                response.end(JSON.stringify({ transactionId }));
-            })
-            .catch(error => {
-                console.error('Error inserting transaction information:', error);
-                response.statusCode = 500;
-                response.end('Internal server error');
-            });
+        response.statusCode = 200;
+        response.setHeader('Content-Type', 'application/json');
+        response.end(JSON.stringify({ transactionId }));
     });
 }
 
