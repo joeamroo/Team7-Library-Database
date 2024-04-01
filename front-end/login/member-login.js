@@ -61,7 +61,7 @@ loginBtn.addEventListener('click', () => {
 });
 
 signinBtn.addEventListener('click', () => {
-    loginRequest();
+    loginValidation();
 })
 
 
@@ -123,37 +123,76 @@ function homepage() {
 /* ------    Login Section   ------ */
 /* --------------------------------------- */
 
-function loginRequest() {
-    const username = document.getElementById('member-email').value.trim();
-    const password = document.getElementById('member-password').value.trim();
+/*function loginRequest() {
+  const username = document.getElementById('member-email').value.trim();
+  const password = document.getElementById('member-password').value.trim();
 
+  const data = {
+    username: username,
+    password: password
+  };
+
+  console.log(data);
+
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', 'https://cougarchronicles.onrender.com/login', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      const response = JSON.parse(xhr.responseText);
+      console.log('Login result:', response);
+      // Handle the login response (e.g., redirect to dashboard on success)
+    } else {
+      console.error('Login error:', xhr.status);
+      console.error('Login error:', xhr.responseText);
+      // Handle the login error (e.g., display an error message)
+    }
+  };
+
+  xhr.onerror = function() {
+    console.error('Request error');
+    // Handle the request error (e.g., display an error message)
+  };
+
+  xhr.send(JSON.stringify(data));
+}*/
+
+const backendUrl = 'https://cougarchronicles.onrender.com'; 
+const sendReturnUrl = `${backendUrl}/loginUser`;
+
+
+/*function loginRequest() {
+    const username = $('#member-email').val().trim();
+    const password = $('#member-password').val().trim();
+  
     const data = {
-        username: username,
-        password: password
+      username: username,
+      password: password
     };
-
-    console.log(username);
-    console.log(password);
-
-    fetch('https://cougarchronicles.onrender.com/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(result => {
-        console.log('Login result:', result);
+  
+    $.ajax({
+      url: 'https://cougarchronicles.onrender.com/loginUser',
+      type: 'POST',
+      data: JSON.stringify(data),
+      contentType: 'application/json',
+      success: function(response) {
+        console.log('Login result:', response);
         // Handle the login response (e.g., redirect to dashboard on success)
-    })
-    .catch(error => {
-        console.error('Error:', error);
+      },
+      error: function(xhr, status, error) {
+        console.error('Login error:', error);
         // Handle the login error (e.g., display an error message)
+      }
     });
-}
+  }*/
 
-/*function loginValidation() {
+/* --------------------------------------- */
+/* ------    Login Section   ------ */
+/* --------------------------------------- */
+
+// Makes sure all fields are not empty
+function loginValidation() { 
     const allLoginFields = [
         'member-email', 'member-password'
     ].every(id => document.getElementById(id).value.trim() !== "");
@@ -162,8 +201,8 @@ function loginRequest() {
     // the user's form will shake.
     allLoginFields?  loginRequest() : shake(800);
 }
-
-function loginRequest() {
+// Stores email and hashes password
+function loginRequest() { 
     const usertext = document.getElementById('member-email');
     const ciphertext = hashPassword(document.getElementById('member-password').value.trim());
     
@@ -171,8 +210,7 @@ function loginRequest() {
     console.log(ciphertext);
 
 }
-
-
+// Hashes password and returns to loginRequest
 async function hashPassword(password) {
     // Encode the password as UTF-8
     const msgBuffer = new TextEncoder().encode(password); 
@@ -185,7 +223,34 @@ async function hashPassword(password) {
     const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     
     return hashArray;
-}*/
+}
+
+// Sends credentials to server
+function sendRequest(username, password) {
+    
+    const data = JSON.stringify( {
+        username: username,
+        password: password
+    });
+    
+      console.log(data);
+    
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', sendReturnUrl);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            console.log("it worked");
+
+        }
+        else {
+            console.log('Error returning items:', xhr.statusText);
+        }
+    }
+
+    xhr.send(data);
+}
 
 
 /* --------------------------------------- */
@@ -228,7 +293,7 @@ function register() {
 
 
 
-/*async function sendRequest(user, pass) {
+/*async function loginRequest(user, pass) {
     try {
         const response = await fetch('https://cougarchronicles.onrender.com/login', {
             method: 'POST',
@@ -248,33 +313,6 @@ function register() {
     }
 }*/
 
-// Function for Checklist 3 buttons
-/*function checklist3() {
-    var buttonId = event.target.id;
-    if (buttonId === 'staff-page-access') {
-        window.location = "..//Staff Page/staff.html";
-    } else if (buttonId === 'member-page-access') {
-        window.location = "..//Dashboard/dashboard.html";
-    }
-}*/
 
-/*$(document).ready(function() {
-    var myObject = {
-        rPassword: "username",
-        sPassword: "password"
-    };
 
-    $.ajax({
-        url: 'https://cougarchronicles.onrender.com',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(myObject),
-        success: function(response) {
-            console.log('Server response:', response);
-        },
-        error: function(xhr, status, error) {
-            console.error('Error:', error);
-        }
-    });
-});*/
 

@@ -1,4 +1,5 @@
 const http = require('http');
+const url = require('url');
 const { getInitialCatalogInfo, getCatalogSearchWithRestrictions, insertDataToDatabase } = require('./routes/catalog');
 const { insertTransactionInfo } = require('./routes/checkout');
 const { getTransactionItems, returnItems } = require('./routes/returnItems');
@@ -36,9 +37,6 @@ const server = http.createServer((request, res) => {
             switch (pathname) {
                 case '/initial-catalog':
                     getInitialCatalogInfo(res);
-                    break;
-                case '/dashboard':
-                    getUser(res);
                     break;
                 default:
                     serve404(res, pathname);
@@ -124,8 +122,8 @@ const server = http.createServer((request, res) => {
                         serve404(res);
                     }
                 });
-            } 
-            else if (pathname === '/login') {
+                
+            } else if (pathname === '/loginUser') {
                 let body = '';
                 request.on('data', (chunk) => {
                     body += chunk.toString();
@@ -133,43 +131,56 @@ const server = http.createServer((request, res) => {
                 request.on('end', () => {
                     try {
                         const postData = JSON.parse(body);
-                        const username = postData.username;
-                        const password = postData.password;
-                        loginUser(res, username, password);
-                    } catch (error) {
+                        console.log(postData);
+                        loginUser(res, postData.username, postData.password);
+                    } 
+                    catch (error) {
                         console.error('Error parsing JSON:', error);
                         serve404(res);
                     }
                 });
-            } else if (pathname === '/register') {
-                let body = '';
-                request.on('data', (chunk) => {
-                    body += chunk.toString();
-                });
-                request.on('end', () => {
-                    try {
-                        const postData = JSON.parse(body);
-                        registerUser(res, postData.first_name, postData.last_name, postData.address,
-                                        postData.city_addr, postData.state_addr, postData.zipcode_addr,
-                                        postData.email, postData.password);
-                    } catch (error) {
-                        console.error('Error parsin JSON', error);
-                    }
-                });
-
+            
             } else {
                 serve404(res);
             }
             break;
             default:
                 serve404(res, pathname);
-           
-        
-    }
+        }
+
 });
+
+
+
+
+/*const serv = http.createServer((req, res) => {
+    if (req.method === 'POST' && req.url === '/login') {
+      let body = '';
+  
+      req.on('data', chunk => {
+        body += chunk.toString();
+      });
+  
+      req.on('end', () => {
+        const { username, password } = JSON.parse(body);
+  
+        // Perform authentication logic here
+        if (username === 'validuser' && password === 'validpassword') {
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: true, message: 'Login successful' }));
+        } else {
+          res.writeHead(401, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: false, message: 'Invalid credentials' }));
+        }
+      });
+    } else {
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'Not Found' }));
+    }
+  });*/
 
 
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
     console.log(`Server is running on port ${port}`);
-});
+}); 

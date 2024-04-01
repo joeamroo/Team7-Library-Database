@@ -49,19 +49,36 @@ function verifyPassword(receivedHashedPassword, storedHashedPassword) {
                 });
 }*/
 
-function loginUser(res, username, password) {
+/*function loginUser(res, username, password) {
     // Perform authentication logic here using the provided username and password
     // Example:
-    if (username === 'validuser' && password === 'validpassword') {
+    console.log('Here');
+    if (username === 'test@user.com' && password === 'password') {
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ success: true, message: 'Login successful' }));
     } else {
         res.writeHead(401, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ success: false, message: 'Invalid credentials' }));
     }
+}*/
+
+function loginUser(response, username, password) {
+    //const insertQuery = 'INSERT INTO transaction (member_id) values (?)';
+   
+    if (username === 'test@user.com' && password === 'password') {
+        response.statusCode = 200;
+        response.setHeader('Content-Type', 'application/json');
+        response.end(JSON.stringify({ success: true, message: 'Valid credentials' }));
+    } else {
+        response.statusCode = 401;
+        response.setHeader('Content-Type', 'application/json');
+        response.end(JSON.stringify({ success: true, message: 'Invalid credentials' }));
+    }
+
+    
+
+
 }
-
-
 
 
 function getUserStoredPassword(username) {

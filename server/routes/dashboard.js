@@ -30,5 +30,3 @@ module.exports = { getUser };
 
 
 
-
-module.exports = { getDash };
