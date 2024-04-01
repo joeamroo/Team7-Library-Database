@@ -53,16 +53,10 @@ function loginUser(response, username, password) {
 
 
 function getUserStoredPassword(username) {
-    // Placeholder function for fetching the stored hashed password
-    // In a real application, this would query your database
-    // For this example, let's assume the stored password is 'exampleHashedPassword'
+=
     return 'd033e22ae348aeb5660fc2140aec35850c4da997';
 }
 
-
-
-// Simulate a login attempt
-//loginUser('john_doe', receivedHashedPassword);
 
 
 
