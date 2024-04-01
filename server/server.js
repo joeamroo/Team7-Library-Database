@@ -5,11 +5,10 @@ const { getTransactionItems, returnItems } = require('./routes/returnItems');
 const { getUser } = require('./routes/dashboard');
 const { loginUser } = require('./routes/login');
 const { registerUser } = require('./routes/register');
-const path = require('path');
 
 function setCorsHeaders(res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET,fd POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
 
