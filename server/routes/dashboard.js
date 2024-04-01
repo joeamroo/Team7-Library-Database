@@ -13,29 +13,15 @@ const link = mysql.createConnection({
 
 
 
-function getDash(response) {
-    const sql_query = 'SELECT * FROM book';
+function getUser(response, user) {
+    const sql_query = 'SELECT';
     
-    link.query(sql_query, (err, results) => {
-
-
-        let returns = '';
-
-        results.forEach(item => {
-            returns += '<tr>Test</tr>';
-        });
-
-        const parent = fs.readFileSync('./front-end/dashboard/dashboard.html', 'utf-8');
-        const child = parent.replace('<!--orders-->', returns);
-
-        response.writeHead(200, { 'Content-Type': 'text/html'});
-        response.end(child, 'utf-8');
-    });
+   
     
     
 }
 
-module.exports = { getDash };
+module.exports = { getUser };
 
 
 

@@ -2,7 +2,7 @@ const http = require('http');
 const { getInitialCatalogInfo, getCatalogSearchWithRestrictions, insertDataToDatabase } = require('./routes/catalog');
 const { insertTransactionInfo } = require('./routes/checkout');
 const { getTransactionItems, returnItems } = require('./routes/returnItems');
-const { getDash } = require('./routes/dashboard');
+const { getUser } = require('./routes/dashboard');
 const { loginUser } = require('./routes/login');
 const { registerUser } = require('./routes/register');
 const path = require('path');
@@ -36,6 +36,9 @@ const server = http.createServer((request, res) => {
             switch (pathname) {
                 case '/initial-catalog':
                     getInitialCatalogInfo(res);
+                    break;
+                case '/dashboard':
+                    getUser(res);
                     break;
                 default:
                     serve404(res, pathname);
@@ -121,14 +124,8 @@ const server = http.createServer((request, res) => {
                         serve404(res);
                     }
                 });
-            }
-            else {
-                console.log('NOT FINDING PATH');
-                serve404(res);
-            }
-            break;
-            case 'POST':
-            if (pathname === '/login') {
+            } 
+            else if (pathname === '/login') {
                 let body = '';
                 request.on('data', (chunk) => {
                     body += chunk.toString();
@@ -136,8 +133,9 @@ const server = http.createServer((request, res) => {
                 request.on('end', () => {
                     try {
                         const postData = JSON.parse(body);
-                        loginUser(res, postData.rPassword, postData.sPassword);
-                        console.log(postData.rPassword, postdata.sPassword);
+                        const username = postData.username;
+                        const password = postData.password;
+                        loginUser(res, username, password);
                     } catch (error) {
                         console.error('Error parsing JSON:', error);
                         serve404(res);
