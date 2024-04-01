@@ -34,209 +34,100 @@
     <main>
       <section id="account-management">
         <h2>Account Management</h2>
-        <button id="createAccountBtn">Create Account</button>
-        <button id="editAccountBtn">Edit Account</button>
-        <button id="deleteAccountBtn">Delete Account</button>
-
-        <script>
-          $(document).ready(function() {
-            $('#createAccountBtn').click(function() {
-              const url = '/accounts';
-              const data = {
-                username: 'example_username',
-                password: 'example_password',
-                email: 'example@example.com',
-                role: 'user' 
-              };
-
-              sendRequest('POST', url, data, 'Account created successfully!');
-            });
-
-            $('#editAccountBtn').click(function() {
-              const accountId = prompt('Enter account ID to edit:');
-              if (!accountId) return;
-
-              const url = `/accounts/${accountId}`;
-              const data = {
-                username: 'new_username',
-                password: 'new_password',
-                email: 'new_email@example.com',
-                role: 'admin' 
-              };
-
-              sendRequest('PUT', url, data, 'Account edited successfully!');
-            });
-
-            $('#deleteAccountBtn').click(function() {
-              const accountId = prompt('Enter account ID to delete:');
-              if (!accountId) return;
-
-              const url = `/accounts/${accountId}`;
-
-              sendRequest('DELETE', url, null, 'Account deleted successfully!');
-            });
-
-            function sendRequest(method, url, data, successMessage) {
-              $.ajax({
-                type: method,
-                url: url,
-                data: JSON.stringify(data),
-                contentType: 'application/json',
-                success: function(response) {
-                  console.log('Response:', response);
-                  alert(successMessage);
-                },
-                error: function(xhr, status, error) {
-                  console.error('Error:', error);
-                  alert('Failed to perform action');
-                }
-              });
-            }
-          });
-
-        </script>
-      </section>
-
-      <section id="borrowing-rules">
-        <h2>Borrowing Rules</h2>
-        <button id="setRulesBtn">Set Borrowing Rules</button>
-
-        <script>
-          $(document).ready(function() {
-            $('#setRulesBtn').click(function() {
-              const borrowingRules = prompt('Enter borrowing rules (e.g., maximum number of books allowed per user):');
-              const fines = prompt('Enter fines (e.g., fine amount per day late):');
-              const loanPeriods = prompt('Enter loan periods (e.g., loan period for each type of item):');
-
-              const data = {
-                borrowingRules: borrowingRules,
-                fines: fines,
-                loanPeriods: loanPeriods
-              };
-
-              const url = '/library/rules';
-
-              sendRequest('PUT', url, data, 'Borrowing rules updated successfully!');
-            });
-
-            function sendRequest(method, url, data, successMessage) {
-              $.ajax({
-                type: method,
-                url: url,
-                data: JSON.stringify(data),
-                contentType: 'application/json',
-                success: function(response) {
-                  console.log('Response:', response);
-                  alert(successMessage);
-                },
-                error: function(xhr, status, error) {
-                  console.error('Error:', error);
-                  alert('Failed to perform action');
-                }
-              });
-            }
-          });
-
-        </script>
+        <body>
+          <h2>Create a New Staff Account</h2>
+          <form id="staffForm">
+            <div class="form-group">
+              <label for="staffID">Staff ID:</label>
+              <input type="text" id="staffID" name="staffID" required>
+            </div>
+            <div class="form-group">
+              <label for="username">Username:</label>
+              <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+              <label for="password">Password:</label>
+              <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+              <label for="firstName">First Name:</label>
+              <input type="text" id="firstName" name="firstName" required>
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name:</label>
+              <input type="text" id="lastName" name="lastName" required>
+            </div>
+            <div class="form-group">
+              <label for="staffPosition">Staff Position:</label>
+              <input type="text" id="staffPosition" name="staffPosition" required>
+            </div>
+            <div class="form-group">
+              <label for="employmentStatus">Employment Status:</label>
+              <select id="employmentStatus" name="employmentStatus" required>
+                <option value="Full-time">Full-time</option>
+                <option value="Part-time">Part-time</option>
+                <option value="Contract">Contract</option>
+                <option value="Intern">Intern</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="supervisor">Supervisor:</label>
+              <input type="text" id="supervisor" name="supervisor" required>
+            </div>
+            <div class="form-group">
+              <label for="phoneNumber">Phone Number:</label>
+              <input type="tel" id="phoneNumber" name="phoneNumber" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+            <button type="submit">Submit</button>
+          </form>
+        </body>
       </section>
 
       <section id="communication">
         <h2>Communication with Users</h2>
-        <div class="dropdown">
-          <button class="dropbtn">Send Message</button>
-          <div class="dropdown-content">
-            <a href="#" id="memberMessageBtn">Send Message to Members</a>
-            <a href="#" id="staffMessageBtn">Send Message to Staff</a>
-            <a href="#" id="adminMessageBtn">Send Message to Admins</a>
-            <a href="#" id="allUsersMessageBtn">Send Message to All Users</a>
+        <form id="communicationForm">
+          <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="4" required></textarea>
           </div>
-          <script>
-            $(document).ready(function() {
-              $('#memberMessageBtn').click(function() {
-                const message = prompt('Enter message for members:');
-                sendMessage('member', message);
-              });
-
-              $('#staffMessageBtn').click(function() {
-                const message = prompt('Enter message for staff:');
-                sendMessage('staff', message);
-              });
-
-              $('#adminMessageBtn').click(function() {
-                const message = prompt('Enter message for admins:');
-                sendMessage('admin', message);
-              });
-
-              $('#allUsersMessageBtn').click(function() {
-                const message = prompt('Enter message for all users:');
-                sendMessage('all', message); 
-              });
-
-              function sendMessage(role, message) {
-                const url = `/users/message/${role}`;
-                const data = {
-                  message: message
-                };
-
-                sendRequest('POST', url, data, 'Message sent successfully!');
-              }
-
-              function sendRequest(method, url, data, successMessage) {
-                $.ajax({
-                  type: method,
-                  url: url,
-                  data: JSON.stringify(data),
-                  contentType: 'application/json',
-                  success: function(response) {
-                    console.log('Response:', response);
-                    alert(successMessage);
-                  },
-                  error: function(xhr, status, error) {
-                    console.error('Error:', error);
-                    alert('Failed to send message');
-                  }
-                });
-              }
-            });
-
-          </script>
-        </div>
+          <div class="form-group">
+            <label for="recipient">Recipient:</label>
+            <select id="recipient" name="recipient" required>
+              <option value="member">Member</option>
+              <option value="staff">Staff</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <button type="submit">Send Message</button>
+        </form>
       </section>
 
-      <div id="eventModal" class="modal">
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <h2>Manage Library Events</h2>
-          <button id="addEventBtn">Add Event</button>
-          <button id="editEventBtn">Edit Event</button>
-          <button id="deleteEventBtn">Delete Event</button>
-        </div>
-      </div>
-
-      <script>
-        $(document).ready(function() {
-          $('#manageEventsBtn').click(function() {
-            $('#eventModal').show();
-          });
-
-          $('.close').click(function() {
-            $('#eventModal').hide();
-          });
-
-          $('#addEventBtn').click(function() {
-            alert('Add Event button clicked');
-          });
-
-          $('#editEventBtn').click(function() {
-            alert('Edit Event button clicked');
-          });
-
-          $('#deleteEventBtn').click(function() {
-            alert('Delete Event button clicked');
-          });
-        });
-
-      </script>
+<body>
+        <h2>Add Classes/Events</h2>
+        <form id="eventForm">
+          <div class="form-group">
+            <label for="eventName">Event Name:</label>
+            <input type="text" id="eventName" name="eventName" required>
+          </div>
+          <div class="form-group">
+            <label for="eventDate">Date:</label>
+            <input type="date" id="eventDate" name="eventDate" required>
+          </div>
+          <div class="form-group">
+            <label for="eventLocation">Location:</label>
+            <input type="text" id="eventLocation" name="eventLocation" required>
+          </div>
+          <div class="form-group">
+            <label for="eventOrganizer">Organizer:</label>
+            <input type="text" id="eventOrganizer" name="eventOrganizer" required>
+          </div>
+          <button type="submit">Add Event</button>
+        </form>
+      </body>
     </main>
 
     <footer>
