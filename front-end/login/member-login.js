@@ -61,7 +61,7 @@ loginBtn.addEventListener('click', () => {
 });
 
 signinBtn.addEventListener('click', () => {
-    loginValidation();
+    loginRequest();
 })
 
 
@@ -123,7 +123,37 @@ function homepage() {
 /* ------    Login Section   ------ */
 /* --------------------------------------- */
 
-function loginValidation() {
+function loginRequest() {
+    const username = document.getElementById('member-email').value.trim();
+    const password = document.getElementById('member-password').value.trim();
+
+    const data = {
+        username: username,
+        password: password
+    };
+
+    console.log(username);
+    console.log(password);
+
+    fetch('https://cougarchronicles.onrender.com/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+        console.log('Login result:', result);
+        // Handle the login response (e.g., redirect to dashboard on success)
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Handle the login error (e.g., display an error message)
+    });
+}
+
+/*function loginValidation() {
     const allLoginFields = [
         'member-email', 'member-password'
     ].every(id => document.getElementById(id).value.trim() !== "");
@@ -155,7 +185,7 @@ async function hashPassword(password) {
     const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     
     return hashArray;
-}
+}*/
 
 
 /* --------------------------------------- */

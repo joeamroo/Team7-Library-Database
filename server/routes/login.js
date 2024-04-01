@@ -21,7 +21,7 @@ function verifyPassword(receivedHashedPassword, storedHashedPassword) {
 }
 
 // user login function
-function loginUser(response, username, password) {
+/*function loginUser(response, username, password) {
    
     const query = "SELECT member_username, member_password FROM member_credentials WHERE" +
                   "member_username = ? AND member_password = ?";
@@ -47,6 +47,18 @@ function loginUser(response, username, password) {
                         response.end('Login failed');
                     }
                 });
+}*/
+
+function loginUser(res, username, password) {
+    // Perform authentication logic here using the provided username and password
+    // Example:
+    if (username === 'validuser' && password === 'validpassword') {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: true, message: 'Login successful' }));
+    } else {
+        res.writeHead(401, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: false, message: 'Invalid credentials' }));
+    }
 }
 
 
