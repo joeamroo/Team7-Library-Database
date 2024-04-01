@@ -6,11 +6,10 @@ const { getTransactionItems, returnItems } = require('./routes/returnItems');
 const { getUser } = require('./routes/dashboard');
 const { loginUser } = require('./routes/login');
 const { registerUser } = require('./routes/register');
-const path = require('path');
 
 function setCorsHeaders(res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET,fd POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
 
@@ -43,6 +42,7 @@ const server = http.createServer((request, res) => {
             }
             break;
         case 'POST':
+            setCorsHeaders(res);
             if (pathname === '/catalog') {
                 let body = '';
                 request.on('data', (chunk) => {
@@ -122,6 +122,8 @@ const server = http.createServer((request, res) => {
                         serve404(res);
                     }
                 });
+            }
+            else if (pathname === '/login') {
                 
             } else if (pathname === '/loginUser') {
                 let body = '';
@@ -139,15 +141,30 @@ const server = http.createServer((request, res) => {
                         serve404(res);
                     }
                 });
-            
-            } else {
-                serve404(res);
+            } 
+            else if (pathname === '/register') {
+                let body = '';
+                request.on('data', (chunk) => {
+                    body += chunk.toString();
+                });
+                request.on('end', () => {
+                    try {
+                        const postData = JSON.parse(body);
+                        registerUser(res, postData.first_name, postData.last_name, postData.address,
+                                        postData.city_addr, postData.state_addr, postData.zipcode_addr,
+                                        postData.email, postData.password);
+                    } catch (error) {
+                        console.error('Error parsin JSON', error);
+                    }
+                });
+
+            } 
+            else {
+                serve404(res, pathname);
             }
             break;
-            default:
-                serve404(res, pathname);
-        }
-
+           
+    }
 });
 
 

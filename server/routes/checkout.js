@@ -31,6 +31,7 @@ function insertTransactionInfo(response, memberId, checkout_items) {
         }
 
         const transactionId = result.insertId;
+        updatePromises = [];
 
         checkout_items.forEach(item => {
             const {type, id} = item;

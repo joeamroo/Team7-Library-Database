@@ -10,7 +10,7 @@
         } else {
             // If not logged in, prompt the user to login
             if (confirm("You need to login to sign up for this class. Do you want to login?")) {
-                window.location.href = "/front-end/login/member-login.html"; // Redirect to the login page
+                window.location.href = "../login/member-login.html"; // Redirect to the login page
             }
         }
     }
