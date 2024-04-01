@@ -146,29 +146,29 @@ function returnItems(response, items) {
             updateHoldsQuery = 'UPDATE device SET current_holds = current_holds - 1 WHERE device_id = ? AND current_holds > 0';
         }
         updateReturnDateQuery = 'UPDATE transaction SET return_date = NOW() WHERE transaction_id = ?';
-        findNextHoldQuery = `SELECT hold_id, member_id, phone_number FROM hold_request, member WHERE hold_request.member_id = member.member_id AND item_id = ? AND STATUS = 'active' ORDER BY hold_id ASC LIMIT 1`;
+        findNextHoldQuery = `SELECT hold_id, phone_number, member_id FROM hold_request, member WHERE hold_request.member_id = member.member_id AND item_id = ? AND STATUS = 'active' ORDER BY hold_id ASC LIMIT 1`;
 
         if (returnQuery && updateCopiesQuery) {
             updatePromises.push(
                 connection.query(returnQuery, [itemId, transactionId]),
                 connection.query(updateCopiesQuery, [itemId]),
                 connection.query(updateHoldsQuery, [itemId]),
-                connection.query(updateReturnDateQuery, [transactionId]),
-                connection.query(findNextHoldQuery, [itemId], (err, results) => {
+                connection.query(updateReturnDateQuery, [transactionId], (err, results) => {
                     if (err) {
-                        console.error('Error getting next error:', err);
+                        console.error('Error retrieving next hold:', err);
                         return;
                     }
-                    if (results.lenght > 0) {
-                        const nextHoldId = results[0].hold_id;
-                        const nextMemberId = results[0].member_id;
+                    if (results.length > 0) {
+                        const holdTurnId = results[0].hold_id;
+                        const turnMemberId = results[0].member_id;
+                        const turnPhoneNum = results[0].phone_number;
+
 
                     }
                 })
             );
         }
     });
-
     
     Promise.all(updatePromises).then(() => {
         response.writeHead(200, { 'Content-Type': 'application/json' });
