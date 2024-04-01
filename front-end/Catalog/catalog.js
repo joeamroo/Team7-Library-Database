@@ -194,6 +194,7 @@ document.addEventListener('click', function(event) {
     if (event.target.classList.contains('hold-btn')) {
         const currAvail = parseInt(event.target.closest('.catalog-item').querySelector('#currAvail').textContent);
         const medium = event.target.closest('.catalog-item').querySelector('#medium').textContent;
+        const currHolds = event.target.closest('.catalog-item').querySelector('#currHolds');
 
         let itemId;
 
@@ -219,11 +220,11 @@ document.addEventListener('click', function(event) {
             xhr.onload = function() {
                 if (xhr.status === 200) {
                     const responseData = JSON.parse(xhr.responseText);
-                    console.log('Updated current_holds:', responseData.updatedHolds);
                     const button = event.target.closest('.hold-btn');
                     if (button) {
                         button.innerHTML = '<i class="uil uil-check"></i> Hold Placed';
                     }
+                    currHolds.textContent = responseData.updatedHolds;
                 } 
                 else {
                     console.error('Error :', xhr.statusText);
