@@ -3,7 +3,6 @@
 
 const backendUrl = 'https://cougarchronicles.onrender.com'; 
 const checkoutInsertUrl = `${backendUrl}/checkout-insert`;
-const checkoutTransacIdUrl = `${backendUrl}/checkout-transacID`;
 
 document.addEventListener('DOMContentLoaded', function() {
     const finalizeBtn = document.getElementById('finalize-btn');
