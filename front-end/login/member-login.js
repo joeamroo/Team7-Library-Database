@@ -10,7 +10,6 @@ const link = document.createElement('a');
 const shakeEvent = document.querySelector('.begin');
 var staffCheck = document.querySelector('.toggle-switch');
 
-
 /* --------------------------------------- */
 /* ----- Adds a Sign Up Button ----- */
 /* ----- and validates input   ----- */
@@ -46,7 +45,7 @@ overlayButton.addEventListener('click', function(event) {
         'state_addr', 'zipcode_addr', 'email', 'password'
     ].every(id => document.getElementById(id).value.trim() !== "");
 
-    allFieldsFilled? console.log("true") : shake(600);
+    allFieldsFilled? register() : shake(600);
 });
 /* --------------------------------------- */
 
@@ -138,7 +137,7 @@ function loginRequest() {
     const usertext = document.getElementById('member-email');
     const ciphertext = hashPassword(document.getElementById('member-password').value.trim());
     
-    sendRequest(ciphertext);
+    sendRequest(usertext, ciphertext);
   
 
 }
@@ -155,24 +154,69 @@ async function hashPassword(password) {
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     
-    return hashHex;
+    return hashArray;
 }
 
-function sendRequest(pass) {
-    console.log(pass);
+
+/* --------------------------------------- */
+/* ------    Register Section   ------ */
+/* --------------------------------------- */
+
+
+
+function register() {
     const backendUrl = 'https://cougarchronicles.onrender.com';
-    const loginUrl = '${backendUrl}/login';
+    const registerUrl = '${backendUrl}/register';
+
+    const registerFields = [
+        'first_name', 'last_name', 'address', 'city_addr', 
+        'state_addr', 'zipcode_addr', 'email', 'password'
+    ].every(id => document.getElementById(id).value.trim() !== "");
 
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', loginUrl);
-    xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.open('POST', registerUrl);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onerror = function() {
+        console.error("Error:", xhr.statusText);
+    }
 
-    const data = JSON.stringify(pass);
+    const data = JSON.stringify({
+        first_name: first_name,
+        last_name: last_name,
+        address: address,
+        city_addr: city_addr,
+        state_addr: state_addr,
+        zipcode_addr: zipcode_addr,
+        email: email,
+        password: password
+    });
+
 
     xhr.send(data);
 }
 
-    
+
+
+/*async function sendRequest(user, pass) {
+    try {
+        const response = await fetch('https://cougarchronicles.onrender.com/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user: "user",
+                password: "pass"
+            }),
+        });
+
+        const data = await response.json();
+        console.log('Server response:', data);
+    } catch (error) {
+        console.error('Error sending password to the server:', error);
+    }
+}*/
+
 // Function for Checklist 3 buttons
 /*function checklist3() {
     var buttonId = event.target.id;
@@ -183,4 +227,23 @@ function sendRequest(pass) {
     }
 }*/
 
+/*$(document).ready(function() {
+    var myObject = {
+        rPassword: "username",
+        sPassword: "password"
+    };
+
+    $.ajax({
+        url: 'https://cougarchronicles.onrender.com',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(myObject),
+        success: function(response) {
+            console.log('Server response:', response);
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', error);
+        }
+    });
+});*/
 

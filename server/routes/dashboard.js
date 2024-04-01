@@ -35,7 +35,7 @@ function getDash(response) {
     
 }
 
-
+module.exports = { getDash };
 
 
 

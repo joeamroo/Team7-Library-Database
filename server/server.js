@@ -3,12 +3,13 @@ const { getInitialCatalogInfo, getCatalogSearchWithRestrictions, insertDataToDat
 const { insertTransactionInfo } = require('./routes/checkout');
 const { getTransactionItems, returnItems } = require('./routes/returnItems');
 const { getDash } = require('./routes/dashboard');
-const { verifyPassword } = require('./routes/login');
+const { loginUser } = require('./routes/login');
+const { registerUser } = require('./routes/register');
 const path = require('path');
 
 function setCorsHeaders(res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,fd POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
 
@@ -35,27 +36,6 @@ const server = http.createServer((request, res) => {
             switch (pathname) {
                 case '/initial-catalog':
                     getInitialCatalogInfo(res);
-                    break;
-                case '/dashboard':
-                    getDash(res);
-                    break;
-                case '/dashboard.css':
-                    serveStaticFile('./front-end/dashboard/dashboard.css', 'text/css', res);
-                    break;
-                case '/login':
-                    getCredentials(res);
-                    break;
-                case '/member-login.html':
-                    serveStaticFile('./front-end/login/member-login.html', 'text/html', res);
-                    break;
-                case '/member-login.css':
-                    serveStaticFile('./front-end/login/member-login.css', 'text/css', res);
-                    break;
-                case '/member-img.css':
-                    serveStaticFile('./front-end/login/member-img.css', 'text/css', res);
-                    break;
-                case '/member-login.js':
-                    serveStaticFile('./front-end/login/member-login.js', 'application/javascript', res);
                     break;
                 default:
                     serve404(res, pathname);
@@ -147,8 +127,45 @@ const server = http.createServer((request, res) => {
                 serve404(res);
             }
             break;
+            case 'POST':
+            if (pathname === '/login') {
+                let body = '';
+                request.on('data', (chunk) => {
+                    body += chunk.toString();
+                });
+                request.on('end', () => {
+                    try {
+                        const postData = JSON.parse(body);
+                        loginUser(res, postData.rPassword, postData.sPassword);
+                        console.log(postData.rPassword, postdata.sPassword);
+                    } catch (error) {
+                        console.error('Error parsing JSON:', error);
+                        serve404(res);
+                    }
+                });
+            } else if (pathname === '/register') {
+                let body = '';
+                request.on('data', (chunk) => {
+                    body += chunk.toString();
+                });
+                request.on('end', () => {
+                    try {
+                        const postData = JSON.parse(body);
+                        registerUser(res, postData.first_name, postData.last_name, postData.address,
+                                        postData.city_addr, postData.state_addr, postData.zipcode_addr,
+                                        postData.email, postData.password);
+                    } catch (error) {
+                        console.error('Error parsin JSON', error);
+                    }
+                });
+
+            } else {
+                serve404(res);
+            }
+            break;
             default:
-            serve404(res, pathname);
+                serve404(res, pathname);
+           
         
     }
 });

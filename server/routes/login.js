@@ -20,19 +20,37 @@ function verifyPassword(receivedHashedPassword, storedHashedPassword) {
     return receivedHashedPassword === storedHashedPassword;
 }
 
-// Example usage with a hypothetical user login function
-function loginUser(username, receivedHashedPassword) {
-    // Placeholder for retrieving the stored hashed password for a user
-    const storedHashedPassword = getUserStoredPassword(username);
+// user login function
+function loginUser(response, username, password) {
+   
+    const query = "SELECT member_username, member_password FROM member_credentials WHERE" +
+                  "member_username = ? AND member_password = ?";
 
-    if (verifyPassword(receivedHashedPassword, storedHashedPassword)) {
-        console.log('Login successful');
-        // Proceed with login process
-    } else {
-        console.log('Login failed: Incorrect password');
-        // Handle login failure
-    }
+                  link.query(query, [username, password], (err, results) => {
+                    if (err) {
+                        console.error('Database error', err);
+                        response.writeHead(500); // HTTP status code 500: Internal Server Error
+                        response.end('Server error');
+                        return;
+                    }
+            
+                    // Check if any results were returned
+                    if (results.length > 0) {
+                        // User found, proceed with login
+                        console.log('User found:', results[0].member_username);
+                        response.writeHead(200); // HTTP status code 200: OK
+                        response.end('Login successful');
+                    } else {
+                        // No user found with the provided username and password
+                        console.log('Login failed: User not found or password incorrect');
+                        response.writeHead(401); // HTTP status code 401: Unauthorized
+                        response.end('Login failed');
+                    }
+                });
 }
+
+
+
 
 function getUserStoredPassword(username) {
     // Placeholder function for fetching the stored hashed password
@@ -48,4 +66,4 @@ function getUserStoredPassword(username) {
 
 
 
-module.exports = { verifyPassword };
+module.exports = { loginUser };
