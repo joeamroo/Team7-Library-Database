@@ -122,13 +122,7 @@ const server = http.createServer((request, res) => {
                     }
                 });
             }
-            else {
-                console.log('NOT FINDING PATH');
-                serve404(res);
-            }
-            break;
-            case 'POST':
-            if (pathname === '/login') {
+            else if (pathname === '/login') {
                 let body = '';
                 request.on('data', (chunk) => {
                     body += chunk.toString();
@@ -143,7 +137,8 @@ const server = http.createServer((request, res) => {
                         serve404(res);
                     }
                 });
-            } else if (pathname === '/register') {
+            } 
+            else if (pathname === '/register') {
                 let body = '';
                 request.on('data', (chunk) => {
                     body += chunk.toString();
@@ -159,14 +154,12 @@ const server = http.createServer((request, res) => {
                     }
                 });
 
-            } else {
-                serve404(res);
+            } 
+            else {
+                serve404(res, pathname);
             }
             break;
-            default:
-                serve404(res, pathname);
            
-        
     }
 });
 

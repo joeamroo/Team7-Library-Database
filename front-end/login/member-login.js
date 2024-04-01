@@ -115,7 +115,7 @@ function forgotPass() {
 
 /* Login/Registration to Homepage*/
 function homepage() {
-    window.location.href = '/';
+    window.location.href = '../Home/home.html';
 }
 
 

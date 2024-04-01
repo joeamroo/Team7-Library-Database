@@ -15,7 +15,6 @@ connection.connect((err) => {
 
 
 function getTransactionItems(response, transactionId) {
-    console.log('Entered the function hereeeeee');
     const transactionQuery = 'SELECT * FROM transaction_view where transaction_id = (?) AND returned = 0';
 
     let transactionInfoHtml = '';
@@ -133,26 +132,43 @@ function returnItems(response, items) {
 
         if (medium === 'book') {
             returnQuery = 'UPDATE book_transaction SET returned = 1 WHERE book_id = ? AND transaction_id = ?';
-            updateCopiesQuery = 'UPDATE book SET available_copies = available_copies + 1 where isbn = ?';
+            updateCopiesQuery = 'UPDATE book SET available_copies = available_copies + 1 WHERE isbn = ? AND current_holds = 0';
+            updateHoldsQuery = 'UPDATE book SET current_holds = current_holds - 1 WHERE isbn = ? AND current_holds > 0';
         }
         else if (medium === 'movie') {
             returnQuery = 'UPDATE movie_transaction SET returned = 1 WHERE movie_id = ? AND transaction_id = ?';
-            updateCopiesQuery = 'UPDATE movie SET available_copies = available_copies + 1 where movie_id = ?';
+            updateCopiesQuery = 'UPDATE movie SET available_copies = available_copies + 1 WHERE movie_id = ? AND current_holds = 0';
+            updateHoldsQuery = 'UPDATE movie SET current_holds = current_holds - 1 WHERE movie_id = ? AND current_holds > 0';
         }
         else if (medium === 'device') {
             returnQuery = 'UPDATE device_transaction SET returned = 1 WHERE device_id = ? AND transaction_id = ?';
-            updateCopiesQuery = 'UPDATE device SET available_copies = available_copies + 1 where device_id = ?';
+            updateCopiesQuery = 'UPDATE device SET available_copies = available_copies + 1 WHERE device_id = ? AND current_holds = 0';
+            updateHoldsQuery = 'UPDATE device SET current_holds = current_holds - 1 WHERE device_id = ? AND current_holds > 0';
         }
         updateReturnDateQuery = 'UPDATE transaction SET return_date = NOW() WHERE transaction_id = ?';
+        findNextHoldQuery = `SELECT hold_id, member_id, phone_number FROM hold_request, member WHERE hold_request.member_id = member.member_id AND item_id = ? AND STATUS = 'active' ORDER BY hold_id ASC LIMIT 1`;
 
         if (returnQuery && updateCopiesQuery) {
             updatePromises.push(
                 connection.query(returnQuery, [itemId, transactionId]),
                 connection.query(updateCopiesQuery, [itemId]),
-                connection.query(updateReturnDateQuery, [transactionId])
+                connection.query(updateHoldsQuery, [itemId]),
+                connection.query(updateReturnDateQuery, [transactionId]),
+                connection.query(findNextHoldQuery, [itemId], (err, results) => {
+                    if (err) {
+                        console.error('Error getting next error:', err);
+                        return;
+                    }
+                    if (results.lenght > 0) {
+                        const nextHoldId = results[0].hold_id;
+                        const nextMemberId = results[0].member_id;
+
+                    }
+                })
             );
         }
     });
+
     
     Promise.all(updatePromises).then(() => {
         response.writeHead(200, { 'Content-Type': 'application/json' });
