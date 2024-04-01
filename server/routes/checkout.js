@@ -55,8 +55,7 @@ function insertTransactionInfo(response, memberId, checkout_items) {
 
         Promise.all(updatePromises)
             .then(() => {
-                response.statusCode = 200;
-                response.setHeader('Content-Type', 'application/json');
+                response.writeHead(200, { 'Content-Type': 'application/json' });
                 response.end(JSON.stringify({ transactionId }));
             })
             .catch(error => {
