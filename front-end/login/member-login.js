@@ -138,7 +138,7 @@ function loginRequest() {
     const ciphertext = hashPassword(document.getElementById('member-password').value.trim());
     
     sendRequest(usertext, ciphertext);
-  
+    console.log(ciphertext);
 
 }
 
@@ -165,8 +165,7 @@ async function hashPassword(password) {
 
 
 function register() {
-    const backendUrl = 'https://cougarchronicles.onrender.com';
-    const registerUrl = '${backendUrl}/register';
+    const backendUrl = 'https://cougarchronicles.onrender.com/login';
 
     const registerFields = [
         'first_name', 'last_name', 'address', 'city_addr', 
@@ -174,22 +173,24 @@ function register() {
     ].every(id => document.getElementById(id).value.trim() !== "");
 
     const xhr = new XMLHttpRequest();
-        xhr.open('POST', registerUrl);
+        xhr.open('POST', backendUrl);
         xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onerror = function() {
         console.error("Error:", xhr.statusText);
     }
 
     const data = JSON.stringify({
-        first_name: first_name,
-        last_name: last_name,
-        address: address,
-        city_addr: city_addr,
-        state_addr: state_addr,
-        zipcode_addr: zipcode_addr,
-        email: email,
-        password: password
+        first_name: registerFields[0],
+        last_name: registerFields[1],
+        address: registerFields[2],
+        city_addr: registerFields[3],
+        state_addr: registerFields[4],
+        zipcode_addr: registerFields[5],
+        email: registerFields[6],
+        password: registerFields[7]
     });
+
+    console.log(data);
 
 
     xhr.send(data);

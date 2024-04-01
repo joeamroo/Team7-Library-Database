@@ -53,7 +53,7 @@ function loginUser(response, username, password) {
 
 
 function getUserStoredPassword(username) {
-=
+
     return 'd033e22ae348aeb5660fc2140aec35850c4da997';
 }
 
