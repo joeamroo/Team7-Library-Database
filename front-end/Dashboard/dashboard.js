@@ -42,3 +42,33 @@ var input = document.querySelector(".input-box");
           list.style.maxHeight = list.scrollHeight + "px";
         });
       }
+
+
+      let notification = document.querySelector(".notification");
+
+      function showNotification() {
+        if (notification.classList.contains("hidden")) {
+          notification.classList.toggle("hidden");
+        }
+        notification.classList.toggle("active");
+        const timeout = setTimeout(() => {
+          if (
+            notification.classList.contains("active") &&
+            !notification.classList.contains("hidden")
+          ) {
+            notification.classList.toggle("active");
+            notification.classList.toggle("hidden");
+          } else {
+            window.clearTimeout(timeout);
+          }
+        }, 5000);
+      }
+    
+      function closeNote() {
+        notification.classList.toggle("active");
+        notification.classList.toggle("hidden");
+      }
+      
+    
+      // Show notification on page load
+      window.addEventListener("load", showNotification);
