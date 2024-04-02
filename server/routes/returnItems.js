@@ -1,5 +1,10 @@
 const mysql = require('mysql');
 
+const twilio = require('twilio');
+const accountSid = 'ACcdcd6f0cca79738f15b9c37a29a3ec1f';
+const authToken = '635fab36ec5a503120a11da85f8a0b98';
+const client = twilio(accountSid, authToken);
+
 const connection = mysql.createConnection({
     host: 'library-database-sytem.mysql.database.azure.com',
     user: 'lbrGuest',
@@ -146,23 +151,33 @@ function returnItems(response, items) {
             updateHoldsQuery = 'UPDATE device SET current_holds = current_holds - 1 WHERE device_id = ? AND current_holds > 0';
         }
         updateReturnDateQuery = 'UPDATE transaction SET return_date = NOW() WHERE transaction_id = ?';
-        findNextHoldQuery = `SELECT hold_id, phone_number, member_id FROM hold_request, member WHERE hold_request.member_id = member.member_id AND item_id = ? AND STATUS = 'active' ORDER BY hold_id ASC LIMIT 1`;
+        findNextHoldQuery = `SELECT hold_id, phone_number, hold_request.member_id, item_name, COALESCE(movie_id, isbn, device_id) AS item_id FROM hold_request, member WHERE hold_request.member_id = member.member_id AND COALESCE(movie_id, isbn, device_id) = ? AND hold_request.status = 'active' ORDER BY hold_id ASC LIMIT 1`;
 
         if (returnQuery && updateCopiesQuery) {
             updatePromises.push(
                 connection.query(returnQuery, [itemId, transactionId]),
                 connection.query(updateCopiesQuery, [itemId]),
                 connection.query(updateHoldsQuery, [itemId]),
-                connection.query(updateReturnDateQuery, [transactionId], (err, results) => {
+                connection.query(updateReturnDateQuery, [transactionId]),
+                connection.query(findNextHoldQuery, [itemId], (err, results) => {
                     if (err) {
                         console.error('Error retrieving next hold:', err);
                         return;
                     }
                     if (results.length > 0) {
                         const holdTurnId = results[0].hold_id;
-                        const turnMemberId = results[0].member_id;
                         const turnPhoneNum = results[0].phone_number;
-
+                        const turnMemberId = results[0].member_id;
+                        const turnItemName = results[0].item_name;
+                        const turnItemId = results[0].item_id; 
+                        
+                        client.messages.create ({
+                            body: `Your item (${turnItemName}) is ready for pickup.`,
+                            from: 'your_twilio_phone_number',
+                            to: turnPhoneNum
+                        })
+                        .then(message => console.log('Message sent:', message.sid))
+                        .catch(err => console.error('Error sending message:', err));
 
                     }
                 })
