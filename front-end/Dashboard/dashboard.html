@@ -6,6 +6,16 @@
 	<title>Library Dashboard</title>
 	<link rel="stylesheet" href="dashboard.css">
 	<!--<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>-->
+  <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round|Material+Icons+Sharp|Material+Icons+Two+Tone"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Foldit:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
 </head>
 <body>
 
@@ -69,9 +79,29 @@
 
   <a class="user-greet">Welcome, User!</a>
 
+  
   <div class="rounded-rectangle">
+    <div class="title-dropdown-container">
+      <a class="order-title">Orders</a>
+      <div class="dropdown">
+        <div class="input-box"></div>
+        <div class="list">
+          <div class="search-box">
+            <input type="search" name="" id="search" placeholder="Search Options" onkeyup="search(this)" />
+          </div>
+          <input type="radio" name="drop1" id="id11" class="radio" />
+          <label for="id11">
+            <span class="material-icons-outlined">new_label</span>
+            <span class="name">Book</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  
+ 
+  
 
-    <a class="order-title">Orders</a>
+    
 
     <!---->
     <div class="recent-orders">
@@ -94,6 +124,8 @@
       </table>
     </div>
    </div>
+    
+  </div>
 
   </header>
 
@@ -114,6 +146,7 @@
 </container>
 
   <!-- Container Ends -->
-
+  
 </body>
+<script src="dashboard.js"></script>
 </html>

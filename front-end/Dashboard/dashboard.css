@@ -42,6 +42,8 @@ header {
 
 
 
+
+
 /* ===================== Top Bar ===================== */
 .top-bar {
   display: flex;
@@ -235,6 +237,7 @@ header {
 
   /*Outer Rectangle*/
   .rounded-rectangle {
+    display: absolute;
     background-color: var(--f9f9f9);
     border-radius: 20px; /* Adjust the px value to increase or decrease the roundness */
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -248,11 +251,13 @@ header {
 
   .order-title {
     font-size: x-large;
+    padding-bottom: 30px;
   }
 
   .recent-orders {
-    width: 80%;
-    margin: 0 auto;
+    display: absolute;
+    width: 100%;
+    margin: 20px 0px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -304,3 +309,144 @@ header {
   }
 
 /* ===================== Recent Order Ends ===================== */
+
+
+
+.dropdown {
+  width: 200px;
+  height: fit-content;
+  box-sizing: border-box;
+  position: relative;
+  left: 150px;
+  bottom: 30px;
+}
+.input-box {
+  width: 100%;
+  height: 40px;
+  box-sizing: border-box;
+  outline: 0.3mm solid rgba(0, 0, 0, 0.15);
+  border-radius: 2mm;
+  padding: 10px 15px;
+  font-family: poppins;
+  font-size: 14px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: flex-start;
+  position: flex;
+  left: 150px;
+  bottom: 30px;
+}
+.input-box::before {
+  content: "expand_more";
+  font-family: "Material Icons";
+  position: absolute;
+  font-size: 18px;
+  top: 50%;
+  right: 15px;
+  transform: translate(0, -50%);
+  width: fit-content;
+  height: fit-content;
+}
+.input-box.open::before {
+  content: "expand_less";
+}
+.input-box:empty::after {
+  content: "Select Title";
+  color: rgba(0, 0, 0, 0.5);
+}
+.list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: fit-content;
+  background: white;
+  margin-top: 10px;
+  border-radius: 2mm;
+  overflow: hidden;
+  display: relative;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  max-height: 0;
+  transition: 0.25s ease-out;
+}
+.list input {
+  display: none;
+}
+.list label {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  font-family: poppins;
+  font-size: 14px;
+  padding: 10px 15px;
+  box-sizing: border-box;
+  cursor: pointer;
+  position: relative;
+}
+.list label .material-icons-outlined,
+.input-box .material-icons-outlined {
+  margin-right: 5px;
+  font-size: 22px;
+}
+
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+
+.list label:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+input:checked + label {
+  color: rgb(20, 117, 213);
+  background: rgb(238, 245, 252);
+}
+input:checked + label::before {
+  content: "done";
+  font-family: "Material Icons";
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translate(0, -50%);
+  font-size: 18px;
+}
+.open {
+  outline: 0.7mm solid rgb(20, 117, 213);
+}
+.title {
+  font-family: poppins;
+  font-size: small;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.search-box {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 8px;
+}
+#search {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px;
+  border-radius: 1mm;
+  border: none;
+  outline: 0.3mm solid rgba(0, 0, 0, 0.15);
+  font-family: poppins;
+}
+#search:focus {
+  outline: 0.5mm solid rgba(0, 0, 0, 0.35);
+}
+
+.title-dropdown-container {
+  display: relative;
+  align-items: center;
+}
