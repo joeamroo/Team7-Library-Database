@@ -20,9 +20,11 @@ body{
     height: 100vh;
 }
 
-/* All sections with the word 'container' is
-   handled and updated by javascript */
-/* ------- CONTAINER STARTS ------- */
+/* ==========================================================================
+   Section: Container Starts
+   ========================================================================== */
+
+/*----------------- LEFT SIDE OF CONTAINER ------------------*/
 
 .container{
     background-color: #fff;
@@ -30,11 +32,12 @@ body{
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
     position: relative;
     overflow: hidden;
-    width: 868px;
+    width: 888px;
     max-width: 100%;
-    min-height: 580px;
+    min-height: 630px;
 }
 
+/* Controls the spacing of Register (gray portion - Text) */
 .container p{
     font-size: 14px;
     line-height: 20px;
@@ -50,7 +53,7 @@ body{
     color: #333;
     font-size: 13px;
     text-decoration: none;
-    margin: 15px 0 10px;
+    margin: 20px 0 10px;
 }
 
 .container button{
@@ -68,7 +71,6 @@ body{
 }
 
 
-
 .container button:hover {
     background-color: #841200;
     transition-property: transform;
@@ -78,100 +80,17 @@ body{
 }
 
 /* Controls the size of the Staff
-   keyword on the toggle */
+   label on the toggle */
 #toggle-info {
     font-size: 12px;
     height: 20px;
     width: 60px;
 }
 
-/*hides checkbox*/
+/*hides checkbox for toggle */
 input[type=checkbox] {
     opacity:0;
 }
-
-.toggle-switch-active
- {
-    background-color:#841717;
-    width: 50px;
-    height: 20px;
-    border-radius: 200px;
-    cursor: pointer;
-    position: relative;
-    transition: transform 0.3s ease 0s;
-    
-}
-
-
-
-.toggle-switch
- {
-    background-color:#1e1918;
-    width: 50px;
-    height: 20px;
-    border-radius: 200px;
-    cursor: pointer;
-    position: relative;
-    transition: transform 0.3s ease 0s;
-}
-
-
-
-.toggle-switch::before
-{
-    position: absolute;
-    content: '';
-    background-color:#fff;
-    width: 18px;
-    height: 18px;
-    border-radius: 200px;
-    margin: 1.5px;
-    transition: 0.2s;
-}
-
-
-.toggle-switch-active::before {
-    position: absolute ;
-    content: '';
-    background-color:#fff;
-    width: 18px;
-    height: 18px;
-    border-radius: 200px;
-    margin: 1.5px;
-    transform: translateX(29px);
-    background-color:#fff;
-}
-
-
-
-
-/* For arrow back key */
-
-.arrow.clicked {
-    cursor: pointer;
-    filter: invert(8%) sepia(61%) 
-    saturate(6300%) hue-rotate(356deg) 
-    brightness(96%) contrast(86%);
-    transform: scale(1.2);
-}
-
-.arrow {
-    position: relative;
-    left: 10px;
-    top: 20px;
-    border:none;
-    transition: transform 0.3s ease;
-    
-}
-
-.arrow:hover {
-    transform: translateX(-1px);
-    filter: invert(8%) sepia(61%) 
-    saturate(6300%) hue-rotate(356deg) 
-    brightness(96%) contrast(86%);
-}
-
-
 
 .container button.hidden{
     background-color: transparent;
@@ -209,7 +128,6 @@ input[type=checkbox] {
     transition: all 0.6s ease-in-out;
 }
 
-/* ------- CONTAINER ENDS ------- */
 
 /* Handles the size of the sign-in portion*/
 .sign-in{
@@ -243,12 +161,9 @@ input[type=checkbox] {
     z-index: 5;
     animation: move 0.6s;
 }
-
-
-
 /* When the form is moved due to an event trigger,
    the objects within the form become transparent */
-@keyframes move{
+   @keyframes move{
     0%, 49.99%{
         opacity: 0;
         z-index: 5;
@@ -259,6 +174,7 @@ input[type=checkbox] {
     }
 }
 
+/*----------------- RIGHT SIDE OF CONTAINER ------------------*/
 
 .toggle-container{
     position: absolute;
@@ -331,6 +247,106 @@ input[type=checkbox] {
     transform: translateX(200%);
 }
 
+#sign-up-section {
+    top: -21px;
+}
+
+
+
+/* ===================== Container Ends ===================== */
+
+
+/* ==========================================================================
+   Section: For Left Arrow Key
+   ========================================================================== */
+
+
+.toggle-switch-active
+ {
+    background-color:#841717;
+    width: 50px;
+    height: 20px;
+    border-radius: 200px;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.3s ease 0s;
+    
+}
+
+
+
+.toggle-switch
+ {
+    background-color:#1e1918;
+    width: 50px;
+    height: 20px;
+    border-radius: 200px;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.3s ease 0s;
+}
+
+
+
+.toggle-switch::before
+{
+    position: absolute;
+    content: '';
+    background-color:#fff;
+    width: 18px;
+    height: 18px;
+    border-radius: 200px;
+    margin: 1.5px;
+    transition: 0.2s;
+}
+
+
+.toggle-switch-active::before {
+    position: absolute ;
+    content: '';
+    background-color:#fff;
+    width: 18px;
+    height: 18px;
+    border-radius: 200px;
+    margin: 1.5px;
+    transform: translateX(29px);
+    background-color:#fff;
+}
+
+.arrow.clicked {
+    cursor: pointer;
+    filter: invert(8%) sepia(61%) 
+    saturate(6300%) hue-rotate(356deg) 
+    brightness(96%) contrast(86%);
+    transform: scale(1.2);
+}
+
+.arrow {
+    position: relative;
+    left: 10px;
+    top: 20px;
+    border:none;
+    transition: transform 0.3s ease;
+    
+}
+
+.arrow:hover {
+    transform: translateX(-1px);
+    filter: invert(8%) sepia(61%) 
+    saturate(6300%) hue-rotate(356deg) 
+    brightness(96%) contrast(86%);
+}
+
+/* ===================== Arrow Key Ends ===================== */
+
+
+/* ==========================================================================
+   Section: To Shave the form AGGRESIVELY
+   ========================================================================== */
+
+
+
+
 @keyframes shake {
     0%, 100% {
       transform: translateX(0);
@@ -350,3 +366,148 @@ input[type=checkbox] {
     backface-visibility: hidden;
     perspective: 1000px;
   }
+  /* ===================== Shake Ends ===================== */
+
+  /* ==========================================================================
+   Section: Notification System
+   ========================================================================== */
+
+.notification {
+    position: fixed;
+    top: 15px;
+    left: 50%;
+    transform: translate(-50%, -200px);
+    background: rgb(0, 0, 0);
+    width: fit-content;
+    height: 54px;
+    box-sizing: border-box;
+    padding: 8px;
+    border-radius: 15mm;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    box-shadow: rgba(38, 57, 77, 0.7) 0px 20px 30px -10px;
+    transition: 0.5s ease-in;
+    max-width: 1000px;
+  }
+  .notification img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 4px solid rgb(80, 80, 80);
+    transition: 0.35s ease-in;
+  }
+  .details {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    font-family: poppins;
+    margin: 0 15px;
+    padding: 1px;
+    white-space: nowrap;
+  }
+  .name {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+  }
+  .message {
+    font-size: 14px;
+    color: white;
+  }
+  .xbtn {
+    width: 25px;
+    height: 25px;
+    color: white;
+    background: rgba(255, 255, 255, 0.2);
+    text-align: center;
+    line-height: 30px;
+    font-size: 22px;
+    border-radius: 60%;
+    cursor: pointer;
+  }
+  .notify {
+    background: rgb(226, 230, 233);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+  .notify span {
+    font-size: 30px;
+  }
+  .notification.hidden {
+    animation: closeNote 1s ease-in-out;
+    transform: translate(-50%, -200px);
+    max-width: 54px;
+    padding: 0;
+  }
+  .notification.hidden img {
+    width: 38px;
+    height: 38px;
+    border: 8px solid rgb(80, 80, 80);
+  }
+  @keyframes closeNote {
+    0% {
+      transform: translate(-50%, 0);
+      max-width: 1000px;
+      padding: 8px;
+    }
+    65% {
+      transform: translate(-50%, 0);
+      max-width: 54px;
+      padding: 0px;
+    }
+    100% {
+      transform: translate(-50%, -200px);
+      max-width: 54px;
+      padding: 0;
+    }
+  }
+  .notification.active {
+    animation: showNote 1s ease-in-out;
+    max-width: 1000px;
+    transform: translate(-50%, 0);
+    padding: 8px;
+  }
+  .notification.active img {
+    animation: resize 1s ease-in-out;
+    width: 32px;
+    height: 32px;
+    border: 4px solid rgb(80, 80, 80);
+  }
+  @keyframes showNote {
+    0% {
+      transform: translate(-50%, -200px);
+      max-width: 54px;
+      padding: 0;
+    }
+    35% {
+      transform: translate(-50%, 0px);
+      max-width: 54px;
+      padding: 0;
+    }
+    100% {
+      transform: translate(-50%, 0px);
+      max-width: 1000px;
+      padding: 8px;
+    }
+  }
+  @keyframes resize {
+    0%,
+    40% {
+      width: 38px;
+      height: 38px;
+      border: 8px solid rgb(80, 80, 80);
+    }
+    100% {
+      width: 32px;
+      height: 32px;
+      border: 4px solid rgb(80, 80, 80);
+    }
+  }
+  
+  /* ===================== Notification System Ends ===================== */

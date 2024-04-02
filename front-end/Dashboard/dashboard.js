@@ -43,6 +43,10 @@ var input = document.querySelector(".input-box");
         });
       }
 
+/* ==========================================================================
+   Section: Notification System
+   ========================================================================== */
+
 
       let notification = document.querySelector(".notification");
 
@@ -73,6 +77,7 @@ var input = document.querySelector(".input-box");
       // Show notification on page load
       window.addEventListener("load", showNotification);
 
+/* ===================== Notification Ends ===================== */
 /*
       Reports:
 
