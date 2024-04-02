@@ -253,32 +253,41 @@ document.addEventListener('click', function(event) {
 // Event listener for locally gathering the items being checked out before inserting into
 document.addEventListener('click', function(event) {
     if (event.target.classList.contains('checkout-btn')) {
-        const itemContainer = event.target.closest('.catalog-item');
+        const itemContainer = event.target.closest('.catalog-item'); 
 
         if (itemContainer) {
             const itemInfo = itemContainer.querySelector('.info');
+            const itemAvailability = parseInt(event.target.closest('.catalog-item').querySelector('#currAvail').textContent);
             const itemType = itemInfo.querySelector('#medium').textContent.toLowerCase();
             
             const itemHtml = generateItemHtml(itemInfo, itemType);
             let chosenItems = JSON.parse(localStorage.getItem('chosenItems')) || [];
 
-            if (chosenItems.includes(itemHtml)) {
-                chosenItems = chosenItems.filter(item => item !== itemHtml);
-                event.target.textContent = 'Add to cart';
-                event.target.innerHTML = ''; 
-            } 
-            else {
-                chosenItems.push(itemHtml);
-                event.target.textContent = ' Added to cart';
-                const icon = document.createElement('i');
-                icon.className = "uil uil-check";
-                event.target.prepend(icon);
+            if (itemAvailability > 0) {
+                if (chosenItems.includes(itemHtml)) {
+                  chosenItems = chosenItems.filter(item => item !== itemHtml);
+                  event.target.textContent = 'Add to cart';
+                  event.target.innerHTML = '';
+                } 
+                else {
+                  chosenItems.push(itemHtml);
+                  event.target.textContent = ' Added to cart';
+                  const icon = document.createElement('i');
+                  icon.className = "uil uil-check";
+                  event.target.prepend(icon);
+                }
+                localStorage.setItem('chosenItems', JSON.stringify(chosenItems));
+                updateButtonStates();
             }
-
-            localStorage.setItem('chosenItems', JSON.stringify(chosenItems));
-
-            updateButtonStates();
-        } 
+            else {
+                const modal = document.querySelector('#itemIsNotAvail');
+                modal.style.display = 'block';
+                const acceptBtn =  modal.querySelector('#accept-msg');
+                acceptBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+                });
+            } 
+        }
         else {
             console.error('Error: Item container not found');
         }

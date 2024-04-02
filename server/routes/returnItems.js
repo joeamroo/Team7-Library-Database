@@ -160,6 +160,7 @@ function returnItems(response, items) {
                 connection.query(updateCopiesQuery, [itemId]),
                 connection.query(updateHoldsQuery, [itemId]),
                 connection.query(updateReturnDateQuery, [transactionId]),
+                // Use later to notify user
                 connection.query(findNextHoldQuery, [itemId], (err, results) => {
                     if (err) {
                         console.error('Error retrieving next hold:', err);
