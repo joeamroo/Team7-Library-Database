@@ -43,6 +43,10 @@ var input = document.querySelector(".input-box");
         });
       }
 
+/* ==========================================================================
+   Section: Notification System
+   ========================================================================== */
+
 
       let notification = document.querySelector(".notification");
 
@@ -68,7 +72,22 @@ var input = document.querySelector(".input-box");
         notification.classList.toggle("active");
         notification.classList.toggle("hidden");
       }
-      
+
     
       // Show notification on page load
       window.addEventListener("load", showNotification);
+
+/* ===================== Notification Ends ===================== */
+/*
+      Reports:
+
+1. Waitlist (hold request)
+	Authors, Genres, Year, Rating, Asset Condition
+2. Transactions
+	Books, Movies, Devices (for a specific date frame), Asset Condition
+3. Returns
+      Books, Movies, Devices, Asset Condition, 
+4. Events
+	Events attended this year, or a specific year
+
+  */

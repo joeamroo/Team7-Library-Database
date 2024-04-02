@@ -7,15 +7,27 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="member-login.css">
     <link rel="stylesheet" href="member-img.css">
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round|Material+Icons+Sharp|Material+Icons+Two+Tone"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
      <title>Member Login Page</title>
 </head>
 
 <body>
-    <div class="begin">
+
+    
+       <div class="begin">
     <div class="container" id="container">
         <div class="form-container sign-up">
-            <form>
+            <form id="sign-up-section">
                 <h1>Create Account</h1>
                 <span>Account Information</span>
                 <input type="first_name" id="first_name" placeholder="First Name">
@@ -24,6 +36,7 @@
                 <input type="city_addr" id="city_addr" placeholder="City">
                 <input type="state_addr" id="state_addr" placeholder="State">
                 <input type="zipcode_addr" id="zipcode_addr" placeholder="Zip Code">
+                <input type="phone_number" id="phone_num" placeholder="Phone Number">
                 <input type="email" id="email" placeholder="Email">
                 <input type="password" id="password" placeholder="Password">
             </form>
@@ -60,8 +73,6 @@
             </form>
        
         </div>
-    
-
 
 
         <div class="toggle-container">
@@ -79,7 +90,25 @@
             </div>
         </div>
     </div>
+
+
+    <!-- ✨✨✨✨✨✨✨✨ Notification System ✨✨✨✨✨✨✨✨✨✨ -->
+<div class="center">
+    <div class="notification">
+      <img src="../Dashboard/notify.png" alt="" />
+      <div class="details">
+        <div class="name">Cougar Chronicles</div>
+        <div class="message">Welcome, User!</div>
+      </div>
+      <span class="material-icons-round xbtn" onclick="closeNote()">close</span>
+    </div>
+  </div>
+
+  <a class="user-greet">Welcome, User!</a>
+<!-- ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️  ➡️ -->
 </div>
+
+ 
 
 
     <script src="member-login.js"></script>

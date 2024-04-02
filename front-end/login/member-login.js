@@ -26,10 +26,11 @@ overlayButton.textContent = 'Sign Up';
 
 // Style the button to overlay the form
 overlayButton.style.position = 'absolute';
-overlayButton.style.top = '93%'; // Adjust as necessary
+overlayButton.style.top = '95%'; // Adjust as necessary
 overlayButton.style.left = '50%'; // Adjust as necessary
 overlayButton.style.transform = 'translate(-50%, -50%)';
 overlayButton.style.zIndex = '10'; // Ensure it's above other items
+
 
 // Append the button to the form
 form.style.position = 'relative'; // Make sure the form is positioned
@@ -291,7 +292,40 @@ function register() {
     xhr.send(data);
 }
 
+/* ==========================================================================
+   Section: Notification System
+   ========================================================================== */
 
+let notification = document.querySelector(".notification");
+
+      function showNotification() {
+        if (notification.classList.contains("hidden")) {
+          notification.classList.toggle("hidden");
+        }
+        notification.classList.toggle("active");
+        const timeout = setTimeout(() => {
+          if (
+            notification.classList.contains("active") &&
+            !notification.classList.contains("hidden")
+          ) {
+            notification.classList.toggle("active");
+            notification.classList.toggle("hidden");
+          } else {
+            window.clearTimeout(timeout);
+          }
+        }, 5000);
+      }
+    
+      function closeNote() {
+        notification.classList.toggle("active");
+        notification.classList.toggle("hidden");
+      }
+
+    
+      // Show notification on page load
+      window.addEventListener("load", showNotification);
+
+/* ===================== Notification Ends ===================== */
 
 /*async function loginRequest(user, pass) {
     try {
