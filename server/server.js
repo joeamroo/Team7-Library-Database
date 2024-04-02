@@ -1,4 +1,5 @@
 const http = require('http');
+require('dotenv').config();
 const url = require('url');
 const { getInitialCatalogInfo, getCatalogSearchWithRestrictions, insertDataToDatabase } = require('./routes/catalog');
 const { insertTransactionInfo } = require('./routes/checkout');
