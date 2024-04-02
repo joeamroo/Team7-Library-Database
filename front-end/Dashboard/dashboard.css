@@ -524,14 +524,14 @@ input:checked + label::before {
   color: white;
 }
 .btn {
-  width: 35px;
-  height: 35px;
+  width: 25px;
+  height: 25px;
   color: white;
   background: rgba(255, 255, 255, 0.2);
   text-align: center;
-  line-height: 35px;
+  line-height: 30px;
   font-size: 22px;
-  border-radius: 50%;
+  border-radius: 60%;
   cursor: pointer;
 }
 .notify {
