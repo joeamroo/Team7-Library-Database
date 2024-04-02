@@ -1,6 +1,8 @@
 {
   "dependencies": {
+    "dotenv": "^16.4.5",
     "jquery": "^3.7.1",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "twilio": "^5.0.2"
   }
 }
