@@ -4,7 +4,6 @@ require('dotenv').config();
 const twilio = require('twilio');
 const accountSid = 'ACcdcd6f0cca79738f15b9c37a29a3ec1f';
 const authToken = '565a1591d897df4e670cf894860072c6';
-const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
 const client = twilio(accountSid, authToken);
 
 const connection = mysql.createConnection({
@@ -175,7 +174,7 @@ function returnItems(response, items) {
                         
                         client.messages.create ({
                             body: `Your item (${turnItemName}) is ready for pickup.`,
-                            from: twilioPhoneNumber,
+                            from: '+18445030158',
                             to: turnPhoneNum
                         })
                         .then(message => console.log('Message sent:', message.sid))
