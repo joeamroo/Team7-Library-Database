@@ -13,6 +13,7 @@
     "crypto": "^1.0.1",
     "dotenv": "^16.4.5",
     "mysql": "^2.18.1",
-    "sodium-plus": "^0.9.0"
+    "sodium-plus": "^0.9.0",
+    "twilio": "^5.0.2"
   }
 }
