@@ -6,7 +6,7 @@ const { getTransactionItems, returnItems } = require('./routes/returnItems');
 const { getUser } = require('./routes/dashboard');
 const { loginUser } = require('./routes/login');
 const { registerUser } = require('./routes/register');
-const { getListedEvents } = require('./routes/classesnEvents');
+const { getListedEvents, eventSignUp } = require('./routes/classesnEvents');
 
 function setCorsHeaders(res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -127,9 +127,26 @@ const server = http.createServer((request, res) => {
                     }
                 });
             }
+            else if (pathname === '/event-signup') {
+                let body = '';
+                request.on('data', (chunk) => {
+                    body += chunk.toString();
+                });
+                request.on('end', () => {
+                    try {
+                        const postData = JSON.parse(body);
+                        eventSignUp(res, postData.eventId, postData.memberId);
+                    } 
+                    catch (error) {
+                        console.error('Error parsing JSON:', error);
+                        serve404(res);
+                    }
+                });
+            }
             else if (pathname === '/login') {
                 
-            } else if (pathname === '/loginUser') {
+            } 
+            else if (pathname === '/loginUser') {
                 let body = '';
                 request.on('data', (chunk) => {
                     body += chunk.toString();

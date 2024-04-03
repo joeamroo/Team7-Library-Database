@@ -1,3 +1,4 @@
+const { event } = require('jquery');
 const mysql = require('mysql');
 
 const connection = mysql.createConnection({
@@ -18,7 +19,8 @@ function createEventHtml(item) {
     let eventHtml = '';
     eventHtml += '<div class="event-item">'
     eventHtml += '<div class="info">';
-    eventHtml += `<img src="${item.event_img}">`;
+    eventHtml += `<img src=${item.event_img}>`;
+    eventHtml += `<p id="eventId" style="display: none;">${item.event_id}</p>`;
     eventHtml += `<h3><strong><span id="event-title">${item.event_name}</span></strong></h3>`;
     eventHtml += `<p><strong>Date:</strong> <span id="date">${item.date}</span></p>`;
     eventHtml += `<p><strong>Time:</strong> <span id="time">${item.start_time}-${item.end_time} ${item.morning_or_afternoon}</span></p>`;
@@ -47,5 +49,8 @@ function getListedEvents(response) {
     });
 }
 
+function eventSignUp(response, eventId, memberId) {
+    console.log(eventId, memberId);
+}
 
-module.exports = { getListedEvents };
+module.exports = { getListedEvents, eventSignUp };
