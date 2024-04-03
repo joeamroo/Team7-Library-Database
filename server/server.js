@@ -1,5 +1,4 @@
 const http = require('http');
-require('dotenv').config();
 const url = require('url');
 const { getInitialCatalogInfo, getCatalogSearchWithRestrictions, insertDataToDatabase } = require('./routes/catalog');
 const { insertTransactionInfo } = require('./routes/checkout');
@@ -7,6 +6,7 @@ const { getTransactionItems, returnItems } = require('./routes/returnItems');
 const { getUser } = require('./routes/dashboard');
 const { loginUser } = require('./routes/login');
 const { registerUser } = require('./routes/register');
+const { getListedEvents } = require('./routes/classesnEvents');
 
 function setCorsHeaders(res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -37,6 +37,9 @@ const server = http.createServer((request, res) => {
             switch (pathname) {
                 case '/initial-catalog':
                     getInitialCatalogInfo(res);
+                    break;
+                case '/events':
+                    getListedEvents(res);
                     break;
                 default:
                     serve404(res, pathname);
