@@ -1,4 +1,3 @@
-const { event } = require('jquery');
 const mysql = require('mysql');
 
 const connection = mysql.createConnection({
