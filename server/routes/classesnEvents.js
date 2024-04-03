@@ -36,11 +36,13 @@ function getListedEvents(response) {
             response.end('Server error');
             return;
         }
+
+        let eventsHtml = '';
         
-        results.forEach(item => { createEventHtml(item) });
+        results.forEach(item => { eventsHtml += createEventHtml(item); });
         
         response.writeHead(200, { 'Content-Type': 'text/html' });
-        response.end(catalogHtml, 'utf-8');
+        response.end(eventsHtml, 'utf-8');
     });
 }
 
