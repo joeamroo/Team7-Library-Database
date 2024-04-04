@@ -139,7 +139,7 @@ body {
 
 .branch {
     margin-bottom: 40px;
-    justify-content: space-between; /* Space elements evenly */
+    justify-content: space-between; 
 }
 
 .branch h3 {
@@ -157,7 +157,7 @@ body {
 .branch-info {
     width: 70%;
     display: flex;
-    flex-direction: column; /* Stack hours vertically */
+    flex-direction: column; 
 }
 
 .branch-image {
@@ -197,9 +197,7 @@ a {
 .container {
   display: flex;
   flex-direction: column;
-  /* Change from row to column */
   align-items: center;
-  /* Center items horizontally */
   gap: 20px;
   padding-bottom: 20px;
 }
@@ -209,7 +207,6 @@ footer {
   color: #fff;
   text-align: center;
   padding: 10px 0;
-  /* position: fixed;
-    bottom: 0; */
-  width: 100%;
+  position: relative;
+  z-index: 1000;
 }

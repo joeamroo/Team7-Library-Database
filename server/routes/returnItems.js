@@ -174,7 +174,7 @@ function returnItems(response, items) {
                         const turnItemId = results[0].item_id; 
                         
                         client.messages.create ({
-                            body: `Your item on hold, (${turnItemName}), is ready for checkout.`,
+                            body: `Your item on hold, ${turnItemName}, is ready for checkout.`,
                             from: '+18445030158',
                             to: turnPhoneNum
                         })
