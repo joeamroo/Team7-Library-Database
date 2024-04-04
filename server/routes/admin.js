@@ -13,10 +13,6 @@ connection.connect((err) => {
     console.log('Connected to LibraryDev database');
 });
 
-function createStaffItem(item){
-    let staffHtml = '';
-    staffHtml +='<>'
-}
 
 request.on('end', () => {
     const formData = new URLSearchParams(body);

@@ -61,13 +61,14 @@ loginBtn.addEventListener('click', () => {
     container.classList.remove("active");
 });
 
+/* The Login Button on the White Area */
 signinBtn.addEventListener('click', () => {
     loginValidation();
-})
+});
 
 
 
-/* --------------------------------------- */
+/* -----------------------------s---------- */
 
 svgIcon.addEventListener('click', function() {
     // Moves the arrow key left when clicked
@@ -204,11 +205,16 @@ function loginValidation() {
 }
 // Stores email and hashes password
 function loginRequest() { 
-    const usertext = document.getElementById('member-email');
-    const ciphertext = hashPassword(document.getElementById('member-password').value.trim());
-    
-    sendRequest(usertext, ciphertext);
-    console.log(ciphertext);
+    const usertext = document.getElementById('member-email').value;
+    const ciphertext = hashPassword(document.getElementById('member-password').value);
+
+   // localStorage.setItem("user", usertext);
+    //localStorage.setItem("auth", ciphertext);
+    //sendRequest(usertext, ciphertext);
+    //const item = localStorage.getItem('auth');
+   // console.log('item');
+    //console.log(ciphertext);
+    storeDatabase(usertext, ciphertext);
 
 }
 // Hashes password and returns to loginRequest
@@ -227,7 +233,7 @@ async function hashPassword(password) {
 }
 
 // Sends credentials to server
-function sendRequest(username, password) {
+/*function sendRequest(username, password) {
     
     const data = JSON.stringify( {
         username: username,
@@ -251,7 +257,7 @@ function sendRequest(username, password) {
     }
 
     xhr.send(data);
-}
+}*/
 
 
 /* --------------------------------------- */
@@ -348,5 +354,8 @@ let notification = document.querySelector(".notification");
 }*/
 
 
-
-
+function storeDatabase(user, pass) {
+  localStorage.setItem('user_session', user);
+  localStorage.setItem('auth_session', pass);
+  console.log('Data', pass);
+}
