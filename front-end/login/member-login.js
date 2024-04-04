@@ -181,7 +181,7 @@ function loginValidation() {
 // Stores email and hashes password
 function loginRequest() { 
     const usertext = document.getElementById('member-email').value;
-    const ciphertext = hashPassword(document.getElementById('member-password').value);
+    const ciphertext = scramPassword(document.getElementById('member-password').value);
 
    // localStorage.setItem("user", usertext);
     //localStorage.setItem("auth", ciphertext);
