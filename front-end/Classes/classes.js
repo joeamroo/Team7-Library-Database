@@ -53,16 +53,15 @@ document.addEventListener('click', function(event) {
             xhr.open('POST', signUpEventUrl); 
             xhr.setRequestHeader('Content-Type', 'application/json');
 
-            console.log('signing up for event');
-            console.log(eventId, memberId);
 
             xhr.onload = function() {
                 if (xhr.status === 200) {
                     console.log('Successfully added member to event and updated event attendance');
+                    showSuccessfulToast(event.target.closest('.event-item'));
                 } 
                 else if (xhr.status === 409) {
                     console.log('Member is already registered for event');
-                    showToast();
+                    showDenialToast(event.target.closest('.event-item'));
                 }
                 else {
                     console.error('Error :', xhr.statusText);
@@ -80,17 +79,44 @@ document.addEventListener('click', function(event) {
     }
 });
 
-function showToast() {
-    const toastContainer = document.getElementById('toastContainer');
+function showDenialToast(eventItemElement) {
+    let toastContainer = eventItemElement.querySelector('.toast-container');
+
+    if (!toastContainer) {
+      toastContainer = document.createElement('div');
+      toastContainer.classList.add('toast-container');
+      eventItemElement.appendChild(toastContainer);
+    }
+  
     toastContainer.innerText = 'You have already signed up for this event';
     toastContainer.style.display = 'block';
-
+  
     setTimeout(() => {
-        toastContainer.style.opacity = '0';
+      toastContainer.style.opacity = '0';
     }, 800);
-
+  
     setTimeout(() => {
-        toastContainer.style.display = 'none';
+      toastContainer.style.display = 'none';
     }, 8800);
 }
 
+function showSuccessfulToast(eventItemElement) {
+    let toastContainer = eventItemElement.querySelector('.toast-container');
+
+    if (!toastContainer) {
+      toastContainer = document.createElement('div');
+      toastContainer.classList.add('toast-container');
+      eventItemElement.appendChild(toastContainer);
+    }
+  
+    toastContainer.innerText = 'Successfully registered for event';
+    toastContainer.style.display = 'block';
+  
+    setTimeout(() => {
+      toastContainer.style.opacity = '0';
+    }, 1100);
+  
+    setTimeout(() => {
+      toastContainer.style.display = 'none';
+    }, 11000);
+}
