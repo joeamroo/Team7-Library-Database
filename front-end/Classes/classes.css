@@ -226,7 +226,7 @@ a {
   color: #fff;
   padding: 10px 20px;
   border-radius: 5px;
-  display: none; /* Initially hidden */
+  display: none; 
   z-index: 1000;
   opacity: 1;
   transition: opacity 1s ease;

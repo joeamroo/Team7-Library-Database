@@ -26,7 +26,7 @@ function createEventHtml(item) {
     eventHtml += `<p><strong>Time:</strong> <span id="time">${item.start_time}-${item.end_time} ${item.morning_or_afternoon}</span></p>`;
     eventHtml += `<p><strong>Sponsor:</strong> <span id="sponsor">${item.sponsor}</span></p>`;
     eventHtml += `<p><strong>Description:</strong> ${item.event_description}</p>`;
-    eventHtml += '<button onclick="showToast()" class="signup-button">Sign Up</button>';    
+    eventHtml += '<button class="signup-button">Sign Up</button>';    
     eventHtml += `</div></div>`;
     return eventHtml;
 }
@@ -61,6 +61,7 @@ function eventSignUp(response, eventId, memberId) {
         else {
             const count = checkResult[0].count;
             if (count > 0) {
+                console.log('User is already registered for this event');
                 response.writeHead(409, { 'Content-Type': 'application/json' });
             }
             else {

@@ -62,6 +62,7 @@ document.addEventListener('click', function(event) {
                 } 
                 else if (xhr.status === 409) {
                     console.log('Member is already registered for event');
+                    showToast();
                 }
                 else {
                     console.error('Error :', xhr.statusText);
