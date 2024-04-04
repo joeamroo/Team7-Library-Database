@@ -49,7 +49,24 @@ function getListedEvents(response) {
 }
 
 function eventSignUp(response, eventId, memberId) {
-    console.log(eventId, memberId);
+    addSignUpQuery = 'insert into events_member_link (event_id, member_id) values (?, ?)';
+    updateAttendanceQuery = 'update event set attendance_count = attendance_count + 1 where event_id = ?';
+
+    connection.query(addSignUpQuery, [eventId, memberId], (err, result) => {
+        if (err) {
+            console.log('Error inserting into bridge table:', err);
+        }
+        if (result) {
+            connection.query(updateAttendanceQuery, [eventId], (updErr, result) => {
+                if(updErr) {
+                    console.log('Error updating attendance count:', updErr);
+                }
+                else {
+                    response.writeHead(200, { 'Content-Type': 'application/json' });
+                }
+            });
+        }
+    });
 }
 
 module.exports = { getListedEvents, eventSignUp };

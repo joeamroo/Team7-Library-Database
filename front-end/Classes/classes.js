@@ -46,7 +46,6 @@ document.addEventListener('click', function(event) {
         const eventId = parseInt(event.target.closest('.event-item').querySelector('#eventId').textContent);
         const loginState = localStorage.getItem('loggedIn');
         const memberId = 10021001;
-        console.log( loginState, memberId);
 
         
         if (loginState === 'true') {
@@ -58,7 +57,7 @@ document.addEventListener('click', function(event) {
 
             xhr.onload = function() {
                 if (xhr.status === 200) {
-                    console.log('Successfully added member to event');
+                    console.log('Successfully added member to event and updated event attendance');
                 } 
                 else {
                     console.error('Error :', xhr.statusText);
@@ -72,7 +71,7 @@ document.addEventListener('click', function(event) {
         else {
             // User is not signed in
             window.location.href = '../login/member-login.html'
-        }        
+        }
     }
 });
 
