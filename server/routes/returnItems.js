@@ -160,6 +160,7 @@ function returnItems(response, items) {
                 connection.query(updateCopiesQuery, [itemId]),
                 connection.query(updateHoldsQuery, [itemId]),
                 connection.query(updateReturnDateQuery, [transactionId]),
+                // Use later to notify user - fix twilio account 
                 connection.query(findNextHoldQuery, [itemId], (err, results) => {
                     if (err) {
                         console.error('Error retrieving next hold:', err);
@@ -173,7 +174,7 @@ function returnItems(response, items) {
                         const turnItemId = results[0].item_id; 
                         
                         client.messages.create ({
-                            body: `Your item (${turnItemName}) is ready for pickup.`,
+                            body: `Your item on hold, (${turnItemName}), is ready for checkout.`,
                             from: '+18445030158',
                             to: turnPhoneNum
                         })
