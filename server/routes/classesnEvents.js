@@ -63,6 +63,7 @@ function eventSignUp(response, eventId, memberId) {
             if (count > 0) {
                 console.log('User is already registered for this event');
                 response.writeHead(409, { 'Content-Type': 'application/json' });
+                response.end(JSON.stringify({ message: 'alreadyRegistered' }));
             }
             else {
                 connection.query(addSignUpQuery, [eventId, memberId], (err, result) => {
@@ -76,6 +77,7 @@ function eventSignUp(response, eventId, memberId) {
                             }
                             else {
                                 response.writeHead(200, { 'Content-Type': 'application/json' });
+                                response.end(JSON.stringify({ message: 'signUpSuccessful' }));
                             }
                         });
                     }
