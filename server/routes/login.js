@@ -1,14 +1,12 @@
-const http = require('http');
-const fs = require('fs');
 const mysql = require('mysql');
-const crypto = require('crypto');
+
 
 
 const link = mysql.createConnection({
     host: 'library-database-sytem.mysql.database.azure.com',
     user: 'lbrGuest',
     password: 'gu3st@cces$',
-    database: 'access_control',
+    database: 'librarydev',
     port:3306
 });
   
@@ -68,9 +66,11 @@ function loginUser(response, username, password) {
    console.log(response);
    console.log(username);
    console.log(password);
-   res.writeHead(200, { 'Content-Type': 'application/json' });
-   res.end(JSON.stringify({ success: true, message: 'Login successful' }));
-   
+   //response.statusCode = 200;
+   response.setHeader('Content-Type', 'application/json');
+   response.writeHead(200, { 'Content-Type': 'application/json' });
+   response.end(JSON.stringify({message: 'error occured' }));
+  
 
 
 }

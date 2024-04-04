@@ -1,5 +1,4 @@
 const http = require('http');
-const url = require('url');
 const { getInitialCatalogInfo, getCatalogSearchWithRestrictions, insertDataToDatabase } = require('./routes/catalog');
 const { insertTransactionInfo } = require('./routes/checkout');
 const { getTransactionItems, returnItems } = require('./routes/returnItems');
@@ -187,32 +186,6 @@ const server = http.createServer((request, res) => {
 
 
 
-
-/*const serv = http.createServer((req, res) => {
-    if (req.method === 'POST' && req.url === '/login') {
-      let body = '';
-  
-      req.on('data', chunk => {
-        body += chunk.toString();
-      });
-  
-      req.on('end', () => {
-        const { username, password } = JSON.parse(body);
-  
-        // Perform authentication logic here
-        if (username === 'validuser' && password === 'validpassword') {
-          res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ success: true, message: 'Login successful' }));
-        } else {
-          res.writeHead(401, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ success: false, message: 'Invalid credentials' }));
-        }
-      });
-    } else {
-      res.writeHead(404, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: 'Not Found' }));
-    }
-  });*/
 
 
 const port = process.env.PORT || 3000;
