@@ -229,7 +229,7 @@ const sendReturnUrl = `${backendUrl}/loginUser`;
 
 
 // Sends credentials to server
-/*function sendRequest(username, password) {
+function sendRequest(username, password) {
     
     const data = JSON.stringify( {
         username: username,
@@ -253,7 +253,7 @@ const sendReturnUrl = `${backendUrl}/loginUser`;
     }
 
     xhr.send(data);
-}*/
+}
 
 
 /* --------------------------------------- */
