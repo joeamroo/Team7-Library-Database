@@ -123,9 +123,6 @@ const server = http.createServer((request, res) => {
                         serve404(res);
                     }
                 });
-            }
-            else if (pathname === '/login') {
-                
             } else if (pathname === '/loginUser') {
                 let body = '';
                 request.on('data', (chunk) => {

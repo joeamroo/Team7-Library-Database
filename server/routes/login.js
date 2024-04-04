@@ -65,17 +65,12 @@ function verifyPassword(receivedHashedPassword, storedHashedPassword) {
 function loginUser(response, username, password) {
     //const insertQuery = 'INSERT INTO transaction (member_id) values (?)';
    
-    if (username === 'test@user.com' && password === 'password') {
-        response.statusCode = 200;
-        response.setHeader('Content-Type', 'application/json');
-        response.end(JSON.stringify({ success: true, message: 'Valid credentials' }));
-    } else {
-        response.statusCode = 401;
-        response.setHeader('Content-Type', 'application/json');
-        response.end(JSON.stringify({ success: true, message: 'Invalid credentials' }));
-    }
-
-    
+   console.log(response);
+   console.log(username);
+   console.log(password);
+   res.writeHead(200, { 'Content-Type': 'application/json' });
+   res.end(JSON.stringify({ success: true, message: 'Login successful' }));
+   
 
 
 }

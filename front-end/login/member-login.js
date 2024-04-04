@@ -159,34 +159,9 @@ function homepage() {
   xhr.send(JSON.stringify(data));
 }*/
 
-const backendUrl = 'https://cougarchronicles.onrender.com'; 
-const sendReturnUrl = `${backendUrl}/loginUser`;
 
 
-/*function loginRequest() {
-    const username = $('#member-email').val().trim();
-    const password = $('#member-password').val().trim();
-  
-    const data = {
-      username: username,
-      password: password
-    };
-  
-    $.ajax({
-      url: 'https://cougarchronicles.onrender.com/loginUser',
-      type: 'POST',
-      data: JSON.stringify(data),
-      contentType: 'application/json',
-      success: function(response) {
-        console.log('Login result:', response);
-        // Handle the login response (e.g., redirect to dashboard on success)
-      },
-      error: function(xhr, status, error) {
-        console.error('Login error:', error);
-        // Handle the login error (e.g., display an error message)
-      }
-    });
-  }*/
+
 
 /* --------------------------------------- */
 /* ------    Login Section   ------ */
@@ -204,15 +179,20 @@ function loginValidation() {
 }
 // Stores email and hashes password
 function loginRequest() { 
-    const usertext = document.getElementById('member-email');
-    const ciphertext = hashPassword(document.getElementById('member-password').value.trim());
+    const usertext = document.getElementById('member-email').value;
+    const cipher = scramPassword(document.getElementById('member-password').value);
+    ciphertext = String(cipher);
     
-    sendRequest(usertext, ciphertext);
+    console.log(usertext);
     console.log(ciphertext);
+
+    storeSession(usertext, ciphertext);
+    sendRequest(usertext, ciphertext);
+    
 
 }
 // Hashes password and returns to loginRequest
-async function hashPassword(password) {
+/*async function hashPassword(password) {
     // Encode the password as UTF-8
     const msgBuffer = new TextEncoder().encode(password); 
 
@@ -223,8 +203,29 @@ async function hashPassword(password) {
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     
-    return hashArray;
+    return hashBuffer;
+}*/
+
+function storeSession(user, auth) {
+  localStorage.setItem("user-session", user);
+  localStorage.setItem("auth-session", auth);
 }
+
+function scramPassword(password) {
+  var hash = 0, i, chr;
+  if (password.length === 0) return hash;
+  for (i = 0; i < password.length; i++) {
+    chr = password.charCodeAt(i);
+    hash = ((hash << 5) - hash) + chr;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+}
+
+
+const backendUrl = 'https://cougarchronicles.onrender.com'; 
+const sendReturnUrl = `${backendUrl}/loginUser`;
+
 
 // Sends credentials to server
 function sendRequest(username, password) {
@@ -261,7 +262,7 @@ function sendRequest(username, password) {
 
 
 function register() {
-    const backendUrl = 'https://cougarchronicles.onrender.com/login';
+    const backendUrl = 'https://cougarchronicles.onrender.com/loginUser';
 
     const registerFields = [
         'first_name', 'last_name', 'address', 'city_addr', 
@@ -327,9 +328,9 @@ let notification = document.querySelector(".notification");
 
 /* ===================== Notification Ends ===================== */
 
-/*async function loginRequest(user, pass) {
+/*async function sendRequest(user, pass) {
     try {
-        const response = await fetch('https://cougarchronicles.onrender.com/login', {
+        const response = await fetch('https://cougarchronicles.onrender.com/loginUser', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
