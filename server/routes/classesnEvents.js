@@ -16,6 +16,7 @@ connection.connect((err) => {
 
 function createEventHtml(item) {
     let eventHtml = '';
+    eventHtml += '<div class="toast-container" id="toastContainer"></div>';
     eventHtml += '<div class="event-item">'
     eventHtml += '<div class="info">';
     eventHtml += `<img src=${item.event_img}>`;
@@ -25,7 +26,7 @@ function createEventHtml(item) {
     eventHtml += `<p><strong>Time:</strong> <span id="time">${item.start_time}-${item.end_time} ${item.morning_or_afternoon}</span></p>`;
     eventHtml += `<p><strong>Sponsor:</strong> <span id="sponsor">${item.sponsor}</span></p>`;
     eventHtml += `<p><strong>Description:</strong> ${item.event_description}</p>`;
-    eventHtml += '<button class="signup-button">Sign Up</button>';    
+    eventHtml += '<button onclick="showToast()" class="signup-button">Sign Up</button>';    
     eventHtml += `</div></div>`;
     return eventHtml;
 }
@@ -49,22 +50,36 @@ function getListedEvents(response) {
 }
 
 function eventSignUp(response, eventId, memberId) {
+    checkSignUpExistenceQuery = 'select count(*) as count from events_member_link where event_id = ? and member_id = ?';
     addSignUpQuery = 'insert into events_member_link (event_id, member_id) values (?, ?)';
     updateAttendanceQuery = 'update event set attendance_count = attendance_count + 1 where event_id = ?';
 
-    connection.query(addSignUpQuery, [eventId, memberId], (err, result) => {
-        if (err) {
-            console.log('Error inserting into bridge table:', err);
+    connection.query(checkSignUpExistenceQuery, [eventId, memberId], (checkErr, checkResult) => {
+        if (checkErr) {
+            console.log('Error checking events_member_link:', checkErr);
         }
-        if (result) {
-            connection.query(updateAttendanceQuery, [eventId], (updErr, result) => {
-                if(updErr) {
-                    console.log('Error updating attendance count:', updErr);
-                }
-                else {
-                    response.writeHead(200, { 'Content-Type': 'application/json' });
-                }
-            });
+        else {
+            const count = checkResult[0].count;
+            if (count > 0) {
+                response.writeHead(409, { 'Content-Type': 'application/json' });
+            }
+            else {
+                connection.query(addSignUpQuery, [eventId, memberId], (err, result) => {
+                    if (err) {
+                        console.log('Error inserting into bridge table:', err);
+                    }
+                    if (result) {
+                        connection.query(updateAttendanceQuery, [eventId], (updErr, result) => {
+                            if(updErr) {
+                                console.log('Error updating attendance count:', updErr);
+                            }
+                            else {
+                                response.writeHead(200, { 'Content-Type': 'application/json' });
+                            }
+                        });
+                    }
+                });
+            }
         }
     });
 }

@@ -45,7 +45,7 @@ document.addEventListener('click', function(event) {
     if (event.target.classList.contains('signup-button')) {
         const eventId = parseInt(event.target.closest('.event-item').querySelector('#eventId').textContent);
         const loginState = localStorage.getItem('loggedIn');
-        const memberId = 10021001;
+        const memberId = 1002001;
 
         
         if (loginState === 'true') {
@@ -54,11 +54,15 @@ document.addEventListener('click', function(event) {
             xhr.setRequestHeader('Content-Type', 'application/json');
 
             console.log('signing up for event');
+            console.log(eventId, memberId);
 
             xhr.onload = function() {
                 if (xhr.status === 200) {
                     console.log('Successfully added member to event and updated event attendance');
                 } 
+                else if (xhr.status === 409) {
+                    console.log('Member is already registered for event');
+                }
                 else {
                     console.error('Error :', xhr.statusText);
                 }
@@ -74,4 +78,18 @@ document.addEventListener('click', function(event) {
         }
     }
 });
+
+function showToast() {
+    const toastContainer = document.getElementById('toastContainer');
+    toastContainer.innerText = 'You have already signed up for this event';
+    toastContainer.style.display = 'block';
+
+    setTimeout(() => {
+        toastContainer.style.opacity = '0';
+    }, 800);
+
+    setTimeout(() => {
+        toastContainer.style.display = 'none';
+    }, 8800);
+}
 

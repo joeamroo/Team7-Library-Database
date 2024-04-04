@@ -218,6 +218,20 @@ a {
   padding-bottom: 20px;
 }
 
+.toast-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  display: none; /* Initially hidden */
+  z-index: 1000;
+  opacity: 1;
+  transition: opacity 1s ease;
+}
+
 /* ==================== Footer ==================== */
 
 footer {
