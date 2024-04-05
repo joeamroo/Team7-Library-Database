@@ -181,17 +181,23 @@ signinBtn.addEventListener('click', () => {
         xhr.onload = function() {
             if (xhr.status === 200) {
                 console.log('successful log in');
+                localStorage.setItem('loggedIn', true);
                 const responseData = JSON.parse(xhr.responseText);
                 
                 if ('memberId' in responseData) {
                     const memberId = responseData.memberId;
-                    console.log('Member ID:', memberId); 
+
+                    localStorage.setItem('userId', memberId);
+                    localStorage.setItem('isAdmin', false);
+                    window.location.href = '../Dashboard/dashboard.html';
                 }
                 else if ('staffId' in responseData) {
                     const staffId = responseData.staffId;
                     const isAdmin = responseData.isAdmin;
-                    console.log('Staff ID:', staffId);
-                    console.log('Is Admin:', isAdmin);
+
+                    localStorage.setItem('userId', staffId);
+                    localStorage.setItem('isAdmin', isAdmin);
+                    window.location.href = '../Staff Page/staff.html';
                 }
                 //change localstorage info
             }

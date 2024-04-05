@@ -105,7 +105,15 @@ function loginUser(response, email, password, isStaff) {
                 if (result.length > 0) {
                     librLink.query(staffLbrQuery, [email, password], (regStaffErr, lbrResult) => {
                         const staffId = lbrResult[0].staff_id;
-                        const isAdmin = lbrResult[0].staff_position;
+                        const staff_pos = lbrResult[0].staff_position;
+                        let isAdmin;
+                        if (staff_pos === 'admin') {
+                            isAdmin = true;
+                        }
+                        else {
+                            isAdmin = false;
+                        }
+                        
                         console.log(staffId);
                         response.writeHead(200, { 'Content-Type': 'application/json' });
                         response.end(JSON.stringify({ staffId, isAdmin }));
