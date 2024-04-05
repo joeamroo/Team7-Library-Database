@@ -211,7 +211,7 @@ document.addEventListener('click', function(event) {
         
         if (parseInt(currAvail) == 0) {
             const itemTitle = event.target.parentElement.parentElement.querySelector('.catalog-item-info h3').textContent;
-            const memberId = localStorage.getItem('userId');
+            const memberId = localStorage.getItem('memberId');
             const xhr = new XMLHttpRequest();
             xhr.open('POST', catalogHoldUrl); 
             xhr.setRequestHeader('Content-Type', 'application/json');

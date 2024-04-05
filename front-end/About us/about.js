@@ -1,9 +1,3 @@
-document.addEventListener('DOMContentLoaded', function() {
-    if (localStorage.getItem('loggedIn') === null) {
-        localStorage.setItem('loggedIn', false);
-    }
-});
-
 const loggedIn = localStorage.getItem('loggedIn');
 const memberId = localStorage.getItem('memberId');
 const staffId = localStorage.getItem('staffId');
@@ -27,5 +21,3 @@ loginButton.addEventListener('click', function(event) {
         }
     }
 });
-
-

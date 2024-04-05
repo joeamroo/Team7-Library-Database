@@ -1,6 +1,13 @@
 // NEED to delete and remove chosen items once confirm checkout is called
 // localStorage.removeItem('chosenItems');
 
+const memberId = localStorage.getItem('memberId');
+const memIdElement = document.getElementById('mem-id');
+
+if (memIdElement && memberId) {
+    memIdElement.innerHTML = memberId;
+}
+
 const backendUrl = 'https://cougarchronicles.onrender.com'; 
 const checkoutInsertUrl = `${backendUrl}/checkout-insert`;
 

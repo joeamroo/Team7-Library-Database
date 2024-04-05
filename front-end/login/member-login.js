@@ -187,7 +187,8 @@ signinBtn.addEventListener('click', () => {
                 if ('memberId' in responseData) {
                     const memberId = responseData.memberId;
 
-                    localStorage.setItem('userId', memberId);
+                    localStorage.removeItem('staffId');
+                    localStorage.setItem('memberId', memberId);
                     localStorage.setItem('isAdmin', false);
                     window.location.href = '../Dashboard/dashboard.html';
                 }
@@ -195,7 +196,8 @@ signinBtn.addEventListener('click', () => {
                     const staffId = responseData.staffId;
                     const isAdmin = responseData.isAdmin;
 
-                    localStorage.setItem('userId', staffId);
+                    localStorage.removeItem('memberId');
+                    localStorage.setItem('staffId', staffId);
                     localStorage.setItem('isAdmin', isAdmin);
 
                     if (isAdmin === false) {
