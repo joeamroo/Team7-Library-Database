@@ -511,3 +511,17 @@ input[type=checkbox] {
   }
   
   /* ===================== Notification System Ends ===================== */
+
+  .toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #7a7a7a;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: none; 
+    z-index: 1000;
+    opacity: 1;
+    transition: opacity 1s ease;
+  }

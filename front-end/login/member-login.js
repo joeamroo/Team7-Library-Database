@@ -56,8 +56,8 @@ overlayButton.addEventListener('click', function(event) {
         'state_addr', 'phone_num', 'email', 'password'
     ].every(id => document.getElementById(id).value.trim() !== "");
 
+
     if (allFieldsFilled) {
-        console.log('attempting to create new member account');
         const fName = document.getElementById('first_name').value.trim();
         const lName = document.getElementById('last_name').value.trim();
         const fullName = fName + ' ' + lName;
@@ -68,13 +68,24 @@ overlayButton.addEventListener('click', function(event) {
         const phoneNum = '+1' + document.getElementById('phone_num').value.trim();
         const email = document.getElementById('email').value.trim();
         const password = document.getElementById('password').value.trim();
+
+
+        const allFieldsFilledToRemove = [
+            'first_name', 'last_name', 'address', 'city_addr',
+            'state_addr', 'zipcode_addr', 'phone_num', 'email', 'password'
+        ].forEach(id => {
+            const element = document.getElementById(id);
+            element.value = "";
+        });
+
+
         let memType;
 
         if (state === 'texas') {
-            memType = 'OutState';
+            memType = 'InState';
         }
         else {
-            memType = 'InState';
+            memType = 'OutState';
         }
 
         const xhr = new XMLHttpRequest;
@@ -83,6 +94,7 @@ overlayButton.addEventListener('click', function(event) {
 
         xhr.onload = function() {
             if (xhr.status === 200) {
+                showSuccessfulToast();
                 console.log('successfully created member');
             } 
             else {
@@ -109,6 +121,22 @@ overlayButton.addEventListener('click', function(event) {
     }
         
 });
+
+function showSuccessfulToast() {
+    let toastContainer = document.getElementById('toastContainer');
+
+    toastContainer.innerText = 'Successfully created account';
+    toastContainer.style.display = 'block';
+    toastContainer.style.opacity = '1';
+  
+    setTimeout(() => {
+      toastContainer.style.opacity = '0';
+    }, 1100);
+  
+    setTimeout(() => {
+      toastContainer.style.display = 'none';
+    }, 11000);
+}
 /* ======================================= */
 /* ======================================= */
 /* ======================================= */
