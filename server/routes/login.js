@@ -82,9 +82,8 @@ function loginUser(response, email, password, isStaff) {
             }
             else {
                 librLink.query(memberLbrQuery, [email, password], (regMemErr, lbrResult) => {
-                    const memberId = lbrResult[0].member_id;
                     response.writeHead(200, { 'Content-Type': 'application/json' });
-                    response.end(JSON.stringify({ memberId }));
+                    response.end(JSON.stringify({ lbrResult }));
                 });
             }
         });
@@ -96,11 +95,9 @@ function loginUser(response, email, password, isStaff) {
             }
             else {
                 const isAdmin = result.isAdmin;
-                let staffId;
                 librLink.query(staffLbrQuery, [email, password], (regStaffErr, lbrResult) => {
-                    staffId = lbrResult[0].staff_id;
                     response.writeHead(200, { 'Content-Type': 'application/json' });
-                    response.end(JSON.stringify({ staffId, isAdmin }));
+                    response.end(JSON.stringify({ lbrResult, isAdmin }));
                 });
             }
         });
