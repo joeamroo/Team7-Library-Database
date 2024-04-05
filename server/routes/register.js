@@ -23,7 +23,7 @@ const accessLink = mysql.createConnection({
 // registration
 function registerMember(res, full_name, address, city_addr, state, zipcode_addr, phone_num, email, password, memType) {
     // insert into access control first
-    accessLink.query('INSERT INTO member_credential(password, email) VALUES (?, ?)', [password, email], (credentialErr, result) => {
+    accessLink.query('INSERT INTO member_credentials (password, email) VALUES (?, ?)', [password, email], (credentialErr, result) => {
         if (credentialErr) {
             console.log('error accessing access_control db table:', credentialErr);
         }
