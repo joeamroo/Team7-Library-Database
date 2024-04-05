@@ -1,27 +1,26 @@
-// Function to handle sign up for event
-/*function handleSignupButtonClick() {
-    const isLoggedIn = true; // Assuming the user is logged in for demonstration
+const loggedIn = localStorage.getItem('loggedIn');
+const memberId = localStorage.getItem('memberId');
+const staffId = localStorage.getItem('staffId');
+const isAdmin = localStorage.getItem('isAdmin');
+const loginButton = document.getElementById('myAccount');
 
-    if (isLoggedIn) {
-         // If logged in, confirm the class sign-up
-        if (confirm("Are you sure you want to sign up for this class?")) {
-            alert("You are signed up for the class!");
-        }
-    } 
-    else {
-        // If not logged in, prompt the user to login
-        if (confirm("You need to login to sign up for this class. Do you want to login?")) {
-            window.location.href = "../login/member-login.html"; // Redirect to the login page
+loginButton.addEventListener('click', function(event) {
+    console.log('clicking the one button');
+    if (loggedIn === 'true') {
+        console.log('user is logged in');
+        if (loginButton) {
+            if(memberId !== null && memberId !== undefined) {
+                loginButton.href = '../Dashboard/dashboard.html';
+            }
+            else if (staffId !== null && staffId !== undefined && isAdmin === 'false') {
+                loginButton.href = '../Staff Page/staff.html';
+            }
+            else if (isAdmin === 'true') {
+                loginButton.href = '../admin/admin.html';
+            } 
         }
     }
-}
-
-// Add event listeners to all signup buttons
-const signupButtons = document.querySelectorAll('.signup-button');
-signupButtons.forEach(button => {
-    button.addEventListener('click', handleSignupButtonClick);
-});*/
-
+});
 
 // Backend calls
 const backendUrl = 'https://cougarchronicles.onrender.com'; 

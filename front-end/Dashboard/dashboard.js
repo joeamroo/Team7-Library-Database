@@ -1,3 +1,20 @@
+const loggedIn = localStorage.getItem('loggedIn');
+const memberId = localStorage.getItem('memberId');
+const loginButton = document.getElementById('myAccount');
+
+loginButton.addEventListener('click', function(event) {
+    console.log('clicking the one button');
+    if (loggedIn === 'true') {
+        console.log('user is logged in');
+        if (loginButton) {
+            if(memberId !== null && memberId !== undefined) {
+                loginButton.href = '#';
+            }
+        }
+    }
+});
+
+
 const container = document.getElementById('container');
 
 /* --------------------------------------- */
