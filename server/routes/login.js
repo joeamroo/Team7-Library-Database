@@ -71,9 +71,9 @@ function verifyPassword(receivedHashedPassword, storedHashedPassword) {
 //Added code here
 function loginUser(response, email, password, isStaff) {
     memberAccQuery = 'SELECT * FROM member_credentials WHERE member_email = ? AND member_password = ?';
-    memberLbrQuery = 'SELECT member_id FROM member WHERE email = ? AND password = ?';
+    memberLbrQuery = 'SELECT * FROM member WHERE email = ? AND password = ?';
     staffAccQuery = 'SELECT * FROM staff_credentials WHERE staff_email = ? AND staff_password = ?';
-    staffLbrQuery = 'SELECT staff_id FROM staff WHERE email = ? AND password = ?';
+    staffLbrQuery = 'SELECT * FROM staff WHERE email = ? AND password = ?';
 
     if (isStaff === 'false') {
         accessLink.query(memberAccQuery, [email, password], (memberErr, result) => {
@@ -82,8 +82,10 @@ function loginUser(response, email, password, isStaff) {
             }
             else {
                 librLink.query(memberLbrQuery, [email, password], (regMemErr, lbrResult) => {
+                    const memberId = lbrResult[0].member_id;
+                    console.log(memberId);
                     response.writeHead(200, { 'Content-Type': 'application/json' });
-                    response.end(JSON.stringify({ lbrResult }));
+                    response.end(JSON.stringify({ memberId }));
                 });
             }
         });
@@ -95,9 +97,12 @@ function loginUser(response, email, password, isStaff) {
             }
             else {
                 const isAdmin = result.isAdmin;
+                let staffId;
                 librLink.query(staffLbrQuery, [email, password], (regStaffErr, lbrResult) => {
+                    staffId = lbrResult[0].staff_id;
+                    console.log(staffId);
                     response.writeHead(200, { 'Content-Type': 'application/json' });
-                    response.end(JSON.stringify({ lbrResult, isAdmin }));
+                    response.end(JSON.stringify({ staffId, isAdmin }));
                 });
             }
         });
