@@ -81,12 +81,18 @@ function loginUser(response, email, password, isStaff) {
                 console.log('Error getting member:', memberErr);
             }
             else {
-                librLink.query(memberLbrQuery, [email, password], (regMemErr, lbrResult) => {
-                    const memberId = lbrResult[0].member_id;
-                    console.log(memberId);
-                    response.writeHead(200, { 'Content-Type': 'application/json' });
-                    response.end(JSON.stringify({ memberId }));
-                });
+                if (result.length > 0) {
+                    librLink.query(memberLbrQuery, [email, password], (regMemErr, lbrResult) => {
+                        const memberId = lbrResult[0].member_id;
+                        console.log(memberId);
+                        response.writeHead(200, { 'Content-Type': 'application/json' });
+                        response.end(JSON.stringify({ memberId }));
+                    });
+                }
+                else {
+                    response.writeHead(409, { 'Content-Type': 'application/json' });
+                    response.end(JSON.stringify({ message: 'User not found' }));
+                }
             }
         });
     }
@@ -96,13 +102,19 @@ function loginUser(response, email, password, isStaff) {
                 console.log('Error getting staff:', memberErr);
             }
             else {
-                const isAdmin = result.isAdmin;
-                librLink.query(staffLbrQuery, [email, password], (regStaffErr, lbrResult) => {
-                    const staffId = lbrResult[0].staff_id;
-                    console.log(staffId);
-                    response.writeHead(200, { 'Content-Type': 'application/json' });
-                    response.end(JSON.stringify({ staffId, isAdmin }));
-                });
+                if (result.length > 0) {
+                    librLink.query(staffLbrQuery, [email, password], (regStaffErr, lbrResult) => {
+                        const staffId = lbrResult[0].staff_id;
+                        const isAdmin = lbrResult[0].staff_position;
+                        console.log(staffId);
+                        response.writeHead(200, { 'Content-Type': 'application/json' });
+                        response.end(JSON.stringify({ staffId, isAdmin }));
+                    });
+                }
+                else {
+                    response.writeHead(409, { 'Content-Type': 'application/json' });
+                    response.end(JSON.stringify({ message: 'User not found' }));
+                }
             }
         });
     }

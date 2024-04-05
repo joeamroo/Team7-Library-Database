@@ -195,6 +195,10 @@ signinBtn.addEventListener('click', () => {
                 }
                 //change localstorage info
             }
+            else if (xhr.status === 409) {
+                const response = JSON.parse(xhr.responseText);
+                console.log(response);
+            }
             else {
                 console.error('Error :', xhr.statusText);
             }
