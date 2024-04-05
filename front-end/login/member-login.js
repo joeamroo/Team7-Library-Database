@@ -37,17 +37,84 @@ form.style.position = 'relative'; // Make sure the form is positioned
 form.appendChild(overlayButton);
 
 // Optionally, you could also add an event listener to the button
+/* ======================================= */
+/* ======================================= */
+/* ======================================= */
+/* ======================================= */
+/* ======================================= */
+/* ======================================= */
+
+const backendUrl = 'https://cougarchronicles.onrender.com'; 
+const registerUrl = `${backendUrl}/registerMember`;
+
 overlayButton.addEventListener('click', function(event) {
     // Prevent the default form submission if necessary
     event.preventDefault();
     
     const allFieldsFilled = [
-        'first_name', 'last_name', 'address', 'city_addr', 
-        'state_addr', 'zipcode_addr', 'email', 'password'
+        'first_name', 'last_name', 
+        'state_addr', 'phone_num', 'email', 'password'
     ].every(id => document.getElementById(id).value.trim() !== "");
 
-    allFieldsFilled? register() : shake(600);
+    if (allFieldsFilled) {
+        console.log('attempting to create new member account');
+        const fName = document.getElementById('first_name').value.trim();
+        const lName = document.getElementById('last_name').value.trim();
+        const fullName = fName + ' ' + lName;
+        const addr = document.getElementById('address').value.trim();
+        const city = document.getElementById('city_addr').value.trim();
+        const state = document.getElementById('state_addr').value.trim().toLowerCase();
+        const zipcode = document.getElementById('zipcode_addr').value.trim();
+        const phoneNum = '+1' + document.getElementById('phone_num').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value.trim();
+        let memType;
+
+        if (state === 'texas') {
+            memType = 'OutState';
+        }
+        else {
+            memType = 'InState';
+        }
+
+        const xhr = new XMLHttpRequest;
+        xhr.open('POST', registerUrl);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                console.log('successfully created member');
+            } 
+            else {
+                console.error('Error:', xhr.statusText);
+            }
+        };
+
+        const data = JSON.stringify({
+            fullName: fullName,
+            addr: addr,
+            city: city,
+            state: state,
+            zipcode: zipcode,
+            phoneNum: phoneNum,
+            email: email,
+            password: password,
+            memType: memType
+        });
+
+        xhr.send(data)
+    } 
+    else {
+        shake(600);
+    }
+        
 });
+/* ======================================= */
+/* ======================================= */
+/* ======================================= */
+/* ======================================= */
+/* ======================================= */
+/* ======================================= */
 /* --------------------------------------- */
 
 
@@ -120,12 +187,12 @@ function homepage() {
     window.location.href = '../Home/home.html';
 }
 
-const backendUrl = 'https://cougarchronicles.onrender.com'; 
 const sendReturnUrl = `${backendUrl}/loginUser`;
 
 /* --------------------------------------- */
 /* ------    Login Section   ------ */
 /* --------------------------------------- */
+
 
 
 
@@ -261,7 +328,7 @@ function sendRequest(user, pass) {
 
 
 
-function register() {
+/*function register() {
     const backendUrl = 'https://cougarchronicles.onrender.com/loginUser';
 
     const registerFields = [
@@ -291,7 +358,7 @@ function register() {
 
 
     xhr.send(data);
-}
+}*/
 
 /* ==========================================================================
    Section: Notification System

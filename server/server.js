@@ -4,7 +4,7 @@ const { insertTransactionInfo } = require('./routes/checkout');
 const { getTransactionItems, returnItems } = require('./routes/returnItems');
 const { getUser } = require('./routes/dashboard');
 const { loginUser } = require('./routes/login');
-const { registerUser } = require('./routes/register');
+const { registerMember } = require('./routes/register');
 const { getListedEvents, eventSignUp } = require('./routes/classesnEvents');
 
 function setCorsHeaders(res) {
@@ -159,7 +159,7 @@ const server = http.createServer((request, res) => {
                     }
                 });
             } 
-            else if (pathname === '/register') {
+            else if (pathname === '/registerMember') {
                 let body = '';
                 request.on('data', (chunk) => {
                     body += chunk.toString();
@@ -167,9 +167,7 @@ const server = http.createServer((request, res) => {
                 request.on('end', () => {
                     try {
                         const postData = JSON.parse(body);
-                        registerUser(res, postData.first_name, postData.last_name, postData.address,
-                                        postData.city_addr, postData.state_addr, postData.zipcode_addr,
-                                        postData.email, postData.password);
+                        registerMember(res, postData.fullName, postData.addr, postData.city, postData.state, postData.zipcode, postData.phoneNum, postData.email, postData.password, postData.memType);
                     } catch (error) {
                         console.error('Error parsin JSON', error);
                     }

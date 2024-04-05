@@ -1,7 +1,7 @@
 const fs = require('fs');
 const mysql = require('mysql');
 
-const link = mysql.createConnection({
+const librLink = mysql.createConnection({
     host: 'library-database-sytem.mysql.database.azure.com',
     user: 'lbrGuest',
     password: 'gu3st@cces$',
@@ -9,24 +9,34 @@ const link = mysql.createConnection({
     port:3306
 });
 
+const accessLink = mysql.createConnection({
+    host: 'library-database-sytem.mysql.database.azure.com',
+    user: 'lbrGuest',
+    password: 'gu3st@cces$',
+    database: 'access_control',
+    port:3306
+});
+
+
 
 
 // registration
-function registerUser(res, first_name, last_name, address, city_addr, state, zipcode_addr, email, password) {
-        const sql_query = 'INSERT INTO member' +
-                         '(first_name, last_name, address, city_addr, state, zipcode_addr, email, password)' +
-                         'VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
-    
-                         link.query(sql_query, values, (error, results, fields) => {
-                            if (error) {
-                                // Handle error
-                                console.error(error);
-                                return;
-                            }
-                            // Success
-                            console.log(`User added with ID: ${results.insertId}`);
-                        });
-                    }
-                
+function registerMember(res, full_name, address, city_addr, state, zipcode_addr, phone_num, email, password, memType) {
+    // insert into access control first
+    accessLink.query('INSERT INTO member_credential(password, email) VALUES (?, ?)', [password, email], (credentialErr, result) => {
+        if (credentialErr) {
+            console.log('error accessing access_control db table:', credentialErr);
+        }
+    });
 
-module.exports = { registerUser };
+    librLink.query('INSERT INTO member (password, name, email, mem_type, phone_number, street_addr, city_addr, state, zipcode_addr) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', [password, full_name, email, memType, phone_num, address, city_addr, state, zipcode_addr], (newMemErr, result) => {
+        if (newMemErr) {
+            console.log('error entering new member into librarydev db:', newMemErr);
+        }
+    });
+
+    response.writeHead(200, { 'Content-Type': 'application/json' });
+    response.end(JSON.stringify({ message: 'accountCreationSuccessful' }));
+}
+
+module.exports = { registerMember };
