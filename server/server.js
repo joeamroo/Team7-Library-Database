@@ -69,7 +69,7 @@ const server = http.createServer((request, res) => {
                 request.on('end', () => {
                     try {
                         const postData = JSON.parse(body);
-                        insertDataToDatabase(res, postData.itemTitle);
+                        insertDataToDatabase(res, postData.itemTitle, postData.memberId);
                     } 
                     catch (error) {
                         console.error('Error parsing JSON:', error);

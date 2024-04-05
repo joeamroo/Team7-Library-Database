@@ -211,6 +211,7 @@ document.addEventListener('click', function(event) {
         
         if (parseInt(currAvail) == 0) {
             const itemTitle = event.target.parentElement.parentElement.querySelector('.catalog-item-info h3').textContent;
+            const memberId = localStorage.getItem('userId');
             const xhr = new XMLHttpRequest();
             xhr.open('POST', catalogHoldUrl); 
             xhr.setRequestHeader('Content-Type', 'application/json');
@@ -235,7 +236,7 @@ document.addEventListener('click', function(event) {
                 console.error('Network error');
             };
 
-            const data = JSON.stringify({ itemTitle: itemTitle });
+            const data = JSON.stringify({ itemTitle: itemTitle, memberId: memberId });
             xhr.send(data);
 
         }

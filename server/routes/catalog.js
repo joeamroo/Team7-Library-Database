@@ -191,10 +191,8 @@ function getCatalogSearchWithRestrictions(response, keyword, searchBy, limitBy, 
     });
 }
 
-function insertDataToDatabase(response, itemTitle) {
+function insertDataToDatabase(response, itemTitle, memberId) {
     const getInfo = 'SELECT asset_type, isbn, asset_id from catalog_view where book_movie_title_model = ?';
-    // I have specified the member but need to change to use member logged in !!!!!
-    const member_id = 1002001;
 
     connection.query(getInfo, [itemTitle], (err, results) => {
         const { asset_type, isbn, asset_id } = results[0];
@@ -206,21 +204,21 @@ function insertDataToDatabase(response, itemTitle) {
 
         if (asset_type === 'book') {
             insertQuery = 'INSERT INTO hold_request (member_id, item_name, isbn, status, request_date) VALUES (?, ?, ?, ?, NOW())';
-            values = [member_id, itemTitle, isbn, 'active'];
+            values = [memberId, itemTitle, isbn, 'active'];
 
             updateHoldQuery = 'UPDATE book SET current_holds = current_holds + 1 WHERE isbn = ?';
             updValues = [isbn];
         } 
         else if (asset_type === 'movie') {
             insertQuery = 'INSERT INTO hold_request (member_id, item_name, movie_id, status, request_date) VALUES (?, ?, ?, ?, NOW())';
-            values = [member_id, itemTitle, asset_id, 'active'];
+            values = [memberId, itemTitle, asset_id, 'active'];
 
             updateHoldQuery = 'UPDATE movie SET current_holds = current_holds + 1 WHERE movie_id = ?';
             updValues = [asset_id];
         }
         else if (asset_type === 'device') {
             insertQuery = 'INSERT INTO hold_request (member_id, item_name, device_id, status, request_date) VALUES (?, ?, ?, ?, NOW())';
-            values = [member_id, itemTitle, asset_id, 'active'];
+            values = [memberId, itemTitle, asset_id, 'active'];
 
             updateHoldQuery = 'UPDATE device SET current_holds = current_holds + 1 WHERE device_id = ?';
             updValues = [asset_id];

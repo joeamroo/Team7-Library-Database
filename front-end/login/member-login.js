@@ -197,12 +197,19 @@ signinBtn.addEventListener('click', () => {
 
                     localStorage.setItem('userId', staffId);
                     localStorage.setItem('isAdmin', isAdmin);
-                    window.location.href = '../Staff Page/staff.html';
+
+                    if (isAdmin === false) {
+                        window.location.href = '../Staff Page/staff.html';
+                    }
+                    else {
+                        window.location.href = '../admin/admin.html';
+                    }
+                    
                 }
-                //change localstorage info
             }
             else if (xhr.status === 409) {
                 const response = JSON.parse(xhr.responseText);
+                showNoLoginToast()
                 console.log(response);
             }
             else {
@@ -223,6 +230,22 @@ signinBtn.addEventListener('click', () => {
     }
 
 });
+
+function showNoLoginToast() {
+    let toastContainer = document.getElementById('loginToastContainer');
+
+    toastContainer.innerText = 'User not found';
+    toastContainer.style.display = 'block';
+    toastContainer.style.opacity = '1';
+  
+    setTimeout(() => {
+      toastContainer.style.opacity = '0';
+    }, 1100);
+  
+    setTimeout(() => {
+      toastContainer.style.display = 'none';
+    }, 11000);
+}
 
 
 /* ======================================= */

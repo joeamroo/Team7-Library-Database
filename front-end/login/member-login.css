@@ -512,7 +512,7 @@ input[type=checkbox] {
   
   /* ===================== Notification System Ends ===================== */
 
-  .toast-container {
+  #toastContainer {
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -520,6 +520,21 @@ input[type=checkbox] {
     color: #fff;
     padding: 10px 20px;
     border-radius: 5px;
+    display: none; 
+    z-index: 1000;
+    opacity: 1;
+    transition: opacity 1s ease;
+  }
+
+  #loginToastContainer {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    background-color: #6b6b6b;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    bottom: 50px;
     display: none; 
     z-index: 1000;
     opacity: 1;
