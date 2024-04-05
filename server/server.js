@@ -142,7 +142,7 @@ const server = http.createServer((request, res) => {
                     }
                 });
             } 
-            else if (pathname === '/loginUser')  {
+            else if (pathname === '/logIn')  {
                 let body = '';
                 request.on('data', (chunk) => {
                     body += chunk.toString();
@@ -151,7 +151,7 @@ const server = http.createServer((request, res) => {
                     try {
                         const postData = JSON.parse(body);
                         console.log(postData);
-                        loginUser(res, postData.username, postData.password);
+                        loginUser(res, postData.email, postData.password, postData.isStaff);
                     } 
                     catch (error) {
                         console.error('Error parsing JSON:', error);

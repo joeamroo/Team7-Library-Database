@@ -1,15 +1,21 @@
 const mysql = require('mysql');
 
 
-
-const link = mysql.createConnection({
+const librLink = mysql.createConnection({
     host: 'library-database-sytem.mysql.database.azure.com',
     user: 'lbrGuest',
     password: 'gu3st@cces$',
     database: 'librarydev',
     port:3306
 });
-  
+
+const accessLink = mysql.createConnection({
+    host: 'library-database-sytem.mysql.database.azure.com',
+    user: 'lbrGuest',
+    password: 'gu3st@cces$',
+    database: 'access_control',
+    port:3306
+});
 
 
 
@@ -60,26 +66,55 @@ function verifyPassword(receivedHashedPassword, storedHashedPassword) {
     }
 }*/
 
-function loginUser(response, username, password) {
-    //const insertQuery = 'INSERT INTO transaction (member_id) values (?)';
-   
-   console.log(response);
-   console.log(username);
-   console.log(password);
-   //response.statusCode = 200;
-   response.setHeader('Content-Type', 'application/json');
-   response.writeHead(200, { 'Content-Type': 'application/json' });
-   response.end(JSON.stringify({message: 'error occured' }));
+
+
+//Added code here
+function loginUser(response, email, password, isStaff) {
+    memberAccQuery = 'SELECT * FROM member_credentials WHERE member_email = ? AND member_password = ?';
+    memberLbrQuery = 'SELECT member_id FROM member WHERE email = ? AND password = ?';
+    staffAccQuery = 'SELECT * FROM staff_credentials WHERE staff_email = ? AND staff_password = ?';
+    staffLbrQuery = 'SELECT staff_id FROM staff WHERE email = ? AND password = ?';
+
+    if (isStaff === 'false') {
+        accessLink.query(memberAccQuery, [email, password], (memberErr, result) => {
+            if (memberErr) {
+                console.log('Error getting member:', memberErr);
+            }
+            else {
+                librLink.query(memberLbrQuery, [email, password], (regMemErr, lbrResult) => {
+                    const memberId = lbrResult[0].member_id;
+                    response.writeHead(200, { 'Content-Type': 'application/json' });
+                    response.end(JSON.stringify({ memberId }));
+                });
+            }
+        });
+    }
+    else {
+        accessLink.query(staffAccQuery, [email, password], (staffErr, result) => {
+            if (staffErr) {
+                console.log('Error getting staff:', memberErr);
+            }
+            else {
+                const isAdmin = result.isAdmin;
+                let staffId;
+                librLink.query(staffLbrQuery, [email, password], (regStaffErr, lbrResult) => {
+                    staffId = lbrResult[0].staff_id;
+                    response.writeHead(200, { 'Content-Type': 'application/json' });
+                    response.end(JSON.stringify({ staffId, isAdmin }));
+                });
+            }
+        });
+    }
   
-
-
 }
 
 
+
+/*
 function getUserStoredPassword(username) {
 
     return 'd033e22ae348aeb5660fc2140aec35850c4da997';
-}
+}*/
 
 
 

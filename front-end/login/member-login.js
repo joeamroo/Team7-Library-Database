@@ -43,10 +43,26 @@ form.appendChild(overlayButton);
 /* ======================================= */
 /* ======================================= */
 /* ======================================= */
+/* ======================================= */
+/* ======================================= */
+/* ======================================= */
+/* ======================================= */
+/* ======================================= */
+/* ======================================= */
+/* --------------------------------------- */
+/* ======================================= */
+/* ======================================= */
+/* ======================================= */
+/* ======================================= */
+/* ======================================= */
+/* ======================================= */
+/* --------------------------------------- */
 
 const backendUrl = 'https://cougarchronicles.onrender.com'; 
 const registerUrl = `${backendUrl}/registerMember`;
+const logInUrl = `${backendUrl}/logIn`;
 
+//This is for creating a new account
 overlayButton.addEventListener('click', function(event) {
     // Prevent the default form submission if necessary
     event.preventDefault();
@@ -88,7 +104,7 @@ overlayButton.addEventListener('click', function(event) {
             memType = 'OutState';
         }
 
-        const xhr = new XMLHttpRequest;
+        const xhr = new XMLHttpRequest();
         xhr.open('POST', registerUrl);
         xhr.setRequestHeader('Content-Type', 'application/json');
 
@@ -137,6 +153,82 @@ function showSuccessfulToast() {
       toastContainer.style.display = 'none';
     }, 11000);
 }
+
+signinBtn.addEventListener('click', () => {
+    event.preventDefault();
+
+    const allFieldsFilled = [
+        'member-email', 'member-password'
+    ].every(id => document.getElementById(id).value.trim() !== "");
+
+    if (allFieldsFilled) {
+        const email = document.getElementById('member-email').value.trim();
+        const password = document.getElementById('member-password').value.trim();
+        let isStaff;
+
+        if (staff.checked === true) {
+            isStaff = true;
+        }
+        else {
+            isStaff = false;
+        }
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', logInUrl); 
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                console.log('successful log in');
+                const responseData = JSON.parse(xhr.responseText);
+                
+                if ('memberId' in responseData) {
+                    const memberId = responseData.memberId;
+                    console.log('Member ID:', memberId); 
+                }
+                else if ('staffId' in responseData) {
+                    const staffId = responseData.staffId;
+                    const isAdmin = responseData.isAdmin;
+                    console.log('Staff ID:', staffId);
+                    console.log('Is Admin:', isAdmin);
+                }
+                //change localstorage info
+            }
+            else {
+                console.error('Error :', xhr.statusText);
+            }
+        }
+
+        const data = JSON.stringify({ 
+            email: email,
+            password: password,
+            isStaff: isStaff
+        });
+
+        xhr.send(data);
+    }
+    else {
+        console.log('enter soemthing');
+    }
+
+});
+
+
+/* ======================================= */
+/* ======================================= */
+/* ======================================= */
+/* ======================================= */
+/* ======================================= */
+/* ======================================= */
+/* --------------------------------------- */
+/* ======================================= */
+/* ======================================= */
+/* ======================================= */
+/* ======================================= */
+/* ======================================= */
+/* ======================================= */
+/* --------------------------------------- */
 /* ======================================= */
 /* ======================================= */
 /* ======================================= */
@@ -157,9 +249,9 @@ loginBtn.addEventListener('click', () => {
 });
 
 /* The Login Button on the White Area */
-signinBtn.addEventListener('click', () => {
+/*signinBtn.addEventListener('click', () => {
     loginValidation();
-});
+});*/
 
 
 
@@ -266,7 +358,7 @@ xhr.send(JSON.stringify(data));
 /* --------------------------------------- */
 
 // Makes sure all fields are not empty
-function loginValidation() { 
+/*function loginValidation() { 
     const allLoginFields = [
         'member-email', 'member-password'
     ].every(id => document.getElementById(id).value.trim() !== "");
@@ -286,7 +378,7 @@ function loginRequest() {
     storeSession(usertext, ciphertext);
     sendRequest(usertext, ciphertext);
 
-}
+}*/
 // Hashes password and returns to loginRequest
 /*async function hashPassword(password) {
     // Encode the password as UTF-8
@@ -302,7 +394,7 @@ function loginRequest() {
     return hashBuffer;
 }*/
 
-function storeSession(user, auth) {
+/*function storeSession(user, auth) {
   localStorage.setItem("user-session", user);
   localStorage.setItem("auth-session", auth);
 }
@@ -316,7 +408,7 @@ function scramPassword(password) {
     hash |= 0; // Convert to 32bit integer
   }
   return hash;
-}
+}*/
 
 
 
@@ -410,16 +502,16 @@ let notification = document.querySelector(".notification");
             window.clearTimeout(timeout);
           }
         }, 5000);
-      }
+    }
     
-      function closeNote() {
+    function closeNote() {
         notification.classList.toggle("active");
         notification.classList.toggle("hidden");
-      }
+    }
 
     
       // Show notification on page load
-      window.addEventListener("load", showNotification);
+    window.addEventListener("load", showNotification);
 
 /* ===================== Notification Ends ===================== */
 
