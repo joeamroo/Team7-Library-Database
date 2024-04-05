@@ -22,6 +22,13 @@ document.addEventListener('DOMContentLoaded', function() {
       const dueDate = document.getElementById('due-date').textContent;
       const totalItems = totalItemsSpan.textContent;
       const chosenItems = JSON.parse(localStorage.getItem('chosenItems')) || [];
+
+      const isLoggedIn = localStorage.getItem('loggedIn');
+
+      if (isLoggedIn === 'false') {
+        showNoLoginToast()
+        return;
+      }
   
       
       const data = {
@@ -101,6 +108,21 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+function showNoLoginToast() {
+    let toastContainer = document.getElementById('chkOutToastContainer');
+
+    toastContainer.innerText = 'User is not logged in';
+    toastContainer.style.display = 'block';
+    toastContainer.style.opacity = '1';
+  
+    setTimeout(() => {
+      toastContainer.style.opacity = '0';
+    }, 1100);
+  
+    setTimeout(() => {
+      toastContainer.style.display = 'none';
+    }, 11000);
+}
 
 // Getting catalog items from local storage that will be used to make insertion for transaction
 // ADD localStorage.removeItem('chosenItems')  after the checkout button is clicked 

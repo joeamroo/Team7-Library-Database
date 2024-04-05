@@ -192,6 +192,7 @@ document.getElementById('search-btn').addEventListener('click', function(event) 
 
 document.addEventListener('click', function(event) {
     if (event.target.classList.contains('hold-btn')) {
+        const isLoggedIn = localStorage.getItem('loggedIn');
         const currAvail = parseInt(event.target.closest('.catalog-item').querySelector('#currAvail').textContent);
         const medium = event.target.closest('.catalog-item').querySelector('#medium').textContent;
         const currHolds = event.target.closest('.catalog-item').querySelector('#currHolds');
@@ -240,16 +241,36 @@ document.addEventListener('click', function(event) {
             xhr.send(data);
 
         }
-        else {
+        else if (parseInt(currAvail) !== 0 && isLoggedIn === 'true') {
            const isAvailModal = document.getElementById('itemIsAvail');
            isAvailModal.style.display = 'block';
            const acceptBtn =  isAvailModal.querySelector('#accept-msg');
            acceptBtn.addEventListener('click', function() {
             isAvailModal.style.display = 'none';
            });
-        }        
+        }   
+        else if (parseInt(currAvail) !== 0 && isLoggedIn === 'false') {
+            showNoLoginToast()
+            return;
+        }     
     }
 });
+
+function showNoLoginToast() {
+    let toastContainer = document.getElementById('holdToastContainer');
+
+    toastContainer.innerText = 'User is not logged in';
+    toastContainer.style.display = 'block';
+    toastContainer.style.opacity = '1';
+  
+    setTimeout(() => {
+      toastContainer.style.opacity = '0';
+    }, 1100);
+  
+    setTimeout(() => {
+      toastContainer.style.display = 'none';
+    }, 11000);
+}
 
 // Event listener for locally gathering the items being checked out before inserting into
 document.addEventListener('click', function(event) {

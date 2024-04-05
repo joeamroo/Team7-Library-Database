@@ -289,6 +289,20 @@ header #title {
     color: white;
 }
 
+.toast-container {
+    position: fixed;
+    margin-left: 115px;
+    margin-top: 350px;
+    background-color: #686767;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: none; 
+    z-index: 1000;
+    opacity: 1;
+    transition: opacity 1s ease;
+}
+
 
 /* =============== Footer Section =============== */
 
