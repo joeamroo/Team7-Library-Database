@@ -5,6 +5,7 @@ const memberId = localStorage.getItem('memberId');
 const staffId = localStorage.getItem('staffId');
 const isAdmin = localStorage.getItem('isAdmin');
 const loginButton = document.getElementById('myAccount');
+const logOutBtn = document.getElementById('logoutBtn');
 
 loginButton.addEventListener('click', function(event) {
     console.log('clicking the one button');
@@ -21,5 +22,14 @@ loginButton.addEventListener('click', function(event) {
                 loginButton.href = '#';
             } 
         }
+    }
+});
+
+logOutBtn.addEventListener('click', function(event) {
+    console.log('logging out');
+    localStorage.setItem('loggedIn', false);
+    if (staffId !== null && staffId !== undefined) {
+        logOutBtn.href = '../Home/home.html';
+        localStorage.removeItem('staffId');
     }
 });

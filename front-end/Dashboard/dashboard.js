@@ -1,17 +1,15 @@
 const loggedIn = localStorage.getItem('loggedIn');
 const memberId = localStorage.getItem('memberId');
 const loginButton = document.getElementById('myAccount');
+const logOutBtn = document.getElementById('logoutBtn');
 
-loginButton.addEventListener('click', function(event) {
-    console.log('clicking the one button');
-    if (loggedIn === 'true') {
-        console.log('user is logged in');
-        if (loginButton) {
-            if(memberId !== null && memberId !== undefined) {
-                loginButton.href = '#';
-            }
-        }
-    }
+logOutBtn.addEventListener('click', function(event) {
+  console.log('logging out');
+  localStorage.setItem('loggedIn', false);
+  if(memberId !== null && memberId !== undefined) {
+    logOutBtn.href = '../Home/home.html';
+    localStorage.removeItem('memberId');
+  }
 });
 
 

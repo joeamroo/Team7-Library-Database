@@ -57,6 +57,7 @@ form.appendChild(overlayButton);
 /* ======================================= */
 /* ======================================= */
 /* --------------------------------------- */
+// Gaby added this, change if needed to fit desired functionality
 
 const backendUrl = 'https://cougarchronicles.onrender.com'; 
 const registerUrl = `${backendUrl}/registerMember`;

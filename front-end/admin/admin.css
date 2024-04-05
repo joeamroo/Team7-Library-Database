@@ -66,6 +66,11 @@ header {
   cursor: pointer;
   color: var(--colorLight);
 }
+
+#logoutBtn {
+  float: right;
+}
+
 #staffForm {
   background-color: var(--colorLight);
   padding: 20px;
