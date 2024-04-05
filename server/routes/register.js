@@ -35,8 +35,8 @@ function registerMember(res, full_name, address, city_addr, state, zipcode_addr,
         }
     });
 
-    response.writeHead(200, { 'Content-Type': 'application/json' });
-    response.end(JSON.stringify({ message: 'accountCreationSuccessful' }));
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ message: 'accountCreationSuccessful' }));
 }
 
 module.exports = { registerMember };
