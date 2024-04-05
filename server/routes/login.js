@@ -75,7 +75,7 @@ function loginUser(response, email, password, isStaff) {
     staffAccQuery = 'SELECT * FROM staff_credentials WHERE staff_email = ? AND staff_password = ?';
     staffLbrQuery = 'SELECT * FROM staff WHERE email = ? AND password = ?';
 
-    if (isStaff === 'false') {
+    if (isStaff === false) {
         accessLink.query(memberAccQuery, [email, password], (memberErr, result) => {
             if (memberErr) {
                 console.log('Error getting member:', memberErr);
@@ -106,7 +106,6 @@ function loginUser(response, email, password, isStaff) {
             }
         });
     }
-  
 }
 
 
