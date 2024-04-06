@@ -2,6 +2,15 @@ const loggedIn = localStorage.getItem('loggedIn');
 const memberId = localStorage.getItem('memberId');
 const loginButton = document.getElementById('myAccount');
 const logOutBtn = document.getElementById('logoutBtn');
+const profileSelect = document.getElementById('profile-selection');
+const orderSelect = document.getElementById('order-selection');
+const holdSelect = document.getElementById('hold-selection');
+const waitSelect = document.getElementById('waitlist-selection');
+const profileView = document.querySelector('.settings.profile');
+const orderView = document.querySelector('.settings.orders');
+const holdsView = document.querySelector('.settings.holds');
+const waitlistView = document.querySelector('.settings.waitlist');
+
 
 logOutBtn.addEventListener('click', function(event) {
   console.log('logging out');
@@ -15,11 +24,14 @@ logOutBtn.addEventListener('click', function(event) {
 
 const container = document.getElementById('container');
 
-/* --------------------------------------- */
-/* ----- Dropdown List ----- */
-/* --------------------------------------- */
 
-var input = document.querySelector(".input-box");
+/* 
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │                            Dropdown List                                │
+  └─────────────────────────────────────────────────────────────────────────┘
+ */
+
+/*var input = document.querySelector(".input-box");
       input.onclick = function () {
         this.classList.toggle("open");
         let list = this.nextElementSibling;
@@ -56,11 +68,14 @@ var input = document.querySelector(".input-box");
           let list = input.nextElementSibling;
           list.style.maxHeight = list.scrollHeight + "px";
         });
-      }
+      }*/
 
-/* ==========================================================================
-   Section: Notification System
-   ========================================================================== */
+
+/* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                         Notification Settings                               │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
 
 
       let notification = document.querySelector(".notification");
@@ -88,9 +103,57 @@ var input = document.querySelector(".input-box");
         notification.classList.toggle("hidden");
       }
 
+      function showDefaults() {
+        const element = document.querySelector('a#profile-selection.default-click');
+
+        // Simulate a click event
+        element.click();
+      }
     
       // Show notification on page load
       window.addEventListener("load", showNotification);
+      window.addEventListener("load", showDefaults);
+
+
+      
+      profileSelect.addEventListener('click', () => {
+        console.log('clicked');
+        waitlistView.classList.add('hide');
+        orderView.classList.add('hide');
+        holdsView.classList.add('hide');
+        profileView.classList.remove('hide');
+         
+      });
+      
+
+      orderSelect.addEventListener('click', () => {
+        console.log('clicked');
+        profileView.classList.add('hide');
+        holdsView.classList.add('hide');
+        waitlistView.classList.add('hide');
+        orderView.classList.remove('hide');
+      });
+
+      holdSelect.addEventListener('click', () => { 
+        console.log('clicked');
+        profileView.classList.add('hide');
+        orderView.classList.add('hide');
+        waitlistView.classList.add('hide');
+        holdsView.classList.remove('hide');
+      });
+
+      waitSelect.addEventListener('click', () => {
+        console.log('clicked');
+        profileView.classList.add('hide');
+        orderView.classList.add('hide');
+        holdsView.classList.add('hide');
+        waitlistView.classList.remove('hide');
+      });
+
+      
+
+      
+
 
 /* ===================== Notification Ends ===================== */
 /*

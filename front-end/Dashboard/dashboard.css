@@ -146,6 +146,8 @@ header {
     margin: 20px auto;
   }
 
+  
+
  
 
 /* ==========================================================================
@@ -618,3 +620,153 @@ input:checked + label::before {
 }
 
 /* ===================== Notification System Ends ===================== */
+
+
+/* 
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │                          Profile Section                                │
+  └─────────────────────────────────────────────────────────────────────────┘
+ */
+
+
+.profile-pic-container {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 20px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.profile-pic {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  transition: opacity 0.3s ease;
+}
+
+.update-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.profile-pic-container:hover .update-overlay {
+  opacity: 1;
+}
+
+.update-overlay p {
+  font-size: 18px;
+  text-align: center;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.account-container {
+  
+  margin-left: 20px;
+  padding: 1px;
+  
+
+
+}
+
+h2 {
+  margin-top: 0;
+}
+
+.profile-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+
+.profile-details {
+  text-align: center;
+}
+
+.profile-details h3 {
+  margin: 0;
+}
+
+.personal-info {
+  background-color: white;
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.reset-password {
+  padding: 10px 20px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.reset-password:hover {
+  background-color: #c82333;
+}
+
+.reset-password:active {
+  background-color: #bd2130;
+}
+
+
+/* 
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │                          Different Views                                │
+  └─────────────────────────────────────────────────────────────────────────┘
+ */
+
+
+.settings.profile.hide {
+  display: none;
+}
+
+.settings.orders.hide {
+  display: none;
+}
+
+.settings.holds.hide {
+  display: none;
+}
+
+.settings.waitlist.hide {
+  display: none;
+}
+

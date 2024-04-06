@@ -19,8 +19,8 @@
 </head>
 <body>
 
-  <!-- Container Starts -->
-<container>
+
+
 <div class="wrapper">
 
   <div class="top-sidebar">
@@ -33,6 +33,18 @@
 
       <div class="sidebar">
           <div class="top">
+
+
+
+  
+<!-- 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                           Background Image                                  │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ -->
+  
+
+
             <div class = "reading">
               <?xml version="1.0" encoding="utf-8"?>
               <svg id = "avatar" fill="#ffffff" width="100px" height="100px" viewBox="0 0 50 50" version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" overflow="inherit"><path d="M25.154 17.347c3.953 0 7.144-3.217 7.144-7.183 0-3.958-3.19-7.164-7.144-7.164-3.948 0-7.153 3.207-7.153 7.164 0 3.965 3.206 7.183 7.153 7.183zm6.951 1.653c3.271 0 4.644 2.794 4.644 2.794l10.557 14.545c.437.649.694 1.443.694 2.3 0 2.26-1.828 4.097-4.081 4.097-.539 0-1.061-.117-1.519-.295l-6.4-1.774v6.333h-22v-6.333l-6.402 1.777c-.45.176-.968.296-1.509.296-2.251 0-4.088-1.83-4.088-4.09 0-.856.253-1.637.706-2.288l10.55-14.568s1.372-2.794 4.629-2.794h14.219zm-7.099 23.588l8.246-2.74-.179-.05c-5.705-1.672-3.518-9.228 2.173-7.537l.754.268v-8.521l-10.989 3.623-11.011-3.623v8.521l.754-.269c5.688-1.69 7.898 5.865 2.197 7.537l-.2.05 8.255 2.741z"/></svg>
@@ -42,11 +54,11 @@
           </div>
           
           <ul>
-              <li class="menu-item"><a href="#">Profile</a></li>
-              <li class="menu-item"><a href="#">Orders</a></li>
-              <li class="menu-item"><a href="#">Holds</a></li>
+              <li class="menu-item" ><a class="default-click" id="profile-selection" href="#">Profile</a></li>
+              <li class="menu-item"><a id="order-selection" href="#">Orders</a></li>
+              <li class="menu-item"><a id="hold-selection" href="#">Holds</a></li>
               <!--bug exists here-->
-              <li class="menu-item"><a href="#">Waitlist</a></li>
+              <li class="menu-item"><a id="waitlist-selection" href="#">Waitlist</a></li>
               
 
               <li class="menu-item logout" id="logout"><a href="#">
@@ -77,7 +89,12 @@
     </div>
   </div>
 
- <!-- ✨✨✨✨✨✨✨✨ Notification System ✨✨✨✨✨✨✨✨✨✨ -->
+<!-- 
+  ┌────────────────────────────────────────────────────────────────────────┐
+  │                               Notification                             │
+  └────────────────────────────────────────────────────────────────────────┘
+ -->
+ 
   <div class="center">
     <div class="notification">
       <img src="../Dashboard/notify.png" alt="" />
@@ -90,55 +107,119 @@
   </div>
 
   <a class="user-greet">Welcome, User!</a>
-<!-- ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️ ➡️  ➡️ -->
+
   
-  <div class="rounded-rectangle">
-    <div class="title-dropdown-container">
-      <a class="order-title">Orders</a>
-      <div class="dropdown">
-        <div class="input-box"></div>
-        <div class="list">
-          <div class="search-box">
-            <input type="search" name="" id="search" placeholder="Search Options" onkeyup="search(this)" />
-          </div>
-          <input type="radio" name="drop1" id="id11" class="radio" />
-          <label for="id11">
-            <span class="material-icons-outlined">new_label</span>
-            <span class="dropdown-label">Book</span>
-          </label>
-        </div>
-      </div>
-    </div>
-  
+   <div class="rounded-rectangle profile" id="profile-class">
+    <!----------------------------------------------------------------->
+   
+
+
+<!-- 
+  ┌───────────────────────────────────────────────────────────────────┐
+  │                             Profile                               │
+  └───────────────────────────────────────────────────────────────────┘
+ -->
  
   
+    <div class="settings profile">
+      <!-- User settings panel goes here -->
+      <!-- Include the form from the previous code snippet -->
 
-    
-
-    <!---->
-    <div class="recent-orders">
-      <table>
-        <thead>
-          <tr>
-            <th style="width:10%"></th>
-
-            <th style=>Book Title</th>
-            <th>Author</th>
-            <th>ISBN</th>
-            <th>Purchased</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!--returns-->
+      <div class="profile-pic-container">
+        <img src="Profile.png" alt="Profile Picture" class="profile-pic" id="profilePic">
+        <div class="update-overlay" onclick="document.getElementById('fileInput').click();">
+          <p>Update Pic</p>
+        </div>
+      </div>
+      
+      <input type="file" id="fileInput" accept="image/*" onchange="updateProfilePic(this)">
+      
+      <script>
+      function updateProfilePic(input) {
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
           
-        </tbody>
-      </table>
+          reader.onload = function(e) {
+            document.getElementById('profilePic').src = e.target.result;
+            // TODO: Upload the image to the server
+          }
+          
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+      </script>
+
+      <div class="account-container"> <h2>My Account</h2> <p>Manage your User Account Information and Settings</p></div> <div class="profile-info"> 
+
+       
+       
+      </div> <div class="personal-info"> <h3>Personal Information</h3>
+    
+       
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input type="text" id="firstName" value="Darth">
+        </div>
+        
+        <div class="form-group">  
+          <label for="lastName">Last Name</label>
+          <input type="text" id="lastName" value="Murthy">
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email</label>  
+          <input type="email" id="email" value="ssh!atlibrary@library.com">
+        </div>
+        
+        <div class="form-group">
+          <label for="altEmail">Alt. Email</label>
+          <input type="email" id="altEmail" value="ilikebigbooks@icannotlie.com">  
+        </div>
+        
+        <div class="form-group">
+          <label for="phone">Phone Number</label>  
+          <input type="tel" id="phone" value="(541) 504-5555 ">
+        </div>
+        
+        
+        <button class="reset-password">Update Information</button>
     </div>
    </div>
-    
+
+<!-- 
+  ┌───────────────────────────────────────────────────────────────────┐
+  │                             Orders                                │
+  └───────────────────────────────────────────────────────────────────┘
+ -->
+
+  <div class="settings orders">Orders Test
   </div>
 
+
+<!-- 
+  ┌───────────────────────────────────────────────────────────────────┐
+  │                             Holds                                 │
+  └───────────────────────────────────────────────────────────────────┘
+ -->
+
+ <div class="settings holds">Holds Test
+ </div>
+
+<!-- 
+  ┌───────────────────────────────────────────────────────────────────┐
+  │                            WaitList                               │
+  └───────────────────────────────────────────────────────────────────┘
+ -->
+
+ <div class="settings waitlist">Waitlist Test
+</div>
+
+
+
+
+
+ <!-- End of Container-->
+  </div>
   </header>
 
   <!-- Main body-->
@@ -149,12 +230,16 @@
   <!--Main body ends-->
 
  
-
+  
 
   
 </div>
 
-</container>
+
+
+
+
+
 
   <!-- Container Ends -->
   
