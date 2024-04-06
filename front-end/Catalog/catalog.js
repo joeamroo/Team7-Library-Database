@@ -210,7 +210,7 @@ document.addEventListener('click', function(event) {
         }
 
         
-        if (parseInt(currAvail) == 0) {
+        if (parseInt(currAvail) == 0 && isLoggedIn === 'true') {
             const itemTitle = event.target.parentElement.parentElement.querySelector('.catalog-item-info h3').textContent;
             const memberId = localStorage.getItem('memberId');
             const xhr = new XMLHttpRequest();
@@ -249,28 +249,18 @@ document.addEventListener('click', function(event) {
             isAvailModal.style.display = 'none';
            });
         }   
-        else if (parseInt(currAvail) !== 0 && isLoggedIn === 'false') {
-            showNoLoginToast()
-            return;
+        else if (isLoggedIn === 'false') {
+            console.log('landing HEREEEEE');
+            const isAvailModal = document.getElementById('notLoggedIn');
+            isAvailModal.style.display = 'block';
+            const acceptBtn =  isAvailModal.querySelector('#accept-msg');
+            acceptBtn.addEventListener('click', function() {
+                isAvailModal.style.display = 'none';
+            });
         }     
     }
 });
 
-function showNoLoginToast() {
-    let toastContainer = document.getElementById('holdToastContainer');
-
-    toastContainer.innerText = 'User is not logged in';
-    toastContainer.style.display = 'block';
-    toastContainer.style.opacity = '1';
-  
-    setTimeout(() => {
-      toastContainer.style.opacity = '0';
-    }, 1100);
-  
-    setTimeout(() => {
-      toastContainer.style.display = 'none';
-    }, 11000);
-}
 
 // Event listener for locally gathering the items being checked out before inserting into
 document.addEventListener('click', function(event) {
