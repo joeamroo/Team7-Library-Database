@@ -1,10 +1,5 @@
 const http = require('http');
-const path = require('path');
-require("dotenv").config({ path: path.join(__dirname, '.env') });
-console.log(process.env.EXAMPLE_VAR); 
-console.log(process.env.RANDOM_VARIABLE);
-console.log('Environment Variables:', process.env);
-
+require("dotenv").config();
 
 const { getInitialCatalogInfo, getCatalogSearchWithRestrictions, insertDataToDatabase } = require('./routes/catalog');
 const { insertTransactionInfo } = require('./routes/checkout');

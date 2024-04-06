@@ -2,8 +2,8 @@ const mysql = require('mysql');
 
 require('dotenv').config();
 const twilio = require('twilio');
-const accountSid = 'ACcdcd6f0cca79738f15b9c37a29a3ec1f';
-const authToken = '565a1591d897df4e670cf894860072c6';
+const accountSid = process.env.ACCOUNT_SID;
+const authToken = process.env.AUTH_TOKEN;
 const client = twilio(accountSid, authToken);
 
 const connection = mysql.createConnection({
