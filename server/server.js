@@ -1,5 +1,5 @@
 const http = require('http');
-require("dotenv").config();
+require("dotenv").config({ path: path.join(__dirname, '.env') });
 console.log(process.env.EXAMPLE_VAR); 
 
 
