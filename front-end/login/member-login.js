@@ -520,7 +520,9 @@ function sendRequest(user, pass) {
    Section: Notification System
    ========================================================================== */
 
-let notification = document.querySelector(".notification");
+   /*Better to have it upon successful login or after reaching dashboard */
+
+/*let notification = document.querySelector(".notification");
 
       function showNotification() {
         if (notification.classList.contains("hidden")) {
@@ -547,7 +549,7 @@ let notification = document.querySelector(".notification");
 
     
       // Show notification on page load
-    window.addEventListener("load", showNotification);
+    window.addEventListener("load", showNotification);*/
 
 /* ===================== Notification Ends ===================== */
 
