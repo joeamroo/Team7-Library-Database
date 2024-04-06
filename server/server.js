@@ -1,6 +1,6 @@
 const http = require('http');
 require('dotenv').config();
-console.log(process.env); 
+console.log(process.env.EXAMPLE_VAR); 
 
 
 const { getInitialCatalogInfo, getCatalogSearchWithRestrictions, insertDataToDatabase } = require('./routes/catalog');
