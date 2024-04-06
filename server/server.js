@@ -2,6 +2,7 @@ const http = require('http');
 const path = require('path');
 require("dotenv").config({ path: path.join(__dirname, '.env') });
 console.log(process.env.EXAMPLE_VAR); 
+console.log(process.env.RANDOM_VARIABLE);
 console.log('Environment Variables:', process.env);
 
 
