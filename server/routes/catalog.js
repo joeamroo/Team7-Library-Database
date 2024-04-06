@@ -15,7 +15,6 @@ connection.connect((err) => {
 
 function createBookItem(item) {
     let bookHtml = '';
-    bookHtml += '<div class="toast-container" id="holdToastContainer"></div>';
     bookHtml += `<img src="${item.image_address}">`;
     bookHtml += `<div class="info">`;
     bookHtml += `<h3 id = "title">${item.book_movie_title_model}</h3>`;
@@ -31,7 +30,6 @@ function createBookItem(item) {
 
 function createMovieItem(item) {
     let movieHtml = '';
-    movieHtml += '<div class="toast-container" id="holdToastContainer"></div>';
     movieHtml += `<img src="${item.image_address}">`;
     movieHtml += `<div class="info">`;
     movieHtml += `<h3 id = "title">${item.book_movie_title_model}</h3>`;
@@ -48,7 +46,6 @@ function createMovieItem(item) {
 
 function createDeviceItem(item) {
     let deviceHtml = '';
-    deviceHtml += '<div class="toast-container" id="holdToastContainer"></div>';
     deviceHtml += `<img src="${item.image_address}">`;
     deviceHtml += `<div class="info">`;
     deviceHtml += `<h3 id = "title">${item.book_movie_title_model}</h3>`;
