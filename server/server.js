@@ -2,6 +2,7 @@ const http = require('http');
 const path = require('path');
 require("dotenv").config({ path: path.join(__dirname, '.env') });
 console.log(process.env.EXAMPLE_VAR); 
+console.log('Environment Variables:', process.env);
 
 
 const { getInitialCatalogInfo, getCatalogSearchWithRestrictions, insertDataToDatabase } = require('./routes/catalog');
