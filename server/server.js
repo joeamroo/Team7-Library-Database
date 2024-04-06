@@ -1,4 +1,8 @@
 const http = require('http');
+require('dotenv').config();
+console.log(process.env); 
+
+
 const { getInitialCatalogInfo, getCatalogSearchWithRestrictions, insertDataToDatabase } = require('./routes/catalog');
 const { insertTransactionInfo } = require('./routes/checkout');
 const { getTransactionItems, returnItems } = require('./routes/returnItems');

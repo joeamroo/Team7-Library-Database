@@ -69,6 +69,7 @@ function verifyPassword(receivedHashedPassword, storedHashedPassword) {
 
 
 //Added code here
+//This is the function being used now
 function loginUser(response, email, password, isStaff) {
     memberAccQuery = 'SELECT * FROM member_credentials WHERE member_email = ? AND member_password = ?';
     memberLbrQuery = 'SELECT * FROM member WHERE email = ? AND password = ?';
