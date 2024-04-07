@@ -1,6 +1,5 @@
 const loggedIn = localStorage.getItem('loggedIn');
 const memberId = localStorage.getItem('memberId');
-console.log(memberId);
 const loginButton = document.getElementById('myAccount');
 const logOutBtn = document.getElementById('logoutBtn');
 const profileSelect = document.getElementById('profile-selection');
@@ -12,7 +11,7 @@ const orderView = document.querySelector('.settings.orders');
 const holdsView = document.querySelector('.settings.holds');
 const waitlistView = document.querySelector('.settings.waitlist');
 
-const backendUrl = 'https://cougarchronicles.onrender.com';
+
 
 
 
@@ -156,18 +155,18 @@ const container = document.getElementById('container');
   └─────────────────────────────────────────────────────────────────────────────┘
  */
 
- 
+  const backendUrl = 'https://cougarchronicles.onrender.com'; 
   const getUserDashUrl = `${backendUrl}/getDashname`;
   document.addEventListener('DOMContentLoaded', function() {
     const xhr = new XMLHttpRequest();
     xhr.open('POST', getUserDashUrl);
     xhr.setRequestHeader('Content-Type', 'application/json');
-    const memberId = localStorage.getItem('memberId');
-
     
+
+
     xhr.onload = function() {
       if (xhr.status === 200) {
-        const greetName = document.querySelector('.user-greet');
+        const greetName = document.querySelector('.user-greet'); 
         greetName.innerHTML = xhr.responseText;
         console.log(greetName);
       } else {

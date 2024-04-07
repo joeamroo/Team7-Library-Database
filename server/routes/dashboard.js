@@ -17,23 +17,27 @@ function getUserDash(response, memberId) {
 
     // Searches Database for user with the memberID
     const sql_query = 'SELECT name FROM librarydev WHERE member_id = ?';
-    var name = '';
+    let name = '';
 
     // Gets information from backend
     link.query(sql_query, [memberId], (error, result) => {
-        if (result.length > 0) {
+        if (error) {
             console.log('Error retrieving name with memberId');
+            response.writeHead(500);
+            response.end('Server error');
+            return;
         } else {
            console.log('Member found');
            name = '<a class="user-greet">Welcome, ';
-           name += result[0];
+           name += result;
            name += 'User!</a>';
            console.log(name);
-           response.writeHead(200, { 'Content-Type': 'text/html' });
-            response.end(name, 'utf-8');
+           
         }
+        response.writeHead(200, { 'Content-Type': 'text/html' });
+        response.end(name, 'utf-8');
     });
-   
+    
     
     
 }

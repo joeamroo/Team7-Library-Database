@@ -190,6 +190,7 @@ const server = http.createServer((request, res) => {
                 });
             }
             else {
+                console.log('something went wrong');
                 serve404(res, pathname);
             }
             break;
