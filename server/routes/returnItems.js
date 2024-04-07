@@ -160,7 +160,7 @@ function returnItems(response, items) {
                 connection.query(updateCopiesQuery, [itemId]),
                 connection.query(updateHoldsQuery, [itemId]),
                 connection.query(updateReturnDateQuery, [transactionId]),
-                // Use later to notify user - fix twilio account 
+                //Used to identify who to notify using Twilio
                 connection.query(findNextHoldQuery, [itemId], (err, results) => {
                     if (err) {
                         console.error('Error retrieving next hold:', err);
@@ -181,6 +181,7 @@ function returnItems(response, items) {
                         .then(message => console.log('Message sent:', message.sid))
                         .catch(err => console.error('Error sending message:', err));
 
+                        connection.query(`UPDATE hold_request SET status = 'ready' WHERE hold_id = ? AND member_id = ?`, [holdTurnId, turnMemberId]);
                     }
                 })
             );
