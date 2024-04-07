@@ -1,5 +1,6 @@
 const loggedIn = localStorage.getItem('loggedIn');
 const memberId = localStorage.getItem('memberId');
+console.log(memberId);
 const loginButton = document.getElementById('myAccount');
 const logOutBtn = document.getElementById('logoutBtn');
 const profileSelect = document.getElementById('profile-selection');
@@ -155,21 +156,37 @@ const container = document.getElementById('container');
   └─────────────────────────────────────────────────────────────────────────────┘
  */
 
-  const getUserDashUrl = '${backendUrl}/getUserDash';
-
+ 
+  const getUserDashUrl = `${backendUrl}/getDashname`;
   document.addEventListener('DOMContentLoaded', function() {
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', getUserDashUrl);
+    xhr.open('POST', getUserDashUrl);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    const memberId = localStorage.getItem('memberId');
 
+    
     xhr.onload = function() {
       if (xhr.status === 200) {
         const greetName = document.querySelector('.user-greet');
         greetName.innerHTML = xhr.responseText;
+        console.log(greetName);
       } else {
         console.log('Error retrieving information');
       }
     };
-      xhr.send();
+
+    xhr.onerror = function() {
+      console.error('error', xhr.statusText);
+    };
+
+    console.log(memberId);
+    const data = JSON.stringify({
+      memberId: memberId
+    });
+
+    
+
+      xhr.send(data);
   });
 
       

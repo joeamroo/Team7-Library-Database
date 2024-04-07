@@ -42,9 +42,6 @@ const server = http.createServer((request, res) => {
                 case '/events':
                     getListedEvents(res);
                     break;
-                case '/getUserDash':
-                    getUser(res, memberID);
-                    break;
                 default:
                     serve404(res, pathname);
             }
@@ -177,8 +174,21 @@ const server = http.createServer((request, res) => {
                         console.error('Error parsin JSON', error);
                     }
                 });
-
             } 
+            else if (pathname === '/getDashname') {
+                let body = '';
+                request.on('data', (chunk) => {
+                    body += chunk.toString();
+                });
+                request.on('end', () => {
+                    try {
+                        const postData = JSON.parse(body);
+                        getUserDash(res, postData.memberId);
+                    } catch (error) {
+                        console.error('Error parsing JSON:', error);
+                    }
+                });
+            }
             else {
                 serve404(res, pathname);
             }

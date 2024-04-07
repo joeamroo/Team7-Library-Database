@@ -13,19 +13,24 @@ const link = mysql.createConnection({
 
 
 
-function getUserDash(response, memberID) {
+function getUserDash(response, memberId) {
 
     // Searches Database for user with the memberID
-    const sql_query = 'SELECT name FROM librarydev WHERE member id = ?';
+    const sql_query = 'SELECT name FROM librarydev WHERE member_id = ?';
+    var name = '';
 
     // Gets information from backend
-    link.query(sql_query, [memberID], (error, result) => {
-        if (error) {
+    link.query(sql_query, [memberId], (error, result) => {
+        if (result.length > 0) {
             console.log('Error retrieving name with memberId');
         } else {
            console.log('Member found');
-           response.writehead(200, {'Content-Type': 'application/json'});
-           response.end(JSON.stringify({sql_query}));
+           name = '<a class="user-greet">Welcome, ';
+           name += result[0];
+           name += 'User!</a>';
+           console.log(name);
+           response.writeHead(200, { 'Content-Type': 'text/html' });
+            response.end(name, 'utf-8');
         }
     });
    
