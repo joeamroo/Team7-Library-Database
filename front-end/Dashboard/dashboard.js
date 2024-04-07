@@ -11,6 +11,9 @@ const orderView = document.querySelector('.settings.orders');
 const holdsView = document.querySelector('.settings.holds');
 const waitlistView = document.querySelector('.settings.waitlist');
 
+const backendUrl = 'https://cougarchronicles.onrender.com';
+
+
 
 logOutBtn.addEventListener('click', function(event) {
   console.log('logging out');
@@ -117,7 +120,6 @@ const container = document.getElementById('container');
 
       
       profileSelect.addEventListener('click', () => {
-        console.log('clicked');
         waitlistView.classList.add('hide');
         orderView.classList.add('hide');
         holdsView.classList.add('hide');
@@ -127,7 +129,6 @@ const container = document.getElementById('container');
       
 
       orderSelect.addEventListener('click', () => {
-        console.log('clicked');
         profileView.classList.add('hide');
         holdsView.classList.add('hide');
         waitlistView.classList.add('hide');
@@ -135,7 +136,6 @@ const container = document.getElementById('container');
       });
 
       holdSelect.addEventListener('click', () => { 
-        console.log('clicked');
         profileView.classList.add('hide');
         orderView.classList.add('hide');
         waitlistView.classList.add('hide');
@@ -143,14 +143,34 @@ const container = document.getElementById('container');
       });
 
       waitSelect.addEventListener('click', () => {
-        console.log('clicked');
         profileView.classList.add('hide');
         orderView.classList.add('hide');
         holdsView.classList.add('hide');
         waitlistView.classList.remove('hide');
       });
 
-      
+      /* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                              Greets User                                    │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+
+  const getUserDashUrl = '${backendUrl}/getUserDash';
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', getUserDashUrl);
+
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        const greetName = document.querySelector('.user-greet');
+        greetName.innerHTML = xhr.responseText;
+      } else {
+        console.log('Error retrieving information');
+      }
+    };
+      xhr.send();
+  });
 
       
 
