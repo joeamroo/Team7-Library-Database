@@ -746,6 +746,14 @@ input[type="tel"] {
   background-color: #bd2130;
 }
 
+.member-id {
+  margin-bottom: 20px;
+  padding: 23px;
+}
+
+#my-account-label, #my-account-label-2 {
+  margin-top: 12px;
+}
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────┐

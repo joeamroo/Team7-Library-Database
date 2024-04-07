@@ -155,14 +155,13 @@ const container = document.getElementById('container');
   └─────────────────────────────────────────────────────────────────────────────┘
  */
 
-  const backendUrl = 'https://cougarchronicles.onrender.com'; 
+  /*const backendUrl = 'https://cougarchronicles.onrender.com'; 
   const getUserDashUrl = `${backendUrl}/getDashname`;
   document.addEventListener('DOMContentLoaded', function() {
+    
     const xhr = new XMLHttpRequest();
     xhr.open('POST', getUserDashUrl);
     xhr.setRequestHeader('Content-Type', 'application/json');
-    
-
 
     xhr.onload = function() {
       if (xhr.status === 200) {
@@ -179,14 +178,24 @@ const container = document.getElementById('container');
     };
 
     console.log(memberId);
+
     const data = JSON.stringify({
       memberId: memberId
     });
 
-    
+
 
       xhr.send(data);
-  });
+  });*/
+
+
+window.onload = function() {
+  console.log("here");
+  const memberTag = document.getElementById('member-id');
+  console.log(memberTag);
+  memberTag.textContent = 'Member ID: ' + memberId;
+};
+  
 
       
 
