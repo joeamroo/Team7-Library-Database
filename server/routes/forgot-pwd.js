@@ -36,7 +36,7 @@ function resetPassword(res, user_id, email, new_password) {
             res.end(JSON.stringify({ message: 'passwordResetSuccessful' }));
         }
         else {
-            librLink.query('SELECT * FROM staff WHERE email = ?', [user_id, email], (err, result) => {
+            librLink.query('SELECT * FROM staff WHERE staff_id AND email = ?', [user_id, email], (err, result) => {
                 if (err) {
                     console.log('Error accessing staff table:', err);
                 }
