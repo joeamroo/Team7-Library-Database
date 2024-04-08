@@ -23,6 +23,9 @@ document.getElementById('reset-sub').addEventListener('click', function(event) {
             if (xhr.status === 200) {
                 console.log('sucessfully changed password');
             } 
+            else if (xhr.status === 409) {
+                console.log('user not found');
+            }
             else {
                 console.error('Error :', xhr.statusText);
             }
