@@ -332,8 +332,7 @@ function shake(time) {
 /* --------------------------------------- */
 
 function forgotPass() {
-    console.log("We ran out of time for this implementation.");
-    window.alert("Please contact your nearest librarian for help.");
+    window.location.href = '../Forgot-pwd/forgot-pwd.html'
 }
 
 

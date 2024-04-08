@@ -198,7 +198,6 @@ const server = http.createServer((request, res) => {
                 request.on('end', () => {
                     try {
                         const postData = JSON.parse(body);
-                        console.log(postData);
                         resetPassword(res, postData.user_id, postData.email, postData.new_password);
                     } 
                     catch (error) {
