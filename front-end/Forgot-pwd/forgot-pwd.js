@@ -14,7 +14,7 @@ document.getElementById('reset-sub').addEventListener('click', function(event) {
         const user_id = document.getElementById('userID').value.trim();
         const email = document.getElementById('email').value.trim();
         const new_password = document.getElementById('newPwd').value.trim();
-
+        
         const xhr = new XMLHttpRequest();
         xhr.open('POST', resetPasswdUrl); 
         xhr.setRequestHeader('Content-Type', 'application/json');
