@@ -127,68 +127,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.getElementById('search-btn').addEventListener('click', function(event) {
     event.preventDefault(); 
-    
-    const keyword = document.getElementById('keyword').value;
-    const searchBy = document.getElementById('search-by').value;
-    const limitBy = document.getElementById('limit-by').value;
-    const availabilityCheckbox = document.querySelector('#availability input[type="checkbox"]');
-    const availability = availabilityCheckbox.checked ? 'on' : '';
-    
-    const selectedGenres = [];
-    document.querySelectorAll('#bgenre input[type="checkbox"]:checked').forEach((checkbox) => {
-        selectedGenres.push(checkbox.value);
-    });  
-    
-    const selectedLang = [];
-    document.querySelectorAll('#language input[type="checkbox"]:checked').forEach((checkbox) => {
-        selectedLang.push(checkbox.value);
-    });
-
-    const selectedYears = [];
-    document.querySelectorAll('#year-published input[type="checkbox"]:checked').forEach((checkbox) => {
-        selectedYears.push(checkbox.value);
-    });
-
-    const selectedBrands = [];
-    document.querySelectorAll('#brand input[type="checkbox"]:checked').forEach((checkbox) => {
-        selectedBrands.push(checkbox.value);
-    });
-    
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', catalogUrl); 
-    xhr.setRequestHeader('Content-Type', 'application/json');
-
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            const catalogResultsDiv = document.querySelector('.catalog-results');
-            catalogResultsDiv.innerHTML = xhr.responseText;
-
-            const limit = parseInt(document.getElementById('limit-select').value);
-            updateItemsShownOnPage(limit);
-            updateButtonStates();
-        } 
-        else {
-            console.error('Error:', xhr.statusText);
-        }
-    };
-
-    xhr.onerror = function() {
-        console.error('Network error');
-    };
-
-    const data = JSON.stringify({ 
-        keyword: keyword, 
-        searchBy: searchBy, 
-        limitBy: limitBy,
-        availability: availability,
-        genres: selectedGenres,
-        langs: selectedLang,
-        years: selectedYears,
-        brands: selectedBrands
-    });
-
-    xhr.send(data);
+    searchCatalog(); 
 }); 
+
+document.getElementById('keyword').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        searchCatalog();
+    }
+});
 
 document.addEventListener('click', function(event) {
     if (event.target.classList.contains('hold-btn')) {
@@ -392,4 +339,67 @@ function generateItemHtml(itemInfo, itemType) {
     checkoutItemHtml += '<button class="remove-btn"><i class="uil uil-trash-alt"></i>Remove</button></div>';
     
     return checkoutItemHtml;
+}
+
+function searchCatalog() {
+    const keyword = document.getElementById('keyword').value;
+    const searchBy = document.getElementById('search-by').value;
+    const limitBy = document.getElementById('limit-by').value;
+    const availabilityCheckbox = document.querySelector('#availability input[type="checkbox"]');
+    const availability = availabilityCheckbox.checked ? 'on' : '';
+    
+    const selectedGenres = [];
+    document.querySelectorAll('#bgenre input[type="checkbox"]:checked').forEach((checkbox) => {
+        selectedGenres.push(checkbox.value);
+    });  
+    
+    const selectedLang = [];
+    document.querySelectorAll('#language input[type="checkbox"]:checked').forEach((checkbox) => {
+        selectedLang.push(checkbox.value);
+    });
+
+    const selectedYears = [];
+    document.querySelectorAll('#year-published input[type="checkbox"]:checked').forEach((checkbox) => {
+        selectedYears.push(checkbox.value);
+    });
+
+    const selectedBrands = [];
+    document.querySelectorAll('#brand input[type="checkbox"]:checked').forEach((checkbox) => {
+        selectedBrands.push(checkbox.value);
+    });
+    
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', catalogUrl); 
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            const catalogResultsDiv = document.querySelector('.catalog-results');
+            catalogResultsDiv.innerHTML = xhr.responseText;
+
+            const limit = parseInt(document.getElementById('limit-select').value);
+            updateItemsShownOnPage(limit);
+            updateButtonStates();
+        } 
+        else {
+            console.error('Error:', xhr.statusText);
+        }
+    };
+
+    xhr.onerror = function() {
+        console.error('Network error');
+    };
+
+    const data = JSON.stringify({ 
+        keyword: keyword, 
+        searchBy: searchBy, 
+        limitBy: limitBy,
+        availability: availability,
+        genres: selectedGenres,
+        langs: selectedLang,
+        years: selectedYears,
+        brands: selectedBrands
+    });
+
+    xhr.send(data);
 }

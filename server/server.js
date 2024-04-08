@@ -8,6 +8,7 @@ const { getUserDash } = require('./routes/dashboard');
 const { loginUser } = require('./routes/login');
 const { registerMember } = require('./routes/register');
 const { getListedEvents, eventSignUp } = require('./routes/classesnEvents');
+const { resetPassword } = require('./routes/forgot-pwd');
 
 function setCorsHeaders(res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -186,6 +187,22 @@ const server = http.createServer((request, res) => {
                         getUserDash(res, postData.memberId);
                     } catch (error) {
                         console.error('Error parsing JSON:', error);
+                    }
+                });
+            }
+            else if (pathname === '/reset-password') {
+                let body = '';
+                request.on('data', (chunk) => {
+                    body += chunk.toString();
+                });
+                request.on('end', () => {
+                    try {
+                        const postData = JSON.parse(body);
+                        resetPassword(res, postData.user_id, postData.email, postData.new_password);
+                    } 
+                    catch (error) {
+                        console.error('Error parsing JSON:', error);
+                        serve404(res);
                     }
                 });
             }
