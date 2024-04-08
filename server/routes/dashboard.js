@@ -16,13 +16,13 @@ const link = mysql.createConnection({
 function getUserDash(response, memberId) {
 
     // Searches Database for user with the memberID
-    const sql_query = 'SELECT name FROM librarydev WHERE member_id = ?';
+    const sql_query = 'SELECT name FROM member WHERE member_id = ?';
     let name = '';
 
     // Gets information from backend
     link.query(sql_query, [memberId], (error, result) => {
         if (error) {
-            console.log('Error retrieving name with memberId');
+            console.log('Error', memberId);
             response.writeHead(500);
             response.end('Server error');
             return;

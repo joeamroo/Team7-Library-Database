@@ -155,7 +155,7 @@ const container = document.getElementById('container');
   └─────────────────────────────────────────────────────────────────────────────┘
  */
 
-  /*const backendUrl = 'https://cougarchronicles.onrender.com'; 
+  const backendUrl = 'https://cougarchronicles.onrender.com'; 
   const getUserDashUrl = `${backendUrl}/getDashname`;
   document.addEventListener('DOMContentLoaded', function() {
     
@@ -186,7 +186,7 @@ const container = document.getElementById('container');
 
 
       xhr.send(data);
-  });*/
+  });
 
 
 window.onload = function() {
