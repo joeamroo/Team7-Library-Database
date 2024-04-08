@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password</title>
+    <link rel="stylesheet" href="forgot-pwd.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+</head>
+<body>
+    <header>
+        <h1 class="library-name"><a href="../Home/home.html">Cougar Chronicles</a></h1>
+    </header>
+
+    <div class="reset-img">
+        <img src="https://i.pinimg.com/736x/76/38/69/763869a33c8ac9e99a59500992c11127.jpg">
+    </div>
+
+    <div class="reset-form">
+        <h1>Forgot Password</h1>
+        <p id="instructions">Enter your user ID and email to reset your password.</p>
+        <form id="resetPasswordForm">
+            <input type="text" id="userID" name="userID" placeholder="&#9734; user id" required><br>
+            <input type="email" id="email" name="email" placeholder="&#9993; email" required><br>
+            <input type="newPwd" id="newPwd" name="newPwd" placeholder="new password" required><br>
+
+            <p id="alert-msg">potential message!</p>
+
+            <button id="reset-sub" type="submit">Reset Password</button>
+            <p id="go-back"><a href="../login/member-login.html"><i class="uil uil-angle-left"></i>Back to login</a></p>
+        </form>
+    </div>
+    <script src="forgot-pwd.js"></script>
+</body>
+</html>
