@@ -32,6 +32,7 @@ document.getElementById('reset-sub').addEventListener('click', function(event) {
         };
 
         const data = JSON.stringify({ user_id: user_id, email: email, new_password: new_password});
+        console.log(data);
         
         xhr.send(data);
     }

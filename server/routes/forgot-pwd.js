@@ -19,6 +19,9 @@ const accessLink = mysql.createConnection({
 
 
 function resetPassword(res, user_id, email, new_password) {
+    console.log('user_id:', user_id);
+    console.log('email:', email);
+
     newPasswordLibrMember = 'UPDATE member SET password = ? WHERE member_id = ? AND email = ?';
     newPasswordLibrStaff = 'UPDATE staff SET password = ? WHERE staff_id = ? AND email = ?';
     newPasswordAccessMember = 'UPDATE member_credentials SET member_password = ? WHERE member_email = ?';
@@ -36,11 +39,12 @@ function resetPassword(res, user_id, email, new_password) {
             res.end(JSON.stringify({ message: 'passwordResetSuccessful' }));
         }
         else {
-            librLink.query('SELECT * FROM staff WHERE staff_id AND email = ?', [user_id, email], (err, result) => {
+            librLink.query('SELECT * FROM staff WHERE staff_id = ? AND email = ?', [user_id, email], (err, result) => {
                 if (err) {
                     console.log('Error accessing staff table:', err);
                 }
-                if (result.length > 0) {
+                else if (result.length > 0) {
+                    console.log('staff result:', result);
                     librLink.query(newPasswordLibrStaff, [new_password, user_id, email]);
                     accessLink.query(newPasswordAccessStaff, [new_password, email]);
 
