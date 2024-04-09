@@ -17,10 +17,10 @@ body {
     grid-template-columns: auto 1fr; 
     grid-template-rows: auto auto 1fr auto; 
     grid-template-areas:
-        "header header"
-        "content content"
-        "extraBtn extraBtn"
-        "footer footer"; 
+        "header header header"
+        "content content extraBtns"
+        "extraBtn extraBtn extraBtn"
+        "footer footer footer"; 
     height: 100vh; 
     margin: 0;
     background: var(--background);
@@ -116,6 +116,7 @@ nav {
 
 /*===================== Library Image ===================== */
 .content {
+    margin-left: 40px;
     grid-area: content;
     justify-content: center;
     align-items: center;
@@ -125,24 +126,27 @@ nav {
 .library-picture {
     margin-top: 20px;
     text-align: center;
-    max-width: 40%;
+    max-width: 100%;
     float: left;
     overflow: hidden;
     padding-left: 20px;
+    margin-right: 20px;
 }
 
 .library-picture img {
-    max-width: 100%;
-    height: auto;
+    max-width: 700px;
+    max-height: 100%;
 }
 
 .library-title {
+    font-size: 30px;
     text-align: left;
     color: var(--color-black); 
 }
 
 .branch-info {
     max-width: calc(100% - 40px);
+    margin-left: 40px;
     margin: 0 auto;
     padding-left: 20px;
     display: flex;
@@ -199,9 +203,12 @@ nav {
 /* ================= Additional Buttons ================= */
 
 .additional-buttons {
-    grid-area: extraBtn;
+    margin-right: 70px;
+    grid-area: extraBtns;
     position: relative;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center; 
 }
 
@@ -210,7 +217,7 @@ nav {
 .button.checkout {
     display: flex; 
     margin: 0 10px;
-    padding: 5px 60px;
+    padding: 5px 20px;
     justify-content: center;
     text-align: center; 
     text-decoration: none; 
@@ -220,14 +227,11 @@ nav {
     border-radius: 10px; 
     font-size: 35px;
     margin-bottom: 65px;
-    height: 45px;
+    width: 260px;
+    height: 50px;
 }
 
-.button.return-items:not(:last-child),
-.button.search-catalog:not(:last-child),
-.button.button.checkout:not(:last-child) {
-    margin-right: 100px; 
-}
+
 
 .button.return-items:hover, 
 .button.search-catalog:hover, 
