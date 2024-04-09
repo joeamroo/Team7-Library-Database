@@ -50,7 +50,7 @@ function getTransactionItems(response, transactionId) {
                                 transactionInfoHtml += '<div class="info">';
                                 transactionInfoHtml += `<h3 id="btitle">${book.book_movie_title_model}</h3>`;
                                 transactionInfoHtml += `<p>Author: <span id="author">${book.authors}</span></p>`;
-                                transactionInfoHtml += `<p>Type: <span id="medium">${type}</span></p>`;
+                                transactionInfoHtml += `<p>Type: <span id="medium">Book</span></p>`;
                                 transactionInfoHtml += `<p>ISBN: <span id="item_id">${item_id}</span></p>`;
                                 transactionInfoHtml += '</div></div>';
                                 transactionInfoHtml += '<button class="add-btn" id="addBtn"><i class="add-icon uil uil-plus"></i>Return</button>';
@@ -74,7 +74,7 @@ function getTransactionItems(response, transactionId) {
                                 transactionInfoHtml += '<div class="info">';
                                 transactionInfoHtml += `<h3 id="mtitle">${movie.book_movie_title_model}</h3>`;
                                 transactionInfoHtml += `<p>Director: <span id="director">${movie.director_brand}</span></p>`;
-                                transactionInfoHtml += `<p>Type: <span id="medium">${type}</span></p>`;
+                                transactionInfoHtml += `<p>Type: <span id="medium">Movie</span></p>`;
                                 transactionInfoHtml += `<p>Movie ID: <span id="item_id">${item_id}</span></p>`;
                                 transactionInfoHtml += '</div></div>';
                                 transactionInfoHtml += '<button class="add-btn" id="addBtn"><i class="add-icon uil uil-plus"></i>Return</button>';
@@ -97,7 +97,7 @@ function getTransactionItems(response, transactionId) {
                                 transactionInfoHtml += '<div class="info">';
                                 transactionInfoHtml += `<h3 id="model">${device.book_movie_title_model}</h3>`;
                                 transactionInfoHtml += `<p>Brand: <span id="brand">${device.director_brand}</span></p>`;
-                                transactionInfoHtml += `<p>Type: <span id="medium">${type}</span></p>`;
+                                transactionInfoHtml += `<p>Type: <span id="medium">Device</span></p>`;
                                 transactionInfoHtml += `<p>Device ID: <span id="item_id">${item_id}</span></p>`;
                                 transactionInfoHtml += '</div></div>';
                                 transactionInfoHtml += '<button class="add-btn" id="addBtn"><i class="add-icon uil uil-plus"></i>Return</button>';
