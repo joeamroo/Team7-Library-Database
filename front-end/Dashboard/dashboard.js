@@ -184,7 +184,7 @@ const container = document.getElementById('container');
         
         /* Sets the name of the profile information */
         greetName.innerHTML = xhr.responseText;
-        console.log(greetName);
+        //console.log(greetName);
       } else {
         console.log('Error retrieving information');
       }
