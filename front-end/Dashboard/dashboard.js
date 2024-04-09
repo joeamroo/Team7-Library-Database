@@ -203,8 +203,6 @@ const container = document.getElementById('container');
 
       xhr.send(data);
 
-      // Calls function to load information
-      getUserInfo();
   });
 
   /* 
@@ -218,7 +216,7 @@ const container = document.getElementById('container');
     const name = '';
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', getUserInfoUrl);
+    xhr.open('POST', getUserInfoUrl);
     xhr.setRequestHeader('Content-Type', 'application/json');
 
     xhr.onload = function() {
@@ -226,6 +224,7 @@ const container = document.getElementById('container');
         // Parses JSON file into individual segments
         const packets = JSON.parse(xhr.responseText);
 
+        // User info elements from top of code
         userInfoElements.forEach(function(item) {
           // Update the value of each element with the corresponding data from the server
           item.element.textContent = userData[item.key];
@@ -240,8 +239,8 @@ const container = document.getElementById('container');
       console.error('error', xhr.statusText);
     };
 
-
-    xhr.send();
+    // Sends memberID and server sends back profile info
+    xhr.send(JSON.stringify({memberId: memberId}));
   }
 
 
@@ -270,6 +269,9 @@ const container = document.getElementById('container');
 window.onload = function() {
   const memberTag = document.getElementById('member-id');
   memberTag.textContent = 'Member ID: ' + memberId;
+  
+  // loads member info
+  getUserInfo();
 };
   
 
@@ -288,5 +290,6 @@ window.onload = function() {
       Books, Movies, Devices, Asset Condition, 
 4. Events
 	Events attended this year, or a specific year
-
+// Calls function to load information
+      getUserInfo();
   */
