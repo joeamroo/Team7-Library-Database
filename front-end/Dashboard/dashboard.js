@@ -171,6 +171,7 @@ const container = document.getElementById('container');
   const backendUrl = 'https://cougarchronicles.onrender.com'; 
   const getUserDashUrl = `${backendUrl}/getDashname`;
   const getUserInfoUrl = `${backendUrl}/getDashInfo`;
+
   document.addEventListener('DOMContentLoaded', function() {
     
     const xhr = new XMLHttpRequest();
@@ -199,11 +200,30 @@ const container = document.getElementById('container');
       memberId: memberId
     });
 
-
-
       xhr.send(data);
 
   });
+
+    /* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                           Updates User Info                                 │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+
+  updateBtn.addEventListener('click', function(event) {
+    const allFieldsFilled = [
+      'firstName', 'lastName', 'email', 'phone_number', 
+      'street_addr', 'city_addr', 'state_addr', 'zipcode_addr',
+      'email'
+      ].every(id => document.getElementById(id).value.trim() !== "");
+
+    if (allFieldsField) {
+       // updates member info
+        getUserInfo();
+    } else {
+      console.log("All fields need to be filled!");
+    }
+});
 
   /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -244,34 +264,11 @@ const container = document.getElementById('container');
   }
 
 
-  /* 
-  ┌─────────────────────────────────────────────────────────────────────────────┐
-  │                           Updates User Info                                 │
-  └─────────────────────────────────────────────────────────────────────────────┘
- */
-
-  updateBtn.addEventListener('click', function(event) {
-      const allFieldsFilled = [
-        'firstName', 'lastName', 'email', 'phone_number', 
-        'street_addr', 'city_addr', 'state_addr', 'zipcode_addr',
-        'email'
-        ].every(id => document.getElementById(id).value.trim() !== "");
-
-      if (allFieldsField) {
-         console.log("here");
-      }
-  });
-
-
-
 
 /* Gets MemberID from local storage and makes it visible on the profile */
 window.onload = function() {
   const memberTag = document.getElementById('member-id');
   memberTag.textContent = 'Member ID: ' + memberId;
-  
-  // loads member info
-  getUserInfo();
 };
   
 
