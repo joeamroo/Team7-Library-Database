@@ -43,7 +43,7 @@ const server = http.createServer((request, res) => {
                 case '/events':
                     getListedEvents(res);
                     break;
-                case '/getUserDashInfo':
+                case '/getDashInfo':
                     getUserDashInfo(res);
                     break;
                 default:
