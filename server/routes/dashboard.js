@@ -13,7 +13,7 @@ const link = mysql.createConnection({
 
 
 
-function getUserDashGreet(response, memberId) {
+function getUserDash(response, memberId) {
 
     // Searches Database for user with the memberID
     const query_name = 'SELECT name FROM member WHERE member_id = ?';
@@ -67,4 +67,6 @@ function getUserDashInfo(response, memberId, name, email, mem_type, phone_number
     
 }
 
-module.exports = { getUserDashGreet, getUserDashInfo };
+
+
+module.exports = { getUserDash, getUserDashInfo };

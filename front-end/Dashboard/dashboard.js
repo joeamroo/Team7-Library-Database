@@ -2,6 +2,7 @@ const loggedIn = localStorage.getItem('loggedIn');
 const memberId = localStorage.getItem('memberId');
 const loginButton = document.getElementById('myAccount');
 const logOutBtn = document.getElementById('logoutBtn');
+const updateBtn = document.querySelector("#updateInfo");
 const profileSelect = document.getElementById('profile-selection');
 const orderSelect = document.getElementById('order-selection');
 const holdSelect = document.getElementById('hold-selection');
@@ -12,7 +13,19 @@ const holdsView = document.querySelector('.settings.holds');
 const waitlistView = document.querySelector('.settings.waitlist');
 
 
-
+// User Info (logged-in)
+const userInfoElements = [
+  { element: document.querySelector("#firstName"), key: "firstName" },
+  { element: document.querySelector("#lastName"), key: "lastName" },
+  { element: document.querySelector("#phone_number"), key: "phone_number" },
+  { element: document.querySelector("#street_addr"), key: "street_addr" },
+  { element: document.querySelector("#city_addr"), key: "city_addr" },
+  { element: document.querySelector("#state"), key: "state" },
+  { element: document.querySelector("#zipcode_addr"), key: "zipcode_addr" },
+  { element: document.querySelector("#email"), key: "email" },
+  { element: document.querySelector("#member-type"), key: "mem_type" },
+  { element: document.querySelector("#member-status"), key: "status" }
+];
 
 
 logOutBtn.addEventListener('click', function(event) {
@@ -190,23 +203,17 @@ const container = document.getElementById('container');
 
       xhr.send(data);
 
-      // Calls function to load information
-      getUserInfo();
   });
+
+  /* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                              User Info                                      │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
 
   function getUserInfo() {
     // Retrieves user info
     const name = '';
-    const firstName = document.querySelector("#firstName");
-    const lastName = document.querySelector("#lastName");
-    const phone_number = document.querySelector("#phone_number");
-    const street_addr = document.querySelector("#street_addr");
-    const city_addr = document.querySelector("#city_addr");
-    const state = document.querySelector("#state");
-    const zipcode_addr = document.querySelector("#zipcode_addr");
-    const email = document.querySelector("#email");
-    const mem_type = document.querySelector("#member-type");
-    const status = document.querySelector("#member-status");
 
     const xhr = new XMLHttpRequest();
     xhr.open('POST', getUserInfoUrl);
@@ -217,60 +224,43 @@ const container = document.getElementById('container');
         // Parses JSON file into individual segments
         const packets = JSON.parse(xhr.responseText);
 
-        // Gets name
-        firstName.value = packets.name;
-        lastName.value = packets.name;
-
-        // Gets status of membership
-        status.value = packets.status;
-
-        // Gets type of membership
-        mem_type.value = packets.mem_type;
-
-        // Gets phone number
-        phone_number.value = packets.phone_number;
-
-        // Gets street address
-        street_addr = packets.street_addr;
-
-        // Gets city address
-        city_addr = packets.city_addr;
-
-        // Gets state
-        state = packets.state;
-
-        // Gets zipcode
-        zipcode_addr = packets.zipcode_addr;
-
-        // Gets email
-        email.value = packets.email;
-        
+        // User info elements from top of code
+        userInfoElements.forEach(function(item) {
+          // Update the value of each element with the corresponding data from the server
+          item.element.textContent = userData[item.key];
+        });
       } else {
-        console.log("Error retrieving user info");
+        console.error('Error fetching user info:', xhr.status);
       }
     };
+        
 
     xhr.onerror = function() {
       console.error('error', xhr.statusText);
     };
 
-
-    const data = JSON.stringify({
-      memberId: memberId,
-      name: name,
-      email: email,
-      mem_type: mem_type,
-      phone_number: phone_number,
-      street_addr: street_addr,
-      city_addr: city_addr,
-      state: state,
-      zipcode_addr: zipcode_addr
-    });
-
-    xhr.send(data);
-
-    
+    // Sends memberID and server sends back profile info
+    xhr.send(JSON.stringify({memberId: memberId}));
   }
+
+
+  /* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                           Updates User Info                                 │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+
+  updateBtn.addEventListener('click', function(event) {
+      const allFieldsFilled = [
+        'firstName', 'lastName', 'email', 'phone_number', 
+        'street_addr', 'city_addr', 'state_addr', 'zipcode_addr',
+        'email'
+        ].every(id => document.getElementById(id).value.trim() !== "");
+
+      if (allFieldsField) {
+         console.log("here");
+      }
+  });
 
 
 
@@ -279,6 +269,9 @@ const container = document.getElementById('container');
 window.onload = function() {
   const memberTag = document.getElementById('member-id');
   memberTag.textContent = 'Member ID: ' + memberId;
+  
+  // loads member info
+  getUserInfo();
 };
   
 
@@ -297,5 +290,6 @@ window.onload = function() {
       Books, Movies, Devices, Asset Condition, 
 4. Events
 	Events attended this year, or a specific year
-
+// Calls function to load information
+      getUserInfo();
   */

@@ -42,7 +42,7 @@ const server = http.createServer((request, res) => {
                     break;
                 case '/events':
                     getListedEvents(res);
-                    break;
+                    break;W
                 default:
                     serve404(res, pathname);
             }
