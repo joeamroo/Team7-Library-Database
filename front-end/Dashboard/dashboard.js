@@ -238,8 +238,9 @@ const container = document.getElementById('container');
 
     xhr.onload = function() {
       if (xhr.status === 200) {
-        const dataRetrieved = xhr.responseText;
-        console.log(dataRetrieved);
+        //const dataRetrieved = xhr.responseText;
+        //console.log(dataRetrieved);
+        profileInfo.innerHTML = xhr.responseText;
       } else {
         console.log("Failed to retrieve data");
       }
