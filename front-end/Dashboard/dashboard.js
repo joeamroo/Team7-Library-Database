@@ -227,7 +227,7 @@ const container = document.getElementById('container');
 
   /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
-  │                              User Info                                      │
+  │                              User Info (member-id)                          │
   └─────────────────────────────────────────────────────────────────────────────┘
  */
 
@@ -241,8 +241,9 @@ const container = document.getElementById('container');
 
     xhr.onload = function() {
       if (xhr.status === 200) {
-        // Parses JSON file into individual segments
+       
         const packets = JSON.parse(xhr.responseText);
+        console.log(packets);
 
         // User info elements from top of code
         userInfoElements.forEach(function(item) {
