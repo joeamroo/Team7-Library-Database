@@ -270,6 +270,7 @@ const container = document.getElementById('container');
 window.onload = function() {
   const memberTag = document.getElementById('member-id');
   memberTag.textContent = 'Member ID: ' + memberId;
+  getUserInfo();
 };
   
 
