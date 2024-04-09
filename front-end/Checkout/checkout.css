@@ -61,16 +61,15 @@ header #title {
     grid-area: items;
     margin-top: 42px;
     justify-content: center;
-    margin-right: 120px;
     margin-left: 11rem;
-    width: 70%;
+    width: 700px;
     gap: 20px;
 }
 
 .top-bar {
     font-family: sans-serif;
     font-weight: bold;
-    font-size: 15px;
+    font-size: 18px;
     background-color: #ECEBEB; 
     height: 50px;
     padding-left: 10px;
@@ -157,7 +156,6 @@ header #title {
 .transaction-details {
     grid-area: details;
     margin-top: 45px; 
-    margin-left: 5px;
     margin-right: 5rem;
     background-color: #ECEBEB;
     width: 400px;
@@ -292,8 +290,8 @@ header #title {
 
 .toast-container {
     position: fixed;
-    margin-left: 115px;
-    margin-top: 350px;
+    margin-left: 108px;
+    margin-top: 360px;
     background-color: #686767;
     color: #fff;
     padding: 10px 20px;

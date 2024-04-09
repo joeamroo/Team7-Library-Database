@@ -54,6 +54,10 @@ header {
   padding: 17px;
 }
 
+#logo-img {
+  max-width: 500px;
+}
+
 .library-name a {
   font-size: 40px;
   text-decoration: none;
@@ -65,6 +69,7 @@ header {
   display: flex;
   gap: 10px;
   margin-left: auto;
+  height: 1%;
 }
 
 .button {

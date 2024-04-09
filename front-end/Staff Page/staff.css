@@ -36,6 +36,10 @@
     align-items: center;
     padding: 20px;
  }
+
+ #logo-img {
+   max-width: 400px;
+}
  
  
  .library-name a {
