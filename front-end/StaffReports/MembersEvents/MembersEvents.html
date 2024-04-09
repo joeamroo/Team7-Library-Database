@@ -33,7 +33,7 @@
                 <li><strong>Location:</strong> <span id="location"></span></li>
                 <li><strong>Sponsor:</strong> <span id="sponsor"></span></li>
             </ul>
-        </div>        
+        </div>
         <div id="chartContainer">
             <canvas id="myChart"></canvas>
         </div>
@@ -50,8 +50,8 @@
                     const eventData = response.data;
                     // Display event details
                     displayEventDetails(eventData.eventDetails);
-                    // Display the chart using Chart.js
-                    displayChart(eventData.eventAttendance, eventData.averageAttendance);
+                    // Show the event details container
+                    document.getElementById('eventDetailsContainer').style.display = 'block';
                 })
                 .catch(function(error) {
                     console.error('Error fetching event reports:', error);
