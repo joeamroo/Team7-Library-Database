@@ -43,10 +43,7 @@ const server = http.createServer((request, res) => {
                     break;
                 case '/events':
                     getListedEvents(res);
-                    break;
-                case '/staff-events-reports':
-                    getEventReports(res);
-                    break;
+                    break;;
                 default:
                     serve404(res, pathname);
             }
@@ -63,6 +60,22 @@ const server = http.createServer((request, res) => {
                         const postData = JSON.parse(body);
                         getCatalogSearchWithRestrictions(res, postData.keyword, postData.searchBy, postData.limitBy, postData.availability, postData.genres, postData.langs, postData.years, postData.brands);
                     } catch (error) {
+                        console.error('Error parsing JSON:', error);
+                        serve404(res);
+                    }
+                });
+            }
+            else if (pathname === '/event-reports') {
+                let body = '';
+                request.on('data', (chunk) => {
+                    body += chunk.toString();
+                });
+                request.on('end', () => {
+                    try {
+                        const postData = JSON.parse(body);
+                        getEventReports(postData.eventId, res);
+                    } 
+                    catch (error) {
                         console.error('Error parsing JSON:', error);
                         serve404(res);
                     }
