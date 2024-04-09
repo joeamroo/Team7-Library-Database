@@ -43,14 +43,10 @@ const server = http.createServer((request, res) => {
                     break;
                 case '/events':
                     getListedEvents(res);
-<<<<<<< HEAD
-                    break;W
-=======
                     break;
                 case '/staff-reports':
                     getEventReports(res);
                     break;
->>>>>>> e76ce0e (idk)
                 default:
                     serve404(res, pathname);
             }
