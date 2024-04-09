@@ -43,6 +43,9 @@ const server = http.createServer((request, res) => {
                 case '/events':
                     getListedEvents(res);
                     break;
+                case '/getUserDashInfo':
+                    getUserDashInfo(res);
+                    break;
                 default:
                     serve404(res, pathname);
             }
@@ -190,7 +193,7 @@ const server = http.createServer((request, res) => {
                     }
                 });
             }
-            else if (pathname === '/getDashInfo') {
+            /*else if (pathname === '/getDashInfo') {
                 let body = '';
                 request.on('data', (chunk) => {
                     body += chunk.toString();
@@ -205,7 +208,7 @@ const server = http.createServer((request, res) => {
                         console.error('Error parsing JSON: ', error);
                     }
                 });
-            }
+            }*/
             else if (pathname === '/reset-password') {
                 let body = '';
                 request.on('data', (chunk) => {
