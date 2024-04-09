@@ -27,16 +27,18 @@ function getUserDash(response, memberId) {
             response.end('Server error');
             return;
         } else {
-           console.log('Member found');
-           name = '<a class="user-greet">Welcome, ';
-           name += result;
-           name += 'User!</a>';
+           console.log(result.name);
+           name = 'Welcome, ';
+           name += result[0];
+           name += '!';
            console.log(name);
            
         }
         response.writeHead(200, { 'Content-Type': 'text/html' });
         response.end(name, 'utf-8');
     });
+
+    
     
     
     

@@ -166,7 +166,13 @@ const container = document.getElementById('container');
     xhr.onload = function() {
       if (xhr.status === 200) {
         const greetName = document.querySelector('.user-greet'); 
-        greetName.innerHTML = xhr.responseText;
+        const name = document.getElementById('firstName');
+        const retrieved = xhr.responseText;
+        console.log(retrieved);
+        
+        /* Sets the name of the profile information */
+        greetName.innerHTML = retrieved;
+        name.value = greetName.value;
         console.log(greetName);
       } else {
         console.log('Error retrieving information');
