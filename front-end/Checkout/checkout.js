@@ -82,7 +82,10 @@ document.addEventListener('DOMContentLoaded', function() {
   
             content += '</div>';
   
-            html2pdf().from(content).save('checkout_receipt.pdf');
+            html2pdf().from(content).set({jsPDF: {unit: 'in', format: 'letter',orientation: 'portrait'},
+                image: {type: 'jpeg', quality: 1},
+                html2canvas: {scale: 3, logging: true, dpi: 192, letterRendering: true},
+              }).save('checkout_receipt.pdf');
 
             localStorage.removeItem('chosenItems');
             setTimeout(function() {window.location.reload();}, 300);

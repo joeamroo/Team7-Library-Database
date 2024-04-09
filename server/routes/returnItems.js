@@ -136,17 +136,17 @@ function returnItems(response, items) {
         let returnQuery = '';
         let updateCopiesQuery = '';
 
-        if (medium === 'book') {
+        if (medium === 'Book') {
             returnQuery = 'UPDATE book_transaction SET returned = 1 WHERE book_id = ? AND transaction_id = ?';
             updateCopiesQuery = 'UPDATE book SET available_copies = available_copies + 1 WHERE isbn = ? AND current_holds = 0';
             updateHoldsQuery = 'UPDATE book SET current_holds = current_holds - 1 WHERE isbn = ? AND current_holds > 0';
         }
-        else if (medium === 'movie') {
+        else if (medium === 'Movie') {
             returnQuery = 'UPDATE movie_transaction SET returned = 1 WHERE movie_id = ? AND transaction_id = ?';
             updateCopiesQuery = 'UPDATE movie SET available_copies = available_copies + 1 WHERE movie_id = ? AND current_holds = 0';
             updateHoldsQuery = 'UPDATE movie SET current_holds = current_holds - 1 WHERE movie_id = ? AND current_holds > 0';
         }
-        else if (medium === 'device') {
+        else if (medium === 'Device') {
             returnQuery = 'UPDATE device_transaction SET returned = 1 WHERE device_id = ? AND transaction_id = ?';
             updateCopiesQuery = 'UPDATE device SET available_copies = available_copies + 1 WHERE device_id = ? AND current_holds = 0';
             updateHoldsQuery = 'UPDATE device SET current_holds = current_holds - 1 WHERE device_id = ? AND current_holds > 0';
