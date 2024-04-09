@@ -5,7 +5,7 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="MembersEvents.css">
    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
-   <title>Check In/Checkout Items</title>
+   <title>Get Event Report</title>
 </head>
 
 <body>
@@ -15,44 +15,110 @@
         </div>
     </header>
     <div class="form-container">
-        <form>
+        <form id="eventReportForm">
             <div class="form-group">
-                <label for="memberId">Member ID:</label>
-                <input type="text" id="memberId" name="memberId">
+                <label for="EventID">Please Enter the Event ID:</label>
+                <input type="text" id="eventId" name="eventId">
             </div>
-            <div class="form-group">
-                <label for="memberName">Member Name:</label>
-                <input type="text" id="memberName" name="memberName">
-            </div>
-            <div class="form-group">
-                <label for="bookId">Book ID:</label>
-                <input type="text" id="bookId" name="bookId">
-            </div>
-            <div class="form-group">
-                <label for="bookTitle">Book Title:</label>
-                <input type="text" id="bookTitle" name="bookTitle">
-            </div>
-            <div class="form-group">
-                <label for="date">Date:</label>
-                <input type="date" id="date" name="date">
-            </div>
-            <div class="form-group">
-                <label for="condition">Condition:</label>
-                <select id="condition" name="condition">
-                    <option value="good">Good</option>
-                    <option value="damaged">Damaged</option>
-                    <option value="lost">Lost</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="action">Action:</label>
-                <select id="action" name="action">
-                    <option value="checkIn">Check In</option>
-                    <option value="checkOut">Check Out</option>
-                </select>
-            </div>
-            
-            <button type="submit">Submit</button>
+            <button type="submit">Get Reports</button>
         </form>
+        <div id="eventDetailsContainer">
+            <h2>Event Details</h2>
+            <ul>
+                <li><strong>Event ID:</strong> <span id="eventId"></span></li>
+                <li><strong>Event Name:</strong> <span id="eventName"></span></li>
+                <li><strong>Description:</strong> <span id="description"></span></li>
+                <li><strong>Image:</strong> <img id="eventImage" src="" alt="Event Image"></li>
+                <li><strong>Date:</strong> <span id="date"></span></li>
+                <li><strong>Location:</strong> <span id="location"></span></li>
+                <li><strong>Sponsor:</strong> <span id="sponsor"></span></li>
+            </ul>
+        </div>        
+        <div id="chartContainer">
+            <canvas id="myChart"></canvas>
+        </div>
     </div>
+
+    <script>
+        document.getElementById('eventReportForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const eventId = document.getElementById('eventId').value;
+    
+            // Make AJAX request to backend
+            axios.post('/getEventReports', { eventId: eventId })
+                .then(function(response) {
+                    const eventData = response.data;
+                    // Display event details
+                    displayEventDetails(eventData.eventDetails);
+                    // Display the chart using Chart.js
+                    displayChart(eventData.eventAttendance, eventData.averageAttendance);
+                })
+                .catch(function(error) {
+                    console.error('Error fetching event reports:', error);
+                    // Handle error
+                });
+        });
+    
+        function displayEventDetails(eventDetails) {
+            document.getElementById('eventId').textContent = eventDetails.event_id;
+            document.getElementById('eventName').textContent = eventDetails.event_name;
+            document.getElementById('description').textContent = eventDetails.event_description;
+            document.getElementById('eventImage').src = eventDetails.event_image;
+            document.getElementById('date').textContent = eventDetails.date;
+            document.getElementById('location').textContent = eventDetails.location;
+            document.getElementById('sponsor').textContent = eventDetails.sponsor;
+        }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script>
+        document.getElementById('eventReportForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const eventId = document.getElementById('eventId').value;
+
+            // Make AJAX request to backend
+            axios.post('/getEventReports', { eventId: eventId })
+                .then(function(response) {
+                    const eventData = response.data;
+                    // Display the chart using Chart.js
+                    displayChart(eventData);
+                })
+                .catch(function(error) {
+                    console.error('Error fetching event reports:', error);
+                    // Handle error
+                });
+        });
+
+        function displayChart(eventData) {
+            const ctx = document.getElementById('myChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Event Attendance', 'Average Attendance'],
+                    datasets: [{
+                        label: 'Attendance',
+                        data: [eventData.eventAttendance, eventData.averageAttendance],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    </script>
 </body>
+</html>

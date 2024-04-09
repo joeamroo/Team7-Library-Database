@@ -83,7 +83,23 @@ function generateChart(eventAttendance, averageAttendance) {
     });
 }
 
-// Main function to get event reports and generate chart
+function getEventDetails(eventId, callback) {
+    connection.query('SELECT * FROM event WHERE event_id = ?', [eventId], (err, results) => {
+        if (err) {
+            console.error('Error fetching event details:', err);
+            callback(err, null);
+            return;
+        }
+        if (results.length > 0) {
+            const eventDetails = results[0];
+            callback(null, eventDetails);
+        } else {
+            callback('Event not found', null);
+        }
+    });
+}
+
+// Main function to get event reports including details and generate chart
 function getEventReports(eventId, response) {
     getEventAttendance(eventId, (err, eventAttendance) => {
         if (err) {
@@ -101,18 +117,26 @@ function getEventReports(eventId, response) {
                 return;
             }
 
-            // Generate chart using Chart.js
-            generateChart(eventAttendance, averageAttendance);
+            getEventDetails(eventId, (err, eventDetails) => {
+                if (err) {
+                    console.error(err);
+                    response.writeHead(500);
+                    response.end('Server error');
+                    return;
+                }
 
-            // Send response to client
-            const responseData = {
-                eventAttendance: eventAttendance,
-                averageAttendance: averageAttendance
-            };
-            response.writeHead(200, { 'Content-Type': 'application/json' });
-            response.end(JSON.stringify(responseData));
+                // Send response to client
+                const responseData = {
+                    eventDetails: eventDetails,
+                    eventAttendance: eventAttendance,
+                    averageAttendance: averageAttendance
+                };
+                response.writeHead(200, { 'Content-Type': 'application/json' });
+                response.end(JSON.stringify(responseData));
+            });
         });
     });
 }
+
 
 module.exports = { getEventReports };

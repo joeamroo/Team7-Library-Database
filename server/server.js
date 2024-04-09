@@ -65,7 +65,7 @@ const server = http.createServer((request, res) => {
                     }
                 });
             }
-            else if (pathname === '/event-reports') {
+            else if (pathname === '/getEventReports') {
                 let body = '';
                 request.on('data', (chunk) => {
                     body += chunk.toString();
