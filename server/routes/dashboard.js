@@ -89,7 +89,7 @@ function getUserDashInfo(response, memberId) {
     let html = '';
 
     // Gets information from backend
-    link.query(query_name, [memberId], (error, result) => {
+    link.query(query_info, [memberId], (error, result) => {
 
         // New values
         const updatedMemberInfo = memberInfo.map(info => {
