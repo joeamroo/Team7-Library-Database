@@ -27,7 +27,6 @@ function getUserDash(response, memberId) {
             response.end('Server error');
             return;
         } else {
-           console.log(result);
            name = 'Welcome, ';
            name += result[0].name;
            name += '!';
