@@ -1,5 +1,4 @@
 const mysql = require('mysql');
-
 require('dotenv').config();
 const twilio = require('twilio');
 const accountSid = process.env.ACCOUNT_SID;
