@@ -14,7 +14,7 @@ const waitlistView = document.querySelector('.settings.waitlist');
 
 
 // User Info (logged-in)
-const userInfoElements = [
+const userData = [
   { element: document.querySelector("#firstName"), key: "firstName" },
   { element: document.querySelector("#lastName"), key: "lastName" },
   { element: document.querySelector("#phone_number"), key: "phone_number" },
@@ -171,6 +171,7 @@ const container = document.getElementById('container');
   const backendUrl = 'https://cougarchronicles.onrender.com'; 
   const getUserDashUrl = `${backendUrl}/getDashname`;
   const getUserInfoUrl = `${backendUrl}/getDashInfo`;
+
   document.addEventListener('DOMContentLoaded', function() {
     
     const xhr = new XMLHttpRequest();
@@ -199,15 +200,34 @@ const container = document.getElementById('container');
       memberId: memberId
     });
 
-
-
       xhr.send(data);
 
   });
 
+    /* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                           Updates User Info                                 │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+
+  updateBtn.addEventListener('click', function(event) {
+    const allFieldsFilled = [
+      'firstName', 'lastName', 'email', 'phone_number', 
+      'street_addr', 'city_addr', 'state_addr', 'zipcode_addr',
+      'email'
+      ].every(id => document.getElementById(id).value.trim() !== "");
+
+    if (allFieldsField) {
+       // updates member info
+        getUserInfo();
+    } else {
+      console.log("All fields need to be filled!");
+    }
+});
+
   /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
-  │                              User Info                                      │
+  │                              User Info (member-id)                          │
   └─────────────────────────────────────────────────────────────────────────────┘
  */
 
@@ -221,13 +241,14 @@ const container = document.getElementById('container');
 
     xhr.onload = function() {
       if (xhr.status === 200) {
-        // Parses JSON file into individual segments
+       
         const packets = JSON.parse(xhr.responseText);
+        console.log(packets);
 
         // User info elements from top of code
-        userInfoElements.forEach(function(item) {
+        userData.forEach(function(item) {
           // Update the value of each element with the corresponding data from the server
-          item.element.textContent = userData[item.key];
+          item.element.textContent = packets[item.key];
         });
       } else {
         console.error('Error fetching user info:', xhr.status);
@@ -244,33 +265,11 @@ const container = document.getElementById('container');
   }
 
 
-  /* 
-  ┌─────────────────────────────────────────────────────────────────────────────┐
-  │                           Updates User Info                                 │
-  └─────────────────────────────────────────────────────────────────────────────┘
- */
-
-  updateBtn.addEventListener('click', function(event) {
-      const allFieldsFilled = [
-        'firstName', 'lastName', 'email', 'phone_number', 
-        'street_addr', 'city_addr', 'state_addr', 'zipcode_addr',
-        'email'
-        ].every(id => document.getElementById(id).value.trim() !== "");
-
-      if (allFieldsField) {
-         console.log("here");
-      }
-  });
-
-
-
 
 /* Gets MemberID from local storage and makes it visible on the profile */
 window.onload = function() {
   const memberTag = document.getElementById('member-id');
   memberTag.textContent = 'Member ID: ' + memberId;
-  
-  // loads member info
   getUserInfo();
 };
   
