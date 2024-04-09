@@ -68,7 +68,7 @@ function getUserDash(response, memberId) {
 }*/
 
 
-/*function getUserDashInfo(response, memberId) {
+function getUserDashInfo(response, memberId) {
 
     // HTML Elements
     const memberInfo = [
@@ -148,11 +148,11 @@ function getUserDash(response, memberId) {
     });
 
 
-}*/
+}
 
 
 // Function to fetch values from the database and update memberInfo
-function getUserDashInfo(response, memberId) {
+/*function getUserDashInfo(response, memberId) {
 
     const memberInfo = [
         { label: "Last Name", id: "lastName", type: "text", value: "" },
@@ -204,7 +204,7 @@ function getUserDashInfo(response, memberId) {
           }
         });
       });
-  }
+  }*/
   
 
 
