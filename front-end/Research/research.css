@@ -27,6 +27,11 @@ header {
     padding-left: 20px;
 }
 
+#logo-img {
+    max-width: 400px;
+}
+
+
 .library-name a {
     font-size: 40px;
     text-decoration: none;
