@@ -9,7 +9,7 @@ const { loginUser } = require('./routes/login');
 const { registerMember } = require('./routes/register');
 const { getListedEvents, eventSignUp } = require('./routes/classesnEvents');
 const { resetPassword } = require('./routes/forgot-pwd');
-const { getEventReports } = require ('./routes/staffreports');
+const { getEventReports } = require ('./routes/staffeventsreports');
 
 function setCorsHeaders(res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -44,7 +44,7 @@ const server = http.createServer((request, res) => {
                 case '/events':
                     getListedEvents(res);
                     break;
-                case '/staff-reports':
+                case '/staff-events-reports':
                     getEventReports(res);
                     break;
                 default:
