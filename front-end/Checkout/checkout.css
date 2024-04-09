@@ -168,10 +168,11 @@ header #title {
     text-align: left;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); 
+    font-size: 18px;
 }
 
 #total-items-line {
-    font-size: 18px;
+    font-size: 20px;
     padding-top: 20px;
     border-top: 1px solid #ccc;
     padding-bottom: 10px;
