@@ -11,7 +11,7 @@ const profileView = document.querySelector('.settings.profile');
 const orderView = document.querySelector('.settings.orders');
 const holdsView = document.querySelector('.settings.holds');
 const waitlistView = document.querySelector('.settings.waitlist');
-
+const profileInfo = document.querySelector('.member-info');
 
 // User Info (logged-in)
 const userData = [
@@ -219,7 +219,7 @@ const container = document.getElementById('container');
 
     if (allFieldsField) {
        // updates member info
-        getUserInfo();
+        //getUserInfo();
     } else {
       console.log("All fields need to be filled!");
     }
@@ -232,6 +232,63 @@ const container = document.getElementById('container');
  */
 
   function getUserInfo() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', getUserInfoUrl);
+    xhr.setRequestHeader('Content-Type', 'text/html');
+
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        const dataRetrieved = xhr.responseText;
+        console.log(dataRetrieved);
+      } else {
+        console.log("Failed to retrieve data");
+      }
+    };
+
+    xhr.onerror = function() {
+      console.log('error', xhr.statusText);
+    }
+
+    const data = JSON.stringify({
+      memberId: memberId
+    });
+
+    xhr.send(data);
+  }
+
+
+  
+
+
+
+/* Gets MemberID from local storage and makes it visible on the profile */
+window.onload = function() {
+  const memberTag = document.getElementById('member-id');
+  memberTag.textContent = 'Member ID: ' + memberId;
+  getUserInfo();
+};
+  
+
+      
+
+
+/* ===================== Notification Ends ===================== */
+/*
+      Reports:
+
+1. Waitlist (hold request)
+	Authors, Genres, Year, Rating, Asset Condition
+2. Transactions
+	Books, Movies, Devices (for a specific date frame), Asset Condition
+3. Returns
+      Books, Movies, Devices, Asset Condition, 
+4. Events
+	Events attended this year, or a specific year
+// Calls function to load information
+      getUserInfo();
+  */
+
+      /*function getUserInfo() {
     // Retrieves user info
     const name = '';
 
@@ -262,33 +319,4 @@ const container = document.getElementById('container');
 
     // Sends memberID and server sends back profile info
     xhr.send(JSON.stringify({memberId: memberId}));
-  }
-
-
-
-/* Gets MemberID from local storage and makes it visible on the profile */
-window.onload = function() {
-  const memberTag = document.getElementById('member-id');
-  memberTag.textContent = 'Member ID: ' + memberId;
-  getUserInfo();
-};
-  
-
-      
-
-
-/* ===================== Notification Ends ===================== */
-/*
-      Reports:
-
-1. Waitlist (hold request)
-	Authors, Genres, Year, Rating, Asset Condition
-2. Transactions
-	Books, Movies, Devices (for a specific date frame), Asset Condition
-3. Returns
-      Books, Movies, Devices, Asset Condition, 
-4. Events
-	Events attended this year, or a specific year
-// Calls function to load information
-      getUserInfo();
-  */
+  }*/
