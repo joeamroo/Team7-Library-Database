@@ -95,21 +95,21 @@ function getUserDashInfo(response, memberId) {
         const updatedMemberInfo = memberInfo.map(info => {
             switch (info.id) {
               case "lastName":
-                return { ...info, value: "NewLastName" };
+                return { ...info, value: result[0].name };
               case "phone_number":
-                return { ...info, value: "(123) 456-7890" };
+                return { ...info, value: result[0].phone_number };
               case "street_addr":
-                return { ...info, value: "New Street" };
+                return { ...info, value: result[0].street_addr };
               case "city_addr":
-                return { ...info, value: "New City" };
+                return { ...info, value: result[0].city_addr };
               case "state":
-                return { ...info, value: "New State" };
+                return { ...info, value: result[0].state };
               case "zipcode_addr":
-                return { ...info, value: "12345" };
+                return { ...info, value: result[0].zipcode_addr };
               case "email":
-                return { ...info, value: "newemail@example.com" };
+                return { ...info, value: result[0].email };
               case "password":
-                return { ...info, value: "newpassword" };
+                return { ...info, value: result[0].password };
               default:
                 return info;
             }
