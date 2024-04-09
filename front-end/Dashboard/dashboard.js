@@ -2,7 +2,7 @@ const loggedIn = localStorage.getItem('loggedIn');
 const memberId = localStorage.getItem('memberId');
 const loginButton = document.getElementById('myAccount');
 const logOutBtn = document.getElementById('logoutBtn');
-const updateBtn = document.querySelector("#updateInfo");
+const updateBtn = document.querySelector(".main-btn");
 const profileSelect = document.getElementById('profile-selection');
 const orderSelect = document.getElementById('order-selection');
 const holdSelect = document.getElementById('hold-selection');
@@ -116,7 +116,7 @@ var input = document.querySelector(".input-box");
       }
     
       // Show notification on page load
-      window.addEventListener("load", showNotification);
+      //window.addEventListener("load", showNotification);
       window.addEventListener("load", showDefaults);
 
 
@@ -199,7 +199,7 @@ var input = document.querySelector(".input-box");
   └─────────────────────────────────────────────────────────────────────────────┘
  */
 
-  updateBtn.addEventListener('click', function(event) {
+  /*updateBtn.addEventListener('click', function(event) {
     const allFieldsFilled = [
       'firstName', 'lastName', 'email', 'phone_number', 
       'street_addr', 'city_addr', 'state_addr', 'zipcode_addr',
@@ -212,7 +212,20 @@ var input = document.querySelector(".input-box");
     } else {
       console.log("All fields need to be filled!");
     }
+});*/
+
+updateBtn.addEventListener('click', function(event) {
+  openPop();
 });
+
+function closePop() {
+  document.querySelector(".popup").style.display = "none";
+}
+function openPop() {
+  document.querySelector(".popup").style.display = "flex";
+  console.log('clicked pop');
+}
+
 
   /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -278,6 +291,16 @@ window.onload = function() {
   getUserInfo();
   setOrderDate();
 };
+
+
+
+
+
+
+
+
+
+
   
 
       
