@@ -13,33 +13,58 @@ const link = mysql.createConnection({
 
 
 
-function getUserDash(response, memberId) {
+function getUserDashGreet(response, memberId) {
 
     // Searches Database for user with the memberID
-    const sql_query = 'SELECT name FROM member WHERE member_id = ?';
+    const query_name = 'SELECT name FROM member WHERE member_id = ?';
     let name = '';
 
     // Gets information from backend
-    link.query(sql_query, [memberId], (error, result) => {
+    link.query(query_name, [memberId], (error, result) => {
         if (error) {
             console.log('Error', memberId);
             response.writeHead(500);
             response.end('Server error');
             return;
         } else {
-           console.log('Member found');
-           name = '<a class="user-greet">Welcome, ';
-           name += result;
-           name += 'User!</a>';
-           console.log(name);
-           
+           console.log(result);
+           name = 'Welcome, ';
+           name += result[0].name;
+           name += '!';
         }
         response.writeHead(200, { 'Content-Type': 'text/html' });
         response.end(name, 'utf-8');
     });
     
+}
+
+
+function getUserDashInfo(response, memberId, name, email, mem_type, phone_number, street_addr, 
+                                   city_addr, city_addr, state, zipcode_addr) {
+
+    // Searches Database for user with memberID
+    const query_info = 'SELECT name, email, status, mem_type, phone_number, street_addr,\
+                        city_addr, state, zipcode_addr FROM member WHERE member_id = ?';
     
+    link.query(query_info, [memberId], (error, result) => {
+        if (error) {
+            console.log('Error', memberId);
+            response.writeHead(500);
+            response.end('Server error');
+            return;
+        } else {
+            console.log('Successful retrieval!');
+        }
+
+        response.writeHead(200, {'Content-Type': 'application/json'});
+        response.end(
+            result[0].name, result[0].email, result[0].status, result[0].mem_type,
+            result[0].phone_number, result[0].street_addr, result[0].city_addr, 
+            result[0].city_addr, result[0].state, result[0].zipcode_addr,
+            result[0].fine, 'utf-8'
+        );
+    });
     
 }
 
-module.exports = { getUserDash };
+module.exports = { getUserDashGreet, getUserDashInfo };
