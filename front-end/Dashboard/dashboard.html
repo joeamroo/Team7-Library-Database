@@ -208,7 +208,36 @@
 
       </div>
         
-        <button class="update-info" id="updateInfo">Update Information</button>
+        <!--<button class="update-info" id="updateInfo">Update Information</button>-->
+
+        <button type="button" class="main-btn" onclick="openPop()">Submit</button>
+
+        <div class="update-container">
+          <div class="popup">
+            <div class="popup-content">
+              <div class="close" onclick="closePop()">
+                <span class="material-icons-round">cancel</span>
+              </div>
+              <div class="head">Submit Details</div>
+              <div class="text">
+                Are you sure you want to submit the details? You can later edit them
+                in details section
+              </div>
+              <div class="input">
+                <input type="checkbox" id="repeatWarning" />
+                <label for="repeatWarning"> Do not show this anymore</label>
+              </div>
+              <div class="btns">
+                <button type="button" class="btn" onclick="closePop()">
+                  Cancel
+                </button>
+                <button type="button" class="btn" onclick="closePop()">
+                  Submit
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
    </div>
 
@@ -237,8 +266,10 @@
         <label for="end-date">End Date:</label>
         <input type="date" id="end-date" name="end-date" required>
       </div>
-      <button class="dateButton" id="#dateButton" type="submit">Submit</button>
+      <button class="dateButton" id="#dateButton" type="submit" onclick="openPop()">Submit</button>
     </form>
+
+  
 
 
     <div class="dropdown" id="category-selection">
