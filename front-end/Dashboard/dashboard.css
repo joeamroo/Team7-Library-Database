@@ -151,8 +151,36 @@ header {
     margin: 20px auto;
   }
 
-  
+  /* User greet effect */
 
+  
+  .user-greet {
+    position: relative;
+    display: inline-block;
+  }
+
+  .user-greet::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 2px;
+    background-color: red;
+    transform: scaleX(1);
+    transform-origin: left;
+    animation: underlineEffect 2s ease-in-out forwards;
+  }
+
+  @keyframes underlineEffect {
+    0% {
+      transform: scaleX(1);
+    }
+    100% {
+      transform: scaleX(0);
+      transform-origin: right;
+    }
+  }
  
 
 /* ==========================================================================
