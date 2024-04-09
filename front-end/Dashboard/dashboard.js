@@ -238,7 +238,7 @@ const container = document.getElementById('container');
 
     xhr.onload = function() {
       if (xhr.status === 200) {
-        const dataRetrieved = xhr.responseText;
+        const dataRetrieved = JSON.parse(xhr.responseText);
         console.log(dataRetrieved);
       } else {
         console.log("Failed to retrieve data");
