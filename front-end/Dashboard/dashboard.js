@@ -13,19 +13,7 @@ const holdsView = document.querySelector('.settings.holds');
 const waitlistView = document.querySelector('.settings.waitlist');
 const profileInfo = document.querySelector('.member-info');
 
-// User Info (logged-in)
-const userData = [
-  { element: document.querySelector("#firstName"), key: "firstName" },
-  { element: document.querySelector("#lastName"), key: "lastName" },
-  { element: document.querySelector("#phone_number"), key: "phone_number" },
-  { element: document.querySelector("#street_addr"), key: "street_addr" },
-  { element: document.querySelector("#city_addr"), key: "city_addr" },
-  { element: document.querySelector("#state"), key: "state" },
-  { element: document.querySelector("#zipcode_addr"), key: "zipcode_addr" },
-  { element: document.querySelector("#email"), key: "email" },
-  { element: document.querySelector("#member-type"), key: "mem_type" },
-  { element: document.querySelector("#member-status"), key: "status" }
-];
+
 
 
 logOutBtn.addEventListener('click', function(event) {
