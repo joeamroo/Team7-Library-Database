@@ -132,16 +132,6 @@ function getUserDashInfo(response, memberId) {
                 `;
               });
 
-              memberInfo.forEach(info => {
-                html += `
-                  <div class="form-group">
-                    <label for="${info.id}">${info.label}</label>
-                    <input type="${info.type}" id="${info.id}" value="${info.value}">
-                  </div>
-                `;
-              });
-
-
         }
         response.writeHead(200, { 'Content-Type': 'text/html' });
         response.end(html, 'utf-8');
