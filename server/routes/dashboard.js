@@ -206,8 +206,7 @@ function getUserDashInfo(response, memberId) {
       });
   }
   
-  // Call the function to update member info from the database
-  getUserDashInfo(response, memberId);
+
 
 
 
