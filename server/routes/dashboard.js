@@ -61,7 +61,7 @@ function getUserDashInfo(response, memberId, name, email, mem_type, phone_number
             result[0].name, result[0].email, result[0].status, result[0].mem_type,
             result[0].phone_number, result[0].street_addr, result[0].city_addr, 
             result[0].city_addr, result[0].state, result[0].zipcode_addr,
-            result[0].fine, 'utf-8'
+            result[0].fine
         ));
     });
     
