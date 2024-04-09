@@ -416,6 +416,11 @@ header {
   color: black;
 }
 
+.book-label, .movie-label, .device-label {
+  color: black;
+  font-weight: normal;
+  
+}
 
 .material-symbols-outlined {
   font-variation-settings:
@@ -784,3 +789,65 @@ input[type="password"] {
   display: none;
 }
 
+/* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                                  Orders                                     │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+
+ .date-group {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="date"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.dateButton {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  right: 50px;
+}
+
+.dateButton:hover {
+  background-color: #45a049;
+}
+
+
+
+#category-selection {
+  left: 20px;
+  bottom: 63px;
+}
+
+#catLabel {
+  padding-bottom: 1px;
+}
+
+
+
+.date-group {
+  display: inline-block;
+}
+
+.date-selection {
+  margin-left: 250px;
+}
+
+.order-group {
+  display: inline-block;
+}

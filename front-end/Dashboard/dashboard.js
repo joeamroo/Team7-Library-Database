@@ -12,7 +12,7 @@ const orderView = document.querySelector('.settings.orders');
 const holdsView = document.querySelector('.settings.holds');
 const waitlistView = document.querySelector('.settings.waitlist');
 const profileInfo = document.querySelector('.member-info');
-
+const today = new Date().toLocaleDateString();
 
 
 
@@ -29,13 +29,14 @@ logOutBtn.addEventListener('click', function(event) {
 const container = document.getElementById('container');
 
 
+
 /* 
   ┌─────────────────────────────────────────────────────────────────────────┐
   │                            Dropdown List                                │
   └─────────────────────────────────────────────────────────────────────────┘
  */
 
-/*var input = document.querySelector(".input-box");
+var input = document.querySelector(".input-box");
       input.onclick = function () {
         this.classList.toggle("open");
         let list = this.nextElementSibling;
@@ -72,7 +73,7 @@ const container = document.getElementById('container');
           let list = input.nextElementSibling;
           list.style.maxHeight = list.scrollHeight + "px";
         });
-      }*/
+      }
 
 
 /* 
@@ -246,6 +247,26 @@ const container = document.getElementById('container');
   }
 
 
+   /* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                              Orders (date form)                             │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+
+  function setOrderDate() {
+    const startingDate = document.getElementById('start-date');
+    const endingDate = document.getElementById('end-date');
+    var date = new Date(today).toISOString().slice(0, 10);
+
+
+    // Sets the values of each to today's date by default
+    startingDate.value = date;
+    endingDate.value = date;
+
+    //console.log('Set date of ', date);
+  }
+
+
   
 
 
@@ -255,6 +276,7 @@ window.onload = function() {
   const memberTag = document.getElementById('member-id');
   memberTag.textContent = 'Member ID: ' + memberId;
   getUserInfo();
+  setOrderDate();
 };
   
 
