@@ -112,6 +112,7 @@ function getUserDashInfo(response, memberId) {
                 return { ...info, value: result[0].password };
               default:
                 return info;
+                console.log("failed");
             }
           });
 
