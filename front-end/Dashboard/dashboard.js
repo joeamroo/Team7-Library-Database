@@ -14,7 +14,7 @@ const waitlistView = document.querySelector('.settings.waitlist');
 
 
 // User Info (logged-in)
-const userInfoElements = [
+const userData = [
   { element: document.querySelector("#firstName"), key: "firstName" },
   { element: document.querySelector("#lastName"), key: "lastName" },
   { element: document.querySelector("#phone_number"), key: "phone_number" },
@@ -246,9 +246,9 @@ const container = document.getElementById('container');
         console.log(packets);
 
         // User info elements from top of code
-        userInfoElements.forEach(function(item) {
+        userData.forEach(function(item) {
           // Update the value of each element with the corresponding data from the server
-          item.element.textContent = userData[item.key];
+          item.element.textContent = packets[item.key];
         });
       } else {
         console.error('Error fetching user info:', xhr.status);
