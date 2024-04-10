@@ -175,6 +175,8 @@ window.onload = function() {
 };*/
 
 
+
+/*Manage Employees Tab*/
 const addEmployeeBtn = document.getElementById('addEmployeeBtn');
 const addEmployeeForm = document.getElementById('addEmployeeForm');
 const removeEmployeeBtn = document.getElementById('removeEmployeeBtn');
@@ -200,7 +202,6 @@ function toggleForm(btn, form) {
   }
 }
 
-
 //Calling all the staff 
 const backendUrl = 'https://cougarchronicles.onrender.com'; 
 const getEmployeesUrl = `${backendUrl}/getEmployees`;
@@ -217,6 +218,7 @@ function getEmployeeList() {
         if (xhr.status === 200) {
             const employeesDiv = document.querySelector('.table-content');
             employeesDiv.innerHTML = xhr.responseText;
+            updateTotalEmployeesCount(); 
         } 
     };
     xhr.send();
@@ -224,7 +226,6 @@ function getEmployeeList() {
 
 document.addEventListener('DOMContentLoaded', function() {
     getEmployeeList();
-    updateTotalEmployeesCount(); 
 });
 
 document.getElementById('addEmployeeSubmit').addEventListener('click', function(event) {
@@ -339,13 +340,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     empStatDropdown.addEventListener('change', function() {
         if (empStatDropdown.value !== '') {
+            console.log(empStatDropdown.value);
             makePostRequest({ value: empStatDropdown.value, filterType: 'employment_status' });
         }
     });
 
     positionDropdown.addEventListener('change', function() {
         if (positionDropdown.value !== '') {
-            makePostRequest(positionDropdown.value);
+            console.log('this is the value:', positionDropdown.value);
             makePostRequest({ value: positionDropdown.value, filterType: 'staff_position' });
         }
     });
@@ -358,6 +360,8 @@ document.addEventListener('DOMContentLoaded', function() {
         xhr.onload = function() {
             if (xhr.status === 200) {
                 console.log('Limit by successful');
+                const employeesDiv = document.querySelector('.table-content');
+                employeesDiv.innerHTML = xhr.responseText;
                 updateTotalEmployeesCount();
             } 
             else {
@@ -376,5 +380,53 @@ function updateTotalEmployeesCount() {
     totalEmployees.textContent = rowCount;
     console.log(rowCount);
 }
+
+/*Manage Employees Tab End */
+
+
+/*Manage Events Tab*/
+const getEventsUrl = `${backendUrl}/getEventsForAdmin`;
+
+const addEventBtn = document.getElementById('addEventBtn');
+const addEventForm = document.getElementById('addEventForm');
+const removeEventBtn = document.getElementById('removeEventBtn');
+const removeEventForm = document.getElementById('removeEventForm');
+
+addEventBtn.addEventListener('click', () => {
+  toggleForm(addEventBtn, addEventForm);
+});
+
+removeEventBtn.addEventListener('click', () => {
+  toggleForm(removeEventBtn, removeEventForm);
+});
+
+function toggleForm(btn, form) {
+  const icon = btn.querySelector('i');
+
+  if (form.style.display === 'none') {
+    form.style.display = 'block';
+    icon.className = 'uil uil-angle-up';
+  } else {
+    form.style.display = 'none';
+    icon.className = 'uil uil-angle-down';
+  }
+}
+
+function getEventList() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', getEventsUrl);
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            const eventsDiv = document.querySelector('.eventTable-content');
+            eventsDiv.innerHTML = xhr.responseText;
+        } 
+    };
+    xhr.send();
+}
+
+
+
+
 
 

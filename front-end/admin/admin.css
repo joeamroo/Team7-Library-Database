@@ -988,7 +988,7 @@ input[type="date"] {
   color: var(--mainColor);
 }
 
-#employeeTable {
+#employeeTable, #eventTable {
   table-layout: auto;
   margin-top: 30px;
   align-items: center;
@@ -997,11 +997,18 @@ input[type="date"] {
 }
 
 #employeeTable th,
-#employeeTable td {
-  text-align: center;
+#employeeTable td,
+#eventTable th,
+#eventTable td {
+  text-align: left;
 }
 
 #employeeTable tbody tr td {
+  font-size: 18px; 
+  font-weight: normal; 
+}
+
+#eventTable tbody tr td {
   font-size: 18px; 
   font-weight: normal; 
 }
@@ -1014,12 +1021,15 @@ input[type="date"] {
   color: rgb(165, 91, 91);
 }
 
-.employee-btns i {
+.employee-btns i, .event-btns i {
   font-size: 22px;
   margin-right: 5px;
 }
 
-#addEmployeeBtn, #removeEmployeeBtn {
+#addEmployeeBtn, 
+#removeEmployeeBtn, 
+#addEventBtn, 
+#removeEventBtn {
   padding: 10px 15px;
   border-radius: 10px;
   margin-right: 5px;
@@ -1028,12 +1038,12 @@ input[type="date"] {
   margin-bottom: 15px;
 }
 
-#addEmployeeBtn:hover, #removeEmployeeBtn:hover {
+#addEmployeeBtn:hover, #removeEmployeeBtn:hover, #addEventBtn:hover, #removeEventBtn:hover {
   cursor: pointer;
   opacity: 0.8;
 }
 
-#addEmployeeForm {
+#addEmployeeForm, #addEventForm {
   border-radius: 20px;
   margin: 20px 10px;
   width: 85%;
@@ -1045,7 +1055,7 @@ input[type="date"] {
   margin-bottom: 15px;
 }
 
-#removeEmployeeForm {
+#removeEmployeeForm, #removeEventForm {
   border-radius: 20px;
   margin: 20px 10px;
   width: 85%;
@@ -1064,6 +1074,12 @@ input[type="date"] {
   width: 100%;
 }
 
+.mb-31 {
+  display: flex;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
 .form-label {
   width: 150px;
   text-align: left;
@@ -1073,8 +1089,18 @@ input[type="date"] {
 input[type=text],
 input[type=email],
 input[type=password],
+input[type=url],
 .form-select {
   width: 500px;
+}
+
+input[type=date],
+input[type=time] {
+  width: 200px;
+}
+
+#addEventDes {
+  height: 100px;
 }
 
 #employeePosition {
@@ -1090,7 +1116,7 @@ input[type=password],
   width: 300px;
 }
 
-#addEmployeeSubmit, #removeEmployeeSubmit {
+#addEmployeeSubmit, #removeEmployeeSubmit, #addEventSubmit, #removeEventSubmit {
   margin-top: 20px;
   border-radius: 20px;
   background-color: var(--mainColor);
@@ -1107,11 +1133,11 @@ input[type=password],
   color: red;
 }
 
-#limitBySection label {
+#limitBySection label, #limitEventSection label {
   color: var(--mainColor);
 }
 
-#empStat, #position {
+#empStat, #position, #fromDate, #toDate {
   margin-top: 10px;
   margin-right: 50px;
 }

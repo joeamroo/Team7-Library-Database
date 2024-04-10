@@ -55,7 +55,7 @@
           <ul>
               <li class="menu-item" ><a class="default-click" id="profile-selection" href="#">My Profile</a></li>
               <li class="menu-item"><a id="employee-selection" href="#">Manage Employees</a></li>
-              <li class="menu-item"><a id="event-selection" href="#">Events Management</a></li>
+              <li class="menu-item"><a id="event-selection" href="#">Manage Events</a></li>
               <li class="menu-item"><a id="inbox-selection" href="#">Inbox</a></li>
               <!--bug exists here-->
               <li class="menu-item"><a id="logout-selection" href="#">Logout</a></li>
@@ -291,6 +291,7 @@
     <label for="empStatus">Employment Status:</label>
     <select id="limitEmpStat" required>
       <option value="">Select Status</option>
+      <option value="active">Active</option>
       <option value="fired">Fired</option>
       <option value="resigned">Resigned</option>
       <option value="retired">Retired</option>
@@ -323,7 +324,7 @@
     </tbody>
     <tfoot id="summary" class="fw-bold text-dark">
       <tr>
-        <th>Total Employees:<span id="total-count"></span></th> 
+        <th>Total Employees:  <span id="total-count"></span></th> 
       </tr>
     </tfoot>
   </table>
@@ -333,69 +334,88 @@
   
 
 
-<!-- <form class="date-selection" id="date-selection">
-      <div class="date-group">
-        <label for="start-date">Start Date:</label>
-        <input type="date" id="start-date" name="start-date" required>
-      </div>
-      <div class="date-group">
-        <label for="end-date">End Date:</label>
-        <input type="date" id="end-date" name="end-date" required>
-      </div>
-      <button class="dateButton" id="#dateButton" type="submit" onclick="openPop()">Submit</button>
-    </form>
-
-  
-
-
-    <div class="dropdown" id="category-selection">
-      <label for="input-box" id="catLabel">Category: </label>
-      <div class="input-box"></div>
-      <div class="list">
-        <div class="search-box">
-          <input
-            type="search"
-            name=""
-            id="search"
-            placeholder="Search Options"
-            onkeyup="search(this)"
-          />
-        </div>
-
-        
-        <input type="radio" name="book" id="#book" class="radio" />
-        <label for="book-label">
-          <span class="material-icons-outlined"> auto_stories </span>
-          <span class="book-label">Book</span>
-        </label>
-
-        
-        <input type="radio" name="movie" id="#movie" class="radio" />
-        <label for="movie-label">
-          <span class="material-icons-outlined"> movie </span>
-          <span class="movie-label">Movie</span>
-        </label>
-
-        
-        <input type="radio" name="device" id="#device" class="radio" />
-        <label for="device-label">
-          <span class="material-icons-outlined"> devices </span>
-          <span class="device-label">Device</span>
-        </label>
-
-
-        
-      </div>
-    </div>-->
-
-
 <!-- 
   ┌───────────────────────────────────────────────────────────────────┐
   │                             Holds                                 │
   └───────────────────────────────────────────────────────────────────┘
  -->
 
- <div class="settings event">Events Test
+ <div class="settings event">
+  <h3 id="table-name">Classes and Events</h3>
+  <button class="event-btns" id="addEventBtn"><i class="uil uil-angle-down"></i>Add Event</button>
+  <button class="event-btns" id="removeEventBtn"><i class="uil uil-angle-down"></i>Delete Event</button>
+
+  <div id="addEventForm" style="display: none;">
+    <form>
+      <div class="mb-3">
+        <label class="form-label">Event Name<span id="req">*</span></label>
+        <input type="text" class="form-control" id="addEventName" autocomplete="off" required>
+      </div>
+      <div class="mb-31">
+        <label class="form-label">Event Description<span id="req">*</span></label>
+        <input type="text" class="form-control" id="addEventDes" autocomplete="off" required style="text-align: left;">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Event Image<span id="req">*</span></label>
+        <input type="url" class="form-control" id="eventImg" autocomplete="off" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Sponsor<span id="req">*</span></label>
+        <input type="text" class="form-control" id="eventSponsor" autocomplete="off" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Date<span id="req">*</span></label>
+        <input type="date" class="form-control" id="eventDate" autocomplete="off" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Start Time<span id="req">*</span></label>
+        <input type="time" class="form-control" id="eventStart" autocomplete="off" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">End Time<span id="req">*</span></label>
+        <input type="time" class="form-control" id="eventEnd" autocomplete="off" required>
+      </div>
+      <button type="submit" id="addEventSubmit">Add Event</button>
+    </form>
+  </div>
+  <div id="removeEventForm" style="display: none;">
+    <form id="removeEventForm">
+      <div class="mb-3">
+        <label class="form-label">Event ID<span id="req">*</span></label>
+        <input type="text" class="form-control" id="eventId" autocomplete="off" required>
+      </div>
+      <button type="submit" id="removeEventSubmit">Delete Event</button>
+    </form>
+  </div>
+
+  <div id="limitEventSection">
+    <label for="fromDate">From Date:</label>
+    <input type="date" id="fromDate" required>
+  
+    <label for="toDate">To Date:</label>
+    <input type="date" id="toDate" required>
+  </div>
+
+  <table id="eventTable" class="table table-striped table-hover text-info shadow">
+    <thead>
+      <tr class="text-dark">
+        <th scope="col">Event ID</th>
+        <th scope="col">Event Name</th>
+        <th scope="col">Date</th>
+        <th scope="col">Sponsor</th>
+        <th scope="col">Attendance</th>
+        <th scope="col">Event Status</th>
+      </tr>
+    </thead>
+    <tbody class="eventTable-content">
+      <!--Employee info here-->
+    </tbody>
+    <tfoot id="summary" class="fw-bold text-dark">
+      <tr>
+        <th>Total Events:  <span id="eventTotal-count"></span></th> 
+      </tr>
+    </tfoot>
+  </table>
  </div>
 
 <!-- 
