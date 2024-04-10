@@ -312,7 +312,7 @@ function getUserOrderReport() {
     xhr.onload = function() {
       if (xhr.status === 200) {
         orderReport.innerHTML = xhr.responseText;
-        console.log("Client-side (Orders Report):" + orderReport);
+        //console.log("Client-side (Orders Report):" + orderReport);
         //orderReport.innerHTML += xhr.responseText;
         //console.log("clientside" + orderReport);
       } else {
@@ -324,7 +324,7 @@ function getUserOrderReport() {
       console.error('error', xhr.statusText);
     };
 
-    console.log(memberId);
+    //console.log(memberId);
 
     const data = JSON.stringify({
       memberId: memberId
