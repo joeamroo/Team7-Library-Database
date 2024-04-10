@@ -221,6 +221,20 @@ const server = http.createServer((request, res) => {
                     }
                 });
             }
+            else if (pathname === '/getDashOrders') {
+                let body = '';
+                request.on('data', (chunk) => {
+                    body += chunk.toString();
+                });
+                request.on('end', () => {
+                    try {
+                        const postData = JSON.parse(body);
+                        getUserDashInfo(res, postData.memberId);
+                    } catch (error) {
+                        console.error('Error parsing JSON: ', error);
+                    }
+                });
+            }
             else if (pathname === '/reset-password') {
                 let body = '';
                 request.on('data', (chunk) => {

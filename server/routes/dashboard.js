@@ -10,6 +10,43 @@ const link = mysql.createConnection({
 });
 
 
+function getSQLTable(data) {
+  
+    // Create the table element
+    const table = document.createElement('table');
+
+    // Create the table header
+    const headerRow = document.createElement('tr');
+    const headers = Object.keys(data[0]);
+
+    headers.forEach(headerText => {
+      const th = document.createElement('th');
+      th.textContent = headerText;
+      headerRow.appendChild(th);
+    });
+
+    table.appendChild(headerRow);
+
+    // Create the table rows and cells
+    data.forEach(rowData => {
+      const row = document.createElement('tr');
+
+      headers.forEach(key => {
+        const cell = document.createElement('td');
+        cell.textContent = rowData[key];
+        row.appendChild(cell);
+      });
+
+      table.appendChild(row);
+    });
+
+    // Append the table to the document body or a specific container
+    document.body.appendChild(table);
+
+
+   // Returns table for client retrieval
+   return table;
+}
 
 
 
@@ -36,8 +73,6 @@ function getUserDash(response, memberId) {
     });
     
 }
-
-
 
 
 function getUserDashInfo(response, memberId) {
@@ -109,65 +144,49 @@ function getUserDashInfo(response, memberId) {
         response.writeHead(200, { 'Content-Type': 'text/html' });
         response.end(html, 'utf-8');
     });
+}
 
+function getOrderDashInfo(response, memberId) {
+  const sqlQuery = `
+    SELECT 
+      TV.transaction_Id AS 'Order ID',
+      T.date_created AS 'Date Purchased',
+      TV.asset_type AS 'Item',
+      CV.image_address AS '',
+      CV.year_released AS 'Year Released',
+      CV.book_movie_title_model AS 'Product',
+      CV.isbn AS 'ISBN',
+      CV.serial_number AS 'Serial Number',
+      CV.asset_id AS 'Condition',
+      CV.genres AS 'Genre',
+      CV.languages AS 'Language',
+      TV.returned AS 'Status'
+    FROM 
+      TRANSACTION AS T,
+      TRANSACTION_VIEW AS TV,
+      CATALOG_VIEW AS CV,
+      MEMBER AS M
+    WHERE 
+      M.member_id = ? AND 
+      T.transaction_id = TV.transaction_Id AND 
+      TV.itemId = CV.asset_id
+  `;
 
+  // Use the memberId parameter in the query execution
+  db.query(sqlQuery, [memberId], (error, results) => {
+    if (error) {
+      console.error('Error executing query:', error);
+      response.writeHead(500, {'Content-Type': 'text/html'});
+      response.end('Error', 'utf-8');
+    } else {
+        response.writeHead(200, { 'Content-Type': 'text/html' });
+        response.end(html, 'utf-8');
+    }
+  });
 }
 
 
-// Function to fetch values from the database and update memberInfo
-/*function getUserDashInfo(response, memberId) {
 
-    const memberInfo = [
-        { label: "Last Name", id: "lastName", type: "text", value: "" },
-        { label: "Phone Number", id: "phone_number", type: "tel", value: "" },
-        { label: "Street Address", id: "street_addr", type: "text", value: "" },
-        { label: "City", id: "city_addr", type: "text", value: "" },
-        { label: "State", id: "state", type: "text", value: "" },
-        { label: "Zip Code", id: "zipcode_addr", type: "text", value: "" },
-        { label: "Email", id: "email", type: "email", value: "" },
-        { label: "Password", id: "password", type: "password", value: "" }
-      ];
-
-    const updatedMemberInfo = memberInfo.map(info => {
-      return new Promise((resolve, reject) => {
-        const query = `SELECT '${info.id}' FROM member WHERE memberId = ?`;
-        connection.query(query, [memberId], (err, results) => {
-          if (err) {
-            console.error('Error executing query:', err);
-            reject(err);
-          } else {
-            if (results.length > 0) {
-              const newValue = results[0].value;
-              resolve({ ...info, value: newValue });
-            } else {
-              resolve(info);
-            }
-          }
-        });
-      });
-    });
-  
-    Promise.all(updatedMemberInfo)
-      .then(updatedInfo => {
-        console.log('Updated member info:', updatedInfo);
-        // Perform any further actions with the updated member info
-        response.writeHead(200, { 'Content-Type': 'text/html' });
-        response.end(updatedMemberInfo, 'utf-8');
-      })
-      .catch(err => {
-        console.error('Error updating member info:', err);
-      })
-      .finally(() => {
-        // Close the database connection
-        connection.end(err => {
-          if (err) {
-            console.error('Error closing database connection:', err);
-          } else {
-            console.log('Database connection closed');
-          }
-        });
-      });
-  }*/
   
 
 

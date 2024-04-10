@@ -1,3 +1,19 @@
 {
-    "livePreview.defaultPreviewPath": "/front-end/login/member-login.html"
+    "livePreview.defaultPreviewPath": "/front-end/login/member-login.html",
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "library-database-sytem.mysql.database.azure.com",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "Library_DB",
+            "database": "librarydev",
+            "username": "lbrGuest",
+            "password": "gu3st@cces$"
+        }
+    ]
 }
