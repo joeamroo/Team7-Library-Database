@@ -166,6 +166,113 @@ function getUserDashInfo(response, memberId) {
 
 function getUserOrderInfo(response, memberId) {
 
+   const sqlQuery = `
+    SELECT 
+      TV.transaction_Id AS 'Order ID',
+      T.date_created AS 'Date Purchased',
+      TV.asset_type AS 'Item',
+      CV.image_address AS '',
+      CV.year_released AS 'Year Released',
+      CV.book_movie_title_model AS 'Product',
+      CV.isbn AS 'ISBN',
+      CV.serial_number AS 'Serial Number',
+      CV.asset_id AS 'Condition',
+      CV.genres AS 'Genre',
+      CV.languages AS 'Language',
+      TV.returned AS 'Status'
+    FROM 
+      TRANSACTION AS T,
+      TRANSACTION_VIEW AS TV,
+      CATALOG_VIEW AS CV,
+      MEMBER AS M
+    WHERE 
+      M.member_id = ? AND 
+      T.transaction_id = TV.transaction_Id AND 
+      TV.itemId = CV.asset_id
+  `;
+
+
+  // HTML Elements
+  const memberInfo = [
+    { label: "Order ID", id: "orderID", value: "" },
+    { label: "Date Purchased", id: "date_purchased", value: "" },
+    { label: "Item", id: "item", value: "" },
+    { label: "", id: "image_address", value: "" },
+    { label: "Year Released", id: "year_released", value: "" },
+    { label: "Product", id: "product", value: "" },
+    { label: "ISBN", id: "isbn", value: "" },
+    { label: "Serial Number", id: "serial_number", value: "" },
+    { label: "Condition", id: "condition", value: "" },
+    { label: "Genre", id: "genre", value: "" },
+    { label: "Language", id: "language", value: "" },
+    { label: "Status", id: "status", value: ""}
+  ];
+
+
+
+  // Gets information from backend
+  link.query(query_info, [memberId], (error, result) => {
+    let html = '';
+
+    // New values
+    const updatedMemberInfo = memberInfo.map(info => {
+      switch (info.id) {
+        case "orderID":
+          return { ...info, value: result[0].transaction_id };
+        case "date_purchased":
+          return { ...info, value: result[0].date_created };
+        case "item":
+          return { ...info, value: result[0].asset_type };
+        case "image_address":
+          return { ...info, value: result[0].image_address };
+        case "year_released":
+          return { ...info, value: result[0].year_released };
+        case "product":
+          return { ...info, value: result[0].book_movie_title_model };
+        case "isbn":
+          return { ...info, value: result[0].isbn };
+        case "serial_number":
+          return { ...info, value: result[0].serial_number };
+        case "condition":
+          return { ...info, value: result[0].asset_id };
+        case "genre":
+          return { ...info, value: result[0].genres };
+        case "language":
+            return { ...info, value: result[0].languages };
+        case "status":
+            return { ...info, value: result[0].returned };
+        default:
+          return info;
+      }
+    });
+
+    if (error) {
+      console.log('Error', memberId);
+      response.writeHead(500);
+      response.end('Server error');
+      return;
+    } else {
+      html += '<table>';
+      html += '<thead><tr>';
+      updatedMemberInfo.forEach(info => {
+        html += `<th>${info.label}</th>`;
+      });
+      html += '</tr></thead>';
+      html += '<tbody><tr>';
+      updatedMemberInfo.forEach(info => {
+        html += `<td>${info.value}</td>`;
+      });
+      html += '</tr></tbody>';
+      html += '</table>';
+    }
+
+    response.writeHead(200, { 'Content-Type': 'text/html' });
+    response.end(html, 'utf-8');
+  });
+}
+
+/*function getUserOrderInfo(response, memberId) {*/
+
   //console.log("Server-side (memberid): " + memberId);
 
   /*const sqlQuery = `
@@ -193,7 +300,7 @@ function getUserOrderInfo(response, memberId) {
       TV.itemId = CV.asset_id
   `;*/
 
-  const sqlQuery = "SELECT TV.transaction_Id AS 'Order ID', T.date_created AS 'Date Purchased', " +
+  /*const sqlQuery = "SELECT TV.transaction_Id AS 'Order ID', T.date_created AS 'Date Purchased', " +
                  "TV.asset_type AS 'Item', CV.image_address AS '', CV.year_released AS 'Year Released', " +
                  "CV.book_movie_title_model AS 'Product', CV.isbn AS 'ISBN', CV.serial_number AS 'Serial Number', " +
                  "CV.asset_id AS 'Condition', CV.genres AS 'Genre', CV.languages AS 'Language', " +
@@ -213,6 +320,10 @@ function getUserOrderInfo(response, memberId) {
     }
   });
 }
+*/
+
+
+
 
 
 
