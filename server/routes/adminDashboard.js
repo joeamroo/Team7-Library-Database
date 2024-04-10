@@ -51,10 +51,10 @@ function getEmployees(res) {
 function insertStaff(res, name, phoneNum, email, password, supervisor, position) {
     let isAdmin;
     if (position === 'admin') {
-        isAdmin = true;
+        isAdmin = 'true';
     }
     else {
-        isAdmin = false;
+        isAdmin = 'false';
     }
 
     // insert into access control first
@@ -64,7 +64,7 @@ function insertStaff(res, name, phoneNum, email, password, supervisor, position)
         }
     });
 
-    connection.query('INSERT INTO staff (password, name, staff_position, employment_status, supervisor, phone_number, email,) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', [password, name, position, 'status', supervisor, phoneNum, email], (newMemErr, result) => {
+    connection.query(`INSERT INTO staff (password, name, staff_position, employment_status, supervisor, phone_number, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`, [password, name, position, 'active', supervisor, phoneNum, email], (newMemErr, result) => {
         if (newMemErr) {
             console.log('error entering new member into librarydev db:', newMemErr);
         }
