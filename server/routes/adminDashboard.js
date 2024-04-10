@@ -83,7 +83,7 @@ function removeStaff(res, email, staffId, empStatus) {
         }
     });
 
-    connection.query(`UPDATE staff SET date_removed = NOW(), status = ? WHERE email = ? AND staff_id = ?`, [empStatus, email, staffId], (removeStaffErr, result) => {
+    connection.query(`UPDATE staff SET date_removed = NOW(), employment_status = ? WHERE email = ? AND staff_id = ?`, [empStatus, email, staffId], (removeStaffErr, result) => {
         if (removeStaffErr) {
             console.log('error entering new member into librarydev db:', removeStaffErr);
         }
