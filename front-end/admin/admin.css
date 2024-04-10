@@ -76,6 +76,7 @@ header {
 
 
   .wrapper .sidebar ul li{
+    margin-left: -25px;
     padding: 15px;
     border-bottom: 1px solid #bdb8d7;
     border-bottom: 1px solid rgba(0,0,0,0.05);
@@ -1016,6 +1017,7 @@ input[type="date"] {
 }
 
 #addEmployeeBtn:hover, #removeEmployeeBtn:hover {
+  cursor: pointer;
   opacity: 0.8;
 }
 
@@ -1067,8 +1069,13 @@ input[type=password],
   width: 300px; 
 }
 
+
 #employeeSupervisor {
   margin-bottom: 10px;
+}
+
+#removalReason {
+  width: 300px;
 }
 
 #addEmployeeSubmit, #removeEmployeeSubmit {
@@ -1076,8 +1083,12 @@ input[type=password],
   border-radius: 20px;
   background-color: var(--mainColor);
   color: white;
-
   padding: 10px 20px;
+}
+
+#addEmployeeSubmit:hover, #removeEmployeeSubmit:hover {
+  cursor: pointer;
+  background-color: #ad2727 ;
 }
 
 #req {

@@ -205,6 +205,7 @@ function toggleForm(btn, form) {
 const backendUrl = 'https://cougarchronicles.onrender.com'; 
 const getEmployeesUrl = `${backendUrl}/getEmployees`;
 const addEmployeeUrl = `${backendUrl}/addStaff`;
+const removeEmployeeUrl = `${backendUrl}/removeStaff`;
 
 
 function getEmployeeList() {
@@ -272,6 +273,54 @@ document.getElementById('addEmployeeSubmit').addEventListener('click', function(
     }
     else {
         const submitBtn = document.getElementById('addEmployeeSubmit');
+        submitBtn.classList.add('shake-button');
+
+        setTimeout(() => {
+            submitBtn.classList.remove('shake-button');
+        }, 500);
+    }
+});
+
+
+document.getElementById('removeEmployeeSubmit').addEventListener('click', function(event) {
+    event.preventDefault();
+    
+    const allFieldsFilled = [
+        'removeEmployeeEmail', 'removeEmployeeId'
+    ].every(id => document.getElementById(id).value.trim() !== "");
+
+    if (allFieldsFilled) {
+        const email = document.getElementById('removeEmployeeEmail').value.trim();
+        const staff_id = document.getElementById('removeEmployeeId').value.trim();
+        const empStatus = document.getElementById('removalReason').value;
+        
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', removeEmployeeUrl); 
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                console.log('sucessfully removed employee');
+                document.getElementById('removeEmployeeEmail').value = '';
+                document.getElementById('removeEmployeeId').value = '';
+                document.getElementById('removalReason').value = '';
+                getEmployeeList();
+            } 
+            else {
+                console.error('Error:', xhr.statusText);
+            }
+        };
+
+        const data = JSON.stringify({ 
+            email: email, 
+            staff_id,
+            empStatus
+        });
+        
+        xhr.send(data);
+    }
+    else {
+        const submitBtn = document.getElementById('removeEmployeeSubmit');
         submitBtn.classList.add('shake-button');
 
         setTimeout(() => {

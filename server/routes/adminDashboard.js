@@ -74,5 +74,23 @@ function insertStaff(res, name, phoneNum, email, password, supervisor, position)
     res.end(JSON.stringify({ message: 'staffCreationSuccessful' }));
 }
 
+function removeStaff(res, email, staffId, empStatus) {
+    // insert into access control first
+    accessLink.query('DELETE * from staff_credentials WHERE staff_email = ?', [email], (credentialErr, result) => {
+        if (credentialErr) {
+            console.log('error accessing access_control db table:', credentialErr);
+        }
+    });
 
-module.exports = { getEmployees, insertStaff };
+    connection.query(`UPDATE staff SET date_removed = NOW(), status = ? WHERE email = ? AND staff_id = ?`, [empStatus, email, staffId], (removeStaffErr, result) => {
+        if (removeStaffErr) {
+            console.log('error entering new member into librarydev db:', newMemErr);
+        }
+    });
+
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ message: 'staffDeletionSuccessful' }));
+}
+
+
+module.exports = { getEmployees, insertStaff, removeStaff };

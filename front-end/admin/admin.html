@@ -266,12 +266,22 @@
   <div id="removeEmployeeForm" style="display: none;">
     <form id="removeEmployeeForm">
       <div class="mb-3">
-        <label for="removeEmployeeName" class="form-label">Employee Name<span id="req">*</span></label>
-        <input type="text" class="form-control" id="employeeName" required>
+        <label for="employeeId" class="form-label">Staff ID<span id="req">*</span></label>
+        <input type="text" class="form-control" id="removeEmployeeId" required>
       </div>
       <div class="mb-3">
-        <label for="employeeId" class="form-label">Staff ID<span id="req">*</span></label>
-        <input type="text" class="form-control" id="employeePhoneNum" required>
+        <label for="removeEmployeeEmail" class="form-label">Email<span id="req">*</span></label>
+        <input type="email" class="form-control" id="removeEmployeeEmail" required>
+      </div>
+      <div class="mb-3">
+        <label for="reason" class="form-label">Reason for Removal<span id="req">*</span></label>
+        <select class="form-select" id="removalReason" required>
+          <option value="">Select Reason</option>
+          <option value="fired">Fired</option>
+          <option value="resigned">Resigned</option>
+          <option value="retired">Retired</option>
+          <option value="temporary">Temporary</option>          
+        </select>
       </div>
       <button type="submit" id="removeEmployeeSubmit">Remove Employee</button>
     </form>
