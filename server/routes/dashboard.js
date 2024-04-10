@@ -12,6 +12,8 @@ const link = mysql.createConnection({
 
 
 function getSQLTable(data) {
+
+  console.log("Server-side (table): " + data);
   
     const headers = Object.keys(data[0]);
   
@@ -31,7 +33,7 @@ function getSQLTable(data) {
       </tbody>
     </table>
 `;
-    console.log(table);
+    
 }
 
 
@@ -81,8 +83,7 @@ function getUserDashInfo(response, memberId) {
     // Gets information from backend
     link.query(query_info, [memberId], (error, result) => {
     
-      console.log(result);
-      let html = getSQLTable(result);
+      let html = '';
 
         // New values
         const updatedMemberInfo = memberInfo.map(info => {
@@ -134,6 +135,8 @@ function getUserDashInfo(response, memberId) {
 
 function getUserOrderInfo(response, memberId) {
 
+  console.log("Server-side (memberid): " + memberId);
+
   const sqlQuery = `
     SELECT 
       TV.transaction_Id AS 'Order ID',
@@ -158,20 +161,20 @@ function getUserOrderInfo(response, memberId) {
       T.transaction_id = TV.transaction_Id AND 
       TV.itemId = CV.asset_id
   `;
-    let html = '';
+    
 
   // Use the memberId parameter in the query execution
   link.query(sqlQuery, [memberId], (error, results) => {
     if (error) {
-      console.error('Error executing query:', error);
+      console.log("server-side (query)" + results);
+      //console.error('Error executing query:', error);
       response.writeHead(500, {'Content-Type': 'text/html'});
       response.end('Error in retrieval', 'utf-8');
     } else {
-        html = getSQLTable(results);
-        console.log(html);
+        let html = getSQLTable(results);
         response.writeHead(200, { 'Content-Type': 'text/html' });
         response.end(html, 'utf-8');
-        console.log("results");
+        
     }
   });
 }
