@@ -54,7 +54,6 @@ function getUserDash(response, memberId) {
 
     // Searches Database for user with the memberID
     const query_name = 'SELECT name FROM member WHERE member_id = ?';
-    let name = '';
 
     // Gets information from backend
     link.query(query_name, [memberId], (error, result) => {
@@ -64,12 +63,10 @@ function getUserDash(response, memberId) {
             response.end('Server error');
             return;
         } else {
-           name = 'Welcome, ';
-           name += result[0].name;
-           name += '!';
+           const name = 'Welcome, ' + result[0].name + '!';
+           response.writeHead(200, { 'Content-Type': 'text/html' });
+           response.end(name, 'utf-8');
         }
-        response.writeHead(200, { 'Content-Type': 'text/html' });
-        response.end(name, 'utf-8');
     });
     
 }
