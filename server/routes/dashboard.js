@@ -144,6 +144,7 @@ function getUserDashInfo(response, memberId) {
 }
 
 function getUserOrderInfo(response, memberId) {
+
   const sqlQuery = `
     SELECT 
       TV.transaction_Id AS 'Order ID',
@@ -168,6 +169,7 @@ function getUserOrderInfo(response, memberId) {
       T.transaction_id = TV.transaction_Id AND 
       TV.itemId = CV.asset_id
   `;
+    let html = '';
 
   // Use the memberId parameter in the query execution
   db.query(sqlQuery, [memberId], (error, results) => {
@@ -176,6 +178,7 @@ function getUserOrderInfo(response, memberId) {
       response.writeHead(500, {'Content-Type': 'text/html'});
       response.end('Error', 'utf-8');
     } else {
+        html = getSQLTable(results);
         response.writeHead(200, { 'Content-Type': 'text/html' });
         response.end(html, 'utf-8');
     }
