@@ -22,6 +22,7 @@ function createStaffHtml(item) {
     staffHtml += '<tr id="employee-item">';
     staffHtml += `<td id="staff_id">${item.staff_id}</td>`;
     staffHtml += `<td id="staff_name">${item.name}</td>`;
+    staffHtml += `<td id="staff_email">${item.email}</td>`;
     staffHtml += `<td id="staff_position">${item.staff_position}</td>`;
     staffHtml += `<td id="supervisor">${item.supervisor}</td>`;
     staffHtml += `<td id="staff_empl_status">${item.employment_status}</td>`;
@@ -30,7 +31,7 @@ function createStaffHtml(item) {
 }
 
 function getEmployees(res) {
-    connection.query('SELECT staff_id, name, staff_position, supervisor, employment_status  FROM staff', (err, results) => {
+    connection.query('SELECT staff_id, name, staff_position, supervisor, employment_status, email  FROM staff', (err, results) => {
         if (err) {
             console.error('Error querying catalog data:', err);
             response.writeHead(500);
