@@ -412,6 +412,10 @@ function toggleForm(btn, form) {
   }
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    getEventList();
+});
+
 function getEventList() {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', getEventsUrl);
