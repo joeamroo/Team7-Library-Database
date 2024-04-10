@@ -31,6 +31,7 @@ function getSQLTable(data) {
       </tbody>
     </table>
 `;
+    console.log(table);
 }
 
 
@@ -80,8 +81,9 @@ function getUserDashInfo(response, memberId) {
     // Gets information from backend
     link.query(query_info, [memberId], (error, result) => {
     
+      console.log(result);
       let html = getSQLTable(result);
-      
+
         // New values
         const updatedMemberInfo = memberInfo.map(info => {
             switch (info.id) {
@@ -169,6 +171,7 @@ function getUserOrderInfo(response, memberId) {
         console.log(html);
         response.writeHead(200, { 'Content-Type': 'text/html' });
         response.end(html, 'utf-8');
+        console.log("results");
     }
   });
 }
