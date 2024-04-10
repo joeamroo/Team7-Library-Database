@@ -40,9 +40,6 @@ function getSQLTable(data) {
       table.appendChild(row);
     });
 
-    // Append the table to the document body or a specific container
-    document.body.appendChild(table);
-
 
    // Returns table for client retrieval
    return table;
@@ -143,7 +140,8 @@ function getUserDashInfo(response, memberId) {
     });
 }
 
-function getOrderDashInfo(response, memberId) {
+function getUserOrderInfo(response, memberId) {
+
   const sqlQuery = `
     SELECT 
       TV.transaction_Id AS 'Order ID',
@@ -168,14 +166,17 @@ function getOrderDashInfo(response, memberId) {
       T.transaction_id = TV.transaction_Id AND 
       TV.itemId = CV.asset_id
   `;
+    let html = '';
 
   // Use the memberId parameter in the query execution
-  db.query(sqlQuery, [memberId], (error, results) => {
+  link.query(sqlQuery, [memberId], (error, results) => {
     if (error) {
       console.error('Error executing query:', error);
       response.writeHead(500, {'Content-Type': 'text/html'});
-      response.end('Error', 'utf-8');
+      response.end('Error in retrieval', 'utf-8');
     } else {
+        html = getSQLTable(results);
+        console.log(html);
         response.writeHead(200, { 'Content-Type': 'text/html' });
         response.end(html, 'utf-8');
     }
@@ -189,4 +190,4 @@ function getOrderDashInfo(response, memberId) {
 
 
 
-module.exports = { getUserDash, getUserDashInfo };
+module.exports = { getUserDash, getUserDashInfo, getUserOrderInfo };

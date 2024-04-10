@@ -8,9 +8,10 @@ const orderSelect = document.getElementById('order-selection');
 const holdSelect = document.getElementById('hold-selection');
 const waitSelect = document.getElementById('waitlist-selection');
 const profileView = document.querySelector('.settings.profile');
-const orderView = document.querySelector('.recent-orders');
+const orderView = document.querySelector('.settings.orders');
 const holdsView = document.querySelector('.settings.holds');
 const waitlistView = document.querySelector('.settings.waitlist');
+const orderReport = document.querySelector('.recent-orders');
 const profileInfo = document.querySelector('.member-info');
 const today = new Date().toLocaleDateString();
 
@@ -220,20 +221,7 @@ window.onload = function() {
   └─────────────────────────────────────────────────────────────────────────────┘
  */
 
-  /*updateBtn.addEventListener('click', function(event) {
-    const allFieldsFilled = [
-      'firstName', 'lastName', 'email', 'phone_number', 
-      'street_addr', 'city_addr', 'state_addr', 'zipcode_addr',
-      'email'
-      ].every(id => document.getElementById(id).value.trim() !== "");
-
-    if (allFieldsField) {
-       // updates member info
-        //getUserInfo();
-    } else {
-      console.log("All fields need to be filled!");
-    }
-});*/
+ 
 
 updateBtn.addEventListener('click', function(event) {
   openPop();
@@ -323,9 +311,7 @@ function getUserOrderReport() {
 
     xhr.onload = function() {
       if (xhr.status === 200) {
-        //const dataRetrieved = xhr.responseText;
-        //console.log(dataRetrieved);
-        orderView.innerHTML = xhr.responseText;
+        orderReport.innerHTML = xhr.responseText;
       } else {
         console.log("Failed to retrieve data");
       }
