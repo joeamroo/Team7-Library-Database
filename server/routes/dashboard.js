@@ -1,5 +1,6 @@
 const fs = require('fs');
 const mysql = require('mysql');
+const htmlTemplateTag = require('html-template-tag');
 
 const link = mysql.createConnection({
     host: 'library-database-sytem.mysql.database.azure.com',
@@ -12,37 +13,24 @@ const link = mysql.createConnection({
 
 function getSQLTable(data) {
   
-    // Create the table element
-    const table = document.createElement('table');
-
-    // Create the table header
-    const headerRow = document.createElement('tr');
     const headers = Object.keys(data[0]);
-
-    headers.forEach(headerText => {
-      const th = document.createElement('th');
-      th.textContent = headerText;
-      headerRow.appendChild(th);
+  
+    const tableRows = data.map(rowData => {
+    const cells = headers.map(key => htmlTemplateTag`<td>${rowData[key]}</td>`);
+    return htmlTemplateTag`<tr>${cells}</tr>`;
     });
 
-    table.appendChild(headerRow);
-
-    // Create the table rows and cells
-    data.forEach(rowData => {
-      const row = document.createElement('tr');
-
-      headers.forEach(key => {
-        const cell = document.createElement('td');
-        cell.textContent = rowData[key];
-        row.appendChild(cell);
-      });
-
-      table.appendChild(row);
-    });
-
-
-   // Returns table for client retrieval
-   return table;
+    const tableHeader = headers.map(headerText => htmlTemplateTag`<th>${headerText}</th>`);
+    const table = htmlTemplateTag`
+    <table>
+      <thead>
+        <tr>${tableHeader}</tr>
+      </thead>
+      <tbody>
+        ${tableRows}
+      </tbody>
+    </table>
+`;
 }
 
 

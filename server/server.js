@@ -1,4 +1,5 @@
 const http = require('http');
+const htmlTemplateTag = require('html-template-tag');
 require("dotenv").config();
 
 const { getInitialCatalogInfo, getCatalogSearchWithRestrictions, insertDataToDatabase } = require('./routes/catalog');
