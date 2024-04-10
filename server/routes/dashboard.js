@@ -27,12 +27,10 @@ function getUserDash(response, memberId) {
             response.end('Server error');
             return;
         } else {
-           name = 'Welcome, ';
-           name += result[0].name;
-           name += '!';
+           const name = 'Welcome, ' + result[0].name + '!';
+           response.writeHead(200, { 'Content-Type': 'text/html' });
+           response.end(name, 'utf-8');
         }
-        response.writeHead(200, { 'Content-Type': 'text/html' });
-        response.end(name, 'utf-8');
     });
     
 }
