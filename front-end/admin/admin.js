@@ -151,22 +151,6 @@ inboxSelect.addEventListener('click', () => {
     inboxView.classList.remove('hide');
 });
 
-      /* 
-  ┌─────────────────────────────────────────────────────────────────────────────┐
-  │                              Greets User                                    │
-  └─────────────────────────────────────────────────────────────────────────────┘
-
-    
-  ┌─────────────────────────────────────────────────────────────────────────────┐
-  │                           Updates User Info                                 │
-  └─────────────────────────────────────────────────────────────────────────────┘
-
-
-
-  ┌─────────────────────────────────────────────────────────────────────────────┐
-  │                              Orders (date form)                             │
-  └─────────────────────────────────────────────────────────────────────────────┘
- */
 
 function setOrderDate() {
     const startingDate = document.getElementById('start-date');
@@ -215,3 +199,21 @@ function toggleForm(btn, form) {
     icon.className = 'uil uil-angle-down';
   }
 }
+
+
+//Calling all the staff 
+const backendUrl = 'https://cougarchronicles.onrender.com'; 
+const getEmployeesUrl = `${backendUrl}/employees`;
+
+document.addEventListener('DOMContentLoaded', function() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', getEmployeesUrl);
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            const employeesDiv = document.querySelector('.table-content');
+            employeesDiv.innerHTML = xhr.responseText;
+        } 
+    };
+    xhr.send();
+});
