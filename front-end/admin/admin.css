@@ -987,7 +987,7 @@ input[type="date"] {
 }
 
 #employeeTable {
-  margin-top: 20px;
+  margin-top: 30px;
   align-items: center;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
@@ -1012,7 +1012,7 @@ input[type="date"] {
   margin-right: 5px;
   color: white;
   background-color: rgb(178, 178, 178);
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 #addEmployeeBtn:hover, #removeEmployeeBtn:hover {
@@ -1028,6 +1028,7 @@ input[type="date"] {
   flex-direction: column;
   align-items: flex-start;
   padding: 30px;
+  margin-bottom: 15px;
 }
 
 #removeEmployeeForm {
@@ -1039,6 +1040,7 @@ input[type="date"] {
   flex-direction: column;
   align-items: flex-start;
   padding: 10px;
+  margin-bottom: 15px;
 }
 
 .mb-3 {
@@ -1061,7 +1063,7 @@ input[type=password],
   width: 500px;
 }
 
-#employeeSupervisor, #employeePosition {
+#employeePosition {
   width: 300px; 
 }
 
@@ -1087,5 +1089,25 @@ input[type=password],
 }
 
 #startDate, #endDate, #position {
+  margin-top: 10px;
   margin-right: 50px;
+}
+
+@keyframes shake {
+  10%, 90% {
+      transform: translateX(-2px);
+  }
+  20%, 80% {
+      transform: translateX(2px);
+  }
+  30%, 50%, 70% {
+      transform: translateX(-4px);
+  }
+  40%, 60% {
+      transform: translateX(4px);
+  }
+}
+
+.shake-button {
+  animation: shake 0.5s ease-in-out;
 }

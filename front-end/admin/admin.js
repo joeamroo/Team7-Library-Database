@@ -204,6 +204,7 @@ function toggleForm(btn, form) {
 //Calling all the staff 
 const backendUrl = 'https://cougarchronicles.onrender.com'; 
 const getEmployeesUrl = `${backendUrl}/getEmployees`;
+const addEmployeeUrl = `${backendUrl}/addStaff`;
 
 document.addEventListener('DOMContentLoaded', function() {
     const xhr = new XMLHttpRequest();
@@ -217,3 +218,61 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     xhr.send();
 });
+
+
+document.getElementById('addEmployeeSubmit').addEventListener('click', function(event) {
+    event.preventDefault();
+    
+    const allFieldsFilled = [
+        'addEmployeeName', 'addEmployeePhoneNum', 'employeeEmail', 'employeePassword', 'employeeSupervisor'
+    ].every(id => document.getElementById(id).value.trim() !== "");
+
+    if (allFieldsFilled) {
+        const name = document.getElementById('addEmployeeName').value.trim();
+        const phoneNum = document.getElementById('addEmployeePhoneNum').value.trim();
+        const email = document.getElementById('employeeEmail').value.trim();
+        const password = document.getElementById('employeePassword').value.trim();
+        const supervisor = document.getElementById('employeeSupervisor').value.trim();
+        const position = document.getElementById('employeePosition').value.toLowerCase();
+        
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', addEmployeeUrl); 
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                console.log('sucessfully added employee');
+                document.getElementById('addEmployeeName').value = '';
+                document.getElementById('addEmployeePhoneNum').value = '';
+                document.getElementById('employeeEmail').value = '';
+                document.getElementById('employeePassword').value = '';
+                document.getElementById('employeeSupervisor').value = '';
+                document.getElementById('employeePosition').value = '';
+            } 
+            else {
+                console.error('Error :', xhr.statusText);
+            }
+        };
+
+        const data = JSON.stringify({ 
+            name: name, 
+            phoneNum: phoneNum, 
+            email: email, 
+            password: password, 
+            supervisor: supervisor, 
+            position: position
+        });
+        
+        xhr.send(data);
+    }
+    else {
+        const submitBtn = document.getElementById('addEmployeeSubmit');
+        submitBtn.classList.add('shake-button');
+
+        setTimeout(() => {
+            submitBtn.classList.remove('shake-button');
+        }, 500);
+    }
+});
+
+

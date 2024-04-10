@@ -8,10 +8,14 @@ const connection = mysql.createConnection({
     port:3306
 });
 
-connection.connect((err) => {
-    if (err) throw err;
-    console.log('Connected to LibraryDev database - admin');
+const accessLink = mysql.createConnection({
+    host: 'library-database-sytem.mysql.database.azure.com',
+    user: 'lbrGuest',
+    password: 'gu3st@cces$',
+    database: 'access_control',
+    port:3306
 });
+
 
 function createStaffHtml(item) {
     let staffHtml = '';
@@ -44,5 +48,30 @@ function getEmployees(res) {
 
 }
 
+function insertStaff(res, name, phoneNum, email, password, supervisor, position) {
+    if (position === 'admin') {
+        const isAdmin = true;
+    }
+    else {
+        const isAdmin = false;
+    }
 
-module.exports = { getEmployees }
+    // insert into access control first
+    accessLink.query('INSERT INTO staff_credentials (staff_password, staff_email, isAdmin) VALUES (?, ?, ?)', [password, email, isAdmin], (credentialErr, result) => {
+        if (credentialErr) {
+            console.log('error accessing access_control db table:', credentialErr);
+        }
+    });
+
+    connection.query('INSERT INTO staff (password, name, staff_position, employment_status, supervisor, phone_number, email,) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', [password, name, position, 'status', supervisor, phoneNum, email], (newMemErr, result) => {
+        if (newMemErr) {
+            console.log('error entering new member into librarydev db:', newMemErr);
+        }
+    });
+
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ message: 'staffCreationSuccessful' }));
+}
+
+
+module.exports = { getEmployees, insertStaff };
