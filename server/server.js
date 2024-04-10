@@ -229,7 +229,7 @@ const server = http.createServer((request, res) => {
                 request.on('end', () => {
                     try {
                         const postData = JSON.parse(body);
-                        getUserDashInfo(res, postData.memberId);
+                        getUserOrderReport(res, postData.memberId);
                     } catch (error) {
                         console.error('Error parsing JSON: ', error);
                     }

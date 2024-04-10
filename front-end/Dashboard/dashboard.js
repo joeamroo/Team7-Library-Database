@@ -11,6 +11,7 @@ const profileView = document.querySelector('.settings.profile');
 const orderView = document.querySelector('.settings.orders');
 const holdsView = document.querySelector('.settings.holds');
 const waitlistView = document.querySelector('.settings.waitlist');
+const orderReport = document.querySelector('.recent-orders');
 const profileInfo = document.querySelector('.member-info');
 const today = new Date().toLocaleDateString();
 
@@ -325,7 +326,7 @@ function getUserOrderReport() {
       if (xhr.status === 200) {
         //const dataRetrieved = xhr.responseText;
         //console.log(dataRetrieved);
-        orderView.innerHTML = xhr.responseText;
+        orderReport.innerHTML = xhr.responseText;
       } else {
         console.log("Failed to retrieve data");
       }
