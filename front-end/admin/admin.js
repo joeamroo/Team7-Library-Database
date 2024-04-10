@@ -414,6 +414,39 @@ function toggleForm(btn, form) {
   }
 }
 
+function calculateAttendanceStatistics() {
+    const tableBody = document.getElementById('eventTableItems');
+    const eventRows = tableBody.querySelectorAll('tr[id="event-item"]');
+    const eventTotalCount = document.getElementById('eventTotal-count');
+    const maxAttendanceSpan = document.getElementById('max-attend');
+    const minAttendanceSpan = document.getElementById('min-attend');
+    const avgAttendanceSpan = document.getElementById('avg-attend');
+    const totalAttendanceSpan = document.getElementById('total-atend');
+  
+    let maxAttendance = 0;
+    let minAttendance = 0; 
+    let totalAttendance = 0;
+    let totalEvents = 0;
+  
+    for (const row of eventRows) {
+      const attendance = parseInt(row.querySelector('#attendance').textContent, 10);
+      console.log(attendance);
+  
+      maxAttendance = Math.max(maxAttendance, attendance);
+      minAttendance = Math.min(minAttendance, attendance);
+      totalAttendance += attendance;
+      totalEvents += 1;
+    }
+
+    if (maxAttendanceSpan) maxAttendanceSpan.textContent = maxAttendance;
+    if (minAttendanceSpan) minAttendanceSpan.textContent = minAttendance;
+    if (totalAttendanceSpan) totalAttendanceSpan.textContent = totalAttendance;
+    if (eventTotalCount) eventTotalCount.textContent = totalEvents;
+  
+    const averageAttendance = totalAttendance / eventRows.length || 0;
+    if (avgAttendanceSpan) avgAttendanceSpan.textContent = averageAttendance;
+  }
+
 function getEventList() {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', getEventsUrl);
@@ -422,6 +455,7 @@ function getEventList() {
         if (xhr.status === 200) {
             const eventsDiv = document.querySelector('.eventTable-content');
             eventsDiv.innerHTML = xhr.responseText;
+            calculateAttendanceStatistics();
         } 
     };
     xhr.send();
@@ -563,6 +597,11 @@ document.getElementById('removeEventSubmit').addEventListener('click', function(
         }, 500);
     }
 });
+
+
+
+
+
 
 
 
