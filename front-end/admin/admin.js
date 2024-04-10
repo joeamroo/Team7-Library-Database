@@ -640,6 +640,12 @@ searchButton.addEventListener('click', () => {
 });
 
 
+/*Manage Events Tab End*/
+
+
+/*Manage Communications Tab*/
+
+
 
 
 
