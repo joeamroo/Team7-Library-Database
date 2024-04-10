@@ -172,13 +172,14 @@ function getUserOrderInfo(response, memberId) {
     let html = '';
 
   // Use the memberId parameter in the query execution
-  db.query(sqlQuery, [memberId], (error, results) => {
+  link.query(sqlQuery, [memberId], (error, results) => {
     if (error) {
       console.error('Error executing query:', error);
       response.writeHead(500, {'Content-Type': 'text/html'});
       response.end('Error', 'utf-8');
     } else {
         html = getSQLTable(results);
+        console.log(html);
         response.writeHead(200, { 'Content-Type': 'text/html' });
         response.end(html, 'utf-8');
     }
