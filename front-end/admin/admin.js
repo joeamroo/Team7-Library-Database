@@ -334,8 +334,8 @@ document.getElementById('removeEmployeeSubmit').addEventListener('click', functi
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    const empStatDropdown = document.getElementById('empStat');
-    const positionDropdown = document.getElementById('position');
+    const empStatDropdown = document.getElementById('limitEmpStat');
+    const positionDropdown = document.getElementById('limitPosition');
 
     empStatDropdown.addEventListener('change', function() {
         if (empStatDropdown.value !== '') {
