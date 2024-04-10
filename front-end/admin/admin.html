@@ -232,23 +232,23 @@
     <form>
       <div class="mb-3">
         <label for="addEmployeeName" class="form-label">Employee Name<span id="req">*</span></label>
-        <input type="text" class="form-control" id="addEmployeeName" required>
+        <input type="text" class="form-control" id="addEmployeeName" autocomplete="off" required>
       </div>
       <div class="mb-3">
         <label for="addEmployeePhoneNum" class="form-label">Phone Number<span id="req">*</span></label>
-        <input type="text" class="form-control" id="addEmployeePhoneNum" required>
+        <input type="text" class="form-control" id="addEmployeePhoneNum" autocomplete="off" required>
       </div>
       <div class="mb-3">
         <label for="employeeId" class="form-label">Email<span id="req">*</span></label>
-        <input type="email" class="form-control" id="employeeEmail" required>
+        <input type="email" class="form-control" id="employeeEmail" autocomplete="off" required>
       </div>
       <div class="mb-3">
         <label for="employeeId" class="form-label">Password<span id="req">*</span></label>
-        <input type="password" class="form-control" id="employeePassword" required>
+        <input type="password" class="form-control" id="employeePassword" autocomplete="off" required>
       </div>
       <div class="mb-3">
         <label for="employeeSupervisor" class="form-label">Supervisor<span id="req">*</span></label>
-        <input type="text" class="form-control" id="employeeSupervisor" required>
+        <input type="text" class="form-control" id="employeeSupervisor" autocomplete="off" required>
       </div>
       <div class="mb-3">
         <label for="employeePosition" class="form-label">Position<span id="req">*</span></label>
@@ -267,11 +267,11 @@
     <form id="removeEmployeeForm">
       <div class="mb-3">
         <label for="employeeId" class="form-label">Staff ID<span id="req">*</span></label>
-        <input type="text" class="form-control" id="removeEmployeeId" required>
+        <input type="text" class="form-control" id="removeEmployeeId" autocomplete="off" required>
       </div>
       <div class="mb-3">
         <label for="removeEmployeeEmail" class="form-label">Email<span id="req">*</span></label>
-        <input type="email" class="form-control" id="removeEmployeeEmail" required>
+        <input type="email" class="form-control" id="removeEmployeeEmail" autocomplete="off" required>
       </div>
       <div class="mb-3">
         <label for="reason" class="form-label">Reason for Removal<span id="req">*</span></label>
@@ -287,10 +287,7 @@
     </form>
   </div>
 
-  <div id="dateSelectionSection">
-    <label for="startDate">Start Date:</label>
-    <input type="date" id="startDate" required>
-  
+  <div id="limitBySection">
     <label for="empStatus">Employment Status:</label>
     <select id="empStat" required>
       <option value="">Select Status</option>
@@ -326,7 +323,7 @@
     </tbody>
     <tfoot id="summary" class="fw-bold text-dark">
       <tr>
-        <th>Total Employees:</th> 
+        <th>Total Employees:<span id="total-count"></span></th> 
       </tr>
     </tfoot>
   </table>

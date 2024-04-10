@@ -984,14 +984,26 @@ input[type="date"] {
 }*/
 
 #table-name {
+  margin-bottom: 25px;
   color: var(--mainColor);
 }
 
 #employeeTable {
+  table-layout: auto;
   margin-top: 30px;
   align-items: center;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+#employeeTable th,
+#employeeTable td {
+  text-align: center;
+}
+
+#employeeTable tbody tr td {
+  font-size: 18px; 
+  font-weight: normal; 
 }
 
 .table-striped thead th {
@@ -1012,7 +1024,7 @@ input[type="date"] {
   border-radius: 10px;
   margin-right: 5px;
   color: white;
-  background-color: rgb(178, 178, 178);
+  background-color: rgb(173, 173, 173);
   margin-bottom: 15px;
 }
 
@@ -1095,11 +1107,11 @@ input[type=password],
   color: red;
 }
 
-#dateSelectionSection label {
+#limitBySection label {
   color: var(--mainColor);
 }
 
-#startDate, #empStat, #position {
+#empStat, #position {
   margin-top: 10px;
   margin-right: 50px;
 }

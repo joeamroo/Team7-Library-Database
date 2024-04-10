@@ -23,9 +23,9 @@ function createStaffHtml(item) {
     staffHtml += `<td id="staff_id">${item.staff_id}</td>`;
     staffHtml += `<td id="staff_name">${item.name}</td>`;
     staffHtml += `<td id="staff_email">${item.email}</td>`;
-    staffHtml += `<td id="staff_position">${item.staff_position}</td>`;
+    staffHtml += `<td id="staff_position">${item.staff_position.toUpperCase()}</td>`;
     staffHtml += `<td id="supervisor">${item.supervisor}</td>`;
-    staffHtml += `<td id="staff_empl_status">${item.employment_status}</td>`;
+    staffHtml += `<td id="staff_empl_status">${item.employment_status.toUpperCase()}</td>`;
     staffHtml += '</tr>';
     return staffHtml;
 }
@@ -33,7 +33,7 @@ function createStaffHtml(item) {
 function getEmployees(res) {
     connection.query('SELECT staff_id, name, email, staff_position, supervisor, employment_status FROM staff', (err, results) => {
         if (err) {
-            console.error('Error querying catalog data:', err);
+            console.error('Error querying staff data:', err);
             response.writeHead(500);
             response.end('Server error');
             return;
@@ -94,4 +94,35 @@ function removeStaff(res, email, staffId, empStatus) {
 }
 
 
-module.exports = { getEmployees, insertStaff, removeStaff };
+function filterStaff(res, value, type) {
+    let filterQuery;
+    if (type === 'staff_position') {
+        filterQuery = 'SELECT staff_id, name, email, staff_position, supervisor, employment_status FROM staff WHERE staff_position = ?';
+    }
+    else if (type === 'employment_status') {
+        filterQuery = 'SELECT staff_id, name, email, staff_position, supervisor, employment_status FROM staff WHERE employment_status = ?';
+    }
+
+    connection.query(filterQuery, [value], (filterErr, results) => {
+        if (filterErr) {
+            console.error('Error querying staff data:', filterErr);
+            response.writeHead(500);
+            response.end('Server error');
+            return;
+        }
+
+        let staffHtml = '';
+        if (results.length > 0) {
+            results.forEach(item => { staffHtml += createStaffHtml(item); });
+        }
+        else {
+            staffHtml = 'No Employees Found';
+        }
+
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(staffHtml, 'utf-8');
+    });
+}
+
+
+module.exports = { getEmployees, insertStaff, removeStaff, filterStaff };

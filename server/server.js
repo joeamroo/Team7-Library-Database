@@ -10,7 +10,7 @@ const { registerMember } = require('./routes/register');
 const { getListedEvents, eventSignUp } = require('./routes/classesnEvents');
 const { resetPassword } = require('./routes/forgot-pwd');
 const { getEventReports } = require ('./routes/staffeventsreports');
-const { getEmployees, insertStaff, removeStaff } = require ('./routes/adminDashboard');
+const { getEmployees, insertStaff, removeStaff, filterStaff } = require ('./routes/adminStaffManagement');
 
 function setCorsHeaders(res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -280,6 +280,22 @@ const server = http.createServer((request, res) => {
                     try {
                         const postData = JSON.parse(body);
                         removeStaff(res, postData.email, postData.staff_id, postData.empStatus);
+                    } 
+                    catch (error) {
+                        console.error('Error parsing JSON:', error);
+                        serve404(res);
+                    }
+                });
+            }
+            else if (pathname === '/filterStaff') {
+                let body = '';
+                request.on('data', (chunk) => {
+                    body += chunk.toString();
+                });
+                request.on('end', () => {
+                    try {
+                        const postData = JSON.parse(body);
+                        filterStaff(res, postData.value, postData.type);
                     } 
                     catch (error) {
                         console.error('Error parsing JSON:', error);

@@ -206,6 +206,7 @@ const backendUrl = 'https://cougarchronicles.onrender.com';
 const getEmployeesUrl = `${backendUrl}/getEmployees`;
 const addEmployeeUrl = `${backendUrl}/addStaff`;
 const removeEmployeeUrl = `${backendUrl}/removeStaff`;
+const filterEmployeesUrl = `${backendUrl}/filterStaff`;
 
 
 function getEmployeeList() {
@@ -222,7 +223,8 @@ function getEmployeeList() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    getEmployeeList(); 
+    getEmployeeList();
+    updateTotalEmployeesCount(); 
 });
 
 document.getElementById('addEmployeeSubmit').addEventListener('click', function(event) {
@@ -254,6 +256,7 @@ document.getElementById('addEmployeeSubmit').addEventListener('click', function(
                 document.getElementById('employeeSupervisor').value = '';
                 document.getElementById('employeePosition').value = '';
                 getEmployeeList();
+                updateTotalEmployeesCount();
             } 
             else {
                 console.error('Error:', xhr.statusText);
@@ -305,6 +308,7 @@ document.getElementById('removeEmployeeSubmit').addEventListener('click', functi
                 document.getElementById('removeEmployeeId').value = '';
                 document.getElementById('removalReason').value = '';
                 getEmployeeList();
+                updateTotalEmployeesCount();
             } 
             else {
                 console.error('Error:', xhr.statusText);
@@ -328,5 +332,49 @@ document.getElementById('removeEmployeeSubmit').addEventListener('click', functi
         }, 500);
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const empStatDropdown = document.getElementById('empStat');
+    const positionDropdown = document.getElementById('position');
+
+    empStatDropdown.addEventListener('change', function() {
+        if (empStatDropdown.value !== '') {
+            makePostRequest({ value: empStatDropdown.value, type: 'employment_status' });
+        }
+    });
+
+    positionDropdown.addEventListener('change', function() {
+        if (positionDropdown.value !== '') {
+            makePostRequest(positionDropdown.value);
+            makePostRequest({ value: positionDropdown.value, type: 'staff_position' });
+        }
+    });
+
+    function makePostRequest(data) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', filterEmployeesUrl);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                console.log('Limit by successful');
+                updateTotalEmployeesCount();
+            } 
+            else {
+                console.error('Error:', xhr.statusText);
+            }
+        };
+
+        const dataSending = JSON.stringify(data);
+        xhr.send(dataSending);
+    }
+});
+
+function updateTotalEmployeesCount() {
+    const totalEmployees = document.getElementById('total-count');
+    const rowCount = document.getElementById('employeeTable').rows.length - 1; // Exclude header row
+    totalEmployees.textContent = rowCount;
+    console.log(rowCount);
+}
 
 
