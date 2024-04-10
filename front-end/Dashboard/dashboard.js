@@ -221,20 +221,7 @@ window.onload = function() {
   └─────────────────────────────────────────────────────────────────────────────┘
  */
 
-  /*updateBtn.addEventListener('click', function(event) {
-    const allFieldsFilled = [
-      'firstName', 'lastName', 'email', 'phone_number', 
-      'street_addr', 'city_addr', 'state_addr', 'zipcode_addr',
-      'email'
-      ].every(id => document.getElementById(id).value.trim() !== "");
-
-    if (allFieldsField) {
-       // updates member info
-        //getUserInfo();
-    } else {
-      console.log("All fields need to be filled!");
-    }
-});*/
+ 
 
 updateBtn.addEventListener('click', function(event) {
   openPop();

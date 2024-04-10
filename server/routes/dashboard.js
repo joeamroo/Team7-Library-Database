@@ -143,7 +143,7 @@ function getUserDashInfo(response, memberId) {
     });
 }
 
-function getOrderDashInfo(response, memberId) {
+function getUserOrderInfo(response, memberId) {
   const sqlQuery = `
     SELECT 
       TV.transaction_Id AS 'Order ID',
@@ -189,4 +189,4 @@ function getOrderDashInfo(response, memberId) {
 
 
 
-module.exports = { getUserDash, getUserDashInfo };
+module.exports = { getUserDash, getUserDashInfo, getUserOrderInfo };
