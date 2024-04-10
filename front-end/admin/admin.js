@@ -387,6 +387,7 @@ function updateTotalEmployeesCount() {
 /*Manage Events Tab*/
 const getEventsUrl = `${backendUrl}/getEventsForAdmin`;
 const addEventUrl = `${backendUrl}/insertEvent`;
+const removeEventUrl = `${backendUrl}/deleteEvent`;
 
 const addEventBtn = document.getElementById('addEventBtn');
 const addEventForm = document.getElementById('addEventForm');
@@ -514,6 +515,45 @@ document.getElementById('addEventSubmit').addEventListener('click', function(eve
     }
     else {
         const submitBtn = document.getElementById('addEventSubmit');
+        submitBtn.classList.add('shake-button');
+
+        setTimeout(() => {
+            submitBtn.classList.remove('shake-button');
+        }, 500);
+    }
+});
+
+document.getElementById('removeEventSubmit').addEventListener('click', function(event) {
+    event.preventDefault();
+    
+    const allFieldsFilled = [
+        'removeEventId'
+    ].every(id => document.getElementById(id).value.trim() !== "");
+
+    if (allFieldsFilled) {
+        const eventId = document.getElementById('removeEventId').value.trim();
+        
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', removeEventUrl); 
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                console.log('sucessfully removed event');
+                document.getElementById('removeEventId').value = '';
+                getEventList();
+            } 
+            else {
+                console.error('Error:', xhr.statusText);
+            }
+        };
+
+        const data = JSON.stringify({ eventId });
+        
+        xhr.send(data);
+    }
+    else {
+        const submitBtn = document.getElementById('removeEventSubmit');
         submitBtn.classList.add('shake-button');
 
         setTimeout(() => {

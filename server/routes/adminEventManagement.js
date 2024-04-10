@@ -8,6 +8,11 @@ const connection = mysql.createConnection({
     port:3306
 });
 
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 function createEventHtml(item) {
     let eventHtml = '';
     eventHtml += '<tr id="event-item">';
@@ -16,7 +21,7 @@ function createEventHtml(item) {
     eventHtml += `<td id="event_date">${item.date}</td>`;
     eventHtml += `<td id="sponsor">${item.sponsor}</td>`;
     eventHtml += `<td id="attendance">${item.attendance_count}</td>`;
-    eventHtml += `<td id="event_status">${item.event_status}</td>`;
+    eventHtml += `<td id="event_status">${capitalizeFirstLetter(item.event_status)}</td>`;
     eventHtml += '</tr>';
     return eventHtml;
 }
@@ -50,5 +55,16 @@ function insertEvent(res, name, des, img, sponsor, date, normalizedStartTime, st
     res.end(JSON.stringify({ message: 'eventCreationSuccessful' }));
 }
 
+function deleteEvent(res, eventId) {
+    connection.query(`UPDATE event SET event_status = 'ended' WHERE event_id = ?`, [eventId], (removeEventErr, result) => {
+        if (removeEventErr) {
+            console.log('error entering new member into librarydev db:', removeEventErr);
+        }
+    });
 
-module.exports = { getEventsForAdmin, insertEvent };
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ message: 'eventDeletionSuccessful' }));
+}
+
+
+module.exports = { getEventsForAdmin, insertEvent, deleteEvent };
