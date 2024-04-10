@@ -538,7 +538,7 @@ document.getElementById('removeEventSubmit').addEventListener('click', function(
         xhr.onload = function() {
             if (xhr.status === 200) {
                 console.log('sucessfully removed event');
-                document.getElementById('removeEventId').value = '';
+                document.getElementById('eventId').value = '';
                 getEventList();
             } 
             else {
