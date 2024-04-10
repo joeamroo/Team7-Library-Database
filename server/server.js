@@ -10,7 +10,7 @@ const { registerMember } = require('./routes/register');
 const { getListedEvents, eventSignUp } = require('./routes/classesnEvents');
 const { resetPassword } = require('./routes/forgot-pwd');
 const { getEventReports } = require ('./routes/staffeventsreports');
-const { getEmployees } = require ('./routes/amdinDashboard');
+const { getEmployees } = require ('./routes/adminDashboard');
 
 function setCorsHeaders(res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
