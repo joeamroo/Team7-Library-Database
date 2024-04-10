@@ -27,7 +27,7 @@ function createEventHtml(item) {
 }
 
 function getEventsForAdmin(res) {
-    connection.query('SELECT event_id, event_name, date, sponsor, attendance_count, event_status FROM event', (err, results) => {
+    connection.query('SELECT event_id, event_name, date, sponsor, attendance_count, event_status FROM event ORDER BY date ASC', (err, results) => {
         if (err) {
             console.error('Error querying staff data:', err);
             response.writeHead(500);
