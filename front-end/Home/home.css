@@ -161,14 +161,14 @@ nav {
 }
 
 .branch-details {
-    width: calc(50% - 10px);
+    width: calc(100% - 90px);
     margin: 30px 5px;
     font-size: 20px;
     text-align: left;
 }
 
 .branch-hours {
-    width: calc(50% - 10px);
+    width: calc(100% - 90px);
     margin: 30px 5px;
     font-size: 20px;
     text-align: left;
@@ -195,19 +195,49 @@ nav {
     content: '';
     position: absolute;
     bottom: -5px;    
-    width: 60%;
+    width: 70%;
     height: 5px; 
     background-color: var(--mainColor);
 }
+
+
+/* ================= Upcoming Events ================= */
+/* Finish if possible
+
+.upcoming-events {
+    grid-area: extraBtns;
+    margin-right: 150px;
+    margin-top: 30px;
+    font-size: 20px;
+    width: calc(100% - 90px);
+}
+
+#events-name {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+#events-name::after {
+    left: 0;
+    content: '';
+    position: absolute;
+    bottom: -5px;    
+    width: 80%;
+    height: 5px; 
+    background-color: var(--mainColor);
+}
+
+
+
+
 
 /* ================= Additional Buttons ================= */
 
 .additional-buttons {
     margin-right: 70px;
-    grid-area: extraBtns;
+    grid-area: extraBtn;
     position: relative;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center; 
 }
@@ -216,7 +246,7 @@ nav {
 .button.search-catalog,
 .button.checkout {
     display: flex; 
-    margin: 0 10px;
+    margin: 5px 10px;
     padding: 5px 20px;
     justify-content: center;
     text-align: center; 
@@ -229,6 +259,8 @@ nav {
     margin-bottom: 65px;
     width: 260px;
     height: 50px;
+    margin-right: 20px;
+    
 }
 
 

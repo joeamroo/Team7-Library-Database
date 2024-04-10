@@ -29,6 +29,10 @@ header {
     width: 100%;
 }
 
+#logo-img {
+    max-width: 600px;
+}
+
 header h1 {
     padding-left: 20px;
 }
