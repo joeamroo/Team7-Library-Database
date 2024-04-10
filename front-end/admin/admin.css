@@ -990,7 +990,7 @@ input[type="date"] {
 
 #employeeTable, #eventTable {
   table-layout: auto;
-  margin-top: 30px;
+  margin-top: 40px;
   align-items: center;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
@@ -1154,5 +1154,13 @@ input[type=time] {
 
 .shake-button {
   animation: shake 0.5s ease-in-out;
+}
+
+#searchEventsButton {
+  border-radius: 20px;
+  background-color: var(--mainColor);
+  color: white;
+  padding: 10px 20px;
+  margin-left: -10px;
 }
 

@@ -388,6 +388,7 @@ function updateTotalEmployeesCount() {
 const getEventsUrl = `${backendUrl}/getEventsForAdmin`;
 const addEventUrl = `${backendUrl}/insertEvent`;
 const removeEventUrl = `${backendUrl}/deleteEvent`;
+const filterEventsUrl = `${backendUrl}/filterEvents`;
 
 const addEventBtn = document.getElementById('addEventBtn');
 const addEventForm = document.getElementById('addEventForm');
@@ -445,7 +446,7 @@ function calculateAttendanceStatistics() {
   
     const averageAttendance = totalAttendance / eventRows.length || 0;
     if (avgAttendanceSpan) avgAttendanceSpan.textContent = averageAttendance;
-  }
+}
 
 function getEventList() {
     const xhr = new XMLHttpRequest();
@@ -464,7 +465,6 @@ function getEventList() {
 document.addEventListener('DOMContentLoaded', function() {
     getEventList();
 });
-
 
 document.getElementById('addEventSubmit').addEventListener('click', function(event) {
     event.preventDefault();
@@ -531,6 +531,7 @@ document.getElementById('addEventSubmit').addEventListener('click', function(eve
                 document.getElementById('eventStart').value = '';
                 document.getElementById('eventEnd').value = '';
                 getEventList();
+                calculateAttendanceStatistics();
             } 
             else {
                 console.error('Error:', xhr.statusText);
@@ -578,6 +579,7 @@ document.getElementById('removeEventSubmit').addEventListener('click', function(
                 console.log('sucessfully removed event');
                 document.getElementById('eventId').value = '';
                 getEventList();
+                calculateAttendanceStatistics();
             } 
             else {
                 console.error('Error:', xhr.statusText);
@@ -596,6 +598,45 @@ document.getElementById('removeEventSubmit').addEventListener('click', function(
             submitBtn.classList.remove('shake-button');
         }, 500);
     }
+});
+
+const fromDateInput = document.getElementById('fromDate');
+const toDateInput = document.getElementById('toDate');
+const searchButton = document.getElementById('searchEventsButton');
+
+searchButton.addEventListener('click', () => {
+  const startDate = fromDateInput.value;
+  const endDate = toDateInput.value;
+
+  if (startDate && endDate) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', filterEventsUrl); 
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            console.log('sucessfully filtered event');
+            const filteredEventsDiv = document.querySelector('.eventTable-content');
+            filteredEventsDiv.innerHTML = xhr.responseText;
+            calculateAttendanceStatistics();
+        } 
+        else {
+            console.error('Error:', xhr.statusText);
+        }
+    };
+
+    const data = JSON.stringify({ startDate: startDate, endDate: endDate });
+        
+    xhr.send(data);
+  } 
+  else {
+    const submitBtn = document.getElementById('searchEventsButton');
+        submitBtn.classList.add('shake-button');
+
+        setTimeout(() => {
+            submitBtn.classList.remove('shake-button');
+        }, 500);
+  }
 });
 
 
