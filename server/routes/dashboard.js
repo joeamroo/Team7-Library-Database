@@ -54,7 +54,6 @@ function getUserDash(response, memberId) {
 
     // Searches Database for user with the memberID
     const query_name = 'SELECT name FROM member WHERE member_id = ?';
-    let name = '';
 
     // Gets information from backend
     link.query(query_name, [memberId], (error, result) => {
