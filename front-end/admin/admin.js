@@ -526,12 +526,10 @@ document.getElementById('addEventSubmit').addEventListener('click', function(eve
 document.getElementById('removeEventSubmit').addEventListener('click', function(event) {
     event.preventDefault();
     
-    const allFieldsFilled = [
-        'removeEventId'
-    ].every(id => document.getElementById(id).value.trim() !== "");
+    const allFieldsFilled = document.getElementById('eventId').value.trim() !== "";
 
     if (allFieldsFilled) {
-        const eventId = document.getElementById('removeEventId').value.trim();
+        const eventId = document.getElementById('eventId').value.trim();
         
         const xhr = new XMLHttpRequest();
         xhr.open('POST', removeEventUrl); 
