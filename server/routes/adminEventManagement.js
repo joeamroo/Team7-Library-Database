@@ -39,5 +39,16 @@ function getEventsForAdmin(res) {
     });
 }
 
+function insertEvent(res, name, des, img, sponsor, date, normalizedStartTime, stPeriod, normalizedEndTime, endPeriod) {
+    connection.query(`INSERT INTO staff (event_name, event_description, event_img, date, start_time, startAMPM, end_time, endAMPM, event_status, sponsor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [name, des, img, date, normalizedStartTime, stPeriod, normalizedEndTime, endPeriod, 'active', sponsor ], (newEventErr, result) => {
+        if (newEventErr) {
+            console.log('error entering new event into librarydev db:', newMemErr);
+        }
+    });
 
-module.exports = { getEventsForAdmin };
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ message: 'eventCreationSuccessful' }));
+}
+
+
+module.exports = { getEventsForAdmin, insertEvent };

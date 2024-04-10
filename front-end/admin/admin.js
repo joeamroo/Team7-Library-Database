@@ -386,6 +386,7 @@ function updateTotalEmployeesCount() {
 
 /*Manage Events Tab*/
 const getEventsUrl = `${backendUrl}/getEventsForAdmin`;
+const addEventUrl = `${backendUrl}/insertEvent`;
 
 const addEventBtn = document.getElementById('addEventBtn');
 const addEventForm = document.getElementById('addEventForm');
@@ -412,10 +413,6 @@ function toggleForm(btn, form) {
   }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    getEventList();
-});
-
 function getEventList() {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', getEventsUrl);
@@ -428,6 +425,102 @@ function getEventList() {
     };
     xhr.send();
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    getEventList();
+});
+
+
+document.getElementById('addEventSubmit').addEventListener('click', function(event) {
+    event.preventDefault();
+    
+    const allFieldsFilled = [
+        'addEventName', 'addEventDes', 'eventImg', 'eventSponsor', 'eventDate', 'eventStart', 'eventEnd'
+    ].every(id => document.getElementById(id).value.trim() !== "");
+
+    if (allFieldsFilled) {
+        const name = document.getElementById('addEventName').value.trim();
+        const des = document.getElementById('addEventDes').value.trim();
+        const img = document.getElementById('eventImg').value.trim();
+        const sponsor = document.getElementById('eventSponsor').value.trim();
+        const date = document.getElementById('eventDate').value;
+        const startTime = document.getElementById('eventStart').value;
+        const endTime = document.getElementById('eventEnd').value;
+
+        const [sthourStr, stminuteStr] = startTime.split(':');
+        let stHour = parseInt(sthourStr, 10);
+        const stMinute = parseInt(stminuteStr, 10);
+        let stPeriod = 'AM';
+
+        if (stHour >= 12) {
+            stPeriod = 'PM';
+            if (stHour > 12) {
+                stHour -= 12;
+            }
+        }
+
+        const normalizedStartTime = `${stHour}:${stMinute}`;
+
+
+        const [endhourStr, endminuteStr] = endTime.split(':');
+        let endHour = parseInt(endhourStr, 10);
+        const endMinute = parseInt(endminuteStr, 10);
+        let endPeriod = 'AM';
+
+        if (endHour >= 12) {
+            endPeriod = 'PM';
+            if (endHour > 12) {
+                endHour -= 12;
+            }
+        }
+
+        const normalizedEndTime = `${endHour}:${endMinute}`;
+
+        
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', addEventUrl); 
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                console.log('sucessfully added employee');
+                document.getElementById('addEventName').value = '';
+                document.getElementById('addEventDes').value = '';
+                document.getElementById('eventImg').value = '';
+                document.getElementById('eventSponsor').value = '';
+                document.getElementById('eventDate').value = '';
+                document.getElementById('eventStart').value = '';
+                document.getElementById('eventEnd').value = '';
+                getEventList();
+            } 
+            else {
+                console.error('Error:', xhr.statusText);
+            }
+        };
+
+        const data = JSON.stringify({ 
+            name: name, 
+            des: des, 
+            img: img, 
+            sponsor: sponsor, 
+            date: date, 
+            normalizedStartTime: normalizedStartTime,
+            stPeriod: stPeriod,
+            normalizedEndTime: normalizedEndTime,
+            endPeriod: endPeriod
+        });
+        
+        xhr.send(data);
+    }
+    else {
+        const submitBtn = document.getElementById('addEventSubmit');
+        submitBtn.classList.add('shake-button');
+
+        setTimeout(() => {
+            submitBtn.classList.remove('shake-button');
+        }, 500);
+    }
+});
 
 
 

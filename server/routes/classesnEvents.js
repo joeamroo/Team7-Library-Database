@@ -16,7 +16,6 @@ connection.connect((err) => {
 
 function createEventHtml(item) {
     const formattedDate = formatDate(item.date);
-
     let eventHtml = '';
     eventHtml += '<div class="toast-container" id="toastContainer"></div>';
     eventHtml += '<div class="event-item">'
@@ -25,7 +24,7 @@ function createEventHtml(item) {
     eventHtml += `<p id="eventId" style="display: none;">${item.event_id}</p>`;
     eventHtml += `<h3><strong><span id="event-title">${item.event_name}</span></strong></h3>`;
     eventHtml += `<p><strong>Date:</strong> <span id="date">${formattedDate}</span></p>`;
-    eventHtml += `<p><strong>Time:</strong> <span id="time">${item.start_time}-${item.end_time} ${item.morning_or_afternoon}</span></p>`;
+    eventHtml += `<p><strong>Time:</strong> <span id="time">${item.start_time} ${item.startAMPM} - ${item.end_time} ${item.endAMPM}</span></p>`;
     eventHtml += `<p><strong>Sponsor:</strong> <span id="sponsor">${item.sponsor}</span></p>`;
     eventHtml += `<p><strong>Description:</strong> ${item.event_description}</p>`;
     eventHtml += '<button class="signup-button">Sign Up</button>';    
