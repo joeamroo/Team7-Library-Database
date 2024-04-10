@@ -166,7 +166,7 @@ function getUserDashInfo(response, memberId) {
 
 function getUserOrderInfo(response, memberId) {
 
-   const sqlQuery = `
+   const query_info = `
     SELECT 
       TV.transaction_Id AS 'Order ID',
       T.date_created AS 'Date Purchased',
