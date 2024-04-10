@@ -176,7 +176,7 @@ function getUserOrderInfo(response, memberId) {
     if (error) {
       console.error('Error executing query:', error);
       response.writeHead(500, {'Content-Type': 'text/html'});
-      response.end('Error', 'utf-8');
+      response.end('Error in retrieval', 'utf-8');
     } else {
         html = getSQLTable(results);
         console.log(html);
