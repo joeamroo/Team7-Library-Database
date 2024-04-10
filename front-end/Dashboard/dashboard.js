@@ -311,7 +311,9 @@ function getUserOrderReport() {
 
     xhr.onload = function() {
       if (xhr.status === 200) {
-        orderReport.innerHTML = xhr.responseText;
+        //orderReport.innerHTML = xhr.responseText;\
+        const serverResponse = xhr.responseText;
+        console.log(serverResponse);
       } else {
         console.log("Failed to retrieve data");
       }

@@ -75,11 +75,13 @@ function getUserDashInfo(response, memberId) {
     const query_info = 'SELECT name, email, status, phone_number, street_addr,\
                         city_addr, state, zipcode_addr FROM member WHERE member_id = ?';
 
-    let html = '';
+    
 
     // Gets information from backend
     link.query(query_info, [memberId], (error, result) => {
-
+    
+      let html = getSQLTable(result);
+      
         // New values
         const updatedMemberInfo = memberInfo.map(info => {
             switch (info.id) {
