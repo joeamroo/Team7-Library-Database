@@ -8,12 +8,20 @@ const orderSelect = document.getElementById('order-selection');
 const holdSelect = document.getElementById('hold-selection');
 const waitSelect = document.getElementById('waitlist-selection');
 const profileView = document.querySelector('.settings.profile');
-const orderView = document.querySelector('.settings.orders');
+const orderView = document.querySelector('.recent-orders');
 const holdsView = document.querySelector('.settings.holds');
 const waitlistView = document.querySelector('.settings.waitlist');
 const profileInfo = document.querySelector('.member-info');
 const today = new Date().toLocaleDateString();
 
+/* *********************************************** */
+/* **************** BACK END ********************* */
+/* *********************************************** */
+
+const backendUrl = 'https://cougarchronicles.onrender.com'; 
+const getUserDashUrl = `${backendUrl}/getDashname`;
+const getUserInfoUrl = `${backendUrl}/getDashInfo`;
+const getUserOrderUrl =`${backendUrl}/getDashOrders`;
 
 
 logOutBtn.addEventListener('click', function(event) {
@@ -157,9 +165,7 @@ var input = document.querySelector(".input-box");
   └─────────────────────────────────────────────────────────────────────────────┘
  */
 
-  const backendUrl = 'https://cougarchronicles.onrender.com'; 
-  const getUserDashUrl = `${backendUrl}/getDashname`;
-  const getUserInfoUrl = `${backendUrl}/getDashInfo`;
+
 
   document.addEventListener('DOMContentLoaded', function() {
     
@@ -192,6 +198,21 @@ var input = document.querySelector(".input-box");
       xhr.send(data);
 
   });
+
+     /* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                       MemberId Retrieval from Storage                       │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+
+
+/* Gets MemberID from local storage and makes it visible on the profile */
+window.onload = function() {
+    const memberTag = document.getElementById('member-id');
+    memberTag.textContent = 'Member ID: ' + memberId;
+    getUserInfo();
+    setOrderDate();
+};
 
     /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -267,30 +288,60 @@ function openPop() {
  */
 
   function setOrderDate() {
+
+    // Get the current date
+    const currentDate = new Date();
+
+    // Extract the year, month, and day from the current date
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    const day = currentDate.getDate();
+
     const startingDate = document.getElementById('start-date');
     const endingDate = document.getElementById('end-date');
-    var date = new Date(today).toISOString().slice(0, 10);
-
+    var sdate = new Date(today).toISOString().slice(0, 10);
+    var one_year = new Date(year + 1, month, day)
+    var edate = new Date(one_year).toISOString().slice(0, 10);
 
     // Sets the values of each to today's date by default
-    startingDate.value = date;
-    endingDate.value = date;
-
-    //console.log('Set date of ', date);
+    startingDate.value = sdate;
+    endingDate.value = edate;
   }
 
 
-  
+     /* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                              Orders Report                                  │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
 
+function getUserOrderReport() {
 
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', getUserOrderUrl);
+    xhr.setRequestHeader('Content-Type', 'text/html');
 
-/* Gets MemberID from local storage and makes it visible on the profile */
-window.onload = function() {
-  const memberTag = document.getElementById('member-id');
-  memberTag.textContent = 'Member ID: ' + memberId;
-  getUserInfo();
-  setOrderDate();
-};
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        //const dataRetrieved = xhr.responseText;
+        //console.log(dataRetrieved);
+        orderView.innerHTML = xhr.responseText;
+      } else {
+        console.log("Failed to retrieve data");
+      }
+    };
+
+    xhr.onerror = function() {
+      console.log('error', xhr.statusText);
+    }
+
+    const data = JSON.stringify({
+      memberId: memberId
+    });
+
+    xhr.send(data);
+}
+
 
 
 

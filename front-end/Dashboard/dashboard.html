@@ -55,7 +55,8 @@
           
           <ul>
               <li class="menu-item" ><a class="default-click" id="profile-selection" href="#">Profile</a></li>
-              <li class="menu-item"><a id="order-selection" href="#">Orders</a></li>
+              <li class="menu-item"><a id="order-selection" href="#">
+              </a></li>
               <li class="menu-item"><a id="hold-selection" href="#">Holds</a></li>
               <!--bug exists here-->
               <li class="menu-item"><a id="waitlist-selection" href="#">Waitlist</a></li>
@@ -249,8 +250,6 @@
 
   <div class="settings orders">
 
-  
-
   <div class="order-group">
 
 
@@ -266,7 +265,7 @@
         <label for="end-date">End Date:</label>
         <input type="date" id="end-date" name="end-date" required>
       </div>
-      <button class="dateButton" id="#dateButton" type="submit" onclick="openPop()">Submit</button>
+      <button class="dateButton" id="order-report" type="submit" onclick="getUserOrderReport()">Submit</button>
     </form>
 
   
@@ -306,28 +305,59 @@
           <span class="material-icons-outlined"> devices </span>
           <span class="device-label">Device</span>
         </label>
-
-
-        
       </div>
     </div>
-
-    
-
+  </div> 
 
 
-    
-
-
-
+  <div class="order-title">Recent Orders</div>
+<div class="recent-orders">
+  <!--<table>
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Customer</th>
+        <th>Date</th>
+        <th>Total</th>
+        <th>Status</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>#1234</td>
+        <td>John Doe</td>
+        <td>2023-06-01</td>
+        <td>$99.99</td>
+        <td class="status purchased">Purchased</td>
+        <td class="details">View Details</td>
+      </tr>
+      <tr>
+        <td>#5678</td>
+        <td>Jane Smith</td>
+        <td>2023-06-02</td>
+        <td>$149.99</td>
+        <td class="status active">Active</td>
+        <td class="details">View Details</td>
+      </tr>
+      <tr>
+        <td>#9012</td>
+        <td>Bob Johnson</td>
+        <td>2023-06-03</td>
+        <td>$199.99</td>
+        <td class="status declined">Declined</td>
+        <td class="details">View Details</td>
+      </tr>
+    </tbody>
+  </table>-->
+</div>
   </div>
 
   
 
 
 
-
-  </div>
+</div>
 
 
 <!-- 
@@ -336,8 +366,8 @@
   └───────────────────────────────────────────────────────────────────┘
  -->
 
- <div class="settings holds">Holds Test
- </div>
+ <div class="settings holds">Waitlist Test
+</div>
 
 <!-- 
   ┌───────────────────────────────────────────────────────────────────┐
