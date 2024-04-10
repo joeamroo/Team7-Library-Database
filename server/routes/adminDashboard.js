@@ -38,8 +38,8 @@ function getEmployees(res) {
         
         results.forEach(item => { staffHtml += createStaffHtml(item); });
         
-        response.writeHead(200, { 'Content-Type': 'text/html' });
-        response.end(staffHtml, 'utf-8');
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(staffHtml, 'utf-8');
     });
 
 }
