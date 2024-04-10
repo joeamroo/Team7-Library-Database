@@ -97,12 +97,13 @@ function removeStaff(res, email, staffId, empStatus) {
 }
 
 
-function filterStaff(res, value, type) {
+function filterStaff(res, value, filterType) {
+
     let filterQuery;
-    if (type === 'staff_position') {
+    if (filterType === 'staff_position') {
         filterQuery = 'SELECT staff_id, name, email, staff_position, supervisor, employment_status FROM staff WHERE staff_position = ?';
     }
-    else if (type === 'employment_status') {
+    else if (filterType === 'employment_status') {
         filterQuery = 'SELECT staff_id, name, email, staff_position, supervisor, employment_status FROM staff WHERE employment_status = ?';
     }
 

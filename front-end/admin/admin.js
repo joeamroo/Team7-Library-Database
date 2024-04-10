@@ -339,14 +339,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     empStatDropdown.addEventListener('change', function() {
         if (empStatDropdown.value !== '') {
-            makePostRequest({ value: empStatDropdown.value, type: 'employment_status' });
+            makePostRequest({ value: empStatDropdown.value, filterType: 'employment_status' });
         }
     });
 
     positionDropdown.addEventListener('change', function() {
         if (positionDropdown.value !== '') {
             makePostRequest(positionDropdown.value);
-            makePostRequest({ value: positionDropdown.value, type: 'staff_position' });
+            makePostRequest({ value: positionDropdown.value, filterType: 'staff_position' });
         }
     });
 
@@ -372,7 +372,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function updateTotalEmployeesCount() {
     const totalEmployees = document.getElementById('total-count');
-    const rowCount = document.getElementById('employeeTable').rows.length - 2; // Exclude header row
+    const rowCount = document.getElementById('employeeTable').rows.length - 2;
     totalEmployees.textContent = rowCount;
     console.log(rowCount);
 }
