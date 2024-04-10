@@ -166,13 +166,13 @@ function setOrderDate() {
 }
 
 
-/* Gets MemberID from local storage and makes it visible on the profile */
+/* Gets MemberID from local storage and makes it visible on the profile 
 window.onload = function() {
   const memberTag = document.getElementById('member-id');
   memberTag.textContent = 'Member ID: ' + memberId;
   getUserInfo();
   setOrderDate();
-};
+};*/
 
 
 const addEmployeeBtn = document.getElementById('addEmployeeBtn');

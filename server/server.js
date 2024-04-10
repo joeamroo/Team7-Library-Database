@@ -45,7 +45,7 @@ const server = http.createServer((request, res) => {
                 case '/events':
                     getListedEvents(res);
                     break;
-                case '/events':
+                case '/getEmployees':
                     getEmployees(res);
                     break;
                 default:
