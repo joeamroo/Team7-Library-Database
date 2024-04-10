@@ -12,8 +12,6 @@ const link = mysql.createConnection({
 
 
 function getSQLTable(data) {
-
-  console.log("Server-side (table): " + data);
   
     const headers = Object.keys(data[0]);
   
@@ -173,12 +171,13 @@ function getUserOrderInfo(response, memberId) {
   // Use the memberId parameter in the query execution
   link.query(sqlQuery, [memberId], (error, results) => {
     if (error) {
-      console.log("server-side (query)" + results);
       //console.error('Error executing query:', error);
       response.writeHead(500, {'Content-Type': 'text/html'});
       response.end('Error in retrieval', 'utf-8');
     } else {
         let html = getSQLTable(results);
+        //console.log("server-side (query)" + results);
+        //console.log("server-side (table)" + html);
         response.writeHead(200, { 'Content-Type': 'text/html' });
         response.end(html, 'utf-8');
         
