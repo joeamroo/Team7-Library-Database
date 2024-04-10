@@ -31,7 +31,7 @@ function createStaffHtml(item) {
 }
 
 function getEmployees(res) {
-    connection.query('SELECT staff_id, name, email, staff_position, supervisor, employment_status  FROM staff', (err, results) => {
+    connection.query('SELECT staff_id, name, email, staff_position, supervisor, employment_status FROM staff', (err, results) => {
         if (err) {
             console.error('Error querying catalog data:', err);
             response.writeHead(500);
@@ -85,7 +85,7 @@ function removeStaff(res, email, staffId, empStatus) {
 
     connection.query(`UPDATE staff SET date_removed = NOW(), status = ? WHERE email = ? AND staff_id = ?`, [empStatus, email, staffId], (removeStaffErr, result) => {
         if (removeStaffErr) {
-            console.log('error entering new member into librarydev db:', newMemErr);
+            console.log('error entering new member into librarydev db:', removeStaffErr);
         }
     });
 
