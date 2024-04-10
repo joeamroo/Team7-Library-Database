@@ -27,6 +27,8 @@ function serve404(res, attemptedPath) {
     console.log(`404 Not Found: ${attemptedPath}`);
 }
 
+
+
 const server = http.createServer((request, res) => {
     const pathname = new URL(request.url, `http://${request.headers.host}`).pathname;
 

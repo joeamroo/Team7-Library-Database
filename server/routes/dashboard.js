@@ -12,7 +12,7 @@ const link = mysql.createConnection({
 });
 
 
-function getSQLTable(data) {
+/*function getSQLTable(data) {
   
     const headers = Object.keys(data[0]);
   
@@ -33,7 +33,39 @@ function getSQLTable(data) {
     </table>
 `;
     
+}*/
+
+// Function to execute the SQL query and generate the HTML table
+function getSQLTable(query, callback) {
+  connection.query(query, (error, results) => {
+    if (error) {
+      console.error('Error executing query:', error);
+      callback(null);
+      return;
+    }
+
+    const data = results;
+    const headers = Object.keys(data[0]);
+    const tableRows = data.map(rowData => {
+      const cells = headers.map(key => htmlTemplateTag`<td>${rowData[key]}</td>`);
+      return htmlTemplateTag`<tr>${cells}</tr>`;
+    });
+    const tableHeader = headers.map(headerText => htmlTemplateTag`<th>${headerText}</th>`);
+    const table = htmlTemplateTag`
+      <table>
+        <thead>
+          <tr>${tableHeader}</tr>
+        </thead>
+        <tbody>
+          ${tableRows}
+        </tbody>
+      </table>
+    `;
+
+    callback(table);
+  });
 }
+
 
 
 
@@ -170,22 +202,18 @@ function getUserOrderInfo(response, memberId) {
     
 
   // Use the memberId parameter in the query execution
-  link.query(sqlQuery, [memberId], (error, results) => {
-    if (error) {
-      //console.error('Error executing query:', error);
-      response.writeHead(500, {'Content-Type': 'text/html'});
-      response.end('Error in retrieval', 'utf-8');
+  link.query(sqlQuery, [memberId], (table) => {
+    if (table) {
+      response.writeHead(200, { 'Content-Type': 'text/html' });
+      response.end(table, 'utf-8');
+      // You can send the generated HTML table to the client or use it as needed
+
     } else {
-        let html = getSQLTable(results);
-        //console.log("server-side (query)" + results);
-        //console.log("server-side (table)" + html);
-        response.writeHead(200, { 'Content-Type': 'text/html' });
-        console.log(html);
-        response.end(html, 'utf-8');
-        
+      console.error('Failed to generate table');
     }
   });
 }
+
 
 
 
