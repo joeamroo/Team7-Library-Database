@@ -280,7 +280,7 @@
           <option value="fired">Fired</option>
           <option value="resigned">Resigned</option>
           <option value="retired">Retired</option>
-          <option value="temporary">Temporary</option>          
+          <option value="short-term employment">Short-Term Employment</option>          
         </select>
       </div>
       <button type="submit" id="removeEmployeeSubmit">Remove Employee</button>
@@ -291,8 +291,14 @@
     <label for="startDate">Start Date:</label>
     <input type="date" id="startDate" required>
   
-    <label for="endDate">End Date:</label>
-    <input type="date" id="endDate" required>
+    <label for="empStatus">Employment Status:</label>
+    <select id="empStat" required>
+      <option value="">Select Status</option>
+      <option value="fired">Fired</option>
+          <option value="resigned">Resigned</option>
+          <option value="retired">Retired</option>
+          <option value="short-term employment">Short-Term Employment</option> 
+    </select>
   
     <label for="position">Position:</label>
     <select id="position" required>

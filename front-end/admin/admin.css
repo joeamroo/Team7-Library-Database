@@ -1099,7 +1099,7 @@ input[type=password],
   color: var(--mainColor);
 }
 
-#startDate, #endDate, #position {
+#startDate, #empStat, #position {
   margin-top: 10px;
   margin-right: 50px;
 }
