@@ -459,7 +459,7 @@ document.getElementById('addEventSubmit').addEventListener('click', function(eve
             }
         }
 
-        const normalizedStartTime = `${stHour}:${stMinute}`;
+        const normalizedStartTime = `${stHour.padStart(2, '0')}:${stMinute}`;
 
 
         const [endhourStr, endminuteStr] = endTime.split(':');
@@ -474,7 +474,7 @@ document.getElementById('addEventSubmit').addEventListener('click', function(eve
             }
         }
 
-        const normalizedEndTime = `${endHour}:${endMinute}`;
+        const normalizedEndTime = `${endHour.padEnd(2, '0')}:${endMinute}`;
 
         
         const xhr = new XMLHttpRequest();

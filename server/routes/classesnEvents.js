@@ -42,7 +42,7 @@ function formatDate(dateString) {
 }
 
 function getListedEvents(response) {
-    connection.query('SELECT * FROM event', (err, results) => {
+    connection.query(`SELECT * FROM event WHERE event_status = 'active'`, (err, results) => {
         if (err) {
             console.error('Error querying catalog data:', err);
             response.writeHead(500);
