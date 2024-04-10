@@ -311,7 +311,7 @@ function getUserOrderReport() {
 
     xhr.onload = function() {
       if (xhr.status === 200) {
-        orderReport.innerHTML = JSON.stringify(xhr.responseText);
+        orderReport.innerHTML = xhr.responseText;
         console.log("Client-side (Orders Report):" + orderReport);
         //orderReport.innerHTML += xhr.responseText;
         //console.log("clientside" + orderReport);
