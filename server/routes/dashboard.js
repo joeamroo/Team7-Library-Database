@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const mysql = require('mysql');
 const htmlTemplateTag = require('html-template-tag');
 
@@ -179,6 +180,7 @@ function getUserOrderInfo(response, memberId) {
         //console.log("server-side (query)" + results);
         //console.log("server-side (table)" + html);
         response.writeHead(200, { 'Content-Type': 'text/html' });
+        console.log(html);
         response.end(html, 'utf-8');
         
     }
