@@ -31,7 +31,7 @@ function createStaffHtml(item) {
 }
 
 function getEmployees(res) {
-    connection.query('SELECT staff_id, name, staff_position, supervisor, employment_status, email  FROM staff', (err, results) => {
+    connection.query('SELECT staff_id, name, email, staff_position, supervisor, employment_status  FROM staff', (err, results) => {
         if (err) {
             console.error('Error querying catalog data:', err);
             response.writeHead(500);
