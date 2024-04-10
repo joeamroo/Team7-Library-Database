@@ -106,8 +106,8 @@ function filterStaff(res, value, type) {
     connection.query(filterQuery, [value], (filterErr, results) => {
         if (filterErr) {
             console.error('Error querying staff data:', filterErr);
-            response.writeHead(500);
-            response.end('Server error');
+            res.writeHead(500);
+            res.end('Server error');
             return;
         }
 

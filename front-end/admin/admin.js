@@ -372,7 +372,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function updateTotalEmployeesCount() {
     const totalEmployees = document.getElementById('total-count');
-    const rowCount = document.getElementById('employeeTable').rows.length - 1; // Exclude header row
+    const rowCount = document.getElementById('employeeTable').rows.length - 2; // Exclude header row
     totalEmployees.textContent = rowCount;
     console.log(rowCount);
 }
