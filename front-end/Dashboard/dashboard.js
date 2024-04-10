@@ -311,21 +311,25 @@ function getUserOrderReport() {
 
     xhr.onload = function() {
       if (xhr.status === 200) {
-        //orderReport.innerHTML = xhr.responseText;\
-        const serverResponse = xhr.responseText;
-        console.log(serverResponse);
+        orderReport.innerHTML = xhr.responseText;
+        //console.log("Client-side (Orders Report):" + orderReport);
+        //orderReport.innerHTML += xhr.responseText;
+        //console.log("clientside" + orderReport);
       } else {
         console.log("Failed to retrieve data");
       }
     };
 
     xhr.onerror = function() {
-      console.log('error', xhr.statusText);
-    }
+      console.error('error', xhr.statusText);
+    };
+
+    //console.log(memberId);
 
     const data = JSON.stringify({
       memberId: memberId
     });
+
 
     xhr.send(data);
 }
