@@ -49,11 +49,12 @@ function getEmployees(res) {
 }
 
 function insertStaff(res, name, phoneNum, email, password, supervisor, position) {
+    let isAdmin;
     if (position === 'admin') {
-        const isAdmin = true;
+        isAdmin = true;
     }
     else {
-        const isAdmin = false;
+        isAdmin = false;
     }
 
     // insert into access control first
