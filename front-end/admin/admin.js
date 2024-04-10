@@ -206,7 +206,8 @@ const backendUrl = 'https://cougarchronicles.onrender.com';
 const getEmployeesUrl = `${backendUrl}/getEmployees`;
 const addEmployeeUrl = `${backendUrl}/addStaff`;
 
-document.addEventListener('DOMContentLoaded', function() {
+
+function getEmployeeList() {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', getEmployeesUrl);
 
@@ -217,8 +218,11 @@ document.addEventListener('DOMContentLoaded', function() {
         } 
     };
     xhr.send();
-});
+}
 
+document.addEventListener('DOMContentLoaded', function() {
+    getEmployeeList(); 
+});
 
 document.getElementById('addEmployeeSubmit').addEventListener('click', function(event) {
     event.preventDefault();
@@ -248,9 +252,10 @@ document.getElementById('addEmployeeSubmit').addEventListener('click', function(
                 document.getElementById('employeePassword').value = '';
                 document.getElementById('employeeSupervisor').value = '';
                 document.getElementById('employeePosition').value = '';
+                getEmployeeList();
             } 
             else {
-                console.error('Error :', xhr.statusText);
+                console.error('Error:', xhr.statusText);
             }
         };
 
