@@ -15,7 +15,7 @@ function createEventHtml(item) {
     eventHtml += `<td id="event_name">${item.event_name}</td>`;
     eventHtml += `<td id="event_date">${item.date}</td>`;
     eventHtml += `<td id="sponsor">${item.sponsor}</td>`;
-    eventHtml += `<td id="attendance">${item.attendance}</td>`;
+    eventHtml += `<td id="attendance">${item.attendance_count}</td>`;
     eventHtml += `<td id="event_status">${item.event_status}</td>`;
     eventHtml += '</tr>';
     return eventHtml;
