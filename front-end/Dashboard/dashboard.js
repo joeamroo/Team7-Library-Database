@@ -313,7 +313,8 @@ function getUserOrderReport() {
       if (xhr.status === 200) {
         //const dataRetrieved = xhr.responseText;
         //console.log(dataRetrieved);
-        orderReport.innerHTML = xhr.responseText;
+        const retrieved = xhr.responseText;
+        console.log(retrieved);
       } else {
         console.log("Failed to retrieve data");
       }
