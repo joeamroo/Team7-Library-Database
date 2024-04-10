@@ -40,9 +40,6 @@ function getSQLTable(data) {
       table.appendChild(row);
     });
 
-    // Append the table to the document body or a specific container
-    document.body.appendChild(table);
-
 
    // Returns table for client retrieval
    return table;
