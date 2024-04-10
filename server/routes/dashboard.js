@@ -133,7 +133,7 @@ function getUserDashInfo(response, memberId) {
 
 function getUserOrderInfo(response, memberId) {
 
-  console.log("Server-side (memberid): " + memberId);
+  //console.log("Server-side (memberid): " + memberId);
 
   /*const sqlQuery = `
     SELECT 
