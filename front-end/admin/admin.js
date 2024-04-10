@@ -448,6 +448,10 @@ document.getElementById('addEventSubmit').addEventListener('click', function(eve
         const startTime = document.getElementById('eventStart').value;
         const endTime = document.getElementById('eventEnd').value;
 
+        function padTime(time) {
+            return time.length === 1 ? `0${time}` : time;
+        }
+
         const [sthourStr, stminuteStr] = startTime.split(':');
         let stHour = parseInt(sthourStr, 10);
         const stMinute = parseInt(stminuteStr, 10);
@@ -460,7 +464,7 @@ document.getElementById('addEventSubmit').addEventListener('click', function(eve
             }
         }
 
-        const normalizedStartTime = `${stHour.padStart(2, '0')}:${stMinute}`;
+        const normalizedStartTime = `${padTime(stHour)}:${stMinute}`;
 
 
         const [endhourStr, endminuteStr] = endTime.split(':');
@@ -475,7 +479,7 @@ document.getElementById('addEventSubmit').addEventListener('click', function(eve
             }
         }
 
-        const normalizedEndTime = `${endHour.padEnd(2, '0')}:${endMinute}`;
+        const normalizedEndTime = `${padTime(endHour)}:${endMinute}`;
 
         
         const xhr = new XMLHttpRequest();
