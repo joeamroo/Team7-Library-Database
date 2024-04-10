@@ -16,6 +16,9 @@ const accessLink = mysql.createConnection({
     port:3306
 });
 
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 function createStaffHtml(item) {
     let staffHtml = '';
@@ -23,9 +26,9 @@ function createStaffHtml(item) {
     staffHtml += `<td id="staff_id">${item.staff_id}</td>`;
     staffHtml += `<td id="staff_name">${item.name}</td>`;
     staffHtml += `<td id="staff_email">${item.email}</td>`;
-    staffHtml += `<td id="staff_position">${item.staff_position.toUpperCase()}</td>`;
+    staffHtml += `<td id="staff_position">${capitalizeFirstLetter(item.staff_position)}</td>`;
     staffHtml += `<td id="supervisor">${item.supervisor}</td>`;
-    staffHtml += `<td id="staff_empl_status">${item.employment_status.toUpperCase()}</td>`;
+    staffHtml += `<td id="staff_empl_status">${capitalizeFirstLetter(item.employment_status)}</td>`;
     staffHtml += '</tr>';
     return staffHtml;
 }
