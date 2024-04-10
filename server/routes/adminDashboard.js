@@ -1,3 +1,5 @@
+const mysql = require('mysql');
+
 const connection = mysql.createConnection({
     host: 'library-database-sytem.mysql.database.azure.com',
     user: 'lbrGuest',
