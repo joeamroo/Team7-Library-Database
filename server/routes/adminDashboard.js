@@ -77,7 +77,7 @@ function insertStaff(res, name, phoneNum, email, password, supervisor, position)
 
 function removeStaff(res, email, staffId, empStatus) {
     // insert into access control first
-    accessLink.query('DELETE * from staff_credentials WHERE staff_email = ?', [email], (credentialErr, result) => {
+    accessLink.query('DELETE FROM staff_credentials WHERE staff_email = ?', [email], (credentialErr, result) => {
         if (credentialErr) {
             console.log('error accessing access_control db table:', credentialErr);
         }
