@@ -67,7 +67,7 @@ function deleteEvent(res, eventId) {
 }
 
 function filterEvents(res, startDate, endDate) {
-    filterByDate = 'SELECT * FROM event WHERE date BETWEEN ? AND ? ORDER BY dare ASC';
+    filterByDate = 'SELECT * FROM event WHERE date BETWEEN ? AND ? ORDER BY date ASC';
 
     connection.query(filterByDate, [startDate, endDate], (err, results) => {
         if (err) {
