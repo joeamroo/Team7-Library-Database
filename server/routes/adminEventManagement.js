@@ -27,7 +27,7 @@ function createEventHtml(item) {
 }
 
 function getEventsForAdmin(res) {
-    connection.query('SELECT event_id, event_name, date, sponsor, attendance_count, event_status FROM event ORDER BY date ASC', (err, results) => {
+    connection.query('SELECT event_id, event_name, date, sponsor, attendance_count, event_status FROM event ORDER BY event_id ASC', (err, results) => {
         if (err) {
             console.error('Error querying staff data:', err);
             response.writeHead(500);
@@ -66,5 +66,22 @@ function deleteEvent(res, eventId) {
     res.end(JSON.stringify({ message: 'eventDeletionSuccessful' }));
 }
 
+function filterEvents(res, startDate, endDate) {
+    filterByDate = 'SELECT * FROM event WHERE date BETWEEN ? AND ? ORDER BY dare ASC';
 
-module.exports = { getEventsForAdmin, insertEvent, deleteEvent };
+    connection.query(filterByDate, [startDate, endDate], (err, results) => {
+        if (err) {
+            console.log('error getting filtered info from event into librarydev db:', err);
+        }
+
+        let eventHtml = '';
+        
+        results.forEach(item => { eventHtml += createEventHtml(item); });
+        
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(eventHtml, 'utf-8');
+    });
+}
+
+
+module.exports = { getEventsForAdmin, insertEvent, deleteEvent, filterEvents };
