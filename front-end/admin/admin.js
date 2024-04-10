@@ -203,7 +203,7 @@ function toggleForm(btn, form) {
 
 //Calling all the staff 
 const backendUrl = 'https://cougarchronicles.onrender.com'; 
-const getEmployeesUrl = `${backendUrl}/employees`;
+const getEmployeesUrl = `${backendUrl}/getEmployees`;
 
 document.addEventListener('DOMContentLoaded', function() {
     const xhr = new XMLHttpRequest();
