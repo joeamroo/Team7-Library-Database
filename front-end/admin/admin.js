@@ -123,6 +123,7 @@ window.addEventListener("load", showDefaults);
 
                 
 profileSelect.addEventListener('click', () => {
+    getAdminInfo();
     employeeView.classList.add('hide');
     eventView.classList.add('hide');
     inboxView.classList.add('hide');
@@ -199,7 +200,7 @@ const getAdminInfosUrl = `${backendUrl}/adminInfo`;
 
 
 /* Get Member Info for Dashboard */
-document.addEventListener('DOMContentLoaded', function() { 
+function getAdminInfo() {
     const adminId = document.getElementById('adminId');
     const staffId = localStorage.getItem('staffId');
     adminId.textContent =  staffId;
@@ -223,6 +224,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const data = JSON.stringify({ staffId: staffId });
     xhr.send(data);
+}
+
+document.addEventListener('DOMContentLoaded', function() { 
+    getAdminInfo();
 });
 
 
@@ -387,44 +392,32 @@ document.getElementById('removeEmployeeSubmit').addEventListener('click', functi
     }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    const empStatDropdown = document.getElementById('limitEmpStat');
-    const positionDropdown = document.getElementById('limitPosition');
+document.getElementById('searchEmplysButton').addEventListener('click', function(event) {
+    const empStatDropdown = document.getElementById('limitEmpStat').value;
+    const positionDropdown = document.getElementById('limitPosition').value;
 
-    empStatDropdown.addEventListener('change', function() {
-        if (empStatDropdown.value !== '') {
-            console.log(empStatDropdown.value);
-            makePostRequest({ value: empStatDropdown.value, filterType: 'employment_status' });
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', filterEmployeesUrl);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            console.log('Limit by successful');
+            const employeesDiv = document.querySelector('.table-content');
+            employeesDiv.innerHTML = xhr.responseText;
+            updateTotalEmployeesCount();
+        } 
+        else {
+            console.error('Error:', xhr.statusText);
         }
-    });
+    };
 
-    positionDropdown.addEventListener('change', function() {
-        if (positionDropdown.value !== '') {
-            console.log('this is the value:', positionDropdown.value);
-            makePostRequest({ value: positionDropdown.value, filterType: 'staff_position' });
-        }
-    });
+    const data = JSON.stringify({ empStatus: empStatDropdown, empPosition: positionDropdown});
+    xhr.send(data);
+});
 
-    function makePostRequest(data) {
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', filterEmployeesUrl);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                console.log('Limit by successful');
-                const employeesDiv = document.querySelector('.table-content');
-                employeesDiv.innerHTML = xhr.responseText;
-                updateTotalEmployeesCount();
-            } 
-            else {
-                console.error('Error:', xhr.statusText);
-            }
-        };
-
-        const dataSending = JSON.stringify(data);
-        xhr.send(dataSending);
-    }
+document.getElementById('resetEmplSearch').addEventListener('click', function(event) { 
+    getEmployeeList()
 });
 
 function updateTotalEmployeesCount() {

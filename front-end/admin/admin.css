@@ -1042,7 +1042,7 @@ input[type="date"] {
   margin-right: 5px;
   color: white;
   background-color: rgb(146, 146, 146);
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 #addEmployeeBtn:hover, #removeEmployeeBtn:hover, #addEventBtn:hover, #removeEventBtn:hover {
@@ -1139,7 +1139,7 @@ input[type=time] {
   color: var(--mainColor);
 }
 
-#empStat, #position, #fromDate, #toDate {
+#limitEmpStat, #limitPosition, #fromDate, #toDate {
   margin-top: 10px;
   margin-right: 50px;
 }
@@ -1163,7 +1163,7 @@ input[type=time] {
   animation: shake 0.5s ease-in-out;
 }
 
-#searchEventsButton, #searchCatalogButton, #resetTable {
+#searchEventsButton, #searchCatalogButton, #resetTable, #searchEmplsButton, #resetEmplSearch {
   border-radius: 20px;
   background-color: var(--mainColor);
   color: white;
@@ -1171,7 +1171,11 @@ input[type=time] {
   margin-left: -10px;
 }
 
-#searchEventsButton:hover, #searchCatalogButton:hover, #resetTable:hover {
+#searchEmplsButton {
+  margin-right: 25px;
+}
+
+#searchEventsButton:hover, #searchCatalogButton:hover, #resetTable:hover, #searchEmplsButton:hover, #resetEmplSearch:hover {
   cursor: pointer;
   background-color: #ad2727;
 }

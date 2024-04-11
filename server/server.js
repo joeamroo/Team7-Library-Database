@@ -335,7 +335,7 @@ const server = http.createServer((request, res) => {
                 request.on('end', () => {
                     try {
                         const postData = JSON.parse(body);
-                        filterStaff(res, postData.value, postData.filterType);
+                        filterStaff(res, postData.empStatus, postData.empPosition);
                     } 
                     catch (error) {
                         console.error('Error parsing JSON:', error);
