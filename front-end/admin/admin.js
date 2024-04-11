@@ -151,6 +151,27 @@ inboxSelect.addEventListener('click', () => {
     inboxView.classList.remove('hide');
 });
 
+document.getElementById('employeeConnection').addEventListener('click', () => {
+    profileView.classList.add('hide');
+    eventView.classList.add('hide');
+    inboxView.classList.add('hide');
+    employeeView.classList.remove('hide');
+});
+
+document.getElementById('eventsConnection').addEventListener('click', () => {
+    profileView.classList.add('hide');
+    employeeView.classList.add('hide');
+    inboxView.classList.add('hide');
+    eventView.classList.remove('hide');
+});
+
+document.getElementById('inventoryConnection').addEventListener('click', () => {
+    profileView.classList.add('hide');
+    employeeView.classList.add('hide');
+    eventView.classList.add('hide');
+    inboxView.classList.remove('hide');
+});
+
 
 function setOrderDate() {
     const startingDate = document.getElementById('start-date');
@@ -166,13 +187,41 @@ function setOrderDate() {
 }
 
 
-/* Gets MemberID from local storage and makes it visible on the profile 
-window.onload = function() {
-  const memberTag = document.getElementById('member-id');
-  memberTag.textContent = 'Member ID: ' + memberId;
-  getUserInfo();
-  setOrderDate();
-};*/
+
+
+//Calling all the staff 
+const backendUrl = 'https://cougarchronicles.onrender.com'; 
+const getEmployeesUrl = `${backendUrl}/getEmployees`;
+const addEmployeeUrl = `${backendUrl}/addStaff`;
+const removeEmployeeUrl = `${backendUrl}/removeStaff`;
+const filterEmployeesUrl = `${backendUrl}/filterStaff`;
+const getAdminInfosUrl = `${backendUrl}/adminInfo`;
+
+
+/* Get Member Info for Dashboard */
+document.addEventListener('DOMContentLoaded', function() { 
+    const adminId = document.getElementById('adminId');
+    adminId.textContent =  localStorage.getItem('staffId');
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', getAdminInfosUrl);
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            const data = JSON.parse(xhr.responseText);
+            document.getElementById('admin-name').textContent = data.adminName;
+            document.getElementById('totalEmplyIntro').textContent = data.staffCount;
+            document.getElementById('totalEventIntro').textContent = data.eventCount;
+            document.getElementById('totalItemIntro').textContent = data.itemCount;           
+        } 
+        else {
+            console.error('Error:', xhr.statusText);
+        }
+    };
+
+    const data = JSON.stringify({ adminId: adminId });
+    xhr.send(data);
+});
 
 
 
@@ -201,14 +250,6 @@ function toggleForm(btn, form) {
     icon.className = 'uil uil-angle-down';
   }
 }
-
-//Calling all the staff 
-const backendUrl = 'https://cougarchronicles.onrender.com'; 
-const getEmployeesUrl = `${backendUrl}/getEmployees`;
-const addEmployeeUrl = `${backendUrl}/addStaff`;
-const removeEmployeeUrl = `${backendUrl}/removeStaff`;
-const filterEmployeesUrl = `${backendUrl}/filterStaff`;
-
 
 function getEmployeeList() {
     const xhr = new XMLHttpRequest();

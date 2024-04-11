@@ -198,9 +198,6 @@ header {
   }
 
 
-  .h3 {
-    font-size: 0.5px;
-  }
 
 
   .menu-item {
@@ -1196,7 +1193,7 @@ input[type=time] {
 }
 
 #totalItemsBubble {
-  font-size: 20px;
+  font-size: 25px;
   font-weight: bold;
   margin-top: 60px;
 }
@@ -1210,4 +1207,78 @@ input[type=time] {
   align-items: center;
   margin-bottom: 30px;
   width: 100%;
+}
+
+#totalItemsCount {
+  margin-left: 10px;
+}
+
+#welcome-banner {
+  font-size: xx-large;
+  margin-left: 80px;
+}
+
+.circle-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+
+.circle {
+  width: 300px; 
+  height: 300px; 
+  border-radius: 50%;
+  background-color: var(--mainColor);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(0, 0, 0); 
+  flex-direction: column;
+}
+
+.circle:hover {
+  background-color: var(--colorLight); 
+  transform: scale(1.1); 
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); 
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; 
+  cursor: pointer;
+}
+
+.inner-circle {
+  width: 250px; 
+  height: 250px; 
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.circle-number {
+  font-size: 60px; 
+  font-weight: bold; 
+  position: absolute;
+  top: 30%;
+}
+
+.circle-text {
+  margin-top: 28%;
+  font-size: 16px;
+  font-weight: bold; 
+}
+
+#tabs-name {
+  margin-top: 60px;
+  margin-bottom: 30px;
+}
+
+#my-accountId {
+  font-size: 20px;
+}
+
+#tabs-name {
+  text-decoration: underline;
 }

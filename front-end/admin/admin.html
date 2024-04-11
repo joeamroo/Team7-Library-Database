@@ -78,17 +78,8 @@
  -->
  
   <div class="center">
-    <div class="notification">
-      <img src="../admin/Notify.png" alt="" />
-      <div class="details">
-        <div class="name">Cougar Chronicles</div>
-        <div class="hello-msg">Hello, User!</div>
-      </div>
-      <span class="material-icons-round btn" onclick="closeNote()">close</span>
-    </div>
+    
   </div>
-
-  <a class="user-greet"></a>
 
   
    <div class="rounded-rectangle profile" id="profile-class">
@@ -103,119 +94,35 @@
  -->
  
   
-    <div class="settings profile">
-      <!-- User settings panel goes here -->
-      <!-- Include the form from the previous code snippet -->
-
-      <a class="member-id" id="member-id">Member ID: </a><br />
-      <a class="member-type" id="member-type">Member Type: </a>
-      <a class="member-status" id="member-status"></a>
-      <input type="file" id="fileInput" accept="image/*" onchange="updateProfilePic(this)">
-      
-      <script>
-      function updateProfilePic(input) {
-        if (input.files && input.files[0]) {
-          var reader = new FileReader();
-          
-          reader.onload = function(e) {
-            document.getElementById('profilePic').src = e.target.result;
-            // TODO: Upload the image to the server
-          }
-          
-          reader.readAsDataURL(input.files[0]);
-        }
-      }
-      </script>
-
-      <div class="account-container"> <h2 id="my-account-label">My Account</h2> <p id="my-account-label-2">
-        Manage your User Account Information and Settings</p></div> <div class="profile-info"> 
-
-       
-       
-      </div> <div class="personal-info"> <h3>Personal Information</h3>
-    
-       <div class="member-info" id="member-info">
-        <!--
-        <div class="form-group">
-          <label for="firstName">First Name</label>
-          <input type="text" id="firstName" value="Darth">
-        </div>
-        
-        <div class="form-group">  
-          <label for="lastName">Last Name</label>
-          <input type="text" id="lastName" value="Murthy">
-        </div>
-
-        <div class="form-group">
-          <label for="phone_number">Phone Number</label>  
-          <input type="tel" id="phone_number" value="(541) 504-5555 ">
-        </div>
-
-        <div class="form-group">
-          <label for="street_addr">Street Address</label>
-          <input type="text" id="street_addr" value="Privet Drive">
-        </div>
-
-        <div class="form-group">
-          <label for="city_addr">City</label>
-          <input type="text" id="city_addr" value="Houston">
-        </div>
-
-        <div class="form-group">
-          <label for="state">State</label>
-          <input type="text" id="state" value="Texas">
-        </div>
-
-        <div class="form-group">
-          <label for="zipcode_addr">Zip Code</label>
-          <input type="text" id="zipcode_addr" value="77063">
-        </div>
-        
-        <div class="form-group">
-          <label for="email">Email</label>  
-          <input type="email" id="email" value="ssh!atlibrary@library.com">
-        </div>
-        
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" value="ilikebigbooks@icannotlie.com">  
-        </div>
-        -->
-
-      </div>
-        
-        <!--<button class="update-info" id="updateInfo">Update Information</button>-->
-
-        <button type="button" class="main-btn">Submit</button>
-
-        <div class="update-container">
-          <div class="popup">
-            <div class="popup-content">
-              <div class="close" onclick="closePop()">
-                <span class="material-icons-round">cancel</span>
-              </div>
-              <div class="head">Submit Details</div>
-              <div class="text">
-                Are you sure you want to submit the details? You can later edit them
-                in details section
-              </div>
-              <div class="input">
-                <input type="checkbox" id="repeatWarning" />
-                <label for="repeatWarning"> Do not show this anymore</label>
-              </div>
-              <div class="btns">
-                <button type="button" class="btn" onclick="closePop()">
-                  Cancel
-                </button>
-                <button type="button" class="btn" onclick="closePop()">
-                  Submit
-                </button>
-              </div>
+  <div class="settings profile">
+    <div class="account-container"> 
+      <h2 id="my-account-label">Welcome, <span id="admin-name">Gaby!</span> </h2>
+      <h6 id="my-accountId">Admin ID: <span id="adminId"></span></h6>
+      <h2 id="tabs-name">Quick View</h2>
+      <div class="tabs-overview">
+        <div class="circle-container">
+          <div class="circle" id="employeeConnection">
+            <div class="inner-circle">
+              <span class="circle-number" id="totalEmplyIntro">45</span>
+              <span class="circle-text">Total Employees</span>
+            </div>
+          </div>
+          <div class="circle" id="eventsConnection">
+            <div class="inner-circle">
+              <span class="circle-number" id="totalEventIntro">25</span>
+              <span class="circle-text">Total Events/Classes</span>
+            </div>
+          </div>
+          <div class="circle" id="inventoryConnection">
+            <div class="inner-circle">
+              <span class="circle-number" id="totalItemIntro">60</span>
+              <span class="circle-text">Total Catalog Items</span>
             </div>
           </div>
         </div>
-    </div>
-   </div>
+      </div>
+    </div> 
+  </div>
 
 <!-- 
   ┌───────────────────────────────────────────────────────────────────┐
@@ -331,7 +238,6 @@
 </div>
 
 
-  
 
 
 <!-- 
@@ -464,7 +370,7 @@
       <button id="searchCatalogButton">Filter Items</button>
       <button id="resetTable">Reset Filter</button>
     </div>
-    <div class="mb-3i" id="totalItemsBubble">Total Items:  <span id="totalItemsCount"> 0</span></div>
+    <div class="mb-3i" id="totalItemsBubble">Total Items:<span id="totalItemsCount"> </span></div>
   </div>
 
   <table id="catalogTable" class="table table-striped table-hover text-info shadow">
@@ -485,8 +391,6 @@
 
 
 
-
-
  <!-- End of Container-->
   </div>
   </header>
@@ -498,15 +402,8 @@
   </main>
   <!--Main body ends-->
 
- 
-  
-
   
 </div>
-
-
-
-
 
 
 

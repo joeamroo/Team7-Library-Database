@@ -12,7 +12,6 @@ function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-
 function createBookItemHtml(item) {
     let itemHtml = '';
     itemHtml += '<tr id="catalog-item">';
@@ -37,6 +36,66 @@ function createMovieDeviceItemHtml(item) {
     return itemHtml;
 }
 
+function getAdminInfo(res, adminId) {
+    let namePromise = new Promise((resolve, reject) => {
+        connection.query('SELECT name AS adminName FROM staff WHERE staff_id = ?', [adminId], (err, results) => {
+            if (err) {
+                reject(err);
+            } 
+            else {
+                resolve(results[0].adminName);
+            }
+        });
+    });
+
+    let staffCountPromise = new Promise((resolve, reject) => {
+        connection.query('SELECT COUNT(*) AS staffCount FROM staff', (err, results) => {
+            if (err) {
+                reject(err);
+            } 
+            else {
+                resolve(results[0].staffCount);
+            }
+        });
+    });
+
+    let eventCountPromise = new Promise((resolve, reject) => {
+        connection.query('SELECT COUNT(*) AS eventCount FROM event', (err, results) => {
+            if (err) {
+                reject(err);
+            } 
+            else {
+                resolve(results[0].eventCount);
+            }
+        });
+    });
+
+    let itemCountPromise = new Promise((resolve, reject) => {
+        connection.query('SELECT COUNT(*) AS itemCount FROM catalog_view', (err, results) => {
+            if (err) {
+                reject(err);
+            } 
+            else {
+                resolve(results[0].itemCount);
+            }
+        });
+    });
+
+    Promise.all([namePromise, staffCountPromise, eventCountPromise, itemCountPromise])
+        .then(([adminName, staffCount, eventCount, itemCount]) => {
+            let adminInfo = {
+                adminName: adminName,
+                staffCount: staffCount,
+                eventCount: eventCount,
+                itemCount: itemCount
+            };
+            res.status(200).json(adminInfo); 
+        })
+        .catch(err => {
+            console.error('Error querying database:', err);
+            res.status(500).send('Server error');
+        });
+}
 
 function getItemsForAdmin(res) {
     connection.query('SELECT asset_type, isbn, asset_id, asset_condition, current_holds, total_copies FROM catalog_view', (err, results) => {
@@ -106,4 +165,4 @@ function filterCatalogItems(res, itemType, itemCondition, checkoutDate) {
 }
 
 
-module.exports = { getItemsForAdmin, filterCatalogItems };
+module.exports = { getItemsForAdmin, filterCatalogItems, getAdminInfo};
