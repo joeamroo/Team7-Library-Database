@@ -141,8 +141,8 @@ function getUserDashInfo(response, memberId) {
         lastName = nameParts[nameParts.length - 1];
       });
 
-      console.log('firstName: ' + firstName);
-      console.log('lastName: ' + lastName);
+      //console.log('firstName: ' + firstName);
+      //console.log('lastName: ' + lastName);
 
     
       let html = '';
@@ -217,7 +217,9 @@ function getUserDashInfo(response, memberId) {
     // Use the memberId parameter in the query execution
       link.query(sql_query, values, function(err, result) {
       if (err) {
-        console.error('Failed to generate table for Profile');
+            cachesonsole.error('Failed to insert member details:', err);
+            response.writeHead(500, { 'Content-Type': 'text/plain' });
+            response.end('Internal Server Error');
       } else {
         response.writeHead(200, { 'Content-Type': 'text/html' });
         response.end('Profile settings successfully updated!', 'utf-8');
@@ -232,45 +234,67 @@ function getUserDashInfo(response, memberId) {
  */
 
 function getUserOrderInfo(response, memberId) {
+// Execute the SQL query
+const query = "SELECT TV.transaction_Id AS 'Order ID', " +
+              "T.date_created AS 'Date', " +
+              "CV.image_address AS 'Image', " +
+              "TV.asset_type AS 'Item', " +
+              "CV.year_released AS 'Year Released', " +
+              "CV.book_movie_title_model AS 'Product', " +
+              "CV.isbn AS 'ISBN', " +
+              "CV.asset_id AS 'Serial Number', " +
+              "CV.genres AS 'Genre', " +
+              "CV.languages AS 'Language', " +
+              "TV.returned AS 'Status' " +
+              "FROM TRANSACTION AS T, " +
+              "TRANSACTION_VIEW AS TV, " +
+              "CATALOG_VIEW AS CV, " +
+              "MEMBER AS M " +
+              "WHERE M.member_id = T.member_id " +
+              "AND T.transaction_id = TV.transaction_Id " +
+              "AND TV.itemId = CV.asset_id;";
 
-  const sqlQuery = "SELECT " +
-    "TV.transaction_Id AS 'Order ID', " +
-    "T.date_created AS 'Date Purchased', " +
-    "TV.asset_type AS 'Item', " +
-    "CV.image_address, " + 
-    "CV.year_released AS 'Year Released', " +
-    "CV.book_movie_title_model AS 'Product', " +
-    "CV.isbn AS 'ISBN', CV.serial_number AS 'Serial Number', " + 
-    "CV.asset_id AS 'Condition', CV.genres AS 'Genre', CV.languages AS 'Language', " + 
-    "TV.returned AS 'Status' " +
-"FROM " +
-    "TRANSACTION T " +
-    "INNER JOIN TRANSACTION_VIEW TV ON T.transaction_id = TV.transaction_Id " +
-    "INNER JOIN CATALOG_VIEW CV ON TV.itemId = CV.asset_id " +
-    "INNER JOIN MEMBER M ON M.member_id = T.member_id " +
-"WHERE " +
-    "M.member_id = ?";
 
+link.query(query, [memberId], (err, results) => {
+  if (err) {
+      console.error('Error executing the query:', err);
+      res.writeHead(500, { 'Content-Type': 'text/plain' });
+      res.end('Internal Server Error');
+      return;
+    }  else {
 
-    
+var tableHTML = '<table>' +
+    '<thead>' +
+        '<tr>' +
+            '<th>Order ID</th>' +
+            '<th>Date</th>' +
+            '<th>Image</th>' +
+            '<th>Item</th>' +
+            '<th>Year Released</th>' +
+            '<th>Product</th>' +
+            '<th>ISBN</th>' +
+            '<th>Serial Number</th>' +
+            '<th>Genre</th>' +
+            '<th>Language</th>' +
+            '<th>Status</th>' +
+        '</tr>' +
+    '</thead>' +
+    '<tbody>';
 
-  // Use the memberId parameter in the query execution
-  link.query(sqlQuery, [memberId], (error, result) => {
+    results.forEach(transaction => {
+      tableHTML += '<tr>';
+      for (let key in transaction) {
+          tableHTML += `<td>${transaction[key]}</td>`;
+      }
+      tableHTML += '</tr>';
+  });
 
-    // Generates Table
-    const table = getSQLTable(result);
-
-    if (error) {
-      console.error('Failed to generate table');
-      response.writeHead(500, { 'Content-Type': 'text/html' });
-      response.end(table, 'utf-8');
-    } else {
-      response.writeHead(500, { 'Content-Type': 'text/html' });
-      response.end(table, 'utf-8');
-    }
+    tableHTML += '</tbody>' + '</table>';
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end(tableHTML);
+    } 
   });
 }
-
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
