@@ -29,7 +29,7 @@ function createMovieDeviceItemHtml(item) {
     let itemHtml = '';
     itemHtml += '<tr id="catalog-item">';
     itemHtml += `<td id="item_id">${item.asset_id}</td>`;
-    itemHtml += `<td id="item_type">${item.asset_type}</td>`;
+    itemHtml += `<td id="item_type">${capitalizeFirstLetter(item.asset_type)}</td>`;
     itemHtml += `<td id="item_condition">${item.asset_condition}</td>`;
     itemHtml += `<td id="item_holds">${item.current_holds}</td>`;
     itemHtml += `<td id="item_total_copies">${item.total_copies}</td>`
