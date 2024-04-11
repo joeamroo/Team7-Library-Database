@@ -1166,7 +1166,7 @@ input[type=time] {
   animation: shake 0.5s ease-in-out;
 }
 
-#searchEventsButton, #searchCatalogButton {
+#searchEventsButton, #searchCatalogButton, #resetTable {
   border-radius: 20px;
   background-color: var(--mainColor);
   color: white;
@@ -1174,7 +1174,7 @@ input[type=time] {
   margin-left: -10px;
 }
 
-#searchEventsButton:hover, #searchCatalogButton:hover {
+#searchEventsButton:hover, #searchCatalogButton:hover, #resetTable:hover {
   cursor: pointer;
   background-color: #ad2727;
 }
@@ -1184,16 +1184,21 @@ input[type=time] {
 }
 
 #checkDate {
-  margin-right: 475px;
+  margin-right: 325px;
 }
 
-#returnDate {
-  margin-right: 50px;
+#searchCatalogButton {
+  margin-right: 30px;
 }
 
 #limitCatalogSection {
   margin-top: 10px;
-  margin-bottom: 60px;
+}
+
+#totalItemsBubble {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 60px;
 }
 
 #itemType, #item-condition {
