@@ -118,12 +118,11 @@ function getUserDashInfo(response, memberId) {
         { label: "State", id: "state", type: "text", value: "Texas" },
         { label: "Zip Code", id: "zipcode_addr", type: "text", value: "77063" },
         { label: "Email", id: "email", type: "email", value: "ssh!atlibrary@library.com" },
-        { label: "Password", id: "password", type: "password", value: "ilikebigbooks@icannotlie.com" }
       ];
 
     // Searches Database for user with memberID
     const query_info = 'SELECT name, email, status, phone_number, street_addr, city_addr, state, zipcode_addr ' +
-                        'FROM member WHERE member_id = ?';
+                        'FROM member WHERE member_id = (?)';
 
 
 
@@ -133,7 +132,7 @@ function getUserDashInfo(response, memberId) {
       var firstName = '';
       var lastName = '';
 
-      results.forEach(function(row) {
+      result.forEach(function(row) {
         var fullName = row.name;
         var nameParts = fullName.split(' ');
         firstName = nameParts[0];
