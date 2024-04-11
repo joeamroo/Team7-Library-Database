@@ -198,14 +198,18 @@ function getUserDashInfo(response, memberId) {
   function setUserDashInfo(response, memberId, firstName, lastName, phone_number,
                            street_addr, city_addr, state, zipcode_addr, email) {
 
+
+      // Combines first name and last name
+      const fullName = firstName + " " + lastName;
+
       // Query to search for
-      const sql_query = 'INSERT INTO MEMBER (memberId, firstName, lastName, phone_number, street_addr, city_addr, state, zipcode_addr, email) ' +
+      const sql_query = 'INSERT INTO MEMBER (memberId, name, phone_number, street_addr, city_addr, state, zipcode_addr, email) ' +
                         'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
 
     // Use the memberId parameter in the query execution
-    link.query(sql_query, [memberId, firstName, lastName, phoneNumber, 
-                          streetAddr, cityAddr, state, zipcodeAddr, email],
+    link.query(sql_query, [memberId, fullName, phone_number, 
+                          street_addr, city_addr, state, zipcode_addr, email],
                                                   function(err, result) {
       if (err) {
         console.error('Failed to generate table');
@@ -267,8 +271,24 @@ function getUserOrderInfo(response, memberId) {
 
   function getDashHoldsInfo(response, memberId) {
 
-    //Text
-  }
+    // Searches Database for user with the memberID
+    const query_name = 'SELECT name FROM member WHERE member_id = ?';
+
+    // Gets information from backend
+    link.query(query_name, [memberId], (error, result) => {
+        if (error) {
+            console.log('Error', memberId);
+            response.writeHead(500);
+            response.end('Server error');
+            return;
+        } else {
+           const name = 'Welcome, ' + result[0].name + '!';
+           response.writeHead(200, { 'Content-Type': 'text/html' });
+           response.end(name, 'utf-8');
+        }
+    });
+    
+}
 
 
 
