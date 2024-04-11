@@ -1043,3 +1043,8 @@ input[type="date"] {
 }
 
 
+.chart-container {
+  width: 600px;
+  height: 400px;
+  margin: 0 auto;
+}
