@@ -143,10 +143,11 @@ function getUserDashInfo(response, memberId) {
     // Gets information from backend
     link.query(query_info, [memberId], (error, result) => {
 
-      // Separates full name
-      const full_name = result.name;
+      const full_name = result.name; 
+      const nameArray = full_name.split(' '); 
       const firstName = nameArray[0]; 
-      const lastName = nameArray[1]; 
+      const lastName = nameArray.length > 1 ? nameArray[1] : ''; 
+
     
       let html = '';
 
