@@ -1003,12 +1003,22 @@ input[type="date"] {
   text-align: left;
 }
 
+#catalogTable th,
+#catalogTable td {
+  text-align: left;
+}
+
 #employeeTable tbody tr td {
   font-size: 18px; 
   font-weight: normal; 
 }
 
 #eventTable tbody tr td {
+  font-size: 18px; 
+  font-weight: normal; 
+}
+
+#catalogTable tbody tr td {
   font-size: 18px; 
   font-weight: normal; 
 }
@@ -1174,7 +1184,7 @@ input[type=time] {
 }
 
 #checkDate {
-  margin-right: 35px;
+  margin-right: 475px;
 }
 
 #returnDate {

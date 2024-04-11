@@ -645,6 +645,7 @@ searchButton.addEventListener('click', () => {
 
 /*Manage Inventory Tab*/
 const getItemsUrl = `${backendUrl}/getItemsForAdmin`;
+const filterCatalogItemsUrl = `${backendUrl}/filterCatalogItems`;
 
 function getItemList() {
     const xhr = new XMLHttpRequest();
@@ -662,6 +663,35 @@ function getItemList() {
 document.addEventListener('DOMContentLoaded', function() {
     getItemList();
 });
+
+document.getElementById('searchCatalogButton').addEventListener('click', function(event) {
+    const itemType = document.getElementById('itemType').value;
+    const itemCondition = document.getElementById('item-condition').value;
+    const checkoutDate = document.getElementById('checkDate').value;
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', filterCatalogItemsUrl); 
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            console.log('sucessfully removed event');
+            document.getElementById('itemType').value = '';
+            document.getElementById('item-condition').value = '';
+            document.getElementById('checkDate').value = '';
+            getItemList();
+        } 
+        else {
+            console.error('Error:', xhr.statusText);
+        }
+    };
+
+    const data = JSON.stringify({ itemType: itemType, itemCondition: itemCondition, checkoutDate: checkoutDate });
+        
+    xhr.send(data);
+});
+
+
 
 
 
