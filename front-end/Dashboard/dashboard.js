@@ -15,6 +15,7 @@ const orderReport = document.querySelector('.recent-orders');
 const profileInfo = document.querySelector('.member-info');
 const today = new Date().toLocaleDateString();
 
+
 /* *********************************************** */
 /* **************** BACK END ********************* */
 /* *********************************************** */
@@ -33,7 +34,6 @@ logOutBtn.addEventListener('click', function(event) {
     localStorage.removeItem('memberId');
   }
 });
-
 
 const container = document.getElementById('container');
 
@@ -224,16 +224,66 @@ window.onload = function() {
  
 
 updateBtn.addEventListener('click', function(event) {
-  openPop();
+
+    // Text inside form (prompt)
+    const notice = document.querySelector('#profile-flag');
+
+    // Title of Form
+    const submitTitle = document.querySelector('#submitTitle');
+
+    // Submit button
+    const submitButton = document.querySelector('#submitProfileInfo');
+
+    // Close button
+    const closePrompt = document.querySelector('#closeProfilePrompt');
+
+    const allFieldsFilled = [
+      'lastName', 'phone_number', 'street_addr', 'city_addr',
+      'state', 'zipcode_addr', 'email'
+  ].every(id => document.getElementById(id).value.trim() !== "");
+
+  console.log(allFieldsFilled);
+
+  if (!allFieldsFilled) {
+    submitTitle.textContent = 'WARNING';
+    notice.textContent = 'Make sure all sections are filled out before submitting!';
+    submitButton.disabled = true;
+
+
+  
+    setTimeout(() => {
+      // Simulate close click
+    closePrompt.click();
+      // Reverts text
+      submitTitle.textContent = 'Submit Details';
+      notice.textContent = 'Are you sure you want to submit the details? You can later edit them' +
+      'in details section';
+      // Enables button again
+      submitButton.disabled = false;
+    }, 1100);
+
+    
+
+    
+  } else {
+        // Update user data to server
+    
+  }
+ 
 });
+
+
+
 
 function closePop() {
   document.querySelector(".popup").style.display = "none";
 }
 function openPop() {
   document.querySelector(".popup").style.display = "flex";
-  console.log('clicked pop');
 }
+
+
+
 
 
   /* 
