@@ -13,6 +13,7 @@ const { resetPassword } = require('./routes/forgot-pwd');
 const { getEventReports } = require ('./routes/staffeventsreports');
 const { getEmployees, insertStaff, removeStaff, filterStaff } = require ('./routes/adminStaffManagement');
 const { getEventsForAdmin, insertEvent, deleteEvent, filterEvents } = require('./routes/adminEventManagement');
+const { getItemsForAdmin } = require('./routes/adminCatalogManagement');
 
 function setCorsHeaders(res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -54,6 +55,9 @@ const server = http.createServer((request, res) => {
                     break;
                 case '/getEventsForAdmin':
                     getEventsForAdmin(res);
+                    break;
+                case '/getItemsForAdmin':
+                    getItemsForAdmin(res);
                     break;
                 default:
                     serve404(res, pathname);

@@ -643,8 +643,25 @@ searchButton.addEventListener('click', () => {
 /*Manage Events Tab End*/
 
 
-/*Manage Communications Tab*/
+/*Manage Inventory Tab*/
+const getItemsUrl = `${backendUrl}/getItemsForAdmin`;
 
+function getItemList() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', getItemsUrl);
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            const catalogDiv = document.querySelector('.catalogTable-content');
+            catalogDiv.innerHTML = xhr.responseText;
+        } 
+    };
+    xhr.send();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    getItemList();
+});
 
 
 
