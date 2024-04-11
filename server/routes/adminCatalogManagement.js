@@ -93,8 +93,9 @@ function getAdminInfo(res, adminId) {
             res.end(JSON.stringify({ adminInfo })); 
         })
         .catch(err => {
-            console.error('Error querying database:', err);
-            res.status(500).send('Server error');
+            console.error('Error querying adminInformation data:', err);
+            res.writeHead(500);
+            res.end('Server error');
         });
 }
 
