@@ -215,9 +215,9 @@ function getUserDashInfo(response, memberId) {
     // Use the memberId parameter in the query execution
       link.query(sql_query, values, function(err, result) {
       if (err) {
-            cachesonsole.error('Failed to insert member details:', err);
-            response.writeHead(204, { 'Content-Type': 'text/plain' });
-            response.end('Internal Server Error');
+            console.error('Failed to insert member details:', err);
+            response.writeHead(500, { 'Content-Type': 'text/html' });
+            response.end('Internal Server Error', 'utf-8');
       } else {
         response.writeHead(200, { 'Content-Type': 'text/html' });
         response.end('Profile settings successfully updated!', 'utf-8');
