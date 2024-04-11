@@ -273,6 +273,10 @@ function getUserOrderInfo(response, memberId) {
   └─────────────────────────────────────────────────────────────────────────────┘
  */
 
+  function getDashHoldsInfo(response, memberId) {
+
+    //Text
+  }
 
 
 
