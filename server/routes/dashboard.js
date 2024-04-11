@@ -193,13 +193,8 @@ function getUserDashInfo(response, memberId) {
   function setUserDashInfo(response, memberId, firstName, lastName, phone_number,
                            street_addr, city_addr, state, zipcode_addr, email) {
 
-      // First, check if the member already exists
-      const checkQuery = `SELECT 1 FROM MEMBER WHERE memberId = ?`;
-
-      // Execute checkQuery with memberId and handle the result...
-      // If the member doesn't exist, then proceed with the insert
-
-      const insertQuery = `
+      // Query to search for
+      const sql_query = `
       INSERT INTO MEMBER (
       memberId,
       firstName,
@@ -214,7 +209,7 @@ function getUserDashInfo(response, memberId) {
     `;
 
     // Use the memberId parameter in the query execution
-    link.query(sqlQuery, [memberId, firstName, lastName, phoneNumber, 
+    link.query(sql_query, [memberId, firstName, lastName, phoneNumber, 
                           streetAddr, cityAddr, state, zipcodeAddr, email],
                                                   function(err, result) {
       if (err) {
