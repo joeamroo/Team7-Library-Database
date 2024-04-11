@@ -215,7 +215,7 @@ function getUserDashInfo(response, memberId) {
                           street_addr, city_addr, state, zipcode_addr, email],
                                                   function(err, result) {
       if (err) {
-        console.error('Failed to generate table');
+        console.error('Failed to generate table for Profile');
         response.writeHead(409, { 'Content-Type': 'text/html' });
         response.end('Sorry, an error occurred. Please try again later');
       } else {
