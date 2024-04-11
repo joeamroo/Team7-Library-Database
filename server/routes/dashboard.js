@@ -133,8 +133,6 @@ function getUserDashInfo(response, memberId) {
                 return { ...info, value: result[0].zipcode_addr };
               case "email":
                 return { ...info, value: result[0].email };
-              case "password":
-                return { ...info, value: result[0].password };
               default:
                 return info;
                 console.log("failed");
@@ -157,7 +155,6 @@ function getUserDashInfo(response, memberId) {
                   </div>
                 `;
               });
-
         }
         response.writeHead(200, { 'Content-Type': 'text/html' });
         response.end(html, 'utf-8');

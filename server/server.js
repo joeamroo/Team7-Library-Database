@@ -5,7 +5,7 @@ require("dotenv").config();
 const { getInitialCatalogInfo, getCatalogSearchWithRestrictions, insertDataToDatabase } = require('./routes/catalog');
 const { insertTransactionInfo } = require('./routes/checkout');
 const { getTransactionItems, returnItems } = require('./routes/returnItems');
-const { getUserDash, getUserDashInfo, getUserOrderInfo } = require('./routes/dashboard');
+const { getUserDash, getUserDashInfo, getUserOrderInfo, setUserOrderInfo } = require('./routes/dashboard');
 const { loginUser } = require('./routes/login');
 const { registerMember } = require('./routes/register');
 const { getListedEvents, eventSignUp } = require('./routes/classesnEvents');
@@ -219,6 +219,20 @@ const server = http.createServer((request, res) => {
                 });
             }
             else if (pathname === '/getDashInfo') {
+                let body = '';
+                request.on('data', (chunk) => {
+                    body += chunk.toString();
+                });
+                request.on('end', () => {
+                    try {
+                        const postData = JSON.parse(body);
+                        getUserDashInfo(res, postData.memberId);
+                    } catch (error) {
+                        console.error('Error parsing JSON: ', error);
+                    }
+                });
+            }
+            else if (pathname === '/setDashInfo') {
                 let body = '';
                 request.on('data', (chunk) => {
                     body += chunk.toString();
