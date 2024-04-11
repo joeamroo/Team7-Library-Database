@@ -103,12 +103,17 @@ function filterStaff(res, empStatus, empPos) {
     const queryParams = [];
 
     if (empStatus !== '') {
-        filterQuery += 'employment_status = ?';
-        queryParams += empStatus;
+        filterQuery += 'employment_status = ? ';
+        queryParams.push(empStatus);
     }
+
     if (empPos !== '') {
-        filterQuery += 'staff_position = ?';
-        queryParams += empPos;
+        filterQuery += (queryParams.length > 0 ? 'AND ' : '') + 'staff_position = ? ';
+        queryParams.push(empPos);
+    }
+
+    if (queryParams.length === 0) {
+        filterQuery = 'SELECT staff_id, name, email, staff_position, supervisor, employment_status FROM staff';
     }
 
 
