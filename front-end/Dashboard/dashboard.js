@@ -17,7 +17,6 @@ const profileInfo = document.querySelector('.member-info');
 const today = new Date().toLocaleDateString();
 const notify = document.querySelector('#notify-user');
 
-
 /* *********************************************** */
 /* **************** BACK END ********************* */
 /* *********************************************** */

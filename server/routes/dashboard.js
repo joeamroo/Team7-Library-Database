@@ -212,6 +212,7 @@ function getUserDashInfo(response, memberId) {
 
     // Values to update
     const values = [memberId, fullName, phone_number, street_addr, city_addr, state, zipcode_addr, email];
+
     // Use the memberId parameter in the query execution
       link.query(sql_query, values, function(err, result) {
       if (err) {
@@ -285,6 +286,8 @@ var tableHTML = '<table>' +
       for (let key in transaction) {
         if(key === 'returned') {
           tableHTML += `<td id='returned'>${transaction[key]}</td>`;
+        } else if (key === 'image_address') {
+          tableHTML += `<td><img src="${transaction[key]}" style="max-width: 100%; max-height: 100%;"></td>`;
         } else {
           tableHTML += `<td>${transaction[key]}</td>`;
         }
