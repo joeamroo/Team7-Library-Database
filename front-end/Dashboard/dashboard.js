@@ -15,7 +15,7 @@ const waitlistView = document.querySelector('.settings.waitlist');
 const orderReport = document.querySelector('.recent-orders');
 const profileInfo = document.querySelector('.member-info');
 const today = new Date().toLocaleDateString();
-const notify = document.querySelector('#notify-user');
+let notify = document.querySelector('#notify-user');
 
 
 /* *********************************************** */
