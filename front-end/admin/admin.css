@@ -1156,7 +1156,7 @@ input[type=time] {
   animation: shake 0.5s ease-in-out;
 }
 
-#searchEventsButton {
+#searchEventsButton, #searchCatalogButton {
   border-radius: 20px;
   background-color: var(--mainColor);
   color: white;
@@ -1164,3 +1164,35 @@ input[type=time] {
   margin-left: -10px;
 }
 
+#searchEventsButton:hover, #searchCatalogButton:hover {
+  cursor: pointer;
+  background-color: #ad2727;
+}
+
+#checkOutLabel, #returnLabel {
+  margin-right: 55px;
+}
+
+#checkDate {
+  margin-right: 35px;
+}
+
+#returnDate {
+  margin-right: 50px;
+}
+
+#limitCatalogSection {
+  margin-top: 10px;
+  margin-bottom: 60px;
+}
+
+#itemType, #item-condition {
+  width: 800px;
+}
+
+.mb-3i {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  width: 100%;
+}
