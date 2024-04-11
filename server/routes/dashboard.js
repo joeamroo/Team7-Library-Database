@@ -123,7 +123,7 @@ function getUserDashInfo(response, memberId) {
 
     // Searches Database for user with memberID
     const query_info = 'SELECT name, email, status, phone_number, street_addr, city_addr, state, zipcode_addr ' +
-                        'FROM member WHERE member_id = ?';
+                        'FROM member WHERE member_id = (?)';
 
 
 
