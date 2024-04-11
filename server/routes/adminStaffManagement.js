@@ -97,17 +97,22 @@ function removeStaff(res, email, staffId, empStatus) {
 }
 
 
-function filterStaff(res, value, filterType) {
+function filterStaff(res, empStatus, empPos) {
+    filterQuery = 'SELECT staff_id, name, email, staff_position, supervisor, employment_status FROM staff WHERE ';
 
-    let filterQuery;
-    if (filterType === 'staff_position') {
-        filterQuery = 'SELECT staff_id, name, email, staff_position, supervisor, employment_status FROM staff WHERE staff_position = ?';
+    const queryParams = [];
+
+    if (empStatus !== '') {
+        filterQuery += 'employment_status = ?';
+        queryParams += empStatus;
     }
-    else if (filterType === 'employment_status') {
-        filterQuery = 'SELECT staff_id, name, email, staff_position, supervisor, employment_status FROM staff WHERE employment_status = ?';
+    if (empPos !== '') {
+        filterQuery += 'staff_position = ?';
+        queryParams += empPos;
     }
 
-    connection.query(filterQuery, [value], (filterErr, results) => {
+
+    connection.query(filterQuery, queryParams, (filterErr, results) => {
         if (filterErr) {
             console.error('Error querying staff data:', filterErr);
             res.writeHead(500);
