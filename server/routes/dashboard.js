@@ -141,8 +141,8 @@ function getUserDashInfo(response, memberId) {
         lastName = nameParts[nameParts.length - 1];
       });
 
-      console.log('firstName: ' + firstName);
-      console.log('lastName: ' + lastName);
+      //console.log('firstName: ' + firstName);
+      //console.log('lastName: ' + lastName);
 
     
       let html = '';
@@ -217,7 +217,9 @@ function getUserDashInfo(response, memberId) {
     // Use the memberId parameter in the query execution
       link.query(sql_query, values, function(err, result) {
       if (err) {
-        console.error('Failed to generate table for Profile');
+            cachesonsole.error('Failed to insert member details:', err);
+            response.writeHead(500, { 'Content-Type': 'text/plain' });
+            response.end('Internal Server Error');
       } else {
         response.writeHead(200, { 'Content-Type': 'text/html' });
         response.end('Profile settings successfully updated!', 'utf-8');
