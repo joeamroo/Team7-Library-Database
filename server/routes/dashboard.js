@@ -35,6 +35,12 @@ const link = mysql.createConnection({
     
 }*/
 
+/* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                         Converts SQL to Tables                              │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+
 // Function to execute the SQL query and generate the HTML table
 function getSQLTable(query, callback) {
   connection.query(query, (error, results) => {
@@ -67,7 +73,11 @@ function getSQLTable(query, callback) {
 }
 
 
-
+/* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                         Retrieves the full name                             │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
 
 function getUserDash(response, memberId) {
 
@@ -90,11 +100,17 @@ function getUserDash(response, memberId) {
     
 }
 
+/* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                         Retrieves Profile Info                              │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
 
 function getUserDashInfo(response, memberId) {
 
     // HTML Elements
     const memberInfo = [
+        { label: "First Name", id:"firstName", type: "text", value: "Ruthless"},
         { label: "Last Name", id: "lastName", type: "text", value: "Murthy" },
         { label: "Phone Number", id: "phone_number", type: "tel", value: "(541) 504-5555 " },
         { label: "Street Address", id: "street_addr", type: "text", value: "Privet Drive" },
@@ -109,18 +125,25 @@ function getUserDashInfo(response, memberId) {
     const query_info = 'SELECT name, email, status, phone_number, street_addr,\
                         city_addr, state, zipcode_addr FROM member WHERE member_id = ?';
 
-    
+
 
     // Gets information from backend
     link.query(query_info, [memberId], (error, result) => {
+
+      // Separates full name
+      const full_name = result.name;
+      const firstName = nameArray[0]; 
+      const lastName = nameArray[1]; 
     
       let html = '';
 
         // New values
         const updatedMemberInfo = memberInfo.map(info => {
             switch (info.id) {
+              case "firstName":
+                return { ...info, value: result[0].firstName};
               case "lastName":
-                return { ...info, value: result[0].name };
+                return { ...info, value: result[0].fullName };
               case "phone_number":
                 return { ...info, value: result[0].phone_number };
               case "street_addr":
@@ -159,127 +182,55 @@ function getUserDashInfo(response, memberId) {
         response.writeHead(200, { 'Content-Type': 'text/html' });
         response.end(html, 'utf-8');
     });
+};
+
+/* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                              Updates User Info                              │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+
+  function setUserDashInfo(response, memberId, firstName, lastName, phone_number,
+                           street_addr, city_addr, state, zipcode_addr, email) {
+
+      // First, check if the member already exists
+      const checkQuery = `SELECT 1 FROM MEMBER WHERE memberId = ?`;
+
+      // Execute checkQuery with memberId and handle the result...
+      // If the member doesn't exist, then proceed with the insert
+
+      const insertQuery = `
+      INSERT INTO MEMBER (
+      memberId,
+      firstName,
+      lastName,
+      phone_number,
+      street_addr,
+      city_addr,
+      state,
+      zipcode_addr,
+      email
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    // Use the memberId parameter in the query execution
+    link.query(sqlQuery, [memberId, firstName, lastName, phoneNumber, 
+                          streetAddr, cityAddr, state, zipcodeAddr, email],
+                                                  function(err, result) {
+      if (err) {
+        console.error('Failed to generate table');
+        response.writeHead(409, { 'Content-Type': 'text/html' });
+        response.end('Sorry, an error occurred. Please try again later');
+      } else {
+        response.writeHead(200, { 'Content-Type': 'text/html' });
+        response.end('Profile settings successfully updated!', 'utf-8');
+      }
+  });
 }
 
 function getUserOrderInfo(response, memberId) {
 
-  const query_info = "SELECT TV.transaction_Id AS 'Order ID', T.date_created AS 'Date Purchased', " +
-                 "TV.asset_type AS 'Item', CV.image_address AS '', CV.year_released AS 'Year Released', " +
-                 "CV.book_movie_title_model AS 'Product', CV.isbn AS 'ISBN', CV.serial_number AS 'Serial Number', " +
-                 "CV.asset_id AS 'Condition', CV.genres AS 'Genre', CV.languages AS 'Language', " +
-                 "TV.returned AS 'Status' FROM TRANSACTION AS T, TRANSACTION_VIEW AS TV, CATALOG_VIEW AS CV, " +
-                 "MEMBER AS M WHERE M.member_id = ? AND T.transaction_id = TV.transaction_Id AND TV.itemId = CV.asset_id";
-
-
-  // HTML Elements
-  const memberInfo = [
-    { label: "Order ID", id: "orderID", value: "" },
-    { label: "Date Purchased", id: "date_purchased", value: "" },
-    { label: "Item", id: "item", value: "" },
-    { label: "", id: "image_address", value: "" },
-    { label: "Year Released", id: "year_released", value: "" },
-    { label: "Product", id: "product", value: "" },
-    { label: "ISBN", id: "isbn", value: "" },
-    { label: "Serial Number", id: "serial_number", value: "" },
-    { label: "Condition", id: "condition", value: "" },
-    { label: "Genre", id: "genre", value: "" },
-    { label: "Language", id: "language", value: "" },
-    { label: "Status", id: "status", value: ""}
-  ];
-
-
-
-  // Gets information from backend
-  link.query(query_info, [memberId], (error, result) => {
-    let html = '';
-
-    // New values
-    const updatedMemberInfo = memberInfo.map(info => {
-      switch (info.id) {
-        case "orderID":
-          return { ...info, value: result[0].transaction_id };
-        case "date_purchased":
-          return { ...info, value: result[0].date_created };
-        case "item":
-          return { ...info, value: result[0].asset_type };
-        case "image_address":
-          return { ...info, value: result[0].image_address };
-        case "year_released":
-          return { ...info, value: result[0].year_released };
-        case "product":
-          return { ...info, value: result[0].book_movie_title_model };
-        case "isbn":
-          return { ...info, value: result[0].isbn };
-        case "serial_number":
-          return { ...info, value: result[0].serial_number };
-        case "condition":
-          return { ...info, value: result[0].asset_id };
-        case "genre":
-          return { ...info, value: result[0].genres };
-        case "language":
-            return { ...info, value: result[0].languages };
-        case "status":
-            return { ...info, value: result[0].returned };
-        default:
-          return info;
-      }
-    });
-
-    if (error) {
-      console.log('Error', memberId);
-      response.writeHead(500);
-      response.end('Server error');
-      return;
-    } else {
-      html += '<table>';
-      html += '<thead><tr>';
-      updatedMemberInfo.forEach(info => {
-        html += `<th>${info.label}</th>`;
-      });
-      html += '</tr></thead>';
-      html += '<tbody><tr>';
-      updatedMemberInfo.forEach(info => {
-        html += `<td>${info.value}</td>`;
-      });
-      html += '</tr></tbody>';
-      html += '</table>';
-    }
-
-    response.writeHead(200, { 'Content-Type': 'text/html' });
-    response.end(html, 'utf-8');
-  });
-}
-
-/*function getUserOrderInfo(response, memberId) {*/
-
-  //console.log("Server-side (memberid): " + memberId);
-
-  /*const sqlQuery = `
-    SELECT 
-      TV.transaction_Id AS 'Order ID',
-      T.date_created AS 'Date Purchased',
-      TV.asset_type AS 'Item',
-      CV.image_address AS '',
-      CV.year_released AS 'Year Released',
-      CV.book_movie_title_model AS 'Product',
-      CV.isbn AS 'ISBN',
-      CV.serial_number AS 'Serial Number',
-      CV.asset_id AS 'Condition',
-      CV.genres AS 'Genre',
-      CV.languages AS 'Language',
-      TV.returned AS 'Status'
-    FROM 
-      TRANSACTION AS T,
-      TRANSACTION_VIEW AS TV,
-      CATALOG_VIEW AS CV,
-      MEMBER AS M
-    WHERE 
-      M.member_id = ? AND 
-      T.transaction_id = TV.transaction_Id AND 
-      TV.itemId = CV.asset_id
-  `;*/
-
-  /*const sqlQuery = "SELECT TV.transaction_Id AS 'Order ID', T.date_created AS 'Date Purchased', " +
+const sqlQuery = "SELECT TV.transaction_Id AS 'Order ID', T.date_created AS 'Date Purchased', " +
                  "TV.asset_type AS 'Item', CV.image_address AS '', CV.year_released AS 'Year Released', " +
                  "CV.book_movie_title_model AS 'Product', CV.isbn AS 'ISBN', CV.serial_number AS 'Serial Number', " +
                  "CV.asset_id AS 'Condition', CV.genres AS 'Genre', CV.languages AS 'Language', " +
@@ -292,14 +243,12 @@ function getUserOrderInfo(response, memberId) {
     if (table) {
       response.writeHead(200, { 'Content-Type': 'text/html' });
       response.end(table, 'utf-8');
-      // You can send the generated HTML table to the client or use it as needed
-
     } else {
       console.error('Failed to generate table');
     }
   });
 }
-*/
+
 
 
 
@@ -312,4 +261,4 @@ function getUserOrderInfo(response, memberId) {
 
 
 
-module.exports = { getUserDash, getUserDashInfo, getUserOrderInfo };
+module.exports = { getUserDash, getUserDashInfo, setUserDashInfo, getUserOrderInfo };

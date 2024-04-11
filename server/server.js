@@ -5,7 +5,7 @@ require("dotenv").config();
 const { getInitialCatalogInfo, getCatalogSearchWithRestrictions, insertDataToDatabase } = require('./routes/catalog');
 const { insertTransactionInfo } = require('./routes/checkout');
 const { getTransactionItems, returnItems } = require('./routes/returnItems');
-const { getUserDash, getUserDashInfo, getUserOrderInfo, setUserOrderInfo } = require('./routes/dashboard');
+const { getUserDash, getUserDashInfo, setUserDashInfo, getUserOrderInfo } = require('./routes/dashboard');
 const { loginUser } = require('./routes/login');
 const { registerMember } = require('./routes/register');
 const { getListedEvents, eventSignUp } = require('./routes/classesnEvents');
@@ -244,7 +244,7 @@ const server = http.createServer((request, res) => {
                 request.on('end', () => {
                     try {
                         const postData = JSON.parse(body);
-                        getUserDashInfo(res, postData.memberId);
+                        setUserDashInfo(res, postData.memberId);
                     } catch (error) {
                         console.error('Error parsing JSON: ', error);
                     }

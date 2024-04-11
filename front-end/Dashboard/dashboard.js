@@ -231,8 +231,8 @@ updateBtn.addEventListener('click', function(event) {
 
 
     const allFieldsFilled = [
-      'lastName', 'phone_number', 'street_addr', 'city_addr',
-      'state', 'zipcode_addr', 'email', 'password'
+      'firstName', 'lastName', 'phone_number', 'street_addr', 'city_addr',
+      'state', 'zipcode_addr', 'email'
   ].every(id => document.getElementById(id).value.trim() !== "");
 
   //console.log(allFieldsFilled);
