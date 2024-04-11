@@ -133,7 +133,7 @@ function getUserDashInfo(response, memberId) {
       var firstName = '';
       var lastName = '';
 
-      results.forEach(function(row) {
+      result.forEach(function(row) {
         var fullName = row.name;
         var nameParts = fullName.split(' ');
         firstName = nameParts[0];
