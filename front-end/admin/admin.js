@@ -1,5 +1,3 @@
-const { json } = require("stream/consumers");
-
 // This is in case a user is already logged in, the button is the correct one
 const loggedIn = localStorage.getItem('loggedIn');
 const memberId = localStorage.getItem('memberId');
@@ -211,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function() {
     xhr.onload = function() {
         if (xhr.status === 200) {
             const data = JSON.parse(xhr.responseText);
-            document.getElementById('admin-name').textContent = data.name;
+            document.getElementById('admin-name').textContent = data.adminName;
             document.getElementById('totalEmplyIntro').textContent = data.staffCount;
             document.getElementById('totalEventIntro').textContent = data.eventCount;
             document.getElementById('totalItemIntro').textContent = data.itemCount;           
