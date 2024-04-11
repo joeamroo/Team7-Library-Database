@@ -246,10 +246,10 @@ const query = "SELECT TV.transaction_Id AS 'Order ID', " +
               "CV.genres AS 'Genre', " +
               "CV.languages AS 'Language', " +
               "TV.returned AS 'Status' " +
-              "FROM TRANSACTION T, " +
-              "TRANSACTION_VIEW TV, " +
-              "CATALOG_VIEW CV, " +
-              "MEMBER M " +
+              "FROM TRANSACTION AS T, " +
+              "TRANSACTION_VIEW AS TV, " +
+              "CATALOG_VIEW AS CV, " +
+              "MEMBER AS M " +
               "WHERE M.member_id = T.member_id " +
               "AND T.transaction_id = TV.transaction_Id " +
               "AND TV.itemId = CV.asset_id;";
