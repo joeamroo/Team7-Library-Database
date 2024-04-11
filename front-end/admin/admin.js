@@ -675,18 +675,22 @@ document.getElementById('searchCatalogButton').addEventListener('click', functio
 
     xhr.onload = function() {
         if (xhr.status === 200) {
-            console.log('sucessfully removed event');
+            console.log('sucessfully filtered catalog items event');
             document.getElementById('itemType').value = '';
             document.getElementById('item-condition').value = '';
             document.getElementById('checkDate').value = '';
-            getItemList();
+
+            const catalogDiv = document.querySelector('.catalogTable-content');
+            catalogDiv.innerHTML = xhr.responseText;
         } 
         else {
             console.error('Error:', xhr.statusText);
         }
     };
 
+    
     const data = JSON.stringify({ itemType: itemType, itemCondition: itemCondition, checkoutDate: checkoutDate });
+    console.log(data);
         
     xhr.send(data);
 });
