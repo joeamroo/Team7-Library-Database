@@ -263,7 +263,7 @@ function openPop() {
 }
 
 sendPop.addEventListener('click', function(event) {
-  //setProfileInfo();
+  setProfileInfo();
   closePop();
 });
 
