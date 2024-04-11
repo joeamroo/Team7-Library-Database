@@ -45,7 +45,7 @@ const server = http.createServer((request, res) => {
     const pathname = new URL(request.url, `http://${request.headers.host}`).pathname;
 
     setCorsHeaders(res);
-    
+
     // Immediately return if the request is an OPTIONS preflight request
     if (handleOptionsPreflight(req, res)) return;
     
@@ -233,6 +233,7 @@ const server = http.createServer((request, res) => {
                         getUserDash(res, postData.memberId);
                     } catch (error) {
                         console.error('Error parsing JSON:', error);
+                        serve404(res);
                     }
                 });
             }
@@ -247,6 +248,7 @@ const server = http.createServer((request, res) => {
                         getUserDashInfo(res, postData.memberId);
                     } catch (error) {
                         console.error('Error parsing JSON: ', error);
+                        serve404(res);
                     }
                 });
             }
@@ -261,6 +263,7 @@ const server = http.createServer((request, res) => {
                         setUserDashInfo(res, postData.memberId);
                     } catch (error) {
                         console.error('Error parsing JSON: ', error);
+                        serve404(res);
                     }
                 });
             }
@@ -275,6 +278,7 @@ const server = http.createServer((request, res) => {
                         getUserOrderInfo(res, postData.memberId);
                     } catch (error) {
                         console.error('Error parsing JSON: ', error);
+                        serve404(res);
                     }
                 });
             }
@@ -289,6 +293,7 @@ const server = http.createServer((request, res) => {
                         getDashHoldsInfo(res, postData.memberId);
                     } catch (error) {
                         console.error('Error parsing JSON: ', error);
+                        serve404(res);
                     }
                 });
             }
@@ -441,7 +446,9 @@ const server = http.createServer((request, res) => {
                 serve404(res, pathname);
             }
             break;
-           
+            // Handle other methods (e.g., POST) here
+            default:
+            serve404(res, pathname);
     }
 });
 
