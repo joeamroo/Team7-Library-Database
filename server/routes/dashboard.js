@@ -141,6 +141,9 @@ function getUserDashInfo(response, memberId) {
         lastName = nameParts[nameParts.length - 1];
       });
 
+      console.log('firstName: ' + firstName);
+      console.log('lastName: ' + lastName);
+
     
       let html = '';
 
@@ -209,15 +212,12 @@ function getUserDashInfo(response, memberId) {
       const sql_query = 'INSERT INTO MEMBER (memberId, name, phone_number, street_addr, city_addr, state, zipcode_addr, email) ' +
                         'VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
 
-
+    // Values to update
+    const values = [memberId, fullName, phone_number, street_addr, city_addr, state, zipcode_addr, email];
     // Use the memberId parameter in the query execution
-    link.query(sql_query, [memberId, fullName, phone_number, 
-                          street_addr, city_addr, state, zipcode_addr, email],
-                                                  function(err, result) {
+      link.query(sql_query, values, function(err, result) {
       if (err) {
         console.error('Failed to generate table for Profile');
-        response.writeHead(409, { 'Content-Type': 'text/html' });
-        response.end('Sorry, an error occurred. Please try again later');
       } else {
         response.writeHead(200, { 'Content-Type': 'text/html' });
         response.end('Profile settings successfully updated!', 'utf-8');
