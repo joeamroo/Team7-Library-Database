@@ -1,7 +1,5 @@
-const fs = require('fs');
-const path = require('path');
 const mysql = require('mysql');
-const htmlTemplateTag = require('html-template-tag');
+
 
 const link = mysql.createConnection({
     host: 'library-database-sytem.mysql.database.azure.com',
