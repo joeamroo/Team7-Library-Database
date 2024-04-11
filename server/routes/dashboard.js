@@ -207,7 +207,7 @@ function getUserDashInfo(response, memberId) {
       console.log(fullName);
 
       // Query to search for
-      const sql_query = 'INSERT INTO MEMBER (memberId, name, phone_number, street_addr, city_addr, state, zipcode_addr, email) ' +
+      const sql_query = 'INSERT INTO MEMBER (member_id, name, phone_number, street_addr, city_addr, state, zipcode_addr, email) ' +
                         'VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
 
     // Values to update
@@ -216,6 +216,7 @@ function getUserDashInfo(response, memberId) {
       link.query(sql_query, values, function(err, result) {
       if (err) {
             console.error('Failed to insert member details:', err);
+            console.log('Query Results: ', result);
             response.writeHead(200, { 'Content-Type': 'text/html' });
             response.end('Internal Server Error', 'utf-8');
       } else {
