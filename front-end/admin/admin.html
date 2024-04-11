@@ -461,8 +461,10 @@
     <div class="mb-3i" id="finalFilter">
       <label id="checkOutLabel">Checkedout:</label>
       <input type="date" id="checkDate" required>
-      <button id="searchCatalogButton">Search Items</button>
+      <button id="searchCatalogButton">Filter Items</button>
+      <button id="resetTable">Reset Filter</button>
     </div>
+    <div class="mb-3i" id="totalItemsBubble">Total Items:  <span id="totalItemsCount"> 0</span></div>
   </div>
 
   <table id="catalogTable" class="table table-striped table-hover text-info shadow">
@@ -478,11 +480,6 @@
     <tbody class="catalogTable-content" id="catalogTableItems">
       <!--Employee info here-->
     </tbody>
-    <tfoot id="summary" class="fw-bold text-dark">
-      <tr>
-        <th>Total Items:  <span id="itemsTotal-count"></span></th>
-      </tr>
-    </tfoot>
   </table>
  </div>
 

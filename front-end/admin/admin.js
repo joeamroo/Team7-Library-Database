@@ -655,6 +655,7 @@ function getItemList() {
         if (xhr.status === 200) {
             const catalogDiv = document.querySelector('.catalogTable-content');
             catalogDiv.innerHTML = xhr.responseText;
+            updateTotalCatalogItemsCount()
         } 
     };
     xhr.send();
@@ -676,12 +677,10 @@ document.getElementById('searchCatalogButton').addEventListener('click', functio
     xhr.onload = function() {
         if (xhr.status === 200) {
             console.log('sucessfully filtered catalog items event');
-            document.getElementById('itemType').value = '';
-            document.getElementById('item-condition').value = '';
-            document.getElementById('checkDate').value = '';
-
+            
             const catalogDiv = document.querySelector('.catalogTable-content');
             catalogDiv.innerHTML = xhr.responseText;
+            updateTotalCatalogItemsCount()
         } 
         else {
             console.error('Error:', xhr.statusText);
@@ -695,6 +694,18 @@ document.getElementById('searchCatalogButton').addEventListener('click', functio
     xhr.send(data);
 });
 
+document.getElementById('resetTable').addEventListener('click', function(event) {
+    document.getElementById('itemType').value = '';
+    document.getElementById('item-condition').value = '';
+    document.getElementById('checkDate').value = '';
+    getItemList();
+});
+
+function updateTotalCatalogItemsCount() {
+    const totalItems = document.getElementById('totalItemsCount');
+    const rowCount = document.getElementById('catalogTable').rows.length - 1;
+    totalItems.textContent = rowCount;
+}
 
 
 
