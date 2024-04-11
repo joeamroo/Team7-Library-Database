@@ -203,10 +203,11 @@ function getUserDashInfo(response, memberId) {
 
       // Combines first name and last name
       const fullName = firstName + " " + lastName;
+      console.log(fullName);
 
       // Query to search for
       const sql_query = 'INSERT INTO MEMBER (memberId, name, phone_number, street_addr, city_addr, state, zipcode_addr, email) ' +
-                        'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+                        'VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
 
 
     // Use the memberId parameter in the query execution
