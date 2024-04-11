@@ -38,12 +38,12 @@ function createMovieDeviceItemHtml(item) {
 
 function getAdminInfo(res, adminId) {
     let namePromise = new Promise((resolve, reject) => {
-        connection.query('SELECT name FROM staff WHERE staff_id = ?', [adminId], (err, results) => {
+        connection.query('SELECT name AS adminName FROM staff WHERE staff_id = ?', [adminId], (err, results) => {
             if (err) {
                 reject(err);
             } 
             else {
-                resolve(results[0].name);
+                resolve(results[0].adminName);
             }
         });
     });
@@ -84,7 +84,7 @@ function getAdminInfo(res, adminId) {
     Promise.all([namePromise, staffCountPromise, eventCountPromise, itemCountPromise])
         .then(([name, staffCount, eventCount, itemCount]) => {
             let adminInfo = {
-                name: name,
+                adminName: adminName,
                 staffCount: staffCount,
                 eventCount: eventCount,
                 itemCount: itemCount
