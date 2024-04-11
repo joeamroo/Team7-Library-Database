@@ -257,8 +257,8 @@ const query = "SELECT TV.transaction_Id AS 'Order ID', " +
 link.query(query, [memberId], (err, results) => {
   if (err) {
       console.error('Error executing the query:', err);
-      res.writeHead(204, { 'Content-Type': 'text/plain' });
-      res.end('Internal Server Error');
+      response.writeHead(204, { 'Content-Type': 'text/plain' });
+      response.end('Internal Server Error');
       return;
     }  else {
 
@@ -294,8 +294,8 @@ var tableHTML = '<table>' +
   });
 
     tableHTML += '</tbody>' + '</table>';
-    res.writeHead(200, { 'Content-Type': 'text/html' });
-    res.end(tableHTML);
+    response.writeHead(200, { 'Content-Type': 'text/html' });
+    response.end(tableHTML);
     } 
   });
 }
