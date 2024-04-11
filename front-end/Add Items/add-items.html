@@ -15,7 +15,7 @@
         </div>
     </header>
 <body>
-    <div class="form-container">
+    <div id="addItemForm" class="form-container">
         <h2>Add New Item</h2>
         <form>
             <div class="form-group">
@@ -39,7 +39,7 @@
             </div>
             <div class="form-group">
                 <label for="category">Category:</label>
-                <input type="category" name="category">
+                <input type="category" id="category" name="category">
                 </select>
             </div>
             <div class="form-group">
@@ -50,7 +50,7 @@
                 <label for="publicationReleaseDate">Publication/Release Date:</label>
                 <input type="date" id="publicationReleaseDate" name="publicationReleaseDate">
             </div>
-            <button type="submit">Add Item</button>
+            <button type="submit" id="addItemBtn" class="main-btn">Add Item</button>
         </form>
     </div>
 </body>
