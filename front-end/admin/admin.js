@@ -392,7 +392,9 @@ document.getElementById('removeEmployeeSubmit').addEventListener('click', functi
     }
 });
 
-document.getElementById('searchEmplysButton').addEventListener('click', function(event) {
+document.getElementById('searchEmplsButton').addEventListener('click', function(event) {
+    event.preventDefault();
+
     const empStatDropdown = document.getElementById('limitEmpStat').value;
     const positionDropdown = document.getElementById('limitPosition').value;
 
@@ -416,7 +418,9 @@ document.getElementById('searchEmplysButton').addEventListener('click', function
     xhr.send(data);
 });
 
-document.getElementById('resetEmplSearch').addEventListener('click', function(event) { 
+document.getElementById('resetEmplSearch').addEventListener('click', function(event) {
+    document.getElementById('limitEmpStat').value = '';
+    document.getElementById('limitPosition').value = ''; 
     getEmployeeList()
 });
 
