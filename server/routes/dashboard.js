@@ -118,7 +118,6 @@ function getUserDashInfo(response, memberId) {
         { label: "State", id: "state", type: "text", value: "Texas" },
         { label: "Zip Code", id: "zipcode_addr", type: "text", value: "77063" },
         { label: "Email", id: "email", type: "email", value: "ssh!atlibrary@library.com" },
-        { label: "Password", id: "password", type: "password", value: "ilikebigbooks@icannotlie.com" }
       ];
 
     // Searches Database for user with memberID
