@@ -154,9 +154,9 @@ function getUserDashInfo(response, memberId) {
         const updatedMemberInfo = memberInfo.map(info => {
             switch (info.id) {
               case "firstName":
-                return { ...info, value: result[0].firstName};
+                return { ...info, value: firstName };
               case "lastName":
-                return { ...info, value: result[0].lastName };
+                return { ...info, value: lastName };
               case "phone_number":
                 return { ...info, value: result[0].phone_number };
               case "street_addr":
