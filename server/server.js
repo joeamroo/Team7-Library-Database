@@ -1,4 +1,5 @@
 const http = require('http');
+const url = require('url');
 const htmlTemplateTag = require('html-template-tag');
 require("dotenv").config();
 
@@ -36,10 +37,10 @@ const server = http.createServer((request, res) => {
     setCorsHeaders(res);
 
     if (request.method === 'OPTIONS') {
-      res.writeHead(200);
-      res.end();
-      return;
-    }
+        res.writeHead(204);
+        res.end();
+        return;
+    } 
 
     switch (request.method) {
         case 'GET':
