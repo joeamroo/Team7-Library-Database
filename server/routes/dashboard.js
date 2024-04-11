@@ -41,23 +41,26 @@ const link = mysql.createConnection({
   └─────────────────────────────────────────────────────────────────────────────┘
  */
 
-// Function to execute the SQL query and generate the HTML table
-function getSQLTable(query, callback) {
-  connection.query(query, (error, results) => {
-    if (error) {
-      console.error('Error executing query:', error);
-      callback(null);
-      return;
+  function getSQLTable(queryResult) {
+    // Check if queryResult is empty or undefined
+    if (!queryResult || queryResult.length === 0) {
+      return '<p>No data available</p>'; // Return a simple message if no data
     }
-
-    const data = results;
-    const headers = Object.keys(data[0]);
+  
+    const data = queryResult;
+    const headers = Object.keys(data[0]); // Get headers from the keys of the first row
+  
+    // Generate table headers
+    const tableHeader = headers.map(headerText => `<th>${headerText}</th>`).join('');
+  
+    // Generate table rows
     const tableRows = data.map(rowData => {
-      const cells = headers.map(key => htmlTemplateTag`<td>${rowData[key]}</td>`);
-      return htmlTemplateTag`<tr>${cells}</tr>`;
-    });
-    const tableHeader = headers.map(headerText => htmlTemplateTag`<th>${headerText}</th>`);
-    const table = htmlTemplateTag`
+      const cells = headers.map(key => `<td>${rowData[key]}</td>`).join('');
+      return `<tr>${cells}</tr>`;
+    }).join('');
+  
+    // Construct the table
+    const table = `
       <table>
         <thead>
           <tr>${tableHeader}</tr>
@@ -67,10 +70,9 @@ function getSQLTable(query, callback) {
         </tbody>
       </table>
     `;
-
-    callback(table);
-  });
-}
+  
+    return table; // Return the HTML table string
+  }
 
 
 /* 
@@ -252,12 +254,18 @@ function getUserOrderInfo(response, memberId) {
     
 
   // Use the memberId parameter in the query execution
-  link.query(sqlQuery, [memberId], (table) => {
-    if (table) {
-      response.writeHead(200, { 'Content-Type': 'text/html' });
+  link.query(sqlQuery, [memberId], (error, result) => {
+
+    // Generates Table
+    const table = getSQLTable(result);
+
+    if (error) {
+      console.error('Failed to generate table');
+      response.writeHead(500, { 'Content-Type': 'text/html' });
       response.end(table, 'utf-8');
     } else {
-      console.error('Failed to generate table');
+      response.writeHead(500, { 'Content-Type': 'text/html' });
+      response.end(table, 'utf-8');
     }
   });
 }
