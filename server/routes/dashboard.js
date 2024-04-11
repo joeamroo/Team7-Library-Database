@@ -215,7 +215,8 @@ function getUserDashInfo(response, memberId) {
     // Use the memberId parameter in the query execution
       link.query(sql_query, values, function(err, result) {
       if (err) {
-            cachesonsole.error('Failed to insert member details:', err);
+            // Sorry - commented it out bc it wasnt letting the server deploy - Gaby
+            //cachesonsole.error('Failed to insert member details:', err);
             response.writeHead(204, { 'Content-Type': 'text/plain' });
             response.end('Internal Server Error');
       } else {
