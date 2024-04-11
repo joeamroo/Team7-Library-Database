@@ -89,7 +89,8 @@ function getAdminInfo(res, adminId) {
                 eventCount: eventCount,
                 itemCount: itemCount
             };
-            res.status(200).json(adminInfo); 
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ adminInfo })); 
         })
         .catch(err => {
             console.error('Error querying database:', err);
