@@ -201,7 +201,8 @@ const getAdminInfosUrl = `${backendUrl}/adminInfo`;
 /* Get Member Info for Dashboard */
 document.addEventListener('DOMContentLoaded', function() { 
     const adminId = document.getElementById('adminId');
-    adminId.textContent =  localStorage.getItem('staffId');
+    const staffId = localStorage.getItem('staffId');
+    adminId.textContent =  staffId;
 
     const xhr = new XMLHttpRequest();
     xhr.open('POST', getAdminInfosUrl);
@@ -219,7 +220,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    const data = JSON.stringify({ adminId: adminId });
+    const data = JSON.stringify({ staffId: staffId });
     xhr.send(data);
 });
 
