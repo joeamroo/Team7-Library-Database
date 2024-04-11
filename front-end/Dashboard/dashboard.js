@@ -235,7 +235,7 @@ updateBtn.addEventListener('click', function(event) {
       'state', 'zipcode_addr', 'email'
   ].every(id => document.getElementById(id).value.trim() !== "");
 
-  //console.log(allFieldsFilled);
+  console.log(allFieldsFilled);
 
   if (!allFieldsFilled) {
   
@@ -263,12 +263,22 @@ function openPop() {
 }
 
 sendPop.addEventListener('click', function(event) {
-  setProfileInfo();
+  //setProfileInfo();
   closePop();
 });
 
 
 function setProfileInfo() {
+  
+  const firstName = document.getElementById('.firstName');
+  const lastName = document.getElementById('.lastName');
+  const phone_number = document.getElementById('.phone_number');
+  const street_addr = document.getElementById('.street_addr');
+  const city_addr = document.getElementById('.city_addr');
+  const state = document.getElementById('.state');
+  const zipcode_addr = document.getElementById('.zipcode_addr');
+  const email = document.getElementById('.email');
+
   const xhr = new XMLHttpRequest();
   xhr.open('POST', setUserInfoUrl);
   xhr.setRequestHeader('Content-Type', 'text/html');
@@ -290,7 +300,15 @@ function setProfileInfo() {
   }
 
   const data = JSON.stringify({
-    memberId: memberId
+    memberId: memberId,
+    firstName: firstName,
+    lastName: lastName,
+    phone_number: phone_number,
+    street_addr: street_addr,
+    city_addr: city_addr,
+    state: state,
+    zipcode_addr: zipcode_addr,
+    email: email
   });
 
   xhr.send(data);
