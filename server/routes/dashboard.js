@@ -174,7 +174,7 @@ function getUserDashInfo(response, memberId) {
 
         if (error) {
             console.log('Error', memberId);
-            response.writeHead(500);
+            response.writeHead(204);
             response.end('Server error');
             return;
         } else {
@@ -216,7 +216,7 @@ function getUserDashInfo(response, memberId) {
       link.query(sql_query, values, function(err, result) {
       if (err) {
             cachesonsole.error('Failed to insert member details:', err);
-            response.writeHead(500, { 'Content-Type': 'text/plain' });
+            response.writeHead(204, { 'Content-Type': 'text/plain' });
             response.end('Internal Server Error');
       } else {
         response.writeHead(200, { 'Content-Type': 'text/html' });
@@ -256,7 +256,7 @@ const query = "SELECT TV.transaction_Id AS 'Order ID', " +
 link.query(query, [memberId], (err, results) => {
   if (err) {
       console.error('Error executing the query:', err);
-      res.writeHead(500, { 'Content-Type': 'text/plain' });
+      res.writeHead(204, { 'Content-Type': 'text/plain' });
       res.end('Internal Server Error');
       return;
     }  else {
@@ -316,7 +316,7 @@ var tableHTML = '<table>' +
     link.query(query_name, [memberId], (error, result) => {
         if (error) {
             console.log('Error', memberId);
-            response.writeHead(500);
+            response.writeHead(204);
             response.end('Server error');
             return;
         } else {
