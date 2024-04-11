@@ -209,11 +209,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     xhr.onload = function() {
         if (xhr.status === 200) {
-            const data = JSON.parse(xhr.responseText);
-            document.getElementById('admin-name').textContent = data.adminName;
-            document.getElementById('totalEmplyIntro').textContent = data.staffCount;
-            document.getElementById('totalEventIntro').textContent = data.eventCount;
-            document.getElementById('totalItemIntro').textContent = data.itemCount;           
+            const resultData = JSON.parse(xhr.responseText);
+            console.log(resultData);
+            document.getElementById('admin-name').textContent = resultData.adminInfo.adminName + '!';
+            document.getElementById('totalEmplyIntro').textContent = resultData.adminInfo.staffCount;
+            document.getElementById('totalEventIntro').textContent = resultData.adminInfo.eventCount;
+            document.getElementById('totalItemIntro').textContent = resultData.adminInfo.itemCount;           
         } 
         else {
             console.error('Error:', xhr.statusText);
