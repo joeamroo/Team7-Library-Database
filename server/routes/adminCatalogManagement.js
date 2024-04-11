@@ -103,7 +103,7 @@ function filterCatalogItems(res, itemType, itemCondition, checkoutDate) {
       res.writeHead(200, { 'Content-Type': 'text/html' });
       res.end(itemHtml, 'utf-8');
     });
-  }
+}
 
 
 module.exports = { getItemsForAdmin, filterCatalogItems };
