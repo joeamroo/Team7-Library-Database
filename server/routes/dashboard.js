@@ -283,4 +283,4 @@ function getUserOrderInfo(response, memberId) {
 
 
 
-module.exports = { getUserDash, getUserDashInfo, setUserDashInfo, getUserOrderInfo };
+module.exports = { getUserDash, getUserDashInfo, setUserDashInfo, getUserOrderInfo, getDashHoldsInfo };
