@@ -141,6 +141,9 @@ function getUserDashInfo(response, memberId) {
         lastName = nameParts[nameParts.length - 1];
       });
 
+      console.log('firstName: ' + firstName);
+      console.log('lastName: ' + lastName);
+
     
       let html = '';
 
