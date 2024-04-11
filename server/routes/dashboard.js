@@ -130,10 +130,15 @@ function getUserDashInfo(response, memberId) {
     // Gets information from backend
     link.query(query_info, [memberId], (error, result) => {
 
-      const full_name = result.name; 
-      const nameArray = full_name.split(' '); 
-      const firstName = nameArray[0]; 
-      const lastName = nameArray.length > 1 ? nameArray[1] : ''; 
+      var firstName = '';
+      var lastName = '';
+
+      results.forEach(function(row) {
+        var fullName = row.name;
+        var nameParts = fullName.split(' ');
+        firstName = nameParts[0];
+        lastName = nameParts[nameParts.length - 1];
+      });
 
     
       let html = '';
