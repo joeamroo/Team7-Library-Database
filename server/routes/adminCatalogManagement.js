@@ -142,6 +142,10 @@ function filterCatalogItems(res, itemType, itemCondition, checkoutDate) {
       searchQuery += (queryParams.length > 0 ? 'AND ' : '') + 'DATE(t.date_created) = ? ';
       queryParams.push(checkoutDate);
     }
+
+    if (queryParams.length === 0) {
+        searchQuery = 'SELECT asset_type, isbn, asset_id, asset_condition, current_holds, total_copies FROM catalog_view';
+    }
   
     connection.query(searchQuery, queryParams, (err, results) => {
       if (err) {
