@@ -29,28 +29,15 @@ function serve404(res, attemptedPath) {
     console.log(`404 Not Found: ${attemptedPath}`);
 }
 
-// Function to handle OPTIONS preflight requests
-function preflight(req, res) {
-    if (req.method === 'OPTIONS') {
-        res.writeHead(204); // No Content
-        res.end();
-        return true; // Indicates that the request was an OPTIONS request and was handled
-    }
-    return false; // Indicates that the request was not an OPTIONS request
-}
-
-
 
 const server = http.createServer((request, res) => {
     const pathname = new URL(request.url, `http://${request.headers.host}`).pathname;
 
     setCorsHeaders(res);
 
-    // Immediately return if the request is an OPTIONS preflight request
-    if (handleOptionsPreflight(req, res)) return;
     
     if (request.method === 'OPTIONS') {
-        res.writeHead(200);
+        res.writeHead(204);
         res.end();
         return;
     } 
