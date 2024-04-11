@@ -284,7 +284,12 @@ var tableHTML = '<table>' +
     results.forEach(transaction => {
       tableHTML += '<tr>';
       for (let key in transaction) {
+        if(key === 'returned') {
+          tableHTML += `<td id='returned'>${transaction[key]}</td>`;
+        } else {
           tableHTML += `<td>${transaction[key]}</td>`;
+        }
+          
       }
       tableHTML += '</tr>';
   });
@@ -306,6 +311,8 @@ var tableHTML = '<table>' +
 
     // Searches Database for user with the memberID
     const query_name = 'SELECT name FROM member WHERE member_id = ?';
+
+    
 
     // Gets information from backend
     link.query(query_name, [memberId], (error, result) => {
