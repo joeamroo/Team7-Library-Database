@@ -122,8 +122,21 @@ function getUserDashInfo(response, memberId) {
       ];
 
     // Searches Database for user with memberID
-    const query_info = 'SELECT name, email, status, phone_number, street_addr,\
-                        city_addr, state, zipcode_addr FROM member WHERE member_id = ?';
+    const query_info = `
+    SELECT
+      name,
+      email,
+      status,
+      phone_number,
+      street_addr,
+      city_addr,
+      state,
+      zipcode_addr
+   FROM
+      member
+    WHERE
+      member_id = ?
+  `;
 
 
 
@@ -143,7 +156,7 @@ function getUserDashInfo(response, memberId) {
               case "firstName":
                 return { ...info, value: result[0].firstName};
               case "lastName":
-                return { ...info, value: result[0].fullName };
+                return { ...info, value: result[0].lastName };
               case "phone_number":
                 return { ...info, value: result[0].phone_number };
               case "street_addr":
