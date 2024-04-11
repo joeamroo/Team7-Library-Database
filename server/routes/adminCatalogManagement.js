@@ -82,7 +82,7 @@ function getAdminInfo(res, adminId) {
     });
 
     Promise.all([namePromise, staffCountPromise, eventCountPromise, itemCountPromise])
-        .then(([name, staffCount, eventCount, itemCount]) => {
+        .then(([adminName, staffCount, eventCount, itemCount]) => {
             let adminInfo = {
                 adminName: adminName,
                 staffCount: staffCount,
