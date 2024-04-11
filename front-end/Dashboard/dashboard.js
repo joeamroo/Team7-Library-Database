@@ -15,7 +15,7 @@ const waitlistView = document.querySelector('.settings.waitlist');
 const orderReport = document.querySelector('.recent-orders');
 const profileInfo = document.querySelector('.member-info');
 const today = new Date().toLocaleDateString();
-let notify = document.querySelector('#notify-user');
+const notify = document.querySelector('#notify-user');
 
 
 /* *********************************************** */
@@ -277,10 +277,10 @@ function setProfileInfo() {
     if (xhr.status === 200) {
       //const dataRetrieved = xhr.responseText;
       //console.log(dataRetrieved);
-      notify = xhr.responseText;
+      notify.innerHTML = xhr.responseText;
       showNotification();
     } else {
-      notify = "Failed: Please contact a librarian for help!";
+      notify.innerHTML = "Failed: Please contact a librarian for help!";
       showNotification();
     }
   };
