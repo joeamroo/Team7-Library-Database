@@ -101,7 +101,9 @@
       <img src="../Dashboard/notify.png" alt="" />
       <div class="details">
         <div class="name">Cougar Chronicles</div>
-        <div class="hello-msg">Hello, User!</div>
+        <div class="hello-msg">
+          <a class="message" id="notify-user" >Cougar Message</a>
+        </div>
       </div>
       <span class="material-icons-round btn" onclick="closeNote()">close</span>
     </div>
@@ -211,7 +213,7 @@
         
         <!--<button class="update-info" id="updateInfo">Update Information</button>-->
 
-        <button type="button" class="main-btn" onclick="openPop()">Submit</button>
+        <button type="button" class="main-btn">Submit</button>
 
         <div class="update-container">
           <div class="popup">
@@ -232,7 +234,7 @@
                 <button type="button" class="btn" id="closeProfilePrompt" onclick="closePop()">
                   Cancel
                 </button>
-                <button type="button" class="btn" id="submitProfileInfo" onclick="closePop()">
+                <button type="button" class="btn" id="submitProfileInfo">
                   Submit
                 </button>
               </div>

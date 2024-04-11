@@ -3,6 +3,7 @@ const memberId = localStorage.getItem('memberId');
 const loginButton = document.getElementById('myAccount');
 const logOutBtn = document.getElementById('logoutBtn');
 const updateBtn = document.querySelector(".main-btn");
+const sendPop = document.querySelector('#submitProfileInfo');
 const profileSelect = document.getElementById('profile-selection');
 const orderSelect = document.getElementById('order-selection');
 const holdSelect = document.getElementById('hold-selection');
@@ -14,6 +15,7 @@ const waitlistView = document.querySelector('.settings.waitlist');
 const orderReport = document.querySelector('.recent-orders');
 const profileInfo = document.querySelector('.member-info');
 const today = new Date().toLocaleDateString();
+const notify = document.querySelector('#notify-user');
 
 
 /* *********************************************** */
@@ -23,7 +25,9 @@ const today = new Date().toLocaleDateString();
 const backendUrl = 'https://cougarchronicles.onrender.com'; 
 const getUserDashUrl = `${backendUrl}/getDashname`;
 const getUserInfoUrl = `${backendUrl}/getDashInfo`;
+const setUserInfoUrl =`${backendUrl}/setDashInfo`;
 const getUserOrderUrl =`${backendUrl}/getDashOrders`;
+
 
 
 logOutBtn.addEventListener('click', function(event) {
@@ -225,61 +229,71 @@ window.onload = function() {
 
 updateBtn.addEventListener('click', function(event) {
 
-    // Text inside form (prompt)
-    const notice = document.querySelector('#profile-flag');
-
-    // Title of Form
-    const submitTitle = document.querySelector('#submitTitle');
-
-    // Submit button
-    const submitButton = document.querySelector('#submitProfileInfo');
-
-    // Close button
-    const closePrompt = document.querySelector('#closeProfilePrompt');
 
     const allFieldsFilled = [
-      'lastName', 'phone_number', 'street_addr', 'city_addr',
+      'firstName', 'lastName', 'phone_number', 'street_addr', 'city_addr',
       'state', 'zipcode_addr', 'email'
   ].every(id => document.getElementById(id).value.trim() !== "");
 
-  console.log(allFieldsFilled);
+  //console.log(allFieldsFilled);
 
   if (!allFieldsFilled) {
-    submitTitle.textContent = 'WARNING';
-    notice.textContent = 'Make sure all sections are filled out before submitting!';
-    submitButton.disabled = true;
-
-
   
+
+    // Prevents dialogue from showing
+    closePop();
+
     setTimeout(() => {
-      // Simulate close click
-    closePrompt.click();
-      // Reverts text
-      submitTitle.textContent = 'Submit Details';
-      notice.textContent = 'Are you sure you want to submit the details? You can later edit them' +
-      'in details section';
-      // Enables button again
-      submitButton.disabled = false;
-    }, 1100);
-
-    
-
-    
+      // Sends notification to use that they must fill out form entirely!
+       notify.textContent = 'You must fill out all sections to proceed!';
+       showNotification();
+    }, 900);
+  
   } else {
-        // Update user data to server
-    
+        openPop();
   }
- 
+    
 });
-
-
-
 
 function closePop() {
   document.querySelector(".popup").style.display = "none";
 }
 function openPop() {
   document.querySelector(".popup").style.display = "flex";
+}
+
+sendPop.addEventListener('click', function(event) {
+  setProfileInfo();
+  closePop();
+});
+
+
+function setProfileInfo() {
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', setUserInfoUrl);
+  xhr.setRequestHeader('Content-Type', 'text/html');
+
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      //const dataRetrieved = xhr.responseText;
+      //console.log(dataRetrieved);
+      notify = xhr.responseText;
+      showNotification();
+    } else {
+      notify = "Failed: Please contact a librarian for help!";
+      showNotification();
+    }
+  };
+
+  xhr.onerror = function() {
+    console.log('error', xhr.statusText);
+  }
+
+  const data = JSON.stringify({
+    memberId: memberId
+  });
+
+  xhr.send(data);
 }
 
 
@@ -394,7 +408,36 @@ function getUserOrderReport() {
 
 
 
+        /*// Text inside form (prompt)
+    const notice = document.querySelector('#profile-flag');
+
+    // Title of Form
+    const submitTitle = document.querySelector('#submitTitle');
+
+    // Submit button
+    const submitButton = document.querySelector('#submitProfileInfo');
+
+    // Close button
+    const closePrompt = document.querySelector('#closeProfilePrompt');
+  */
+
+     /* submitTitle.textContent = 'WARNING';
+    notice.textContent = 'Make sure all sections are filled out before submitting!';
+    submitButton.disabled = true;
+
+
   
+    setTimeout(() => {
+      // Simulate close click
+    closePrompt.click();
+      // Reverts text
+      submitTitle.textContent = 'Submit Details';
+      notice.textContent = 'Are you sure you want to submit the details? You can later edit them' +
+      'in details section';
+      // Enables button again
+      submitButton.disabled = false;
+    }, 1100);
+    */
 
       
 
