@@ -92,9 +92,9 @@ function getUserDash(response, memberId) {
             response.end('Server error');
             return;
         } else {
-           const name = 'Welcome, ' + result[0].name + '!';
+           const greeting = 'Welcome, ' + result[0].name + '!';
            response.writeHead(200, { 'Content-Type': 'text/html' });
-           response.end(name, 'utf-8');
+           response.end(greeting, 'utf-8');
         }
     });
     
@@ -216,7 +216,7 @@ function getUserDashInfo(response, memberId) {
       link.query(sql_query, values, function(err, result) {
       if (err) {
             console.error('Failed to insert member details:', err);
-            response.writeHead(500, { 'Content-Type': 'text/html' });
+            response.writeHead(200, { 'Content-Type': 'text/html' });
             response.end('Internal Server Error', 'utf-8');
       } else {
         response.writeHead(200, { 'Content-Type': 'text/html' });
