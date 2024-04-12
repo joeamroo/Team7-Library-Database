@@ -53,7 +53,7 @@ const link = mysql.createConnection({
   
     // Generate table rows
     const tableRows = data.map(rowData => {
-      const cells = headers.map((key, index) => `<td headers="header-${index}">${rowData[key]}</td>`).join('');
+      const cells = headers.map((key, index) => `<td id="${rowData[key]}"</td>`).join('');
       return `<tr>${cells}</tr>`;
     }).join('');
   
