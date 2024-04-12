@@ -293,7 +293,10 @@ function getEmployeeRoles() {
     for (const row of rows) {
         const empRole = row.getElementsByClassName('staff_position')[0].textContent;
         const empName = row.getElementsByClassName('staff_name')[0].textContent;
-        employeeRoles.push(empName);
+        const empStatus = row.getElementsByClassName('staff_empl_status')[0].textContent;
+        if ((empRole === 'Admin' || empRole === 'Librarian') && empStatus === 'Active') {
+            employeeRoles.push(empName);
+        }
     }
     console.log('trying to get supers',employeeRoles);
     return employeeRoles;
@@ -302,8 +305,8 @@ function getEmployeeRoles() {
 function populateSupervisorDropdown(employeeRoles) {
     const dropdown = document.getElementById('employeeSupervisor');
 
-    while (dropdown.options.length > 1) {
-        dropdown.remove(1);
+    while (dropdown.options.length > 2) {
+        dropdown.remove(2);
     }
 
     employeeRoles.forEach(empRole => {
