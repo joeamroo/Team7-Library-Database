@@ -53,7 +53,7 @@ const link = mysql.createConnection({
   
     // Generate table rows
     const tableRows = data.map(rowData => {
-      const cells = headers.map((key, index) => `<td headers="header-${index}">${rowData[key]}</td>`).join('');
+      const cells = headers.map((key, index) => `<td id="${key}">${rowData[key]}</td>`).join('');
       return `<tr>${cells}</tr>`;
     }).join('');
   
@@ -69,6 +69,7 @@ const link = mysql.createConnection({
       </table>
     `;
   
+    console.log("Function table: " + table);
     return table; // Return the HTML table string
   }
 
@@ -263,40 +264,10 @@ link.query(query, [memberId], (err, results) => {
       return;
     }  else {
 
-var tableHTML = '<table>' +
-    '<thead>' +
-        '<tr>' +
-            '<th>Order ID</th>' +
-            '<th>Date</th>' +
-            '<th>Image</th>' +
-            '<th>Item</th>' +
-            '<th>Year Released</th>' +
-            '<th>Product</th>' +
-            '<th>ISBN</th>' +
-            '<th>Serial Number</th>' +
-            '<th>Genre</th>' +
-            '<th>Language</th>' +
-            '<th>Status</th>' +
-        '</tr>' +
-    '</thead>' +
-    '<tbody>';
+    // Converts SQL query to a table with Keys as IDs
+    const tableHTML = getSQLTable(results);
 
-    results.forEach(transaction => {
-      tableHTML += '<tr>';
-      for (let key in transaction) {
-        if(key === 'returned') {
-          tableHTML += `<td id='returned'>${transaction[key]}</td>`;
-        } else if (key === 'image_address') {
-          tableHTML += `<td><img src="${transaction[key]}" style="max-width: 100%; max-height: 100%;"></td>`;
-        } else {
-          tableHTML += `<td>${transaction[key]}</td>`;
-        }
-          
-      }
-      tableHTML += '</tr>';
-  });
-
-    tableHTML += '</tbody>' + '</table>';
+    // Sends the table back to client
     response.writeHead(200, { 'Content-Type': 'text/html' });
     response.end(tableHTML);
     } 
@@ -376,3 +347,39 @@ module.exports = { getUserDash, getUserDashInfo, setUserDashInfo, getUserOrderIn
   
     return table; // Return the HTML table string
   }*/
+
+
+  /*var tableHTML = '<table>' +
+    '<thead>' +
+        '<tr>' +
+            '<th>Order ID</th>' +
+            '<th>Date</th>' +
+            '<th>Image</th>' +
+            '<th>Item</th>' +
+            '<th>Year Released</th>' +
+            '<th>Product</th>' +
+            '<th>ISBN</th>' +
+            '<th>Serial Number</th>' +
+            '<th>Genre</th>' +
+            '<th>Language</th>' +
+            '<th>Status</th>' +
+        '</tr>' +
+    '</thead>' +
+    '<tbody>';*/
+
+    /*results.forEach(transaction => {
+      tableHTML += '<tr>';
+      for (let key in transaction) {
+        if(key === 'returned') {
+          tableHTML += `<td id='returned'>${transaction[key]}</td>`;
+        } else if (key === 'image_address') {
+          tableHTML += `<td><img src="${transaction[key]}" style="max-width: 100%; max-height: 100%;"></td>`;
+        } else {
+          tableHTML += `<td>${transaction[key]}</td>`;
+        }
+          
+      }
+      tableHTML += '</tr>';
+  });
+
+    tableHTML += '</tbody>' + '</table>';*/
