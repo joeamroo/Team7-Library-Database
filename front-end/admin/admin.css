@@ -1097,6 +1097,8 @@ input[type=email],
 input[type=password],
 input[type=url],
 #employeeSupervisor,
+#empId,
+#removeEmployeeEmail,
 #addEventDes,
 .form-select {
   width: 500px;

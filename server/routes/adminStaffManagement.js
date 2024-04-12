@@ -25,7 +25,7 @@ function createStaffHtml(item) {
     staffHtml += '<tr class="employee-item">';
     staffHtml += `<td class="staff_id">${item.staff_id}</td>`;
     staffHtml += `<td class="staff_name">${item.name}</td>`;
-    staffHtml += `<td id="staff_email">${item.email}</td>`;
+    staffHtml += `<td class="staff_email">${item.email}</td>`;
     staffHtml += `<td class="staff_position">${capitalizeFirstLetter(item.staff_position)}</td>`;
     staffHtml += `<td id="supervisor">${item.supervisor}</td>`;
     staffHtml += `<td class="staff_empl_status">${capitalizeFirstLetter(item.employment_status)}</td>`;

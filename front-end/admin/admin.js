@@ -280,6 +280,13 @@ function getEmployeeList() {
 
             const empRoles = getEmployeeRoles(); 
             populateSupervisorDropdown(empRoles);
+            
+            const empIds = getEmployeesIds();
+            populateEmpIdsDropdown(empIds);
+
+            const empEmails = getEmployeesEmail();
+            populateEmpEmailsDropdown(empEmails)
+
         } 
     };
     xhr.send();
@@ -329,17 +336,44 @@ function getEmployeesIds() {
     return empIds;
 }
 
-function populateEmpIdsDropdown(eventIds) {
-    const dropdown = document.getElementById('empId');
+function populateEmpIdsDropdown(empIds) {
+    const dropdown = document.getElementById('removeEmployeeId');
 
     while (dropdown.options.length > 1) {
         dropdown.remove(1);
     }
 
-    eventIds.forEach(empId => {
+    empIds.forEach(empId => {
         const option = document.createElement('option');
         option.value = empId;
         option.textContent = empId;
+        dropdown.appendChild(option);
+    });
+}
+
+function getEmployeesEmail() {
+    const table = document.getElementById('employeeTable');
+    const rows = table.getElementsByClassName('employee-item');
+    const empEmails = [];
+
+    for (const row of rows) {
+        const empEmail = row.getElementsByClassName('staff_email')[0].textContent;
+        empEmails.push(empEmail);
+    }
+    return empEmails;
+}
+
+function populateEmpEmailsDropdown(empEmails) {
+    const dropdown = document.getElementById('removeEmployeeEmail');
+
+    while (dropdown.options.length > 1) {
+        dropdown.remove(1);
+    }
+
+    empEmails.forEach(empEmail => {
+        const option = document.createElement('option');
+        option.value = empEmail;
+        option.textContent = empEmail;
         dropdown.appendChild(option);
     });
 }

@@ -177,13 +177,15 @@
     <form id="removeEmployeeForm">
       <div class="mb-3">
         <label class="form-label">Staff ID<span id="req">*</span></label>
-        <select class="form-select" id="empId" required>
+        <select class="form-select" id="removeEmployeeId" required>
           <option value="">Select ID</option>
         </select>
       </div>
       <div class="mb-3">
-        <label for="removeEmployeeEmail" class="form-label">Email<span id="req">*</span></label>
-        <input type="email" class="form-control" id="removeEmployeeEmail" autocomplete="off" required>
+        <label class="form-label">Email<span id="req">*</span></label>
+        <select class="form-select" id="removeEmployeeEmail" required>
+          <option value="">Select Email</option>
+        </select>
       </div>
       <div class="mb-3">
         <label for="reason" class="form-label">Reason for Removal<span id="req">*</span></label>
