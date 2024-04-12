@@ -1099,6 +1099,7 @@ input[type=url],
 #employeeSupervisor,
 #empId,
 #removeEmployeeEmail,
+#removeEmployeeId,
 #addEventDes,
 .form-select {
   width: 500px;

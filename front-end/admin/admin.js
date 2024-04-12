@@ -332,7 +332,6 @@ function getEmployeesIds() {
         const empId = row.getElementsByClassName('staff_id')[0].textContent;
         empIds.push(empId);
     }
-    console.log('trying to get staff id',empIds);
     return empIds;
 }
 
