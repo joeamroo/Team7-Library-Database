@@ -4,6 +4,12 @@ const staffId = localStorage.getItem('staffId');
 const isAdmin = localStorage.getItem('isAdmin');
 const loginButton = document.getElementById('myAccount');
 
+document.addEventListener('DOMContentLoaded', function() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        loginButton.textContent = 'My Account';
+    }
+});
+
 loginButton.addEventListener('click', function(event) {
     console.log('clicking the one button');
     if (loggedIn === 'true') {
