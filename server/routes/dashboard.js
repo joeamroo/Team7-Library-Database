@@ -48,12 +48,12 @@ const link = mysql.createConnection({
     const data = queryResult;
     const headers = Object.keys(data[0]); // Get headers from the keys of the first row
   
-    // Generate table headers
-    const tableHeader = headers.map(headerText => `<th>${headerText}</th>`).join('');
+    // Generate table headers with id attributes
+    const tableHeader = headers.map((headerText, index) => `<th id="header-${index}">${headerText}</th>`).join('');
   
     // Generate table rows
     const tableRows = data.map(rowData => {
-      const cells = headers.map(key => `<td>${rowData[key]}</td>`).join('');
+      const cells = headers.map((key, index) => `<td headers="header-${index}">${rowData[key]}</td>`).join('');
       return `<tr>${cells}</tr>`;
     }).join('');
   
@@ -342,3 +342,37 @@ var tableHTML = '<table>' +
 
 
 module.exports = { getUserDash, getUserDashInfo, setUserDashInfo, getUserOrderInfo, getDashHoldsInfo };
+
+
+ /*function getSQLTable(queryResult) {
+    // Check if queryResult is empty or undefined
+    if (!queryResult || queryResult.length === 0) {
+      return '<p>No data available</p>'; // Return a simple message if no data
+    }
+  
+    const data = queryResult;
+    const headers = Object.keys(data[0]); // Get headers from the keys of the first row
+  
+    // Generate table headers
+    const tableHeader = headers.map(headerText => `<th>${headerText}</th>`).join('');
+  
+    // Generate table rows
+    const tableRows = data.map(rowData => {
+      const cells = headers.map(key => `<td>${rowData[key]}</td>`).join('');
+      return `<tr>${cells}</tr>`;
+    }).join('');
+  
+    // Construct the table
+    const table = `
+      <table>
+        <thead>
+          <tr>${tableHeader}</tr>
+        </thead>
+        <tbody>
+          ${tableRows}
+        </tbody>
+      </table>
+    `;
+  
+    return table; // Return the HTML table string
+  }*/
