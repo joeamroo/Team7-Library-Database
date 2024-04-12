@@ -298,7 +298,6 @@ function getEmployeeRoles() {
             employeeRoles.push(empName);
         }
     }
-    console.log('trying to get supers',employeeRoles);
     return employeeRoles;
 }
 
@@ -313,6 +312,34 @@ function populateSupervisorDropdown(employeeRoles) {
         const option = document.createElement('option');
         option.value = empRole;
         option.textContent = empRole;
+        dropdown.appendChild(option);
+    });
+}
+
+function getEmployeesIds() {
+    const table = document.getElementById('employeeTable');
+    const rows = table.getElementsByClassName('employee-item');
+    const empIds = [];
+
+    for (const row of rows) {
+        const empId = row.getElementsByClassName('staff_id')[0].textContent;
+        empIds.push(empId);
+    }
+    console.log('trying to get staff id',empIds);
+    return empIds;
+}
+
+function populateEmpIdsDropdown(eventIds) {
+    const dropdown = document.getElementById('empId');
+
+    while (dropdown.options.length > 1) {
+        dropdown.remove(1);
+    }
+
+    eventIds.forEach(empId => {
+        const option = document.createElement('option');
+        option.value = empId;
+        option.textContent = empId;
         dropdown.appendChild(option);
     });
 }

@@ -23,7 +23,7 @@ function capitalizeFirstLetter(string) {
 function createStaffHtml(item) {
     let staffHtml = '';
     staffHtml += '<tr class="employee-item">';
-    staffHtml += `<td id="staff_id">${item.staff_id}</td>`;
+    staffHtml += `<td class="staff_id">${item.staff_id}</td>`;
     staffHtml += `<td class="staff_name">${item.name}</td>`;
     staffHtml += `<td id="staff_email">${item.email}</td>`;
     staffHtml += `<td class="staff_position">${capitalizeFirstLetter(item.staff_position)}</td>`;
