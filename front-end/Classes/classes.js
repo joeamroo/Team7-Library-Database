@@ -44,7 +44,7 @@ document.addEventListener('click', function(event) {
     if (event.target.classList.contains('signup-button')) {
         const eventId = parseInt(event.target.closest('.event-item').querySelector('#eventId').textContent);
         const loginState = localStorage.getItem('loggedIn');
-        const memberId = 1002001;
+        const memberId = localStorage.getItem('memberId');
 
         
         if (loginState === 'true') {
