@@ -239,12 +239,12 @@ const removeEmployeeForm = document.getElementById('removeEmployeeForm');
 
 addEmployeeBtn.addEventListener('click', () => {
   toggleForm(addEmployeeBtn, addEmployeeForm);
-  hideFormIfOpen(removeEmployeeForm);
+  hideFormIfOpen(addEmployeeBtn, removeEmployeeForm);
 });
 
 removeEmployeeBtn.addEventListener('click', () => {
   toggleForm(removeEmployeeBtn, removeEmployeeForm);
-  hideFormIfOpen(addEmployeeForm);
+  hideFormIfOpen(removeEmployeeBtn, addEmployeeForm);
 });
 
 function toggleForm(btn, form) {
@@ -253,16 +253,17 @@ function toggleForm(btn, form) {
   if (form.style.display === 'none') {
     form.style.display = 'block';
     icon.className = 'uil uil-angle-up';
-  } else {
+  } 
+  else {
     form.style.display = 'none';
     icon.className = 'uil uil-angle-down';
   }
 }
 
-function hideFormIfOpen(form, btn) {
+function hideFormIfOpen(btn, form) {
     if (form.style.display === 'block') {
         form.style.display = 'none';
-        const icon = form.previousElementSibling.querySelector('i');
+        const icon = btn.querySelector('i');
         icon.className = 'uil uil-angle-down';
     }
 }
@@ -524,7 +525,6 @@ function updateTotalEmployeesCount() {
     const totalEmployees = document.getElementById('total-count');
     const rowCount = document.getElementById('employeeTable').rows.length - 2;
     totalEmployees.textContent = rowCount;
-    console.log(rowCount);
 }
 
 /*Manage Employees Tab End */
