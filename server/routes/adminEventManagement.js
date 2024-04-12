@@ -15,8 +15,8 @@ function capitalizeFirstLetter(string) {
 
 function createEventHtml(item) {
     let eventHtml = '';
-    eventHtml += '<tr id="event-item">';
-    eventHtml += `<td id="event_id">${item.event_id}</td>`;
+    eventHtml += '<tr class="event-item">';
+    eventHtml += `<td class="event_id">${item.event_id}</td>`;
     eventHtml += `<td id="event_name">${item.event_name}</td>`;
     eventHtml += `<td id="event_date">${item.date}</td>`;
     eventHtml += `<td id="sponsor">${item.sponsor}</td>`;
@@ -36,12 +36,8 @@ function getEventsForAdmin(res) {
         }
 
         let eventHtml = '';
-        const eventIds = [];
-
-        results.forEach(item => {
-        eventHtml += createEventHtml(item);
-        eventIds.push(item.event_id);
-        });
+        
+        results.forEach(item => { eventHtml += createEventHtml(item); });
         
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.end(eventHtml, 'utf-8');

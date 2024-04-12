@@ -509,85 +509,23 @@ function getEventList() {
             const eventsDiv = document.querySelector('.eventTable-content');
             eventsDiv.innerHTML = xhr.responseText;
             calculateAttendanceStatistics();
-
-            const eventIds = extractEventIds(xhr.responseText);
-            updateDeleteEventForm(eventIds);
         } 
     };
     xhr.send();
+}
 
-    function extractEventIds(html) {
-        const eventIds = [];
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const eventIdElements = doc.querySelectorAll('#event_id');
-        eventIdElements.forEach(elem => {
-          eventIds.push(elem.textContent);
-        });
-        return eventIds;
-    }
-      
-    function createDropdownOptions(eventIds) {
-        let options = '';
-        for (const eventId of eventIds) {
-          options += `<option value="${eventId}">${eventId}</option>`;
-        }
-        return options;
+function getEventIds() {
+    const table = document.getElementById('eventTable');
+    const rows = table.getElementsByClassName('event-item');
+    const eventIds = [];
+
+    for (const row of rows) {
+        const eventId = row.getElementsByClassName('event_id')[0].textContent;
+        eventIds.push(eventId);
     }
 
-    function updateDeleteEventForm(eventIds) {
-        const dropdownOptions = createDropdownOptions(eventIds);
-        const dropdownHtml = `<select id="eventId">${dropdownOptions}</select>`;
-        const removeEventForm = document.getElementById('removeEventForm');
-        removeEventForm.innerHTML = `
-          <form>
-            <div class="mb-3">
-              <label class="form-label">Event ID<span id="req">*</span></label>
-              ${dropdownHtml}
-            </div>
-            <button type="submit" id="removeEventSubmit">Delete Event</button>
-          </form>
-        `;
-
-        document.getElementById('removeEventSubmit').addEventListener('click', function(event) {
-            event.preventDefault();
-            
-            const allFieldsFilled = document.getElementById('eventId').value.trim() !== "";
-        
-            if (allFieldsFilled) {
-                const eventId = document.getElementById('eventId').value.trim();
-                
-                const xhr = new XMLHttpRequest();
-                xhr.open('POST', removeEventUrl); 
-                xhr.setRequestHeader('Content-Type', 'application/json');
-        
-                xhr.onload = function() {
-                    if (xhr.status === 200) {
-                        console.log('sucessfully removed event');
-                        document.getElementById('eventId').value = '';
-                        getEventList();
-                        calculateAttendanceStatistics();
-                    } 
-                    else {
-                        console.error('Error:', xhr.statusText);
-                    }
-                };
-        
-                const data = JSON.stringify({ eventId });
-                
-                xhr.send(data);
-            }
-            else {
-                const submitBtn = document.getElementById('removeEventSubmit');
-                submitBtn.classList.add('shake-button');
-        
-                setTimeout(() => {
-                    submitBtn.classList.remove('shake-button');
-                }, 500);
-            }
-        });
-    }
-
+    console.log(eventIds);
+    return eventIds;
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -690,7 +628,43 @@ document.getElementById('addEventSubmit').addEventListener('click', function(eve
     }
 });
 
+document.getElementById('removeEventSubmit').addEventListener('click', function(event) {
+    event.preventDefault();
+    
+    const allFieldsFilled = document.getElementById('eventId').value.trim() !== "";
 
+    if (allFieldsFilled) {
+        const eventId = document.getElementById('eventId').value.trim();
+        
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', removeEventUrl); 
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                console.log('sucessfully removed event');
+                document.getElementById('eventId').value = '';
+                getEventList();
+                calculateAttendanceStatistics();
+            } 
+            else {
+                console.error('Error:', xhr.statusText);
+            }
+        };
+
+        const data = JSON.stringify({ eventId });
+        
+        xhr.send(data);
+    }
+    else {
+        const submitBtn = document.getElementById('removeEventSubmit');
+        submitBtn.classList.add('shake-button');
+
+        setTimeout(() => {
+            submitBtn.classList.remove('shake-button');
+        }, 500);
+    }
+});
 
 const fromDateInput = document.getElementById('fromDate');
 const toDateInput = document.getElementById('toDate');
