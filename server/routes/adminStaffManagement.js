@@ -22,11 +22,11 @@ function capitalizeFirstLetter(string) {
 
 function createStaffHtml(item) {
     let staffHtml = '';
-    staffHtml += '<tr id="employee-item">';
+    staffHtml += '<tr class="employee-item">';
     staffHtml += `<td id="staff_id">${item.staff_id}</td>`;
     staffHtml += `<td id="staff_name">${item.name}</td>`;
     staffHtml += `<td id="staff_email">${item.email}</td>`;
-    staffHtml += `<td id="staff_position">${capitalizeFirstLetter(item.staff_position)}</td>`;
+    staffHtml += `<td class="staff_position">${capitalizeFirstLetter(item.staff_position)}</td>`;
     staffHtml += `<td id="supervisor">${item.supervisor}</td>`;
     staffHtml += `<td id="staff_empl_status">${capitalizeFirstLetter(item.employment_status)}</td>`;
     staffHtml += '</tr>';

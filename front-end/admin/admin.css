@@ -1074,6 +1074,10 @@ input[type="date"] {
   margin-bottom: 15px;
 }
 
+#removeEventElements {
+  padding: 15px;
+}
+
 .mb-3 {
   display: flex;
   align-items: center;
@@ -1092,6 +1096,7 @@ input[type=text],
 input[type=email],
 input[type=password],
 input[type=url],
+#addEventDes,
 .form-select {
   width: 500px;
 }

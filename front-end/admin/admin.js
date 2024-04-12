@@ -277,10 +277,45 @@ function getEmployeeList() {
             const employeesDiv = document.querySelector('.table-content');
             employeesDiv.innerHTML = xhr.responseText;
             updateTotalEmployeesCount(); 
+
+            const empRoles = getEmployeeRoles(); 
+            populateSupervisorDropdown(empRoles);
         } 
     };
     xhr.send();
 }
+
+function getEmployeeRoles() {
+    const table = document.getElementById('employeeTable');
+    const rows = table.getElementsByClassName('employee-item');
+    const employeeRoles = [];
+
+    for (const row of rows) {
+        const empRole = row.getElementsByClassName('staff_position')[0].textContent;
+        if (empRole === 'admin' || empRole === 'librarian') {
+            employeeRoles.push(empRole);
+        }
+    }
+    console.log('trying to get supers',employeeRoles);
+    return employeeRoles;
+}
+
+function populateSupervisorDropdown(employeeRoles) {
+    const dropdown = document.getElementById('employeeSupervisor');
+
+    while (dropdown.options.length > 1) {
+        dropdown.remove(1);
+    }
+
+    employeeRoles.forEach(empRole => {
+        const option = document.createElement('option');
+        option.value = empRole;
+        option.textContent = empRole;
+        dropdown.appendChild(option);
+    });
+}
+
+
 
 document.addEventListener('DOMContentLoaded', function() {
     getEmployeeList();
