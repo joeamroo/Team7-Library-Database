@@ -309,6 +309,7 @@ function setProfileInfo() {
     zipcode_addr: zipcode_addr,
     email: email
   });
+  
 
   xhr.send(data);
 }
