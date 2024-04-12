@@ -509,6 +509,9 @@ function getEventList() {
             const eventsDiv = document.querySelector('.eventTable-content');
             eventsDiv.innerHTML = xhr.responseText;
             calculateAttendanceStatistics();
+
+            const eventIds = getEventIds(); 
+            populateEventDropdown(eventIds);
         } 
     };
     xhr.send();
@@ -523,10 +526,24 @@ function getEventIds() {
         const eventId = row.getElementsByClassName('event_id')[0].textContent;
         eventIds.push(eventId);
     }
-
-    console.log(eventIds);
     return eventIds;
 }
+
+function populateEventDropdown(eventIds) {
+    const dropdown = document.getElementById('eventId');
+
+    while (dropdown.options.length > 1) {
+        dropdown.remove(1);
+    }
+
+    eventIds.forEach(eventId => {
+        const option = document.createElement('option');
+        option.value = eventId;
+        option.textContent = eventId;
+        dropdown.appendChild(option);
+    });
+}
+
 
 document.addEventListener('DOMContentLoaded', function() {
     getEventList();

@@ -290,15 +290,8 @@
     <form id="removeEventForm">
       <div class="mb-3">
         <label class="form-label">Event ID<span id="req">*</span></label>
-        <input type="text" class="form-control" id="eventId" autocomplete="off" required>
-
-        <label class="form-label">Event ID<span id="req">*</span></label>
-        <select class="form-select" id="eventIdpract" required>
-          <option value="">Select ID</option>
-          <option value="librarian">Librarian</option>
-          <option value="admin">Administrator</option>
-          <option value="volunteer">Volunteer</option>
-          <option value="clerk">Clerk</option>          
+        <select class="form-select" id="eventId" required>
+          <option value="">Select ID</option>        
         </select>
       </div>
       <button type="submit" id="removeEventSubmit">Delete Event</button>
