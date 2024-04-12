@@ -509,9 +509,47 @@ function getEventList() {
             const eventsDiv = document.querySelector('.eventTable-content');
             eventsDiv.innerHTML = xhr.responseText;
             calculateAttendanceStatistics();
+
+            const eventIds = extractEventIds(xhr.responseText);
+            updateDeleteEventForm(eventIds);
         } 
     };
     xhr.send();
+
+    function extractEventIds(html) {
+        const eventIds = [];
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const eventIdElements = doc.querySelectorAll('#event_id');
+        eventIdElements.forEach(elem => {
+          eventIds.push(elem.textContent);
+        });
+        return eventIds;
+    }
+      
+    function createDropdownOptions(eventIds) {
+        let options = '';
+        for (const eventId of eventIds) {
+          options += `<option value="${eventId}">${eventId}</option>`;
+        }
+        return options;
+    }
+
+    function updateDeleteEventForm(eventIds) {
+        const dropdownOptions = createDropdownOptions(eventIds);
+        const dropdownHtml = `<select id="eventId">${dropdownOptions}</select>`;
+        const removeEventForm = document.getElementById('removeEventForm');
+        removeEventForm.innerHTML = `
+          <form>
+            <div class="mb-3">
+              <label class="form-label">Event ID<span id="req">*</span></label>
+              ${dropdownHtml}
+            </div>
+            <button type="submit" id="removeEventSubmit">Delete Event</button>
+          </form>
+        `;
+    }
+
 }
 
 document.addEventListener('DOMContentLoaded', function() {

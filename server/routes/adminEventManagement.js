@@ -36,8 +36,12 @@ function getEventsForAdmin(res) {
         }
 
         let eventHtml = '';
-        
-        results.forEach(item => { eventHtml += createEventHtml(item); });
+        const eventIds = [];
+
+        results.forEach(item => {
+        eventHtml += createEventHtml(item);
+        eventIds.push(item.event_id);
+        });
         
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.end(eventHtml, 'utf-8');
