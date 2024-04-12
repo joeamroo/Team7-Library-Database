@@ -548,6 +548,44 @@ function getEventList() {
             <button type="submit" id="removeEventSubmit">Delete Event</button>
           </form>
         `;
+
+        document.getElementById('removeEventSubmit').addEventListener('click', function(event) {
+            event.preventDefault();
+            
+            const allFieldsFilled = document.getElementById('eventId').value.trim() !== "";
+        
+            if (allFieldsFilled) {
+                const eventId = document.getElementById('eventId').value.trim();
+                
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', removeEventUrl); 
+                xhr.setRequestHeader('Content-Type', 'application/json');
+        
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        console.log('sucessfully removed event');
+                        document.getElementById('eventId').value = '';
+                        getEventList();
+                        calculateAttendanceStatistics();
+                    } 
+                    else {
+                        console.error('Error:', xhr.statusText);
+                    }
+                };
+        
+                const data = JSON.stringify({ eventId });
+                
+                xhr.send(data);
+            }
+            else {
+                const submitBtn = document.getElementById('removeEventSubmit');
+                submitBtn.classList.add('shake-button');
+        
+                setTimeout(() => {
+                    submitBtn.classList.remove('shake-button');
+                }, 500);
+            }
+        });
     }
 
 }
@@ -652,43 +690,7 @@ document.getElementById('addEventSubmit').addEventListener('click', function(eve
     }
 });
 
-document.getElementById('removeEventSubmit').addEventListener('click', function(event) {
-    event.preventDefault();
-    
-    const allFieldsFilled = document.getElementById('eventId').value.trim() !== "";
 
-    if (allFieldsFilled) {
-        const eventId = document.getElementById('eventId').value.trim();
-        
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', removeEventUrl); 
-        xhr.setRequestHeader('Content-Type', 'application/json');
-
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                console.log('sucessfully removed event');
-                document.getElementById('eventId').value = '';
-                getEventList();
-                calculateAttendanceStatistics();
-            } 
-            else {
-                console.error('Error:', xhr.statusText);
-            }
-        };
-
-        const data = JSON.stringify({ eventId });
-        
-        xhr.send(data);
-    }
-    else {
-        const submitBtn = document.getElementById('removeEventSubmit');
-        submitBtn.classList.add('shake-button');
-
-        setTimeout(() => {
-            submitBtn.classList.remove('shake-button');
-        }, 500);
-    }
-});
 
 const fromDateInput = document.getElementById('fromDate');
 const toDateInput = document.getElementById('toDate');
