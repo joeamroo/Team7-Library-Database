@@ -42,7 +42,7 @@ const link = mysql.createConnection({
   function getSQLTable(queryResult) {
     // Check if queryResult is empty or undefined
     if (!queryResult || queryResult.length === 0) {
-      return '<p>No data available</p>'; // Return a simple message if no data
+      return '<p>None</p>'; // Return a simple message if no data
     }
   
     const data = queryResult;
