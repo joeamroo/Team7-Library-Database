@@ -565,7 +565,7 @@ function toggleForm(btn, form) {
 
 function calculateAttendanceStatistics() {
     const tableBody = document.getElementById('eventTableItems');
-    const eventRows = tableBody.querySelectorAll('tr[id="event-item"]');
+    const eventRows = tableBody.querySelectorAll('tr[class="event-item"]');
     const eventTotalCount = document.getElementById('eventTotal-count');
     const maxAttendanceSpan = document.getElementById('max-attend');
     const minAttendanceSpan = document.getElementById('min-attend');
