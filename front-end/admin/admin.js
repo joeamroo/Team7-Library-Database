@@ -292,9 +292,8 @@ function getEmployeeRoles() {
 
     for (const row of rows) {
         const empRole = row.getElementsByClassName('staff_position')[0].textContent;
-        if (empRole === 'admin' || empRole === 'librarian') {
-            employeeRoles.push(empRole);
-        }
+        const empName = row.getElementsByClassName('staff_name')[0].textContent;
+        employeeRoles.push(empName);
     }
     console.log('trying to get supers',employeeRoles);
     return employeeRoles;
