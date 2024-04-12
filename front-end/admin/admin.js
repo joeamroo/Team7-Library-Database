@@ -239,12 +239,12 @@ const removeEmployeeForm = document.getElementById('removeEmployeeForm');
 
 addEmployeeBtn.addEventListener('click', () => {
   toggleForm(addEmployeeBtn, addEmployeeForm);
-  hideFormIfOpen(addEmployeeBtn, removeEmployeeForm);
+  hideFormIfOpen(removeEmployeeForm);
 });
 
 removeEmployeeBtn.addEventListener('click', () => {
   toggleForm(removeEmployeeBtn, removeEmployeeForm);
-  hideFormIfOpen(removeEmployeeBtn, addEmployeeForm);
+  hideFormIfOpen(addEmployeeForm);
 });
 
 function toggleForm(btn, form) {
@@ -260,11 +260,9 @@ function toggleForm(btn, form) {
   }
 }
 
-function hideFormIfOpen(btn, form) {
+function hideFormIfOpen(form, btn) {
     if (form.style.display === 'block') {
         form.style.display = 'none';
-        const icon = btn.querySelector('i');
-        icon.className = 'uil uil-angle-down';
     }
 }
 
