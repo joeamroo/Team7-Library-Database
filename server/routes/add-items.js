@@ -38,7 +38,7 @@ function insertEvent(itemType, title, authorDirector, isbn, category, publisherP
                         const genreId = result[0]['LAST_INSERT_ID()'];
                     }
                 })
-                connection.query(`INSERT INTO book (isbn,title,year_released) VALUES (?,?,?)`, [isbn,title,publicationReleaseDate], (err) => { 
+                connection.query(`INSERT INTO book (isbn,title,year_released,imageID) VALUES (?,?,?,?)`, [isbn,title,publicationReleaseDate,imageID], (err) => { 
                     if (err) {
                         console.log('error entering new book into librarydev db:', err);
                     }
