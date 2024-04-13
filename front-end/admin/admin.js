@@ -197,6 +197,7 @@ const addEmployeeUrl = `${backendUrl}/addStaff`;
 const removeEmployeeUrl = `${backendUrl}/removeStaff`;
 const filterEmployeesUrl = `${backendUrl}/filterStaff`;
 const getAdminInfosUrl = `${backendUrl}/adminInfo`;
+const updateEmployeeRoleUrl = `${backendUrl}/updStaffRole`;
 
 
 /* Get Member Info for Dashboard */
@@ -512,8 +513,8 @@ document.getElementById('removeEmployeeSubmit').addEventListener('click', functi
 
         const data = JSON.stringify({ 
             email: email, 
-            staff_id,
-            empStatus
+            staff_id: staff_id,
+            empStatus: empStatus
         });
         
         xhr.send(data);
@@ -541,7 +542,31 @@ document.getElementById('updEmployeeSubmit').addEventListener('click', function(
         const empPos = document.getElementById('updEmployeePosition').value;
         const empSuper = document.getElementById('updEmployeeSupervisor').value;
 
-        console.log('id position and super', empId, empPos, empSuper);    
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', updateEmployeeRoleUrl); 
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                console.log('sucessfully updated employee role');
+                document.getElementById('updEmployeeId').value = '';
+                document.getElementById('updEmployeePosition').value = '';
+                document.getElementById('updEmployeeSupervisor').value = '';
+                getEmployeeList();
+                updateTotalEmployeesCount();
+            } 
+            else {
+                console.error('Error:', xhr.statusText);
+            }
+        };
+
+        const data = JSON.stringify({ 
+            empId: empId,
+            empPos: empPos,
+            empSuper: empSuper
+        });
+        
+        xhr.send(data);  
     }
     else {
         const submitBtn = document.getElementById('updEmployeeSubmit');

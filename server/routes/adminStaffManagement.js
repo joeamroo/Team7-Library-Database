@@ -79,7 +79,6 @@ function insertStaff(res, name, phoneNum, email, password, supervisor, position)
 }
 
 function removeStaff(res, email, staffId, empStatus) {
-    // insert into access control first
     accessLink.query('DELETE FROM staff_credentials WHERE staff_email = ?', [email], (credentialErr, result) => {
         if (credentialErr) {
             console.log('error accessing access_control db table:', credentialErr);
@@ -94,6 +93,17 @@ function removeStaff(res, email, staffId, empStatus) {
 
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ message: 'staffDeletionSuccessful' }));
+}
+
+function updateStaffRole(res, staffId, staffPos, staffSuper) {
+    connection.query(`UPDATE staff SET staff_position = ?, supervisor = ? WHERE staff_id = ?`, [staffPos, staffSuper, staffId], (updateStaffErr, result) => {
+        if (updateStaffErr) {
+            console.log('error updating staff role into librarydev db:', updateStaffErr);
+        }
+    });
+
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ message: 'staffUpdateSuccessful' }));
 }
 
 
@@ -139,4 +149,4 @@ function filterStaff(res, empStatus, empPos) {
 }
 
 
-module.exports = { getEmployees, insertStaff, removeStaff, filterStaff };
+module.exports = { getEmployees, insertStaff, removeStaff, updateStaffRole, filterStaff };

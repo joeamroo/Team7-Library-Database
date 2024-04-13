@@ -12,7 +12,7 @@ const { registerMember } = require('./routes/register');
 const { getListedEvents, eventSignUp } = require('./routes/classesnEvents');
 const { resetPassword } = require('./routes/forgot-pwd');
 const { getEventReports } = require ('./routes/staffeventsreports');
-const { getEmployees, insertStaff, removeStaff, filterStaff } = require ('./routes/adminStaffManagement');
+const { getEmployees, insertStaff, removeStaff, updateStaffRole, filterStaff } = require ('./routes/adminStaffManagement');
 const { getEventsForAdmin, insertEvent, deleteEvent, filterEvents } = require('./routes/adminEventManagement');
 const { getItemsForAdmin, filterCatalogItems, getAdminInfo } = require('./routes/adminCatalogManagement');
 
@@ -329,6 +329,22 @@ const server = http.createServer((request, res) => {
                     try {
                         const postData = JSON.parse(body);
                         removeStaff(res, postData.email, postData.staff_id, postData.empStatus);
+                    } 
+                    catch (error) {
+                        console.error('Error parsing JSON:', error);
+                        serve404(res);
+                    }
+                });
+            }
+            else if (pathname === '/updStaffRole') {
+                let body = '';
+                request.on('data', (chunk) => {
+                    body += chunk.toString();
+                });
+                request.on('end', () => {
+                    try {
+                        const postData = JSON.parse(body);
+                        updateStaffRole(res, postData.empId, postData.empPos, postData.empSuper);
                     } 
                     catch (error) {
                         console.error('Error parsing JSON:', error);
