@@ -27,6 +27,8 @@ document.getElementById('main-btn').addEventListener('click', function(event) {
         const category = document.getElementById('category').value;
         const publisherProducer = document.getElementById('publisherProducer').value;
         const publicationReleaseDate = document.getElementById('publicationReleaseDate').value;
+        const imageID = document.getElementById('imageID').value;
+
 
 
         
@@ -44,6 +46,7 @@ document.getElementById('main-btn').addEventListener('click', function(event) {
                 document.getElementById('category').value = '';
                 document.getElementById('publisherProducer').value = '';
                 document.getElementById('publicationReleaseDate').value = '';
+                document.getElementById('imageID').value = '';
             } 
             else {
                 console.error('Error:', xhr.statusText);
