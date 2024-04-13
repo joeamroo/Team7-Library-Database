@@ -293,7 +293,9 @@ function getEmployeeList() {
             
             const empIds = getEmployeesIds();
             populateEmpIdsDropdown(empIds);
-            populateEmpIdForUpdate(empIds);
+
+            const updEmpIds = getUpdateEmployeesIds();
+            populateEmpIdForUpdate(updEmpIds);
 
             const empEmails = getEmployeesEmail();
             populateEmpEmailsDropdown(empEmails)
@@ -373,6 +375,21 @@ function populateEmpIdsDropdown(empIds) {
         option.textContent = empId;
         dropdown.appendChild(option);
     });
+}
+
+function getUpdateEmployeesIds() {
+    const table = document.getElementById('employeeTable');
+    const rows = table.getElementsByClassName('employee-item');
+    const empIds = [];
+
+    for (const row of rows) {
+        const empId = row.getElementsByClassName('staff_id')[0].textContent;
+        const empStatus = row.getElementsByClassName('staff_empl_status')[0].textContent;
+        if (empStatus === 'Active') {
+            empIds.push(empId);
+        }
+    }
+    return empIds;
 }
 
 function populateEmpIdForUpdate(empIds) {
