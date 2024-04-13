@@ -345,7 +345,6 @@ const sendReturnUrl = `${backendUrl}/loginUser`;
 
 
 function sendRequest(user, pass) {
-    
     const data = {
         username: user,
         password: pass
@@ -369,5 +368,3 @@ function sendRequest(user, pass) {
 
     xhr.send(JSON.stringify(data));
 }
-
-

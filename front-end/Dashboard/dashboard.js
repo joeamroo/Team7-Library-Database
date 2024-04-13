@@ -8,10 +8,12 @@ const profileSelect = document.getElementById('profile-selection');
 const orderSelect = document.getElementById('order-selection');
 const holdSelect = document.getElementById('hold-selection');
 const waitSelect = document.getElementById('waitlist-selection');
+const fineSelect = document.getElementById('fine-selection');
 const profileView = document.querySelector('.settings.profile');
 const orderView = document.querySelector('.settings.orders');
 const holdsView = document.querySelector('.settings.holds');
 const waitlistView = document.querySelector('.settings.waitlist');
+const fineView = document.querySelector('.settings.fines');
 const orderReport = document.querySelector('.recent-orders');
 const profileInfo = document.querySelector('.member-info');
 const today = new Date().toLocaleDateString();
@@ -137,8 +139,8 @@ var input = document.querySelector(".input-box");
         waitlistView.classList.add('hide');
         orderView.classList.add('hide');
         holdsView.classList.add('hide');
+        fineView.classList.add('hide');
         profileView.classList.remove('hide');
-         
       });
       
 
@@ -146,6 +148,7 @@ var input = document.querySelector(".input-box");
         profileView.classList.add('hide');
         holdsView.classList.add('hide');
         waitlistView.classList.add('hide');
+        fineView.classList.add('hide');
         orderView.classList.remove('hide');
       });
 
@@ -153,6 +156,7 @@ var input = document.querySelector(".input-box");
         profileView.classList.add('hide');
         orderView.classList.add('hide');
         waitlistView.classList.add('hide');
+        fineView.classList.add('hide');
         holdsView.classList.remove('hide');
       });
 
@@ -160,7 +164,16 @@ var input = document.querySelector(".input-box");
         profileView.classList.add('hide');
         orderView.classList.add('hide');
         holdsView.classList.add('hide');
+        fineView.classList.add('hide');
         waitlistView.classList.remove('hide');
+      });
+
+      fineSelect.addEventListener('click', () => {
+        profileView.classList.add('hide');
+        orderView.classList.add('hide');
+        holdsView.classList.add('hide');
+        waitlistView.classList.add('hide');
+        fineView.classList.remove('hide');
       });
 
       /* 
