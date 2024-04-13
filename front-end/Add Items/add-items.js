@@ -13,7 +13,7 @@ addItemBtn.addEventListener('click', () => {
     toggleForm(addItemBtn, addItemForm);
   });
 
-document.getElementById('main-btn').addEventListener('click', function(event) {
+document.getElementById('addItemBtn').addEventListener('click', function(event) {
     event.preventDefault();
     
     const allFieldsFilled = [
@@ -68,7 +68,7 @@ document.getElementById('main-btn').addEventListener('click', function(event) {
         xhr.send(data);
     }
     else {
-        const submitBtn = document.getElementById('main-btn');
+        const submitBtn = document.getElementById('addItemBtn');
         additemBtn.classList.add('shake-button');
 
         setTimeout(() => {
