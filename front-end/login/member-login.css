@@ -132,7 +132,7 @@ input[type=checkbox] {
 /* Handles the size of the sign-in portion*/
 .sign-in{
     left: 0;
-    width: 50%;
+    width: 55%;
     z-index: 1;
 }
 
@@ -607,11 +607,11 @@ input[type=checkbox] {
   └─────────────────────────────────────────────────────────────────────────────┘
  */
 
- .form-container {
+.form-container {
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #f2f2f2;
+  background-color: #ffffff;
   border-radius: 5px;
 }
 

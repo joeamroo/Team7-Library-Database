@@ -284,10 +284,6 @@ loginBtn.addEventListener('click', () => {
     container.classList.remove("active");
 });
 
-/* The Login Button on the White Area */
-/*signinBtn.addEventListener('click', () => {
-    loginValidation();
-});*/
 
 
 
@@ -344,112 +340,10 @@ function homepage() {
 
 const sendReturnUrl = `${backendUrl}/loginUser`;
 
-/* --------------------------------------- */
-/* ------    Login Section   ------ */
-/* --------------------------------------- */
 
 
 
 
-/*function sendRequest() {
-  const user = document.getElementById('member-email').value.trim();
-  const pass = document.getElementById('member-password').value.trim();
-  const xhr = new XMLHttpRequest();
-  xhr.open('POST', 'https://cougarchronicles.onrender.com/loginUser', true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-
-xhr.onload = function() {
-  if (xhr.status === 200) {
-    const response = JSON.parse(xhr.responseText);
-    console.log(response);
-    // Process the response data here
-    // ...
-  } else {
-    console.error('Error:', xhr.status);
-  }
-};
-
-xhr.onerror = function() {
-  console.error('Request failed');
-};
-
-// Prepare the data to be sent as JSON
-const data = JSON.stringify( {
-  username: user,
-  password: pass
-});
-
-console.log(data);
-
-xhr.send(JSON.stringify(data));
-}*/
-
-
-
-
-
-/* --------------------------------------- */
-/* ------    Login Section   ------ */
-/* --------------------------------------- */
-
-// Makes sure all fields are not empty
-/*function loginValidation() { 
-    const allLoginFields = [
-        'member-email', 'member-password'
-    ].every(id => document.getElementById(id).value.trim() !== "");
-
-    // Makes sure all fields are field; otherwise,
-    // the user's form will shake.
-    allLoginFields?  loginRequest() : shake(800);
-}
-// Stores email and hashes password
-function loginRequest() { 
-    const usertext = document.getElementById('member-email').value;
-    const cipher = scramPassword(document.getElementById('member-password').value);
-    const ciphertext = String(cipher);
-   
-    console.log(usertext);
-    console.log(ciphertext);
-    storeSession(usertext, ciphertext);
-    sendRequest(usertext, ciphertext);
-
-}*/
-// Hashes password and returns to loginRequest
-/*async function hashPassword(password) {
-    // Encode the password as UTF-8
-    const msgBuffer = new TextEncoder().encode(password); 
-
-    // Hash the password
-    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-
-    // Convert the ArrayBuffer to hex string
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    
-    return hashBuffer;
-}*/
-
-/*function storeSession(user, auth) {
-  localStorage.setItem("user-session", user);
-  localStorage.setItem("auth-session", auth);
-}
-
-function scramPassword(password) {
-  var hash = 0, i, chr;
-  if (password.length === 0) return hash;
-  for (i = 0; i < password.length; i++) {
-    chr = password.charCodeAt(i);
-    hash = ((hash << 5) - hash) + chr;
-    hash |= 0; // Convert to 32bit integer
-  }
-  return hash;
-}*/
-
-
-
-
-
-// Sends credentials to server
 function sendRequest(user, pass) {
     
     const data = {
@@ -476,99 +370,4 @@ function sendRequest(user, pass) {
     xhr.send(JSON.stringify(data));
 }
 
-
-/* --------------------------------------- */
-/* ------    Register Section   ------ */
-/* --------------------------------------- */
-
-
-
-/*function register() {
-    const backendUrl = 'https://cougarchronicles.onrender.com/loginUser';
-
-    const registerFields = [
-        'first_name', 'last_name', 'address', 'city_addr', 
-        'state_addr', 'zipcode_addr', 'email', 'password'
-    ].every(id => document.getElementById(id).value.trim() !== "");
-
-    const xhr = new XMLHttpRequest();
-        xhr.open('POST', backendUrl);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onerror = function() {
-        console.error("Error:", xhr.statusText);
-    }
-
-    const data = JSON.stringify({
-        first_name: registerFields[0],
-        last_name: registerFields[1],
-        address: registerFields[2],
-        city_addr: registerFields[3],
-        state_addr: registerFields[4],
-        zipcode_addr: registerFields[5],
-        email: registerFields[6],
-        password: registerFields[7]
-    });
-
-    console.log(data);
-
-
-    xhr.send(data);
-}*/
-
-/* ==========================================================================
-   Section: Notification System
-   ========================================================================== */
-
-   /*Better to have it upon successful login or after reaching dashboard */
-
-/*let notification = document.querySelector(".notification");
-
-      function showNotification() {
-        if (notification.classList.contains("hidden")) {
-          notification.classList.toggle("hidden");
-        }
-        notification.classList.toggle("active");
-        const timeout = setTimeout(() => {
-          if (
-            notification.classList.contains("active") &&
-            !notification.classList.contains("hidden")
-          ) {
-            notification.classList.toggle("active");
-            notification.classList.toggle("hidden");
-          } else {
-            window.clearTimeout(timeout);
-          }
-        }, 5000);
-    }
-    
-    function closeNote() {
-        notification.classList.toggle("active");
-        notification.classList.toggle("hidden");
-    }
-
-    
-      // Show notification on page load
-    window.addEventListener("load", showNotification);*/
-
-/* ===================== Notification Ends ===================== */
-
-/*async function sendRequest(user, pass) {
-    try {
-        const response = await fetch('https://cougarchronicles.onrender.com/loginUser', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                user: "user",
-                password: "pass"
-            }),
-        });
-
-        const data = await response.json();
-        console.log('Server response:', data);
-    } catch (error) {
-        console.error('Error sending password to the server:', error);
-    }
-}*/
 
