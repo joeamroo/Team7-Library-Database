@@ -4,6 +4,7 @@ const staffId = localStorage.getItem('staffId');
 const isAdmin = localStorage.getItem('isAdmin');
 const itemTypeSelect = document.getElementById('itemType-selection');
 const publicationreleaseDate = document.getElementById('publicationReleaseDate-date');
+const backendUrl = 'https://cougarchronicles.onrender.com'; 
 const addItemURL = `${backendUrl}/add%20Items/add-items.html`;
 const addItemBtn = document.getElementById('addItemBtn');
 const addItemForm = document.getElementById('addItemForm');
