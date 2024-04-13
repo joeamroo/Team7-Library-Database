@@ -134,6 +134,7 @@
   <h3 id="table-name">Employees</h3>
   <button class="employee-btns" id="addEmployeeBtn"><i class="uil uil-angle-down"></i>Add Employee</button>
   <button class="employee-btns" id="removeEmployeeBtn"><i class="uil uil-angle-down"></i>Remove Employee</button>
+  <button class="employee-btns" id="updEmployeeBtn"><i class="uil uil-angle-down"></i>Update Employee Role</button>
 
   <div id="addEmployeeForm" style="display: none;">
     <form>
@@ -198,6 +199,34 @@
         </select>
       </div>
       <button type="submit" id="removeEmployeeSubmit">Remove Employee</button>
+    </form>
+  </div>
+  <div id="updEmployeeForm" style="display: none;">
+    <form>
+      <div class="mb-3">
+        <label class="form-label">Staff ID<span id="req">*</span></label>
+        <select class="form-select" id="updEmployeeId" required>
+          <option value="">Select ID</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="employeePosition" class="form-label">New Position<span id="req">*</span></label>
+        <select class="form-select" id="updEmployeePosition" required>
+          <option value="">Select Position</option>
+          <option value="librarian">Librarian</option>
+          <option value="admin">Administrator</option>
+          <option value="volunteer">Volunteer</option>
+          <option value="clerk">Clerk</option>          
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">New Supervisor<span id="req">*</span></label>
+        <select class="form-select" id="updEmployeeSupervisor" required>
+          <option value="">Select Supervisor</option>
+          <option value="N/A">N/A</option>
+        </select>
+      </div>
+      <button type="submit" id="updEmployeeSubmit">Add Employee</button>
     </form>
   </div>
 
