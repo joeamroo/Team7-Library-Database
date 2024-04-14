@@ -74,21 +74,17 @@ const server = http.createServer((request, res) => {
                             hasFine: queryObject.hasFine === 'true',
                             noTransactions: queryObject.noTransactions === 'true'
                         };
-                        const whereClause = buildWhereClause(filters);
-                        const query = `SELECT m.member_id, m.name, m.email, m.phone_number, m.state, m.city_addr, m.street_addr, m.zipcode_addr, m.fine, t.transaction_id, t.date_created, t.due_date, t.return_date
-                        FROM member m
-                        LEFT JOIN transaction t ON m.member_id = t.member_id
-                        ${whereClause}
-                        `;
-                        pool.query(query, (err, result) => {
+                        getMemberData(filters, (err, result) => {
                             if (err) throw err;
                             res.statusCode = 200;
                             res.setHeader('Content-Type', 'application/json');
                             res.end(JSON.stringify(result));
                           });
-                        } catch (error) {
-                            console.error('Error parsing JSON:', error);
-                            serve404(res);}
+                        } catch (err) {
+                          console.error(err);
+                          res.statusCode = 500;
+                          res.end('Internal server error');
+                        }
                 default:
                     serve404(res, pathname);
             }
