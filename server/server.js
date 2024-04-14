@@ -466,7 +466,7 @@ const server = http.createServer((request, res) => {
                     }
                 });
             }
-            else if (pathname === '/addItems') {
+            else if (pathname === '/add-items') {
                 let body = '';
                 request.on('data', (chunk) => {
                     body += chunk.toString();
