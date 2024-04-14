@@ -58,7 +58,8 @@ document.getElementById('addItemBtn').addEventListener('click', function(event) 
             date: date,
             category: category,
             publisherProducer: publisherProducer,
-            publicationReleaseDate: publicationReleaseDate
+            publicationReleaseDate: publicationReleaseDate,
+            imageLink:imageLink
         });
         
         xhr.send(data);
