@@ -55,7 +55,6 @@ document.getElementById('addItemBtn').addEventListener('click', function(event) 
             title: title, 
             authorDirector: authorDirector, 
             isbn: isbn, 
-            date: date,
             category: category,
             publisherProducer: publisherProducer,
             publicationReleaseDate: publicationReleaseDate,
