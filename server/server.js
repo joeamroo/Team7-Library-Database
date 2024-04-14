@@ -83,6 +83,7 @@ const server = http.createServer((request, res) => {
                           res.statusCode = 500;
                           res.end('Internal server error');
                         }
+                    break;
                 default:
                     serve404(res, pathname);
             }
@@ -524,7 +525,6 @@ const server = http.createServer((request, res) => {
                 serve404(res, pathname);
             }
             break;
-            // Handle other methods (e.g., POST) here
             default:
             serve404(res, pathname);
     }
