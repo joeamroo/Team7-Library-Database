@@ -69,12 +69,12 @@ function addItems(res, itemType, title, authorDirector, isbn, category, publishe
                 console.log('error entering new book into librarydev db:', err);
             }
         }),
-        connection.query(`INSERT INTO book_author_link (book.isbn,author_id) VALUES (?,?)`, [isbn,authorId], (err) => { 
+        connection.query(`INSERT INTO book_author_link (isbn,author_id) VALUES (?,?)`, [isbn,authorId], (err) => { 
             if (err) {
                 console.log('error entering new book_id into librarydev db:', err);
             }
         }),
-        connection.query(`INSERT INTO book_genres_link (book.isbn,genre_id) VALUES (?,?)`, [isbn,genreId], (err) => { 
+        connection.query(`INSERT INTO book_genres_link (isbn,genre_id) VALUES (?,?)`, [isbn,genreId], (err) => { 
             if (err) {
                 console.log('error entering new genre_id into librarydev db:', err);
             }
