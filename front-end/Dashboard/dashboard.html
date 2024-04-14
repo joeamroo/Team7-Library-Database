@@ -16,6 +16,7 @@
       href="https://fonts.googleapis.com/css2?family=Foldit:wght@100;200;300;400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -382,26 +383,28 @@
 
 
 <div class="settings fines">
-  <div class="form-card">
-    <h3 class="mt-0 mb-4 text-center">Enter your card details to pay</h3>
-    <form onsubmit="event.preventDefault()">
-        <div class="row">
-            <div class="col-12">
-                <div class="input-group"> <input type="text" id="cr_no" placeholder="0000 0000 0000 0000" minlength="19" maxlength="19"> <label>CARD NUMBER</label> </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6">
-                <div class="input-group"> <input type="text" name="exp" id="exp" placeholder="MM/YY" minlength="5" maxlength="5"> <label>CARD EXPIRY</label> </div>
-            </div>
-            <div class="col-6">
-                <div class="input-group"> <input type="password" name="cvcpwd" placeholder="&#9679;&#9679;&#9679;" class="placeicon" minlength="3" maxlength="3"> <label>CVV</label> </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12"> <input type="submit" value="Pay $ 100" class="btn btn-success placeicon"> </div>
-        </div>
-    </form>
+  <div class="total">
+    <h2 id="fine-title">Fine Amount:</h2>
+    <h2 id="amount">$2987</h2>
+  </div>
+  <div class="name-info">
+    <label for="first-name">First Name</label>
+    <input type="text" id="first-name" name="first-name" required>
+    <label for="last-name">Last Name</label>
+    <input type="text" id="last-name" name="last-name" required>
+  </div>
+  <div class="card-num-cvv">
+    <label for="card-number">Card Number</label>
+    <input type="text" id="card-number" maxlength="16" required>
+    <label for="cvv">CVV</label>
+    <input type="text" id="cvv" name="cvv" maxlength="3" required>
+  </div>
+  <div class="logos-and-exp">
+    <label for="expiry-date">Expiry Date</label>
+    <input type="text" id="exp-date" name="expiry-date" placeholder="MM/YY" required>
+  </div>
+  <button type="submit" id="payFineBtn">Submit Payment</button>
+</div>
 </div>
 
 
