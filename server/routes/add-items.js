@@ -36,7 +36,7 @@ function getId(item, itemType) {
 }
 
 
-function addItems(res, itemType, title, authorDirector, isbn, category, publisherProducer, publicationReleaseDate,imageLink) {
+function addItems(res, itemType, title, authorDirector, isbn, category, publisherProducer, publicationReleaseDate,imageLink,totalCopies) {
     var authorId = 0;
     var genreId = 0;
     if(itemType === 'book') {
@@ -64,7 +64,7 @@ function addItems(res, itemType, title, authorDirector, isbn, category, publishe
                 }
             })
         }
-        connection.query(`INSERT INTO book (total_copies,available_copies,current_holds,book_condition,isbn,title,year_released,book_img_address) VALUES (?,?,?,?,?,?,?,?)`, ['1','1','0','1',isbn,title,publicationReleaseDate,imageLink], (err) => { 
+        connection.query(`INSERT INTO book (total_copies,available_copies,current_holds,book_condition,isbn,title,year_released,book_img_address) VALUES (?,?,?,?,?,?,?,?)`, [totalCopies,totalCopies,'0','1',isbn,title,publicationReleaseDate,imageLink], (err) => { 
             if (err) {
                 console.log('error entering new book into librarydev db:', err);
             }

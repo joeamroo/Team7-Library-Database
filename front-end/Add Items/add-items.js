@@ -13,7 +13,7 @@ document.getElementById('addItemBtn').addEventListener('click', function(event) 
     event.preventDefault();
     
     const allFieldsFilled = [
-        'itemType', 'title', 'authorDirector', 'isbn', 'category', 'publisherProducer', 'publicationReleaseDate'
+        'itemType', 'title', 'authorDirector', 'isbn', 'category', 'publisherProducer', 'publicationReleaseDate','imageLink','totalCopies'
     ].every(id => document.getElementById(id).value.trim() !== "");
 
     if (allFieldsFilled) {
@@ -25,6 +25,9 @@ document.getElementById('addItemBtn').addEventListener('click', function(event) 
         const publisherProducer = document.getElementById('publisherProducer').value;
         const publicationReleaseDate = document.getElementById('publicationReleaseDate').value;
         const imageLink = document.getElementById('imageLink').value;
+        const totalCopies = document.getElementById('totalCopies').value;
+
+
 
 
 
@@ -44,6 +47,7 @@ document.getElementById('addItemBtn').addEventListener('click', function(event) 
                 document.getElementById('publisherProducer').value = '';
                 document.getElementById('publicationReleaseDate').value = '';
                 document.getElementById('imageLink').value = '';
+                document.getElementById('totalCopies').value = '';
             } 
             else {
                 console.error('Error:', xhr.statusText);
@@ -58,7 +62,8 @@ document.getElementById('addItemBtn').addEventListener('click', function(event) 
             category: category,
             publisherProducer: publisherProducer,
             publicationReleaseDate: publicationReleaseDate,
-            imageLink:imageLink
+            imageLink:imageLink,
+            totalCopies:totalCopies
         });
         
         xhr.send(data);
