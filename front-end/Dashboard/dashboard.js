@@ -581,8 +581,9 @@ function filterOrderTable(tableHTML) {
 
   document.addEventListener('DOMContentLoaded', function() {
     const memberId = localStorage.getItem('memberId');
-    if (memberId === null || memberId === undefined) {
+    if (memberId !== null && memberId !== undefined) {
       getFine();
+      console.log('entering this section');
       setInterval(getFine, 30000);
     }
   });

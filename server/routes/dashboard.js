@@ -92,17 +92,16 @@ function getUserDash(response, memberId) {
     // Gets information from backend
     link.query(query_name, [memberId], (error, result) => {
         if (error) {
-            console.log('Error', memberId);
-            response.writeHead(500);
-            response.end('Server error');
-            return;
-        } else {
-           const greeting = 'Welcome, ' + result[0].name + '!';
-           response.writeHead(200, { 'Content-Type': 'text/html' });
-           response.end(greeting, 'utf-8');
-        }
+          console.log('Error', memberId);
+          response.writeHead(500);
+          response.end('Server error');
+          return;
+        } 
+        console.log('this is the value of result when getting the name', result);
+        const greeting = 'Welcome, ' + result[0].name + '!';
+        response.writeHead(200, { 'Content-Type': 'text/html' });
+        response.end(greeting, 'utf-8');
     });
-    
 }
 
 /* 
