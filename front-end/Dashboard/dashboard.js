@@ -432,7 +432,7 @@ function getUserOrderReport() {
     xhr.send(data);
 }
 
-function filterOrderTable(table) {
+function filterOrderTable(tableHTML) {
 
   // Create a temporary element to hold the table HTML
   const tempElement = document.createElement('div');
