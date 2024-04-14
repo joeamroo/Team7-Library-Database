@@ -206,8 +206,6 @@ var input = document.querySelector(".input-box");
       console.error('error', xhr.statusText);
     };
 
-    console.log(memberId);
-
     const data = JSON.stringify({
       memberId: memberId
     });
