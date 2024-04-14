@@ -5,42 +5,120 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="StaffReports.css">
    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
-   <title>Staff Page</title>
+   <title>Get Event Report</title>
 </head>
 
-
 <body>
-   <header>
-       <div class="top-bar">
-         <h1 class="library-name"><a href="../Home/home.html">Cougar Chronicles</a></h1>
-         <a href="#" class="button" id="logoutBtn">Logout</a>
-       </div>
- <div>
-   <nav>
-       <ul>
-           <li><a href="../Catalog/catalog.html">Catalog</a></li>
-           <li><a href="../Classes/classes.html">Classes and Events</a></li>
-           <li><a href="../Research/research.html">Research</a></li>
-           <li><a href="../About Us/about.html">About us</a></li>
-       </ul>
-   </nav>
- </div>
-     </header>
-     <br/>
-     <br/>
-     <br/>
-
-    <div>
-        <div class="center-container">
-            <br/>
-            <br/>
-                <!--Only members report is needed here-->
-                <a href="./MembersEvents/MembersEvents.html" class="staff-buttons" id="Staff1">Members</a>
-                <a href="./Circulation/Circulation.html" class="staff-buttons" id="Staff2">Circulation Statistics</a>
-        </div> 
+    <header>
+        <div class="top-bar">
+          <h1 class="library-name"><a href="../Home/home.html">Cougar Chronicles</a></h1>
+        </div>
+    </header>
+    <div class="form-container">
+        <form id="eventReportForm">
+            <div class="form-group">
+                <label for="EventID">Please Enter the Event ID:</label>
+                <input type="text" id="eventId" name="eventId">
+            </div>
+            <button type="submit">Get Reports</button>
+        </form>
+        <div id="eventDetailsContainer">
+            <h2>Event Details</h2>
+            <ul>
+                <li><strong>Event ID:</strong> <span id="eventId"></span></li>
+                <li><strong>Event Name:</strong> <span id="eventName"></span></li>
+                <li><strong>Description:</strong> <span id="description"></span></li>
+                <li><strong>Image:</strong> <img id="eventImage" src="" alt="Event Image"></li>
+                <li><strong>Date:</strong> <span id="date"></span></li>
+                <li><strong>Location:</strong> <span id="location"></span></li>
+                <li><strong>Sponsor:</strong> <span id="sponsor"></span></li>
+            </ul>
+        </div>
+        <div id="chartContainer">
+            <canvas id="myChart"></canvas>
+        </div>
     </div>
-  
-    <script src="StaffReports.js"></script>
-</body>
 
+    <script>
+        document.getElementById('eventReportForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const eventId = document.getElementById('eventId').value;
+    
+            // Make AJAX request to backend
+            axios.post('/getEventReports', { eventId: eventId })
+                .then(function(response) {
+                    const eventData = response.data;
+                    // Display event details
+                    displayEventDetails(eventData.eventDetails);
+                    // Show the event details container
+                    document.getElementById('eventDetailsContainer').style.display = 'block';
+                })
+                .catch(function(error) {
+                    console.error('Error fetching event reports:', error);
+                    // Handle error
+                });
+        });
+    
+        function displayEventDetails(eventDetails) {
+            document.getElementById('eventId').textContent = eventDetails.event_id;
+            document.getElementById('eventName').textContent = eventDetails.event_name;
+            document.getElementById('description').textContent = eventDetails.event_description;
+            document.getElementById('eventImage').src = eventDetails.event_image;
+            document.getElementById('date').textContent = eventDetails.date;
+            document.getElementById('location').textContent = eventDetails.location;
+            document.getElementById('sponsor').textContent = eventDetails.sponsor;
+        }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script>
+        document.getElementById('eventReportForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const eventId = document.getElementById('eventId').value;
+
+            // Make AJAX request to backend
+            axios.post('/getEventReports', { eventId: eventId })
+                .then(function(response) {
+                    const eventData = response.data;
+                    // Display the chart using Chart.js
+                    displayChart(eventData);
+                })
+                .catch(function(error) {
+                    console.error('Error fetching event reports:', error);
+                    // Handle error
+                });
+        });
+
+        function displayChart(eventData) {
+            const ctx = document.getElementById('myChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Event Attendance', 'Average Attendance'],
+                    datasets: [{
+                        label: 'Attendance',
+                        data: [eventData.eventAttendance, eventData.averageAttendance],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
 </html>

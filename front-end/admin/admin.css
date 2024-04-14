@@ -1033,8 +1033,7 @@ input[type="date"] {
   margin-right: 5px;
 }
 
-#addEmployeeBtn, 
-#removeEmployeeBtn, 
+.employee-btns, 
 #addEventBtn, 
 #removeEventBtn {
   padding: 10px 15px;
@@ -1074,6 +1073,18 @@ input[type="date"] {
   margin-bottom: 15px;
 }
 
+#updEmployeeForm {
+  border-radius: 20px;
+  margin: 20px 10px;
+  width: 85%;
+  background-color: rgb(224, 224, 224);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 30px;
+  margin-bottom: 15px;
+}
+
 #removeEventElements {
   padding: 15px;
 }
@@ -1100,6 +1111,9 @@ input[type=url],
 #empId,
 #removeEmployeeEmail,
 #removeEmployeeId,
+#updEmployeeId,
+#updEmployeePosition,
+#updEmployeeSupervisor,
 #addEventDes,
 .form-select {
   width: 500px;
@@ -1127,7 +1141,7 @@ input[type=time] {
   width: 300px;
 }
 
-#addEmployeeSubmit, #removeEmployeeSubmit, #addEventSubmit, #removeEventSubmit {
+button[type='submit'] {
   margin-top: 20px;
   border-radius: 20px;
   background-color: var(--mainColor);
@@ -1135,13 +1149,17 @@ input[type=time] {
   padding: 10px 20px;
 }
 
-#addEmployeeSubmit:hover, #removeEmployeeSubmit:hover {
+button[type='submit']:hover {
   cursor: pointer;
   background-color: #ad2727 ;
 }
 
 #req {
   color: red;
+}
+
+#limitBySection, #limitEventSection {
+  margin-top: 15px;
 }
 
 #limitBySection label, #limitEventSection label {

@@ -979,6 +979,10 @@ input[type="password"] {
   display: none;
 }
 
+.settings.fines.hide {
+  display: none;
+}
+
 /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
   │                                  Orders                                     │
@@ -1049,6 +1053,104 @@ input[type="date"] {
   margin: 0 auto;
 }
 
-#Order\ ID {
-  color: green;
+
+
+/*Added for fine*/
+
+.total {
+  margin-top: 50px;
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1.5px solid #ccc;
+  font-size: 20px;
 }
+
+#fine-title {
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+#amount {
+  margin-right: 870px;
+  margin-bottom: 10px;
+}
+
+#first-name,
+#last-name,
+#card-number,
+#cvv,
+#exp-date {
+  width: 400px; 
+  margin-left: 20px;
+  margin-bottom: 40px;
+  font-size: 16px;
+}
+
+#last-name,
+#cvv,
+#exp-date {
+  margin-right: 20px; 
+}
+
+label[for="first-name"] {
+  margin-right: 18px;
+}
+
+label[for="expiry-date"] {
+  margin-right: 15px;
+}
+
+#first-name {
+  margin-right: 48px;
+}
+
+
+#card-number {
+  margin-right: 95px;
+}
+
+.name-info,
+.card-num-cvv,
+.logos-and-exp {
+  margin-left: 80px;
+  display: flex;
+  justify-content: flex-start; 
+}
+
+
+#payFineBtn {
+  width: 90%;
+  margin-left: 60px;
+  background-color: #45a049;
+  color: white;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 18px;
+}
+
+#payFineBtn:hover {
+  cursor: pointer;
+  background-color:  #4CAF50;
+}
+
+@keyframes shake {
+  10%, 90% {
+      transform: translateX(-2px);
+  }
+  20%, 80% {
+      transform: translateX(2px);
+  }
+  30%, 50%, 70% {
+      transform: translateX(-4px);
+  }
+  40%, 60% {
+      transform: translateX(4px);
+  }
+}
+
+.shake-button {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* End of Fine*/

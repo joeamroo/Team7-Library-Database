@@ -8,10 +8,12 @@ const profileSelect = document.getElementById('profile-selection');
 const orderSelect = document.getElementById('order-selection');
 const holdSelect = document.getElementById('hold-selection');
 const waitSelect = document.getElementById('waitlist-selection');
+const fineSelect = document.getElementById('fine-selection');
 const profileView = document.querySelector('.settings.profile');
 const orderView = document.querySelector('.settings.orders');
 const holdsView = document.querySelector('.settings.holds');
 const waitlistView = document.querySelector('.settings.waitlist');
+const fineView = document.querySelector('.settings.fines');
 const orderReport = document.querySelector('.recent-orders');
 const profileInfo = document.querySelector('.member-info');
 const today = new Date().toLocaleDateString();
@@ -137,8 +139,8 @@ var input = document.querySelector(".input-box");
         waitlistView.classList.add('hide');
         orderView.classList.add('hide');
         holdsView.classList.add('hide');
+        fineView.classList.add('hide');
         profileView.classList.remove('hide');
-         
       });
       
 
@@ -146,6 +148,7 @@ var input = document.querySelector(".input-box");
         profileView.classList.add('hide');
         holdsView.classList.add('hide');
         waitlistView.classList.add('hide');
+        fineView.classList.add('hide');
         orderView.classList.remove('hide');
       });
 
@@ -153,6 +156,7 @@ var input = document.querySelector(".input-box");
         profileView.classList.add('hide');
         orderView.classList.add('hide');
         waitlistView.classList.add('hide');
+        fineView.classList.add('hide');
         holdsView.classList.remove('hide');
       });
 
@@ -160,7 +164,16 @@ var input = document.querySelector(".input-box");
         profileView.classList.add('hide');
         orderView.classList.add('hide');
         holdsView.classList.add('hide');
+        fineView.classList.add('hide');
         waitlistView.classList.remove('hide');
+      });
+
+      fineSelect.addEventListener('click', () => {
+        profileView.classList.add('hide');
+        orderView.classList.add('hide');
+        holdsView.classList.add('hide');
+        waitlistView.classList.add('hide');
+        fineView.classList.remove('hide');
       });
 
       /* 
@@ -538,3 +551,69 @@ function filterOrderTable(table) {
     // Sends memberID and server sends back profile info
     xhr.send(JSON.stringify({memberId: memberId}));
   }*/
+
+
+
+  //Pay fine functionality (Gaby)
+
+  const updateMemberFineUrl = `${backendUrl}/updMemberFine`;
+  const getFineUrl = `${backendUrl}/getFineAmount`;
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const memberId = localStorage.getItem('memberId');
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', getFineUrl);
+
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        const responseData = JSON.parse(xhr.responseText);
+        const fine_amount = responseData.gotFine;
+
+        document.getElementById('amount').textContent = '$' + fine_amount;
+      } 
+      else {
+        console.error('Error:', xhr.statusText);
+      }
+    };
+
+    const data = JSON.stringify({ memberId });
+
+    xhr.send(data);
+  });
+
+  document.getElementById('payFineBtn').addEventListener('click', function(event) {
+    event.preventDefault();
+    
+    const allFieldsFilled = [
+      'first-name', 'last-name', 'card-number', 'cvv', 'exp-date'
+    ].every(id => document.getElementById(id).value.trim() !== "");
+
+    if (allFieldsFilled) {
+      const memberId = localStorage.getItem('memberId');
+        
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', updateMemberFineUrl); 
+      xhr.setRequestHeader('Content-Type', 'application/json');
+
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          console.log('reset fine to zero');
+        }
+        else {
+          console.error('Error:', xhr.statusText);
+        }
+      };
+
+      const data = JSON.stringify({ memberId });
+      
+      xhr.send(data);  
+    }
+    else {
+      const submitBtn = document.getElementById('payFineBtn');
+      submitBtn.classList.add('shake-button');
+
+      setTimeout(() => {
+        submitBtn.classList.remove('shake-button');
+      }, 500);
+    }
+  });

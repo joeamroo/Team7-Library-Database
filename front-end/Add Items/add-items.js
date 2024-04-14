@@ -4,15 +4,12 @@ const staffId = localStorage.getItem('staffId');
 const isAdmin = localStorage.getItem('isAdmin');
 const itemTypeSelect = document.getElementById('itemType-selection');
 const publicationreleaseDate = document.getElementById('publicationReleaseDate-date');
-const addItemURL = `${backendUrl}/add%20Items/add-items.html`;
+const backendUrl = 'https://cougarchronicles.onrender.com'; 
+const addItemURL = `${backendUrl}/add-items`;
 const addItemBtn = document.getElementById('addItemBtn');
 const addItemForm = document.getElementById('addItemForm');
 
-addItemBtn.addEventListener('click', () => {
-    toggleForm(addItemBtn, addItemForm);
-  });
-
-document.getElementById('main-btn').addEventListener('click', function(event) {
+document.getElementById('addItemBtn').addEventListener('click', function(event) {
     event.preventDefault();
     
     const allFieldsFilled = [
@@ -27,6 +24,8 @@ document.getElementById('main-btn').addEventListener('click', function(event) {
         const category = document.getElementById('category').value;
         const publisherProducer = document.getElementById('publisherProducer').value;
         const publicationReleaseDate = document.getElementById('publicationReleaseDate').value;
+        const imageLink = document.getElementById('imageLink').value;
+
 
 
         
@@ -44,6 +43,7 @@ document.getElementById('main-btn').addEventListener('click', function(event) {
                 document.getElementById('category').value = '';
                 document.getElementById('publisherProducer').value = '';
                 document.getElementById('publicationReleaseDate').value = '';
+                document.getElementById('imageLink').value = '';
             } 
             else {
                 console.error('Error:', xhr.statusText);
@@ -55,16 +55,16 @@ document.getElementById('main-btn').addEventListener('click', function(event) {
             title: title, 
             authorDirector: authorDirector, 
             isbn: isbn, 
-            date: date,
             category: category,
             publisherProducer: publisherProducer,
-            publicationReleaseDate: publicationReleaseDate
+            publicationReleaseDate: publicationReleaseDate,
+            imageLink:imageLink
         });
         
         xhr.send(data);
     }
     else {
-        const submitBtn = document.getElementById('main-btn');
+        const submitBtn = document.getElementById('addItemBtn');
         additemBtn.classList.add('shake-button');
 
         setTimeout(() => {

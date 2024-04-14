@@ -28,26 +28,10 @@
   <div class="top-sidebar">
     <aside>
       <div id="ArrowLink">
-        <!-- Arrow to go back to homepage -->
-        
-   
        </div>
 
       <div class="sidebar">
-          <div class="top">
-
-
-
-  
-<!-- 
-  ┌─────────────────────────────────────────────────────────────────────────────┐
-  │                           Background Image                                  │
-  └─────────────────────────────────────────────────────────────────────────────┘
- -->
-  
-
-
-            
+          <div class="top">      
             <h2>Management</h2>
             <h3 id = "dashboard"><span id="highlight">Dashboard</span></h3>
           </div>
@@ -70,12 +54,6 @@
   <div class="top-bar">
     <h1 class="library-name"><a href="../Home/home.html"><img src="../Images/logo_white.PNG" id="logo-img"></a></h1>
   </div>
-
-<!-- 
-  ┌────────────────────────────────────────────────────────────────────────┐
-  │                               Notification                             │
-  └────────────────────────────────────────────────────────────────────────┘
- -->
  
   <div class="center">
     
@@ -126,7 +104,7 @@
 
 <!-- 
   ┌───────────────────────────────────────────────────────────────────┐
-  │                             Orders                                │
+  │                            Employees                              │
   └───────────────────────────────────────────────────────────────────┘
  -->
 
@@ -134,6 +112,7 @@
   <h3 id="table-name">Employees</h3>
   <button class="employee-btns" id="addEmployeeBtn"><i class="uil uil-angle-down"></i>Add Employee</button>
   <button class="employee-btns" id="removeEmployeeBtn"><i class="uil uil-angle-down"></i>Remove Employee</button>
+  <button class="employee-btns" id="updEmployeeBtn"><i class="uil uil-angle-down"></i>Update Employee Role</button>
 
   <div id="addEmployeeForm" style="display: none;">
     <form>
@@ -200,6 +179,34 @@
       <button type="submit" id="removeEmployeeSubmit">Remove Employee</button>
     </form>
   </div>
+  <div id="updEmployeeForm" style="display: none;">
+    <form>
+      <div class="mb-3">
+        <label class="form-label">Staff ID<span id="req">*</span></label>
+        <select class="form-select" id="updEmployeeId" required>
+          <option value="">Select ID</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="employeePosition" class="form-label">New Position<span id="req">*</span></label>
+        <select class="form-select" id="updEmployeePosition" required>
+          <option value="">Select Position</option>
+          <option value="librarian">Librarian</option>
+          <option value="admin">Administrator</option>
+          <option value="volunteer">Volunteer</option>
+          <option value="clerk">Clerk</option>          
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">New Supervisor<span id="req">*</span></label>
+        <select class="form-select" id="updEmployeeSupervisor" required>
+          <option value="">Select Supervisor</option>
+          <option value="N/A">N/A</option>
+        </select>
+      </div>
+      <button type="submit" id="updEmployeeSubmit">Update Employee</button>
+    </form>
+  </div>
 
   <div id="limitBySection">
     <label for="empStatus">Employment Status:</label>
@@ -251,7 +258,7 @@
 
 <!-- 
   ┌───────────────────────────────────────────────────────────────────┐
-  │                             Holds                                 │
+  │                             Events                                │
   └───────────────────────────────────────────────────────────────────┘
  -->
 
@@ -343,7 +350,7 @@
 
 <!-- 
   ┌───────────────────────────────────────────────────────────────────┐
-  │                            WaitList                               │
+  │                            Inventory                              │
   └───────────────────────────────────────────────────────────────────┘
  -->
 
@@ -402,23 +409,18 @@
 
 
 
- <!-- End of Container-->
   </div>
   </header>
 
-  <!-- Main body-->
   <main>
 
   
   </main>
-  <!--Main body ends-->
+
 
   
 </div>
 
-
-
-  <!-- Container Ends -->
   
 </body>
 <script src="admin.js"></script>

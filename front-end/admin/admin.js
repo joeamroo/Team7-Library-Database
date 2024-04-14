@@ -197,6 +197,7 @@ const addEmployeeUrl = `${backendUrl}/addStaff`;
 const removeEmployeeUrl = `${backendUrl}/removeStaff`;
 const filterEmployeesUrl = `${backendUrl}/filterStaff`;
 const getAdminInfosUrl = `${backendUrl}/adminInfo`;
+const updateEmployeeRoleUrl = `${backendUrl}/updStaffRole`;
 
 
 /* Get Member Info for Dashboard */
@@ -236,15 +237,25 @@ const addEmployeeBtn = document.getElementById('addEmployeeBtn');
 const addEmployeeForm = document.getElementById('addEmployeeForm');
 const removeEmployeeBtn = document.getElementById('removeEmployeeBtn');
 const removeEmployeeForm = document.getElementById('removeEmployeeForm');
+const updEmployeeBtn = document.getElementById('updEmployeeBtn');
+const updEmployeeForm = document.getElementById('updEmployeeForm');
 
 addEmployeeBtn.addEventListener('click', () => {
   toggleForm(addEmployeeBtn, addEmployeeForm);
   hideFormIfOpen(removeEmployeeForm);
+  hideFormIfOpen(updEmployeeForm);
 });
 
 removeEmployeeBtn.addEventListener('click', () => {
   toggleForm(removeEmployeeBtn, removeEmployeeForm);
   hideFormIfOpen(addEmployeeForm);
+  hideFormIfOpen(updEmployeeForm);
+});
+
+updEmployeeBtn.addEventListener('click', () => {
+    toggleForm(updEmployeeBtn, updEmployeeForm);
+    hideFormIfOpen(addEmployeeForm);
+    hideFormIfOpen(removeEmployeeForm);
 });
 
 function toggleForm(btn, form) {
@@ -278,13 +289,16 @@ function getEmployeeList() {
 
             const empRoles = getEmployeeRoles(); 
             populateSupervisorDropdown(empRoles);
+            populateSupervisorForUpdate(empRoles);
             
             const empIds = getEmployeesIds();
             populateEmpIdsDropdown(empIds);
 
+            const updEmpIds = getUpdateEmployeesIds();
+            populateEmpIdForUpdate(updEmpIds);
+
             const empEmails = getEmployeesEmail();
             populateEmpEmailsDropdown(empEmails)
-
         } 
     };
     xhr.send();
@@ -321,6 +335,21 @@ function populateSupervisorDropdown(employeeRoles) {
     });
 }
 
+function populateSupervisorForUpdate(employeeRoles) {
+    const dropdown = document.getElementById('updEmployeeSupervisor');
+
+    while (dropdown.options.length > 2) {
+        dropdown.remove(2);
+    }
+
+    employeeRoles.forEach(empRole => {
+        const option = document.createElement('option');
+        option.value = empRole;
+        option.textContent = empRole;
+        dropdown.appendChild(option);
+    });
+}
+
 function getEmployeesIds() {
     const table = document.getElementById('employeeTable');
     const rows = table.getElementsByClassName('employee-item');
@@ -335,6 +364,36 @@ function getEmployeesIds() {
 
 function populateEmpIdsDropdown(empIds) {
     const dropdown = document.getElementById('removeEmployeeId');
+
+    while (dropdown.options.length > 1) {
+        dropdown.remove(1);
+    }
+
+    empIds.forEach(empId => {
+        const option = document.createElement('option');
+        option.value = empId;
+        option.textContent = empId;
+        dropdown.appendChild(option);
+    });
+}
+
+function getUpdateEmployeesIds() {
+    const table = document.getElementById('employeeTable');
+    const rows = table.getElementsByClassName('employee-item');
+    const empIds = [];
+
+    for (const row of rows) {
+        const empId = row.getElementsByClassName('staff_id')[0].textContent;
+        const empStatus = row.getElementsByClassName('staff_empl_status')[0].textContent;
+        if (empStatus === 'Active') {
+            empIds.push(empId);
+        }
+    }
+    return empIds;
+}
+
+function populateEmpIdForUpdate(empIds) {
+    const dropdown = document.getElementById('updEmployeeId');
 
     while (dropdown.options.length > 1) {
         dropdown.remove(1);
@@ -443,7 +502,7 @@ document.getElementById('removeEmployeeSubmit').addEventListener('click', functi
     event.preventDefault();
     
     const allFieldsFilled = [
-        'removeEmployeeEmail', 'removeEmployeeId'
+        'removeEmployeeEmail', 'removeEmployeeId', 'removalReason'
     ].every(id => document.getElementById(id).value.trim() !== "");
 
     if (allFieldsFilled) {
@@ -471,8 +530,8 @@ document.getElementById('removeEmployeeSubmit').addEventListener('click', functi
 
         const data = JSON.stringify({ 
             email: email, 
-            staff_id,
-            empStatus
+            staff_id: staff_id,
+            empStatus: empStatus
         });
         
         xhr.send(data);
@@ -486,6 +545,57 @@ document.getElementById('removeEmployeeSubmit').addEventListener('click', functi
         }, 500);
     }
 });
+
+
+document.getElementById('updEmployeeSubmit').addEventListener('click', function(event) {
+    event.preventDefault();
+    
+    const allFieldsFilled = [
+        'updEmployeeId', 'updEmployeePosition', 'updEmployeeSupervisor'
+    ].every(id => document.getElementById(id).value.trim() !== "");
+
+    if (allFieldsFilled) {
+        const empId = document.getElementById('updEmployeeId').value;
+        const empPos = document.getElementById('updEmployeePosition').value;
+        const empSuper = document.getElementById('updEmployeeSupervisor').value;
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', updateEmployeeRoleUrl); 
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                console.log('sucessfully updated employee role');
+                document.getElementById('updEmployeeId').value = '';
+                document.getElementById('updEmployeePosition').value = '';
+                document.getElementById('updEmployeeSupervisor').value = '';
+                getEmployeeList();
+                updateTotalEmployeesCount();
+            } 
+            else {
+                console.error('Error:', xhr.statusText);
+            }
+        };
+
+        const data = JSON.stringify({ 
+            empId: empId,
+            empPos: empPos,
+            empSuper: empSuper
+        });
+        
+        xhr.send(data);  
+    }
+    else {
+        const submitBtn = document.getElementById('updEmployeeSubmit');
+        submitBtn.classList.add('shake-button');
+
+        setTimeout(() => {
+            submitBtn.classList.remove('shake-button');
+        }, 500);
+    }
+});
+
+
 
 document.getElementById('searchEmplsButton').addEventListener('click', function(event) {
     event.preventDefault();
