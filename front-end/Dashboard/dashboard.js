@@ -262,7 +262,7 @@ updateBtn.addEventListener('click', function(event) {
     }, 900);
   
   } else {
-        openPop();
+        setProfileInfo();
   }
     
 });
