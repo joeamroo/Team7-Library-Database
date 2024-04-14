@@ -36,7 +36,7 @@ function getId(item, itemType) {
 }
 
 
-function addItems(res, itemType, title, authorDirector, isbn, category, publisherProducer, publicationReleaseDate,imageLink,totalCopies) {
+function addItems(res, itemType, title, authorDirector, isbn, category, publisherProducer, publicationReleaseDate,imageLink,totalCopies,rating) {
     var authorId = 0;
     var genreId = 0;
     if(itemType === 'book') {
@@ -95,7 +95,7 @@ function addItems(res, itemType, title, authorDirector, isbn, category, publishe
                         console.log(genreId);
                     }
                 }),
-                connection.query(`INSERT INTO movie (movie_id,movie_title,director,year_released,movie_img_address) VALUES (?,?,?,?,?)`, [isbn,title,authorDirector,publicationReleaseDate,imageLink], (err) => { 
+                connection.query(`INSERT INTO movie (available_copies,total_copies,current_holds,movie_condition,rating,movie_id,movie_title,director,year_released,movie_img_address) VALUES (?,?,?,?,?,?,?,?,?,?)`, [totalCopies,totalCopies,'0','1',rating,isbn,title,authorDirector,publicationReleaseDate,imageLink], (err) => { 
                     if (err) {
                         console.log('error entering new movie into librarydev db:', err);
                     }

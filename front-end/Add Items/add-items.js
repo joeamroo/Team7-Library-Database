@@ -26,12 +26,8 @@ document.getElementById('addItemBtn').addEventListener('click', function(event) 
         const publicationReleaseDate = document.getElementById('publicationReleaseDate').value;
         const imageLink = document.getElementById('imageLink').value;
         const totalCopies = document.getElementById('totalCopies').value;
+        const rating = document.getElementById('rating').value;
 
-
-
-
-
-        
         const xhr = new XMLHttpRequest();
         xhr.open('POST', addItemURL); 
         xhr.setRequestHeader('Content-Type', 'application/json');
@@ -48,6 +44,7 @@ document.getElementById('addItemBtn').addEventListener('click', function(event) 
                 document.getElementById('publicationReleaseDate').value = '';
                 document.getElementById('imageLink').value = '';
                 document.getElementById('totalCopies').value = '';
+                document.getElementById('rating').value = '';
             } 
             else {
                 console.error('Error:', xhr.statusText);
@@ -63,7 +60,8 @@ document.getElementById('addItemBtn').addEventListener('click', function(event) 
             publisherProducer: publisherProducer,
             publicationReleaseDate: publicationReleaseDate,
             imageLink:imageLink,
-            totalCopies:totalCopies
+            totalCopies:totalCopies,
+            rating: rating
         });
         
         xhr.send(data);

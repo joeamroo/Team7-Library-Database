@@ -512,7 +512,7 @@ const server = http.createServer((request, res) => {
                 request.on('end', () => {
                     try {
                         const postData = JSON.parse(body);
-                        addItems(res, postData.itemType,postData.title,postData.authorDirector,postData.isbn,postData.category,postData.publisherProducer,postData.publicationReleaseDate,postData.imageLink,postData.totalCopies);
+                        addItems(res, postData.itemType,postData.title,postData.authorDirector,postData.isbn,postData.category,postData.publisherProducer,postData.publicationReleaseDate,postData.imageLink,postData.totalCopies,postData.rating);
                     } 
                     catch (error) {
                         console.error('Error parsing JSON:', error);
