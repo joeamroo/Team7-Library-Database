@@ -13,7 +13,8 @@ function getFineAmount(res, memberId) {
         if (getFineErr) {
             console.log('error getting fine from librarydev db:', getFineErr);
         }
-        const gotFine = result[0].fine;
+        const gotFine = result;
+        console.log(gotFine);
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ gotFine }));
     });

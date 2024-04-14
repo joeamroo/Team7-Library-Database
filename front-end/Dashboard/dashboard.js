@@ -529,7 +529,7 @@ function getUserOrderReport() {
   const updateMemberFineUrl = `${backendUrl}/updMemberFine`;
   const getFineUrl = `${backendUrl}/getFineAmount`;
 
-  document.addEventListener('DOMContentLoaded', function() {
+  function getFine() {
     const memberId = localStorage.getItem('memberId');
     const xhr = new XMLHttpRequest();
     xhr.open('POST', getFineUrl);
@@ -549,6 +549,11 @@ function getUserOrderReport() {
     const data = JSON.stringify({ memberId });
 
     xhr.send(data);
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    getFine();
+    setInterval(getFine, 10000);
   });
 
   document.getElementById('payFineBtn').addEventListener('click', function(event) {
@@ -567,7 +572,12 @@ function getUserOrderReport() {
 
       xhr.onload = function() {
         if (xhr.status === 200) {
-          console.log('reset fine to zero');
+          getFine();
+          document.getElementById('first-name').value = '';
+          document.getElementById('last-name').value = '';
+          document.getElementById('card-number').value = '';
+          document.getElementById('cvv').value = '';
+          document.getElementById('exp-date').value = '';
         }
         else {
           console.error('Error:', xhr.statusText);
