@@ -8,7 +8,9 @@ const connection = mysql.createConnection({
     port:3306
 });
 
-function insertEvent(itemType, title, authorDirector, isbn, category, publisherProducer, publicationReleaseDate,imageLink) {
+function addItems(res, itemType, title, authorDirector, isbn, category, publisherProducer, publicationReleaseDate,imageLink) {
+    var authorId = 0;
+    var genreId = 0;
     if(itemType === 'book') {
         connection.query(`INSERT INTO author (author_name) VALUES (?)`, [authorDirector], (err) => { 
             if (err) {
@@ -20,7 +22,8 @@ function insertEvent(itemType, title, authorDirector, isbn, category, publisherP
                         console.log('error getting new author id:', err);
                     }
                     else {
-                        const authorId = result[0]['LAST_INSERT_ID()'];
+                        authorId = result[0]['LAST_INSERT_ID()'];
+                        console.log(authorId);
                     }
                 })
             }
@@ -35,7 +38,8 @@ function insertEvent(itemType, title, authorDirector, isbn, category, publisherP
                         console.log('error getting new genre id:', err);
                     }
                     else {
-                        const genreId = result[0]['LAST_INSERT_ID()'];
+                        genreId = result[0]['LAST_INSERT_ID()'];
+                        console.log(genreId);
                     }
                 })
                 connection.query(`INSERT INTO book (isbn,title,year_released,book_img_address) VALUES (?,?,?,?)`, [isbn,title,publicationReleaseDate,imageLink], (err) => { 
@@ -67,7 +71,8 @@ function insertEvent(itemType, title, authorDirector, isbn, category, publisherP
                         console.log('error getting new genre id:', err);
                     }
                     else {
-                        const genreId = result[0]['LAST_INSERT_ID()'];
+                        genreId = result[0]['LAST_INSERT_ID()'];
+                        console.log(genreId);
                     }
                 }),
                 connection.query(`INSERT INTO movie (movie_id,movie_title,director,year_released,movie_img_address) VALUES (?,?,?,?,?)`, [isbn,title,authorDirector,publicationReleaseDate,imageLink], (err) => { 
@@ -86,3 +91,5 @@ function insertEvent(itemType, title, authorDirector, isbn, category, publisherP
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ message: 'eventCreationSuccessful' }));
     };
+
+    module.exports = { addItems };
