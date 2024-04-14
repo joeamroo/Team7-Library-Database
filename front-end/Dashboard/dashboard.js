@@ -568,7 +568,6 @@ function filterOrderTable(tableHTML) {
       if (xhr.status === 200) {
         const responseData = JSON.parse(xhr.responseText);
         const fine_amount = responseData.gotFine;
-        console.log('this is working and im getting this', fine_amount);
 
         document.getElementById('amount').textContent = '$' + fine_amount;
       } 
@@ -584,7 +583,7 @@ function filterOrderTable(tableHTML) {
 
   document.addEventListener('DOMContentLoaded', function() {
     getFine();
-    setInterval(getFine, 60000);
+    setInterval(getFine, 30000);
   });
 
   document.getElementById('payFineBtn').addEventListener('click', function(event) {

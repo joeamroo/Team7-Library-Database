@@ -1078,7 +1078,7 @@ input[type="date"] {
 #cvv,
 #exp-date {
   border-radius: 15px;
-  border-color: black;
+  border-color: rgb(85, 85, 85);
   height: 50px;
   width: 400px; 
   margin-left: 20px;
