@@ -541,6 +541,9 @@ function getUserOrderReport() {
 
         document.getElementById('amount').textContent = '$' + fine_amount;
       } 
+      else {
+        console.error('Error:', xhr.statusText);
+      }
     };
 
     const data = JSON.stringify({ memberId });
