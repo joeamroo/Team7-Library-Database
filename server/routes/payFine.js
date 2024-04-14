@@ -8,6 +8,16 @@ const connection = mysql.createConnection({
     port:3306
 });
 
+function getFineAmount(res, memberId) {
+    connection.query(`SELECT fine FROM member WHERE member_id = ?`, [memberId], (getFineErr, result) => {
+        if (getFineErr) {
+            console.log('error getting fine from librarydev db:', getFineErr);
+        }
+        const gotFine = result[0].fine;
+        response.writeHead(200, { 'Content-Type': 'application/json' });
+        response.end(JSON.stringify({ gotFine }));
+    });
+}
 
 function updateFine(res, memberId) {
     connection.query(`UPDATE member SET fine = 0 WHERE member_id = ?`, [memberId], (updMemErr, result) => {
@@ -20,4 +30,4 @@ function updateFine(res, memberId) {
     res.end(JSON.stringify({ message: 'fineUpdateSuccessful' }));
 }
 
-module.exports = { updateFine };
+module.exports = { updateFine, getFineAmount };
