@@ -69,45 +69,42 @@ function addItems(res, itemType, title, authorDirector, isbn, category, publishe
                 console.log('error entering new book into librarydev db:', err);
             }
         }),
-        connection.query(`INSERT INTO book_author_link (book_id,author_id) VALUES ()`, [isbn,authorId], (err) => { 
+        connection.query(`INSERT INTO book_author_link (book_id,author_id) VALUES (?,?)`, [isbn,authorId], (err) => { 
             if (err) {
                 console.log('error entering new book_id into librarydev db:', err);
             }
         }),
-        connection.query(`INSERT INTO book_genres_link (isbn,genre_id) VALUES ()`, [isbn,genreId], (err) => { 
+        connection.query(`INSERT INTO book_genres_link (isbn,genre_id) VALUES (?,?)`, [isbn,genreId], (err) => { 
             if (err) {
                 console.log('error entering new genre_id into librarydev db:', err);
             }
         })
     }
     else if (itemType === 'movie') {
-        connection.query(`INSERT INTO genres (genre_name) VALUES (?)`, [category], (err) => { 
+        genreId = getId(category, 'genre');
+        if (genreId === 0 ) {
+            console.log('genre not found');
+            connection.query(`INSERT INTO genres (genre_name) VALUES (?)`, [category], (err) => {
+                if (err) {
+                    console.log('error entering new genre into librarydev db:', err);
+                }
+                else {
+                    genreId = getId(category, itemType);
+                }
+            })
+        }
+        connection.query(`INSERT INTO movie (available_copies,total_copies,current_holds,movie_condition,rating,movie_id,movie_title,director,year_released,movie_img_address) VALUES (?,?,?,?,?,?,?,?,?,?)`, [totalCopies,totalCopies,'0','1',rating,isbn,title,authorDirector,publicationReleaseDate,imageLink], (err) => { 
             if (err) {
-                console.log('error entering new genre into librarydev db:', err);
+                console.log('error entering new movie into librarydev db:', err);
             }
-            else {
-                connection.query(`SELECT LAST_INSERT_ID()`, (err, result) => {
-                    if (err) {
-                        console.log('error getting new genre id:', err);
-                    }
-                    else {
-                        genreId = result[0]['LAST_INSERT_ID()'];
-                        console.log(genreId);
-                    }
-                }),
-                connection.query(`INSERT INTO movie (available_copies,total_copies,current_holds,movie_condition,rating,movie_id,movie_title,director,year_released,movie_img_address) VALUES (?,?,?,?,?,?,?,?,?,?)`, [totalCopies,totalCopies,'0','1',rating,isbn,title,authorDirector,publicationReleaseDate,imageLink], (err) => { 
-                    if (err) {
-                        console.log('error entering new movie into librarydev db:', err);
-                    }
-                }),
-                connection.query(`INSERT INTO movie_genres_link (isbn,genre_id) VALUES ()`, [isbn,genreId], (err) => { 
-                    if (err) {
-                        console.log('error entering new genre_id into librarydev db:', err);
-                    }
-                })
+        }),
+        connection.query(`INSERT INTO movie_genres_link (isbn,genre_id) VALUES ()`, [isbn,genreId], (err) => { 
+            if (err) {
+                console.log('error entering new genre_id into librarydev db:', err);
             }
         })
-    }
+    }   
+    
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ message: 'eventCreationSuccessful' }));
     };
