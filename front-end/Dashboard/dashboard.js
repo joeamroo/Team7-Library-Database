@@ -387,6 +387,8 @@ function setProfileInfo() {
 
 function getUserOrderReport() {
 
+    const itemValue = '';
+
     const xhr = new XMLHttpRequest();
     xhr.open('POST', getUserOrderUrl);
     xhr.setRequestHeader('Content-Type', 'text/html');
@@ -394,9 +396,10 @@ function getUserOrderReport() {
     xhr.onload = function() {
       if (xhr.status === 200) {
         orderReport.innerHTML = xhr.responseText;
-        //console.log("Client-side (Orders Report):" + orderReport);
-        //orderReport.innerHTML += xhr.responseText;
-        //console.log("clientside" + orderReport);
+        //const orderRetrieval = xhr.responseText;
+       // orderReport.innerHTML = filterOrderTable(orderRetrieval);
+        
+        
       } else {
         console.log("Failed to retrieve data");
       }
@@ -416,8 +419,35 @@ function getUserOrderReport() {
     xhr.send(data);
 }
 
+function filterOrderTable(table) {
 
+  // Create a temporary element to hold the table HTML
+  const tempElement = document.createElement('div');
+  tempElement.innerHTML = tableHTML;
 
+  // Select the table element from the temporary element
+  const table = tempElement.querySelector('table');
+
+  // Select all the table rows
+  const rows = table.getElementsByTagName('tr');
+
+  // Loop through each row
+  for (let i = 0; i < rows.length; i++) {
+    // Select all the cells in the current row
+    const cells = rows[i].getElementsByTagName('td');
+  
+  // Loop through each cell in the row
+  for (let j = 0; j < cells.length; j++) {
+    // Check for all items with NULL values
+    if (cells[j].id === 'item' && cells[j] === 'NULL') {
+      if(cells[j].value === 'book') {
+        // handler
+      }
+    } 
+  }
+}
+
+} // filterOrderTable (ends)
 
 
 

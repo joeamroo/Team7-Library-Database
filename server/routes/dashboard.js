@@ -39,7 +39,7 @@ const link = mysql.createConnection({
   └─────────────────────────────────────────────────────────────────────────────┘
  */
 
-  function getSQLTable(queryResult) {
+  function getSQLTable(queryResult, tableName) {
     // Check if queryResult is empty or undefined
     if (!queryResult || queryResult.length === 0) {
       return '<p>None</p>'; // Return a simple message if no data
@@ -51,15 +51,19 @@ const link = mysql.createConnection({
     // Generate table headers with id attributes
     const tableHeader = headers.map((headerText, index) => `<th id="header-${index}">${headerText}</th>`).join('');
   
-    // Generate table rows
+   // Generate table rows
     const tableRows = data.map(rowData => {
-      const cells = headers.map((key, index) => `<td id="${key}">${rowData[key]}</td>`).join('');
+      const cells = headers.map((key, index) => {
+        const value = rowData[key] === null ? "Not Applicable" : rowData[key];
+          return `<td id="${key}">${value}</td>`;
+        }).join('');
       return `<tr>${cells}</tr>`;
     }).join('');
-  
+
+
     // Construct the table
     const table = `
-      <table>
+      <table id="${tableName}">
         <thead>
           <tr>${tableHeader}</tr>
         </thead>
@@ -68,7 +72,7 @@ const link = mysql.createConnection({
         </tbody>
       </table>
     `;
-  
+    
     console.log("Function table: " + table);
     return table; // Return the HTML table string
   }
@@ -265,7 +269,7 @@ link.query(query, [memberId], (err, results) => {
     }  else {
 
     // Converts SQL query to a table with Keys as IDs
-    const tableHTML = getSQLTable(results);
+    const tableHTML = getSQLTable(results, 'order-table');
 
     // Sends the table back to client
     response.writeHead(200, { 'Content-Type': 'text/html' });
