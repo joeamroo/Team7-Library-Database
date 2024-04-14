@@ -527,6 +527,26 @@ function getUserOrderReport() {
   //Pay fine functionality (Gaby)
 
   const updateMemberFineUrl = `${backendUrl}/updMemberFine`;
+  const getFineUrl = `${backendUrl}/getFineAmount`;
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const memberId = localStorage.getItem('memberId');
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', getFineUrl);
+
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        const responseData = JSON.parse(xhr.responseText);
+        const fine_amount = responseData.gotFine;
+
+        document.getElementById('amount').textContent = '$' + fine_amount;
+      } 
+    };
+
+    const data = JSON.stringify({ memberId });
+
+    xhr.send(data);
+  });
 
   document.getElementById('payFineBtn').addEventListener('click', function(event) {
     event.preventDefault();
@@ -539,7 +559,7 @@ function getUserOrderReport() {
       const memberId = localStorage.getItem('memberId');
         
       const xhr = new XMLHttpRequest();
-      xhr.open('GET', updateMemberFineUrl); 
+      xhr.open('POST', updateMemberFineUrl); 
       xhr.setRequestHeader('Content-Type', 'application/json');
 
       xhr.onload = function() {
