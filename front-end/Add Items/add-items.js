@@ -24,7 +24,7 @@ document.getElementById('addItemBtn').addEventListener('click', function(event) 
         const category = document.getElementById('category').value;
         const publisherProducer = document.getElementById('publisherProducer').value;
         const publicationReleaseDate = document.getElementById('publicationReleaseDate').value;
-        const imageID = document.getElementById('imageLink').value;
+        const imageLink = document.getElementById('imageLink').value;
 
 
 
