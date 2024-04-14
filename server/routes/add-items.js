@@ -21,6 +21,7 @@ function addItems(res, itemType, title, authorDirector, isbn, category, publishe
                     }
                     else {
                         const authorId = result[0]['LAST_INSERT_ID()'];
+                        console.log(authorId);
                     }
                 })
             }
@@ -36,6 +37,7 @@ function addItems(res, itemType, title, authorDirector, isbn, category, publishe
                     }
                     else {
                         const genreId = result[0]['LAST_INSERT_ID()'];
+                        console.log(genreId);
                     }
                 })
                 connection.query(`INSERT INTO book (isbn,title,year_released,book_img_address) VALUES (?,?,?,?)`, [isbn,title,publicationReleaseDate,imageLink], (err) => { 
@@ -68,6 +70,7 @@ function addItems(res, itemType, title, authorDirector, isbn, category, publishe
                     }
                     else {
                         const genreId = result[0]['LAST_INSERT_ID()'];
+                        console.log(genreId);
                     }
                 }),
                 connection.query(`INSERT INTO movie (movie_id,movie_title,director,year_released,movie_img_address) VALUES (?,?,?,?,?)`, [isbn,title,authorDirector,publicationReleaseDate,imageLink], (err) => { 
