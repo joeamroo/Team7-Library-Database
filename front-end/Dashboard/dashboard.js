@@ -580,8 +580,10 @@ function filterOrderTable(tableHTML) {
   }
 
   document.addEventListener('DOMContentLoaded', function() {
-    getFine();
-    setInterval(getFine, 30000);
+    if (localStorage.getItem('memberId')) {
+      getFine();
+      setInterval(getFine, 30000);
+    }
   });
 
   document.getElementById('payFineBtn').addEventListener('click', function(event) {
