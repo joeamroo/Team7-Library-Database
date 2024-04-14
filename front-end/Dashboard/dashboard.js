@@ -206,8 +206,6 @@ var input = document.querySelector(".input-box");
       console.error('error', xhr.statusText);
     };
 
-    console.log(memberId);
-
     const data = JSON.stringify({
       memberId: memberId
     });
@@ -262,7 +260,7 @@ updateBtn.addEventListener('click', function(event) {
     }, 900);
   
   } else {
-        openPop();
+        setProfileInfo();
   }
     
 });
@@ -400,6 +398,8 @@ function setProfileInfo() {
 
 function getUserOrderReport() {
 
+    const itemValue = '';
+
     const xhr = new XMLHttpRequest();
     xhr.open('POST', getUserOrderUrl);
     xhr.setRequestHeader('Content-Type', 'text/html');
@@ -407,9 +407,10 @@ function getUserOrderReport() {
     xhr.onload = function() {
       if (xhr.status === 200) {
         orderReport.innerHTML = xhr.responseText;
-        //console.log("Client-side (Orders Report):" + orderReport);
-        //orderReport.innerHTML += xhr.responseText;
-        //console.log("clientside" + orderReport);
+        //const orderRetrieval = xhr.responseText;
+       // orderReport.innerHTML = filterOrderTable(orderRetrieval);
+        
+        
       } else {
         console.log("Failed to retrieve data");
       }
@@ -429,8 +430,35 @@ function getUserOrderReport() {
     xhr.send(data);
 }
 
+function filterOrderTable(tableHTML) {
 
+  // Create a temporary element to hold the table HTML
+  const tempElement = document.createElement('div');
+  tempElement.innerHTML = tableHTML;
 
+  // Select the table element from the temporary element
+  const table = tempElement.querySelector('table');
+
+  // Select all the table rows
+  const rows = table.getElementsByTagName('tr');
+
+  // Loop through each row
+  for (let i = 0; i < rows.length; i++) {
+    // Select all the cells in the current row
+    const cells = rows[i].getElementsByTagName('td');
+  
+  // Loop through each cell in the row
+  for (let j = 0; j < cells.length; j++) {
+    // Check for all items with NULL values
+    if (cells[j].id === 'item' && cells[j] === 'NULL') {
+      if(cells[j].value === 'book') {
+        // handler
+      }
+    } 
+  }
+}
+
+} // filterOrderTable (ends)
 
 
 
@@ -529,7 +557,7 @@ function getUserOrderReport() {
   const updateMemberFineUrl = `${backendUrl}/updMemberFine`;
   const getFineUrl = `${backendUrl}/getFineAmount`;
 
-  document.addEventListener('DOMContentLoaded', function() {
+  function getFine() {
     const memberId = localStorage.getItem('memberId');
     const xhr = new XMLHttpRequest();
     xhr.open('POST', getFineUrl);
@@ -549,6 +577,15 @@ function getUserOrderReport() {
     const data = JSON.stringify({ memberId });
 
     xhr.send(data);
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const memberId = localStorage.getItem('memberId');
+    if (memberId !== null && memberId !== undefined) {
+      getFine();
+      console.log('entering this section');
+      setInterval(getFine, 30000);
+    }
   });
 
   document.getElementById('payFineBtn').addEventListener('click', function(event) {
@@ -567,7 +604,12 @@ function getUserOrderReport() {
 
       xhr.onload = function() {
         if (xhr.status === 200) {
-          console.log('reset fine to zero');
+          getFine();
+          document.getElementById('first-name').value = '';
+          document.getElementById('last-name').value = '';
+          document.getElementById('card-number').value = '';
+          document.getElementById('cvv').value = '';
+          document.getElementById('exp-date').value = '';
         }
         else {
           console.error('Error:', xhr.statusText);
