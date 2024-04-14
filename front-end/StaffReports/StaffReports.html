@@ -5,120 +5,137 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="StaffReports.css">
    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
-   <title>Get Event Report</title>
+   <title>Member Search</title>
 </head>
 
 <body>
     <header>
         <div class="top-bar">
           <h1 class="library-name"><a href="../Home/home.html">Cougar Chronicles</a></h1>
+          <button id="logoutBtn">Logout</button>
         </div>
     </header>
     <div class="form-container">
-        <form id="eventReportForm">
+        <form id="searchForm">
             <div class="form-group">
-                <label for="EventID">Please Enter the Event ID:</label>
-                <input type="text" id="eventId" name="eventId">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter member name">
             </div>
-            <button type="submit">Get Reports</button>
+            <div class="form-group">
+                <label for="memberId">Member ID:</label>
+                <input type="text" id="memberId" name="memberId" placeholder="Enter member ID">
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="hasFines" value="true"> Members with Fines
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="noTransactions" value="true"> Members with No Transactions
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="btn">Search</button>
+            <button type="button" id="generateReport" class="btn">Generate Report</button>
         </form>
-        <div id="eventDetailsContainer">
-            <h2>Event Details</h2>
-            <ul>
-                <li><strong>Event ID:</strong> <span id="eventId"></span></li>
-                <li><strong>Event Name:</strong> <span id="eventName"></span></li>
-                <li><strong>Description:</strong> <span id="description"></span></li>
-                <li><strong>Image:</strong> <img id="eventImage" src="" alt="Event Image"></li>
-                <li><strong>Date:</strong> <span id="date"></span></li>
-                <li><strong>Location:</strong> <span id="location"></span></li>
-                <li><strong>Sponsor:</strong> <span id="sponsor"></span></li>
-            </ul>
+        <div id="resultsContainer">
+            <table id="resultsTable">
+                <thead>
+                    <tr>
+                        <th>Member ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>Member Type</th>
+                        <th>Phone Number</th>
+                        <th>Address</th>
+                        <th>Fine</th>
+                        <th>Transaction ID</th>
+                        <th>Date Created</th>
+                        <th>Due Date</th>
+                        <th>Return Date</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
-        <div id="chartContainer">
-            <canvas id="myChart"></canvas>
+        <div id="reportContainer" style="display: none;">
+            <h2>Report</h2>
+            <div id="reportContent"></div>
         </div>
     </div>
 
     <script>
-        document.getElementById('eventReportForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const eventId = document.getElementById('eventId').value;
-    
-            // Make AJAX request to backend
-            axios.post('/getEventReports', { eventId: eventId })
-                .then(function(response) {
-                    const eventData = response.data;
-                    // Display event details
-                    displayEventDetails(eventData.eventDetails);
-                    // Show the event details container
-                    document.getElementById('eventDetailsContainer').style.display = 'block';
-                })
-                .catch(function(error) {
-                    console.error('Error fetching event reports:', error);
-                    // Handle error
-                });
-        });
-    
-        function displayEventDetails(eventDetails) {
-            document.getElementById('eventId').textContent = eventDetails.event_id;
-            document.getElementById('eventName').textContent = eventDetails.event_name;
-            document.getElementById('description').textContent = eventDetails.event_description;
-            document.getElementById('eventImage').src = eventDetails.event_image;
-            document.getElementById('date').textContent = eventDetails.date;
-            document.getElementById('location').textContent = eventDetails.location;
-            document.getElementById('sponsor').textContent = eventDetails.sponsor;
+        const logOutBtn = document.getElementById('logoutBtn');
+        const staffId = localStorage.getItem('staffId');
+
+        logOutBtn.addEventListener('click', function(event) {
+            console.log('logging out');
+            localStorage.setItem('loggedIn', false);
+        if (staffId !== null && staffId !== undefined) {
+            logOutBtn.href = '../Home/home.html';
+            localStorage.removeItem('staffId');
         }
-    </script>
+});
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
-    <script>
-        document.getElementById('eventReportForm').addEventListener('submit', function(event) {
+        const searchForm = document.getElementById('searchForm');
+        const resultsTable = document.getElementById('resultsTable').getElementsByTagName('tbody')[0];
+        const generateReportButton = document.getElementById('generateReport');
+        const reportContainer = document.getElementById('reportContainer');
+        const reportContent = document.getElementById('reportContent');
+
+        searchForm.addEventListener('submit', (event) => {
             event.preventDefault();
-            const eventId = document.getElementById('eventId').value;
+            const formData = new FormData(event.target);
+            const queryParams = new URLSearchParams(formData).toString();
+            const apiUrl = `/api/members?${queryParams}`;
 
-            // Make AJAX request to backend
-            axios.post('/getEventReports', { eventId: eventId })
-                .then(function(response) {
-                    const eventData = response.data;
-                    // Display the chart using Chart.js
-                    displayChart(eventData);
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    resultsTable.innerHTML = '';
+                    data.forEach(member => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${member.member_id}</td>
+                            <td>${member.name}</td>
+                            <td>${member.email}</td>
+                            <td>${member.status}</td>
+                            <td>${member.mem_type}</td>
+                            <td>${member.phone_number}</td>
+                            <td>${member.street_addr}, ${member.city_addr}, ${member.state} ${member.zipcode_addr}</td>
+                            <td>${member.fine}</td>
+                            <td>${member.transaction_id || '-'}</td>
+                            <td>${member.date_created || '-'}</td>
+                            <td>${member.due_date || '-'}</td>
+                            <td>${member.return_date || '-'}</td>
+                        `;
+                        resultsTable.appendChild(row);
+                    });
                 })
-                .catch(function(error) {
-                    console.error('Error fetching event reports:', error);
-                    // Handle error
-                });
+                .catch(error => console.error(error));
         });
 
-        function displayChart(eventData) {
-            const ctx = document.getElementById('myChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Event Attendance', 'Average Attendance'],
-                    datasets: [{
-                        label: 'Attendance',
-                        data: [eventData.eventAttendance, eventData.averageAttendance],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        }
+        generateReportButton.addEventListener('click', () => {
+            const formData = new FormData(searchForm);
+            const queryParams = new URLSearchParams(formData).toString();
+            const apiUrl = `/api/reports?${queryParams}`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(reportData => {
+                    reportContainer.style.display = 'block';
+                    const reportHTML = `
+                        <p>Average Fine Amount: $${reportData.averageFine.toFixed(2)}</p>
+                        <p>Average Holds: ${reportData.averageHolds}</p>
+                        <!-- Add more report data as needed -->
+                    `;
+                    reportContent.innerHTML = reportHTML;
+                })
+                .catch(error => console.error(error));
+        });
     </script>
 </body>
 </html>
