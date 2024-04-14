@@ -8,10 +8,10 @@ const connection = mysql.createConnection({
     port:3306
 });
 
-function getId(authorDirector, itemType) {
+function getId(item, itemType) {
     var Id = 0;
     if(itemType === 'author') {
-        connection.query(`SELECT author_id FROM author WHERE author_name = ?`, [authorDirector], (err, result) => {
+        connection.query(`SELECT author_id FROM author WHERE author_name = ?`, [item], (err, result) => {
             if (err) {
                 console.log('error getting author id:', err);
             }
@@ -22,7 +22,7 @@ function getId(authorDirector, itemType) {
         })
     }
     else if(itemType === 'genre') {
-        connection.query(`SELECT genre_id FROM genres WHERE genre_name = ?`, [category], (err, result) => {
+        connection.query(`SELECT genre_id FROM genres WHERE genre_name = ?`, [item], (err, result) => {
             if (err) {
                 console.log('error getting genre id:', err);
             }
