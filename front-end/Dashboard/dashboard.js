@@ -521,3 +521,46 @@ function getUserOrderReport() {
     // Sends memberID and server sends back profile info
     xhr.send(JSON.stringify({memberId: memberId}));
   }*/
+
+
+
+  //Pay fine functionality (Gaby)
+
+  const updateMemberFineUrl = `${backendUrl}/updMemberFine`;
+
+  document.getElementById('payFineBtn').addEventListener('click', function(event) {
+    event.preventDefault();
+    
+    const allFieldsFilled = [
+      'first-name', 'last-name', 'card-number', 'cvv', 'exp-date'
+    ].every(id => document.getElementById(id).value.trim() !== "");
+
+    if (allFieldsFilled) {
+      const memberId = localStorage.getItem('memberId');
+        
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', updateMemberFineUrl); 
+      xhr.setRequestHeader('Content-Type', 'application/json');
+
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          console.log('reset fine to zero');
+        }
+        else {
+          console.error('Error:', xhr.statusText);
+        }
+      };
+
+      const data = JSON.stringify({ memberId });
+      
+      xhr.send(data);  
+    }
+    else {
+      const submitBtn = document.getElementById('payFineBtn');
+      submitBtn.classList.add('shake-button');
+
+      setTimeout(() => {
+        submitBtn.classList.remove('shake-button');
+      }, 500);
+    }
+  });
