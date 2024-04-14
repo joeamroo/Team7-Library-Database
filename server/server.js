@@ -1,7 +1,5 @@
 const http = require('http');
 const url = require('url');
-const db = require('./db');
-const mysql = require('mysql');
 const htmlTemplateTag = require('html-template-tag');
 require("dotenv").config();
 
