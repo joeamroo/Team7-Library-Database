@@ -1,5 +1,7 @@
 const http = require('http');
 const url = require('url');
+const db = require('./db');
+const mysql = require('mysql');
 const htmlTemplateTag = require('html-template-tag');
 require("dotenv").config();
 
@@ -17,6 +19,7 @@ const { getEventsForAdmin, insertEvent, deleteEvent, filterEvents } = require('.
 const { getItemsForAdmin, filterCatalogItems, getAdminInfo } = require('./routes/adminCatalogManagement');
 const { updateFine, getFineAmount } = require('./routes/payFine');
 const { addItems } = require('./routes/add-items');
+const { getMemberData } = require('./routes/staffcirculationreports');
 
 function setCorsHeaders(res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -62,6 +65,30 @@ const server = http.createServer((request, res) => {
                 case '/getItemsForAdmin':
                     getItemsForAdmin(res);
                     break;
+                case '/staffreports':
+                    try {
+                        const queryObject = url.parse(request.url, true).query;
+                        const filters = {
+                            name: queryObject.name || '',
+                            memberId: queryObject.memberId || '',
+                            hasFine: queryObject.hasFine === 'true',
+                            noTransactions: queryObject.noTransactions === 'true'
+                        };
+                        const whereClause = buildWhereClause(filters);
+                        const query = `SELECT m.member_id, m.name, m.email, m.phone_number, m.state, m.city_addr, m.street_addr, m.zipcode_addr, m.fine, t.transaction_id, t.date_created, t.due_date, t.return_date
+                        FROM member m
+                        LEFT JOIN transaction t ON m.member_id = t.member_id
+                        ${whereClause}
+                        `;
+                        pool.query(query, (err, result) => {
+                            if (err) throw err;
+                            res.statusCode = 200;
+                            res.setHeader('Content-Type', 'application/json');
+                            res.end(JSON.stringify(result));
+                          });
+                        } catch (error) {
+                            console.error('Error parsing JSON:', error);
+                            serve404(res);}
                 default:
                     serve404(res, pathname);
             }
