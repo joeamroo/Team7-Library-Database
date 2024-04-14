@@ -9,10 +9,6 @@ const addItemURL = `${backendUrl}/add%20Items/add-items.html`;
 const addItemBtn = document.getElementById('addItemBtn');
 const addItemForm = document.getElementById('addItemForm');
 
-addItemBtn.addEventListener('click', () => {
-    toggleForm(addItemBtn, addItemForm);
-  });
-
 document.getElementById('addItemBtn').addEventListener('click', function(event) {
     event.preventDefault();
     
