@@ -8,7 +8,7 @@ const connection = mysql.createConnection({
     port:3306
 });
 
-function addItems(itemType, title, authorDirector, isbn, category, publisherProducer, publicationReleaseDate,imageLink) {
+function addItems(res, itemType, title, authorDirector, isbn, category, publisherProducer, publicationReleaseDate,imageLink) {
     if(itemType === 'book') {
         connection.query(`INSERT INTO author (author_name) VALUES (?)`, [authorDirector], (err) => { 
             if (err) {
