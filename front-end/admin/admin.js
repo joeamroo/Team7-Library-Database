@@ -227,7 +227,10 @@ function getAdminInfo() {
 }
 
 document.addEventListener('DOMContentLoaded', function() { 
-    getAdminInfo();
+    const staffId = localStorage.getItem('staffId');
+    if (staffId !== null && staffId !== undefined) {
+        getAdminInfo();
+    }
 });
 
 
