@@ -8,7 +8,7 @@ const connection = mysql.createConnection({
     port:3306
 });
 
-function insertEvent(itemType, title, authorDirector, isbn, category, publisherProducer, publicationReleaseDate) {
+function insertEvent(itemType, title, authorDirector, isbn, category, publisherProducer, publicationReleaseDate,imageLink) {
     if(itemType === 'book') {
         connection.query(`INSERT INTO author (author_name) VALUES (?)`, [authorDirector], (err) => { 
             if (err) {
@@ -38,7 +38,7 @@ function insertEvent(itemType, title, authorDirector, isbn, category, publisherP
                         const genreId = result[0]['LAST_INSERT_ID()'];
                     }
                 })
-                connection.query(`INSERT INTO book (isbn,title,year_released,imageID) VALUES (?,?,?,?)`, [isbn,title,publicationReleaseDate,imageID], (err) => { 
+                connection.query(`INSERT INTO book (isbn,title,year_released,book_img_address) VALUES (?,?,?,?)`, [isbn,title,publicationReleaseDate,imageLink], (err) => { 
                     if (err) {
                         console.log('error entering new book into librarydev db:', err);
                     }
@@ -70,7 +70,7 @@ function insertEvent(itemType, title, authorDirector, isbn, category, publisherP
                         const genreId = result[0]['LAST_INSERT_ID()'];
                     }
                 }),
-                connection.query(`INSERT INTO movie (movie_id,movie_title,director,year_released) VALUES (?,?,?,?)`, [isbn,title,authorDirector,publicationReleaseDate], (err) => { 
+                connection.query(`INSERT INTO movie (movie_id,movie_title,director,year_released,movie_img_address) VALUES (?,?,?,?,?)`, [isbn,title,authorDirector,publicationReleaseDate,imageLink], (err) => { 
                     if (err) {
                         console.log('error entering new movie into librarydev db:', err);
                     }
