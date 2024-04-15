@@ -469,7 +469,7 @@ function getUserOrderReport() {
       if (xhr.status === 200) {
         //const retrieved = xhr.responseText;
         //console.log(retrieved);
-        orderReport.innerHTML = xhr.responseText;
+        holdsView.innerHTML = xhr.responseText;
     
         
         
