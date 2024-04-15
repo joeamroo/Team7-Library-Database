@@ -570,7 +570,7 @@ const server = http.createServer((request, res) => {
                 request.on('end', () => {
                     try {
                         const postData = JSON.parse(body);
-                        addDevices(res, postData.deviceID,postData.model,postData.brand,postData.serialNum,postData.imageLink,postData.totalCopies);
+                        addDevices(res,postData.model,postData.brand,postData.serialNum,postData.imageLink,postData.totalCopies);
                     } 
                     catch (error) {
                         console.error('Error parsing JSON:', error);

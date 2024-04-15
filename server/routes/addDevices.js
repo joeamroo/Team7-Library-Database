@@ -9,7 +9,7 @@ const connection = mysql.createConnection({
 });
 
 function addDevices(res,deviceID,brand,model,serialNum,imageLink,totalCopies){
-    connection.query('INSERT INTO device (brand, model, serial_number, device_img_address, total_available,available_copies,device_condition,current_holds) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)', [ brand, model, serialNum, imageLink, totalCopies,totalCopies,'1', '0'], (err) => {
+    connection.query('INSERT INTO device (model, brand, serial_number, device_img_address, total_available,available_copies,device_condition,current_holds) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)', [ model, brand, serialNum, imageLink, totalCopies,totalCopies,'1', '0'], (err) => {
         if (err) {
             console.log('error entering new device into librarydev db:', err);
         }
