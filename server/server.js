@@ -6,14 +6,14 @@ require("dotenv").config();
 const { getInitialCatalogInfo, getCatalogSearchWithRestrictions, insertDataToDatabase } = require('./routes/catalog');
 const { insertTransactionInfo } = require('./routes/checkout');
 const { getTransactionItems, returnItems } = require('./routes/returnItems');
-const { getUserDash, getUserDashInfo, setUserDashInfo, getUserOrderInfo, getDashHoldsInfo } = require('./routes/dashboard');
+const { getUserDash, getUserDashInfo, setUserDashInfo, getUserOrderInfo, getDashHoldsInfo, getUserEventsInfo } = require('./routes/dashboard');
 const { loginUser } = require('./routes/login');
 const { registerMember } = require('./routes/register');
 const { getListedEvents, eventSignUp } = require('./routes/classesnEvents');
 const { resetPassword } = require('./routes/forgot-pwd');
 const { getEventReports } = require ('./routes/staffeventsreports');
 const { getEmployees, insertStaff, removeStaff, updateStaffRole, filterStaff } = require ('./routes/adminStaffManagement');
-const { getEventsForAdmin, insertEvent, deleteEvent, filterEvents } = require('./routes/adminEventManagement');
+const { getAdminAlerts, getEventsForAdmin, insertEvent, deleteEvent, filterEvents } = require('./routes/adminEventManagement');
 const { getItemsForAdmin, filterCatalogItems, getAdminInfo } = require('./routes/adminCatalogManagement');
 const { updateFine, getFineAmount } = require('./routes/payFine');
 const { addItems } = require('./routes/add-items');
@@ -64,48 +64,53 @@ const server = http.createServer((request, res) => {
                 case '/getItemsForAdmin':
                     getItemsForAdmin(res);
                     break;
-                    case '/getMemberData':
-                        try {
-                            const queryObject = url.parse(request.url, true).query;
-                            const filters = {
-                                name: queryObject.name || '',
-                                memberId: queryObject.memberId || '',
-                                hasFine: queryObject.hasFine === 'true',
-                                noTransactions: queryObject.noTransactions === 'true'
-                            };
-                            getMemberData(filters, (err, result) => {
-                                if (err) throw err;
-                                res.statusCode = 200;
-                                res.setHeader('Content-Type', 'application/json');
-                                res.end(JSON.stringify(result));
-                            });
-                        } catch (err) {
-                            console.error(err);
-                            res.statusCode = 500;
-                            res.end('Internal server error');
-                        }
-                        break;
-                    case '/generateReport':
-                        try {
-                            const queryObject = url.parse(request.url, true).query;
-                            const filters = {
-                                name: queryObject.name || '',
-                                memberId: queryObject.memberId || '',
-                                hasFine: queryObject.hasFine === 'true',
-                                noTransactions: queryObject.noTransactions === 'true'
-                            };
-                            generateReport(filters, (err, result) => {
-                                if (err) throw err;
-                                res.statusCode = 200;
-                                res.setHeader('Content-Type', 'application/json');
-                                res.end(JSON.stringify(result));
-                            });
-                        } catch (err) {
-                            console.error(err);
-                            res.statusCode = 500;
-                            res.end('Internal server error');
-                        }
-                        break;
+                case '/getAdminAlerts':
+                    getAdminAlerts(res);
+                    break;
+                case '/api/members':
+                    try {
+                        const queryObject = url.parse(request.url, true).query;
+                        const filters = {
+                        name: queryObject.name || '',
+                        memberId: queryObject.memberId || '',
+                        hasFine: queryObject.hasFine === 'true',
+                        noTransactions: queryObject.noTransactions === 'true',
+                        };
+                        getMemberData(filters, (err, result) => {
+                        if (err) throw err;
+                        console.log('Server Response:', results);
+                        res.statusCode = 200;
+                        res.setHeader('Content-Type', 'application/json');
+                        res.end(JSON.stringify(result));
+                        });
+                    } catch (err) {
+                        console.error(err);
+                        res.statusCode = 500;
+                        res.end('Internal server error');
+                    }
+                    break;
+                case '/api/reports':
+                    try {
+                        const queryObject = url.parse(request.url, true).query;
+                        const filters = {
+                        name: queryObject.name || '',
+                        memberId: queryObject.memberId || '',
+                        hasFine: queryObject.hasFine === 'true',
+                        noTransactions: queryObject.noTransactions === 'true',
+                        };
+                        generateReport(filters, (err, result) => {
+                        if (err) throw err;
+                        console.log('Server Response:', results);
+                        res.statusCode = 200;
+                        res.setHeader('Content-Type', 'application/json');
+                        res.end(JSON.stringify(result));
+                        });
+                    } catch (err) {
+                        console.error(err);
+                        res.statusCode = 500;
+                        res.end('Internal server error');
+                    }
+                    break;
                 default:
                     serve404(res, pathname);
             }
@@ -328,6 +333,21 @@ const server = http.createServer((request, res) => {
                     try {
                         const postData = JSON.parse(body);
                         getDashHoldsInfo(res, postData.memberId);
+                    } catch (error) {
+                        console.error('Error parsing JSON: ', error);
+                        serve404(res);
+                    }
+                });
+            }
+            else if (pathname === '/getDashEvents') {
+                let body = '';
+                request.on('data', (chunk) => {
+                    body += chunk.toString();
+                });
+                request.on('end', () => {
+                    try {
+                        const postData = JSON.parse(body);
+                        getUserEventsInfo(res, postData.memberId);
                     } catch (error) {
                         console.error('Error parsing JSON: ', error);
                         serve404(res);

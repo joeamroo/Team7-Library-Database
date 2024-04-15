@@ -10,14 +10,15 @@ const sendPop = document.querySelector('#submitProfileInfo');
 const profileSelect = document.getElementById('profile-selection');
 const orderSelect = document.getElementById('order-selection');
 const holdSelect = document.getElementById('hold-selection');
-const waitSelect = document.getElementById('waitlist-selection');
+const eventSelect = document.getElementById('event-selection');
 const fineSelect = document.getElementById('fine-selection');
 const profileView = document.querySelector('.settings.profile');
 const orderView = document.querySelector('.settings.orders');
 const holdsView = document.querySelector('.settings.holds');
-const waitlistView = document.querySelector('.settings.waitlist');
+const eventsView = document.querySelector('.settings.events');
 const fineView = document.querySelector('.settings.fines');
 const orderReport = document.querySelector('.recent-orders');
+const eventReport = document.querySelector('.settings.events')
 const profileInfo = document.querySelector('.member-info');
 const today = new Date().toLocaleDateString();
 const notify = document.querySelector('#notify-user');
@@ -29,8 +30,10 @@ const notify = document.querySelector('#notify-user');
 const backendUrl = 'https://cougarchronicles.onrender.com'; 
 const getUserDashUrl = `${backendUrl}/getDashname`;
 const getUserInfoUrl = `${backendUrl}/getDashInfo`;
+const getUserHoldUrl = `${backendUrl}/getUserHolds`;
 const setUserInfoUrl =`${backendUrl}/setDashInfo`;
 const getUserOrderUrl =`${backendUrl}/getDashOrders`;
+const getUserEventsUrl =`${backendUrl}/getDashEvents`;
 
 
 
@@ -156,7 +159,7 @@ var input = document.querySelector(".input-box");
 
       
       profileSelect.addEventListener('click', () => {
-        waitlistView.classList.add('hide');
+        eventsView.classList.add('hide');
         orderView.classList.add('hide');
         holdsView.classList.add('hide');
         fineView.classList.add('hide');
@@ -167,7 +170,7 @@ var input = document.querySelector(".input-box");
       orderSelect.addEventListener('click', () => {
         profileView.classList.add('hide');
         holdsView.classList.add('hide');
-        waitlistView.classList.add('hide');
+        eventsView.classList.add('hide');
         fineView.classList.add('hide');
         orderView.classList.remove('hide');
       });
@@ -175,24 +178,24 @@ var input = document.querySelector(".input-box");
       holdSelect.addEventListener('click', () => { 
         profileView.classList.add('hide');
         orderView.classList.add('hide');
-        waitlistView.classList.add('hide');
+        eventsView.classList.add('hide');
         fineView.classList.add('hide');
         holdsView.classList.remove('hide');
       });
 
-      waitSelect.addEventListener('click', () => {
+      eventSelect.addEventListener('click', () => {
         profileView.classList.add('hide');
         orderView.classList.add('hide');
         holdsView.classList.add('hide');
         fineView.classList.add('hide');
-        waitlistView.classList.remove('hide');
+        eventsView.classList.remove('hide');
       });
 
       fineSelect.addEventListener('click', () => {
         profileView.classList.add('hide');
         orderView.classList.add('hide');
         holdsView.classList.add('hide');
-        waitlistView.classList.add('hide');
+        eventsView.classList.add('hide');
         fineView.classList.remove('hide');
       });
 
@@ -247,6 +250,7 @@ window.onload = function() {
     memberTag.textContent = 'Member ID: ' + memberId;
     getUserInfo();
     setOrderDate();
+    getUserHoldsReport();
 };
 
     /* 
@@ -265,7 +269,7 @@ updateBtn.addEventListener('click', function(event) {
       'state', 'zipcode_addr', 'email'
   ].every(id => document.getElementById(id).value.trim() !== "");
 
-  console.log(allFieldsFilled);
+  //console.log(allFieldsFilled);
 
   if (!allFieldsFilled) {
   
@@ -449,6 +453,92 @@ function getUserOrderReport() {
 
     xhr.send(data);
 }
+
+     /* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                               Holds Report                                  │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+  function getUserHoldsReport() {
+
+    const itemValue = '';
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', getUserHoldUrl);
+    xhr.setRequestHeader('Content-Type', 'text/html');
+
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        //const retrieved = xhr.responseText;
+        //console.log(retrieved);
+        holdsView.innerHTML = xhr.responseText;
+    
+        
+        
+      } else {
+        console.log("Failed to retrieve data");
+      }
+    };
+
+    xhr.onerror = function() {
+      console.error('error', xhr.statusText);
+    };
+
+    //console.log(memberId);
+
+    const data = JSON.stringify({
+      memberId: memberId
+    });
+
+
+    xhr.send(data);
+}
+
+
+
+     /* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                               Events Report                                 │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+
+  function getUserEventsReport() {
+
+    const itemValue = '';
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', getUserEventsUrl);
+    xhr.setRequestHeader('Content-Type', 'text/html');
+
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        //const retrieved = xhr.responseText;
+        //console.log(retrieved);
+        eventsView.innerHTML = xhr.responseText;
+    
+        
+        
+      } else {
+        console.log("Failed to retrieve data");
+      }
+    };
+
+    xhr.onerror = function() {
+      console.error('error', xhr.statusText);
+    };
+
+    //console.log(memberId);
+
+    const data = JSON.stringify({
+      memberId: memberId
+    });
+
+
+    xhr.send(data);
+}
+
+
+
 
 function filterOrderTable(tableHTML) {
 

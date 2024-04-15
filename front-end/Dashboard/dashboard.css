@@ -1062,7 +1062,7 @@ input[type="date"] {
   margin-bottom: 40px;
   display: flex;
   justify-content: space-between;
-  border-bottom: 2px solid #ccc;
+  border-bottom: 1.5px solid #ccc;
   font-size: 20px;
 }
 
@@ -1071,23 +1071,20 @@ input[type="date"] {
   margin-bottom: 10px;
 }
 
+#amount {
+  margin-right: 870px;
+  margin-bottom: 10px;
+}
 
 #first-name,
 #last-name,
 #card-number,
 #cvv,
 #exp-date {
-  border-radius: 15px;
-  border-color: rgb(85, 85, 85);
-  height: 50px;
   width: 400px; 
   margin-left: 20px;
   margin-bottom: 40px;
   font-size: 16px;
-}
-
-#cvv, #exp-date {
-  width: 80px;
 }
 
 #last-name,

@@ -12,35 +12,37 @@
     <header>
         <div class="top-bar">
           <h1 class="library-name"><a href="../Home/home.html">Cougar Chronicles</a></h1>
-          <button id="logoutBtn">Logout</button>
+          <button id="logoutBtn" class="logoutBtn">Logout</button>
         </div>
     </header>
-    <div class="form-container">
-        <form id="searchForm">
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" placeholder="Enter member name">
-            </div>
-            <div class="form-group">
-                <label for="memberId">Member ID:</label>
-                <input type="text" id="memberId" name="memberId" placeholder="Enter member ID">
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" name="hasFines" value="true"> Members with Fines
-                    </label>
+    <div class="content-container">
+        <div class="form-container">
+            <form id="searchForm">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Enter member name">
                 </div>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" name="noTransactions" value="true"> Members with No Transactions
-                    </label>
+                <div class="form-group">
+                    <label for="memberId">Member ID:</label>
+                    <input type="text" id="memberId" name="memberId" placeholder="Enter member ID">
                 </div>
-            </div>
-            <button type="submit" class="btn">Search</button>
-            <button type="button" id="generateReport" class="btn">Generate Report</button>
-        </form>
-        <div id="resultsContainer">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="hasFines" value="true"> Members with Fines
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="noTransactions" value="true"> Members with No Transactions
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="btn">Search</button>
+                <button type="button" id="generateReport" class="btn">Generate Report</button>
+            </form>
+        </div>
+        <div id="resultsContainer" style="display: none;">
             <table id="resultsTable">
                 <thead>
                     <tr>
@@ -64,78 +66,10 @@
         <div id="reportContainer" style="display: none;">
             <h2>Report</h2>
             <div id="reportContent"></div>
+            <canvas id="reportChart"></canvas>
         </div>
     </div>
-
-    <script>
-        const logOutBtn = document.getElementById('logoutBtn');
-        const staffId = localStorage.getItem('staffId');
-
-        logOutBtn.addEventListener('click', function(event) {
-            console.log('logging out');
-            localStorage.setItem('loggedIn', false);
-        if (staffId !== null && staffId !== undefined) {
-            logOutBtn.href = '../Home/home.html';
-            localStorage.removeItem('staffId');
-        }
-});
-
-        const searchForm = document.getElementById('searchForm');
-        const resultsTable = document.getElementById('resultsTable').getElementsByTagName('tbody')[0];
-        const generateReportButton = document.getElementById('generateReport');
-        const reportContainer = document.getElementById('reportContainer');
-        const reportContent = document.getElementById('reportContent');
-
-        searchForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            const queryParams = new URLSearchParams(formData).toString();
-            const apiUrl = `/getMemberData?${queryParams}`;
-
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    resultsTable.innerHTML = '';
-                    data.forEach(member => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${member.member_id}</td>
-                            <td>${member.name}</td>
-                            <td>${member.email}</td>
-                            <td>${member.status}</td>
-                            <td>${member.mem_type}</td>
-                            <td>${member.phone_number}</td>
-                            <td>${member.street_addr}, ${member.city_addr}, ${member.state} ${member.zipcode_addr}</td>
-                            <td>${member.fine}</td>
-                            <td>${member.transaction_id || '-'}</td>
-                            <td>${member.date_created || '-'}</td>
-                            <td>${member.due_date || '-'}</td>
-                            <td>${member.return_date || '-'}</td>
-                        `;
-                        resultsTable.appendChild(row);
-                    });
-                })
-                .catch(error => console.error(error));
-        });
-
-        generateReportButton.addEventListener('click', () => {
-            const formData = new FormData(searchForm);
-            const queryParams = new URLSearchParams(formData).toString();
-            const apiUrl = `/generateReport?${queryParams}`;
-
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(reportData => {
-                    reportContainer.style.display = 'block';
-                    const reportHTML = `
-                        <p>Average Fine Amount: $${reportData.averageFine.toFixed(2)}</p>
-                        <p>Average Holds: ${reportData.averageHolds}</p>
-                        <!-- Add more report data as needed -->
-                    `;
-                    reportContent.innerHTML = reportHTML;
-                })
-                .catch(error => console.error(error));
-        });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+    <script src="StaffReports.js"></script>
 </body>
 </html>

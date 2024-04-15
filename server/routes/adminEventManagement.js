@@ -26,6 +26,32 @@ function createEventHtml(item) {
     return eventHtml;
 }
 
+function createAlertHtml(item) {
+    let alertHtml = '';
+    alertHtml += `<ul class="trigEvent">ID: ${item.event_id}</ul>`;
+    return alertHtml;
+}
+
+function getAdminAlerts(res) {
+    connection.query(`SELECT event_id FROM event_alerts_for_admin WHERE alert_status = 'active' ORDER BY event_id ASC`, (err, results) => {
+        if (err) {
+            console.error('Error getting admin alerts data:', err);
+            response.writeHead(500);
+            response.end('Server error');
+            return;
+        }
+
+        let alertHtml = '';
+
+        if (results.length > 0) {
+            results.forEach(item => { alertHtml += createAlertHtml(item); });
+        }
+        
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(alertHtml, 'utf-8');
+    });
+}
+
 function getEventsForAdmin(res) {
     connection.query('SELECT event_id, event_name, date, sponsor, attendance_count, event_status FROM event ORDER BY event_id ASC', (err, results) => {
         if (err) {
@@ -58,9 +84,15 @@ function insertEvent(res, name, des, img, sponsor, date, normalizedStartTime, st
 function deleteEvent(res, eventId) {
     connection.query(`UPDATE event SET event_status = 'ended' WHERE event_id = ?`, [eventId], (removeEventErr, result) => {
         if (removeEventErr) {
-            console.log('error entering new member into librarydev db:', removeEventErr);
+            console.log('error changing event status:', removeEventErr);
         }
     });
+
+    connection.query(`UPDATE event_alerts_for_admin SET alert_status = 'closed' WHERE event_id = ?`, [eventId], (closeAlertErr, result) => {
+        if (closeAlertErr) {
+            console.log('error changing admin alert status:', removeEventErr);
+        }
+    });  
 
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ message: 'eventDeletionSuccessful' }));
@@ -84,4 +116,4 @@ function filterEvents(res, startDate, endDate) {
 }
 
 
-module.exports = { getEventsForAdmin, insertEvent, deleteEvent, filterEvents };
+module.exports = { getAdminAlerts, getEventsForAdmin, insertEvent, deleteEvent, filterEvents };

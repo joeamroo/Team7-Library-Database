@@ -38,7 +38,6 @@ const link = mysql.createConnection({
   │                         Converts SQL to Tables                              │
   └─────────────────────────────────────────────────────────────────────────────┘
  */
-
   function getSQLTable(queryResult, tableName) {
     // Check if queryResult is empty or undefined
     if (!queryResult || queryResult.length === 0) {
@@ -51,16 +50,29 @@ const link = mysql.createConnection({
     // Generate table headers with id attributes
     const tableHeader = headers.map((headerText, index) => `<th id="header-${index}">${headerText}</th>`).join('');
   
-   // Generate table rows
+    // Generate table rows
     const tableRows = data.map(rowData => {
       const cells = headers.map((key, index) => {
-        const value = rowData[key] === null ? "Not Applicable" : rowData[key];
-          return `<td id="${key}">${value}</td>`;
-        }).join('');
+        let value = rowData[key] === null ? "Not Applicable" : rowData[key];
+  
+        // Check if the key is 'Image' and add an <img> element if it exists
+        if (key === 'Image' && value !== "Not Applicable") {
+          value = `<img src="${value}" alt="Image">`;
+        }
+  
+        // Check if the key is 'date' and format the date
+        if (key.toLowerCase() === 'date' && value !== "Not Applicable") {
+          const dateString = value.toString(); // Convert value to string
+          const dateParts = dateString.split(" ");
+          value = dateParts.slice(0, 4).join(" ");
+        }
+  
+        return `<td id="${key}">${value}</td>`;
+      }).join('');
+  
       return `<tr>${cells}</tr>`;
     }).join('');
-
-
+  
     // Construct the table
     const table = `
       <table id="${tableName}">
@@ -72,8 +84,7 @@ const link = mysql.createConnection({
         </tbody>
       </table>
     `;
-    
-    console.log("Function table: " + table);
+  
     return table; // Return the HTML table string
   }
 
@@ -207,7 +218,7 @@ function getUserDashInfo(response, memberId) {
 
       // Combines first name and last name
       const fullName = firstName + " " + lastName;
-      console.log(fullName);
+      //console.log(fullName);
 
       // Query to search for
       const sql_query = 'UPDATE MEMBER SET name = ?, phone_number = ?, street_addr = ?, city_addr = ?,' +
@@ -220,10 +231,11 @@ function getUserDashInfo(response, memberId) {
       link.query(sql_query, values, function(err, result) {
       if (err) {
             console.error('Failed to insert member details:', err);
-            console.log('Query Results: ', result);
+            //console.log('Query Results: ', result);
             response.writeHead(200, { 'Content-Type': 'text/html' });
             response.end('Internal Server Error', 'utf-8');
       } else {
+        console.log("Update:" + result);
         response.writeHead(200, { 'Content-Type': 'text/html' });
         response.end('Profile settings successfully updated!', 'utf-8');
       }
@@ -311,6 +323,50 @@ link.query(query, [memberId], (err, results) => {
 }
 
 
+/* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                              Get Events List                                │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+
+  function getUserEventsInfo(response, memberId) {
+
+    // Searches Database for user with the memberID
+    const query = `
+        SELECT
+            E.event_name AS 'Event',
+            E.date AS 'Date',
+            CONCAT(E.start_time, ' ', E.startAMPM, ' - ', E.end_time, ' ', E.endAMPM) AS 'Time',
+            E.sponsor AS 'Sponsor',
+            E.event_description AS 'Description'
+        FROM
+            member AS M
+            INNER JOIN events_member_link AS L ON M.member_id = L.member_id
+            INNER JOIN event AS E ON L.event_id = E.event_id
+        WHERE M.member_id = ?;
+    `;
+
+    // Gets information from backend
+    link.query(query, [memberId], (err, results) => {
+      if (err) {
+          console.error('Error executing the query:', err);
+          response.writeHead(204, { 'Content-Type': 'text/plain' });
+          response.end('Internal Server Error');
+          return;
+        }  else {
+    
+        // Converts SQL query to a table with Keys as IDs
+        const tableHTML = getSQLTable(results, 'events-table');
+    
+        // Sends the table back to client
+        response.writeHead(200, { 'Content-Type': 'text/html' });
+        response.end(tableHTML);
+        } 
+      });
+    
+}
+
+
 
 
 
@@ -319,7 +375,7 @@ link.query(query, [memberId], (err, results) => {
 
 
 
-module.exports = { getUserDash, getUserDashInfo, setUserDashInfo, getUserOrderInfo, getDashHoldsInfo };
+module.exports = { getUserDash, getUserDashInfo, setUserDashInfo, getUserOrderInfo, getDashHoldsInfo, getUserEventsInfo };
 
 
  /*function getSQLTable(queryResult) {
