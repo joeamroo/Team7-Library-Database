@@ -57,11 +57,11 @@
           
           <ul>
               <li class="menu-item" ><a class="default-click" id="profile-selection" href="#">Profile</a></li>
-              <li class="menu-item"><a id="order-selection" href="#" onclick="getUserOrderReport()">Orders
+              <li class="menu-item"><a id="order-selection" href="#">Orders
               </a></li>
-              <li class="menu-item"><a id="hold-selection" href="#" onclick="getUserHoldsReport()">Holds</a></li>
+              <li class="menu-item"><a id="hold-selection" href="#">Holds</a></li>
               <!--bug exists here-->
-              <li class="menu-item"><a id="event-selection" href="#" onclick="getUserEventsReport()">Events</a></li>
+              <li class="menu-item"><a id="waitlist-selection" href="#">Waitlist</a></li>
               <li class="menu-item"><a id="fine-selection" href="#">Fine Details</a></li>
               
 
@@ -101,7 +101,7 @@
  
   <div class="center">
     <div class="notification">
-      <img src="../Dashboard/Notify.png" alt="" />
+      <img src="../Dashboard/notify.png" alt="" />
       <div class="details">
         <div class="name">Cougar Chronicles</div>
         <div class="hello-msg">
@@ -138,7 +138,7 @@
         </div>
       </div>
       <a class="member-id" id="member-id">Member ID: </a><br />
-      <a class="member-type" id="member-type">Member Type: Regular</a>
+      <a class="member-type" id="member-type">Member Type: </a>
       <a class="member-status" id="member-status"></a>
       <input type="file" id="fileInput" accept="image/*" onchange="updateProfilePic(this)">
       
@@ -328,31 +328,64 @@
 
 
 
+
 <!-- 
   ┌───────────────────────────────────────────────────────────────────┐
   │                             Holds                                 │
   └───────────────────────────────────────────────────────────────────┘
  -->
 
- <div class="settings holds">
-
+ <div class="settings holds">Holds Test
 </div>
 
 <!-- 
   ┌───────────────────────────────────────────────────────────────────┐
-  │                            Events                                 │
+  │                            WaitList                               │
   └───────────────────────────────────────────────────────────────────┘
  -->
 
- <div class="settings events">
-    <!--SQL QUERY-->
+ <div class="settings waitlist">Waitlist Test
+  <div class="chart-container">
+    <canvas id="bookChart"></canvas>
+    <script>
+      // Sample data
+      var books = ['Book 1', 'Book 2', 'Book 3', 'Book 4', 'Book 5'];
+      var isbns = ['1234567890', '0987654321', '1122334455', '9988776655', '5544332211'];
+  
+      // Create the chart
+      var ctx = document.getElementById('bookChart').getContext('2d');
+      var chart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: books,
+              datasets: [{
+                  label: 'ISBN',
+                  data: isbns,
+                  backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                  borderColor: 'rgba(75, 192, 192, 1)',
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      });
+  </script>
+    
 </div>
 
+
+</div>
 
 
 <div class="settings fines">
   <div class="total">
-    <h2 id="fine-title">Fine Amount: <span id="amount"></span></h2>
+    <h2 id="fine-title">Fine Amount:</h2>
+    <h2 id="amount"></h2>
   </div>
   <div class="name-info">
     <label for="first-name">First Name</label>
@@ -362,9 +395,9 @@
   </div>
   <div class="card-num-cvv">
     <label for="card-number">Card Number</label>
-    <input type="text" id="card-number" maxlength="16" placeholder="0000 0000 0000 0000" required>
+    <input type="text" id="card-number" maxlength="16" required>
     <label for="cvv">CVV</label>
-    <input type="text" id="cvv" name="cvv" maxlength="3" placeholder="XXX" required>
+    <input type="text" id="cvv" name="cvv" maxlength="3" required>
   </div>
   <div class="logos-and-exp">
     <label for="expiry-date">Expiry Date</label>
@@ -377,7 +410,7 @@
 
 
 
-</div>
+
 </div>
 </div>
 </div>
