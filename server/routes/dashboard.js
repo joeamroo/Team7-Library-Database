@@ -337,7 +337,7 @@ link.query(query, [memberId], (err, results) => {
             member AS M
             INNER JOIN events_member_link AS L ON M.member_id = L.member_id
             INNER JOIN event AS E ON L.event_id = E.event_id
-        WHERE member_id = ?;
+        WHERE M.member_id = ?;
     `;
 
     // Gets information from backend
