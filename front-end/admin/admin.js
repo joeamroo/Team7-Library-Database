@@ -753,6 +753,21 @@ function populateEventDropdown(eventIds) {
     });
 }
 
+
+document.addEventListener('DOMContentLoaded', function() {
+    getEventList();
+    getTriggerAlert();
+
+    const eventsAlertModal = document.getElementById('eventsAlert');
+    eventsAlertModal.style.display = 'block';
+
+    const acceptMsgBtn = document.getElementById('accept-msg');
+    acceptMsgBtn.addEventListener('click', function() {
+        eventsAlertModal.style.display = 'none'; 
+    });
+    adjustTriggerAlertHeight();
+});
+
 function adjustTriggerAlertHeight() {
     const ulElements = document.querySelectorAll('.trigEvents ul');
     const numULs = ulElements.length;
@@ -774,21 +789,6 @@ function getTriggerAlert() {
     };
     xhr.send();
 }
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    getEventList();
-    getTriggerAlert();
-
-    const eventsAlertModal = document.getElementById('eventsAlert');
-    eventsAlertModal.style.display = 'block';
-
-    const acceptMsgBtn = document.getElementById('accept-msg');
-    acceptMsgBtn.addEventListener('click', function() {
-        eventsAlertModal.style.display = 'none'; 
-    });
-    adjustTriggerAlertHeight();
-});
 
 
 document.getElementById('addEventSubmit').addEventListener('click', function(event) {

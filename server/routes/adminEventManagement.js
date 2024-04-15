@@ -29,6 +29,7 @@ function createEventHtml(item) {
 function createAlertHtml(item) {
     let alertHtml = '';
     alertHtml += `<ul class="trigEvent">ID: ${item.event_id}</ul>`;
+    return alertHtml;
 }
 
 function getAdminAlerts(res) {
