@@ -64,7 +64,7 @@ const server = http.createServer((request, res) => {
                 case '/getItemsForAdmin':
                     getItemsForAdmin(res);
                     break;
-                case 'getAdminAlerts':
+                case '/getAdminAlerts':
                     getAdminAlerts(res);
                     break;
                 case '/getMemberData':
