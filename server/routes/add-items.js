@@ -17,6 +17,7 @@ function getId(item, itemType) {
             else {
                 Id = result[0]['author_id'];
                 console.log(Id);
+                return Id;
             }
         })
     }
@@ -28,10 +29,10 @@ function getId(item, itemType) {
             else {
                 Id = result[0]['genre_id'];
                 console.log(Id);
+                return Id;
             }
         })
     }
-    return Id;
 }
 
 
