@@ -78,6 +78,7 @@ const server = http.createServer((request, res) => {
                         };
                         getMemberData(filters, (err, result) => {
                         if (err) throw err;
+                        console.log('Server Response:', results);
                         res.statusCode = 200;
                         res.setHeader('Content-Type', 'application/json');
                         res.end(JSON.stringify(result));
@@ -99,6 +100,7 @@ const server = http.createServer((request, res) => {
                         };
                         generateReport(filters, (err, result) => {
                         if (err) throw err;
+                        console.log('Server Response:', results);
                         res.statusCode = 200;
                         res.setHeader('Content-Type', 'application/json');
                         res.end(JSON.stringify(result));
