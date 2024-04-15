@@ -1,5 +1,7 @@
 const logOutBtn = document.getElementById('logoutBtn');
 const staffId = localStorage.getItem('staffId');
+const chartCanvas = document.getElementById('reportChart');
+
 
 logOutBtn.addEventListener('click', function(event) {
     console.log('logging out');
@@ -48,21 +50,56 @@ searchForm.addEventListener('submit', (event) => {
         .catch(error => console.error(error));
 });
 
-generateReportButton.addEventListener('click', () => {
-    const formData = new FormData(searchForm);
-    const queryParams = new URLSearchParams(formData).toString();
-    const apiUrl = `/generateReport?${queryParams}`;
+function renderChart(reportData) {
+  const chartData = {
+    labels: ['Average Fine', 'Average Holds'],
+    datasets: [
+      {
+        label: 'Report Data',
+        data: [reportData.averageFine, reportData.averageHolds],
+        backgroundColor: ['#841717', '#F9CBC5'],
+      },
+    ],
+  };
 
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(reportData => {
-            reportContainer.style.display = 'block';
-            const reportHTML = `
-                <p>Average Fine Amount: $${reportData.averageFine.toFixed(2)}</p>
-                <p>Average Holds: ${reportData.averageHolds}</p>
-                <!-- Add more report data as needed -->
-            `;
-            reportContent.innerHTML = reportHTML;
-        })
-        .catch(error => console.error(error));
+  const chartOptions = {
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+  };
+
+  if (window.reportChart) {
+    window.reportChart.data = chartData;
+    window.reportChart.update();
+  } else {
+    window.reportChart = new Chart(chartCanvas, {
+      type: 'bar',
+      data: chartData,
+      options: chartOptions,
+    });
+  }
+}
+
+generateReportButton.addEventListener('click', () => {
+  const formData = new FormData(searchForm);
+  const queryParams = new URLSearchParams(formData).toString();
+  const apiUrl = `/generateReport?${queryParams}`;
+
+  fetch(apiUrl)
+    .then(response => response.json())
+    .then(reportData => {
+      reportContainer.style.display = 'block';
+      const reportHTML = `
+        <p>Average Fine Amount: $${reportData.averageFine.toFixed(2)}</p>
+        <p>Average Holds: ${reportData.averageHolds}</p>
+        <!-- Add more report data as needed -->
+      `;
+      reportContent.innerHTML = reportHTML;
+
+      // Render the chart using Chart.js
+      renderChart(reportData);
+    })
+    .catch(error => console.error(error));
 });
