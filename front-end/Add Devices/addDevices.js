@@ -13,11 +13,10 @@ document.getElementById('addItemBtn').addEventListener('click', function(event) 
     event.preventDefault();
     
     const allFieldsFilled = [
-        'deviceID', 'model', 'brand', 'serialNum','imageLink','totalCopies'
+        'model', 'brand', 'serialNum','imageLink','totalCopies'
     ].every(id => document.getElementById(id).value.trim() !== "");
 
     if (allFieldsFilled) {
-        const deviceID = document.getElementById('deviceID').value; 
         const model = document.getElementById('model').value;
         const brand = document.getElementById('brand').value;
         const serialNum = document.getElementById('serialNum').value;
@@ -31,7 +30,6 @@ document.getElementById('addItemBtn').addEventListener('click', function(event) 
         xhr.onload = function() {
             if (xhr.status === 200) {
                 console.log('sucessfully added item');
-                document.getElementById('deviceID').value = '';
                 document.getElementById('model').value = '';
                 document.getElementById('brand').value = '';
                 document.getElementById('serialNum').value = '';
@@ -44,7 +42,6 @@ document.getElementById('addItemBtn').addEventListener('click', function(event) 
         };
 
         const data = JSON.stringify({ 
-            deviceID: deviceID,
             model: model,
             brand: brand,
             serialNum: serialNum,
