@@ -210,8 +210,8 @@ function getUserDashInfo(response, memberId) {
       console.log(fullName);
 
       // Query to search for
-      const sql_query = 'INSERT INTO MEMBER (member_id, name, phone_number, street_addr, city_addr, state, zipcode_addr, email) ' +
-                        'VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+      const sql_query = 'UPDATE MEMBER SET name = ?, phone_number = ?, street_addr = ?, city_addr = ?,' +
+                         'state = ?, zipcode_addr = ?, email = ? WHERE member_id = ?';
 
     // Values to update
     const values = [memberId, fullName, phone_number, street_addr, city_addr, state, zipcode_addr, email];
