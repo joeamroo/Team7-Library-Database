@@ -72,7 +72,7 @@ function addItems(res, itemType, title, authorDirector, isbn, category, publishe
                 console.log('error entering new book_id into librarydev db:', err);
             }
         }),
-        connection.query(`INSERT INTO book_genres_link (isbn,genre_id) VALUES (?,?)`, [isbn,genreId], (err) => { 
+        connection.query( `INSERT INTO book_genres_link (isbn,genre_id) VALUES (?,(SELECT genre_id from genres where genre_name = ?))`, [isbn,genreId], (err) => { 
             if (err) {
                 console.log('error entering new genre_id into librarydev db:', err);
             }
@@ -96,7 +96,7 @@ function addItems(res, itemType, title, authorDirector, isbn, category, publishe
                 console.log('error entering new movie into librarydev db:', err);
             }
         }),
-        connection.query(`INSERT INTO movie_genres_link (movie.movie_id,genre_id) VALUES ()`, [isbn,genreId], (err) => { 
+        connection.query(`INSERT INTO movie_genres_link (movie_id,genre_id) VALUES (?,(SELECT genre_id from genres where genre_name = ?))`, [isbn,genreId], (err) => { 
             if (err) {
                 console.log('error entering new genre_id into librarydev db:', err);
             }
