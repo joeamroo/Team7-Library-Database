@@ -157,6 +157,12 @@ var input = document.querySelector(".input-box");
       window.addEventListener("load", showDefaults);
 
 
+      /* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                              Canvas View                                    │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+
       
       profileSelect.addEventListener('click', () => {
         eventsView.classList.add('hide');
@@ -198,6 +204,8 @@ var input = document.querySelector(".input-box");
         eventsView.classList.add('hide');
         fineView.classList.remove('hide');
       });
+
+      
 
       /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -250,7 +258,6 @@ window.onload = function() {
     memberTag.textContent = 'Member ID: ' + memberId;
     getUserInfo();
     setOrderDate();
-    getUserHoldsReport();
 };
 
     /* 
