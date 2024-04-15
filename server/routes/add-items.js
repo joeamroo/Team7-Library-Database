@@ -67,7 +67,7 @@ function addItems(res, itemType, title, authorDirector, isbn, category, publishe
                 console.log('error entering new book into librarydev db:', err);
             }
         }),
-        connection.query(`INSERT INTO book_author_link (book_id,author_id) VALUES (?,?)`, [isbn,authorId], (err) => { 
+        connection.query(`INSERT INTO book_author_link (book_id,author_id) VALUES (?,(SELECT author_id from authors where name = ?))`, [isbn,authorDirector], (err) => { 
             if (err) {
                 console.log('error entering new book_id into librarydev db:', err);
             }
