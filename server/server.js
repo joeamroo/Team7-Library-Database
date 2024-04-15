@@ -17,7 +17,7 @@ const { getEventsForAdmin, insertEvent, deleteEvent, filterEvents } = require('.
 const { getItemsForAdmin, filterCatalogItems, getAdminInfo } = require('./routes/adminCatalogManagement');
 const { updateFine, getFineAmount } = require('./routes/payFine');
 const { addItems } = require('./routes/add-items');
-const { getMemberData } = require('./routes/staffcirculationreports');
+const { getMemberData, generateReport } = require('./routes/staffcirculationreports');
 
 function setCorsHeaders(res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -63,27 +63,48 @@ const server = http.createServer((request, res) => {
                 case '/getItemsForAdmin':
                     getItemsForAdmin(res);
                     break;
-                case '/staffreports':
-                    try {
-                        const queryObject = url.parse(request.url, true).query;
-                        const filters = {
-                            name: queryObject.name || '',
-                            memberId: queryObject.memberId || '',
-                            hasFine: queryObject.hasFine === 'true',
-                            noTransactions: queryObject.noTransactions === 'true'
-                        };
-                        getMemberData(filters, (err, result) => {
-                            if (err) throw err;
-                            res.statusCode = 200;
-                            res.setHeader('Content-Type', 'application/json');
-                            res.end(JSON.stringify(result));
-                          });
+                    case '/getMemberData':
+                        try {
+                            const queryObject = url.parse(request.url, true).query;
+                            const filters = {
+                                name: queryObject.name || '',
+                                memberId: queryObject.memberId || '',
+                                hasFine: queryObject.hasFine === 'true',
+                                noTransactions: queryObject.noTransactions === 'true'
+                            };
+                            getMemberData(filters, (err, result) => {
+                                if (err) throw err;
+                                res.statusCode = 200;
+                                res.setHeader('Content-Type', 'application/json');
+                                res.end(JSON.stringify(result));
+                            });
                         } catch (err) {
-                          console.error(err);
-                          res.statusCode = 500;
-                          res.end('Internal server error');
+                            console.error(err);
+                            res.statusCode = 500;
+                            res.end('Internal server error');
                         }
-                    break;
+                        break;
+                    case '/generateReport':
+                        try {
+                            const queryObject = url.parse(request.url, true).query;
+                            const filters = {
+                                name: queryObject.name || '',
+                                memberId: queryObject.memberId || '',
+                                hasFine: queryObject.hasFine === 'true',
+                                noTransactions: queryObject.noTransactions === 'true'
+                            };
+                            generateReport(filters, (err, result) => {
+                                if (err) throw err;
+                                res.statusCode = 200;
+                                res.setHeader('Content-Type', 'application/json');
+                                res.end(JSON.stringify(result));
+                            });
+                        } catch (err) {
+                            console.error(err);
+                            res.statusCode = 500;
+                            res.end('Internal server error');
+                        }
+                        break;
                 default:
                     serve404(res, pathname);
             }

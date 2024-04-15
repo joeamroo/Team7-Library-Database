@@ -90,7 +90,7 @@
             event.preventDefault();
             const formData = new FormData(event.target);
             const queryParams = new URLSearchParams(formData).toString();
-            const apiUrl = `/api/members?${queryParams}`;
+            const apiUrl = `/getMemberData?${queryParams}`;
 
             fetch(apiUrl)
                 .then(response => response.json())
@@ -121,7 +121,7 @@
         generateReportButton.addEventListener('click', () => {
             const formData = new FormData(searchForm);
             const queryParams = new URLSearchParams(formData).toString();
-            const apiUrl = `/api/reports?${queryParams}`;
+            const apiUrl = `/generateReport?${queryParams}`;
 
             fetch(apiUrl)
                 .then(response => response.json())
