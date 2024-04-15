@@ -29,6 +29,7 @@ const notify = document.querySelector('#notify-user');
 const backendUrl = 'https://cougarchronicles.onrender.com'; 
 const getUserDashUrl = `${backendUrl}/getDashname`;
 const getUserInfoUrl = `${backendUrl}/getDashInfo`;
+const getUserHoldUrl = `${backendUrl}/getUserHolds`;
 const setUserInfoUrl =`${backendUrl}/setDashInfo`;
 const getUserOrderUrl =`${backendUrl}/getDashOrders`;
 
@@ -247,6 +248,7 @@ window.onload = function() {
     memberTag.textContent = 'Member ID: ' + memberId;
     getUserInfo();
     setOrderDate();
+    getUserHoldsReport();
 };
 
     /* 
@@ -265,7 +267,7 @@ updateBtn.addEventListener('click', function(event) {
       'state', 'zipcode_addr', 'email'
   ].every(id => document.getElementById(id).value.trim() !== "");
 
-  console.log(allFieldsFilled);
+  //console.log(allFieldsFilled);
 
   if (!allFieldsFilled) {
   
@@ -449,6 +451,50 @@ function getUserOrderReport() {
 
     xhr.send(data);
 }
+
+     /* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                               Holds Report                                  │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+  function getUserHoldsReport() {
+
+    const itemValue = '';
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', getUserHoldUrl);
+    xhr.setRequestHeader('Content-Type', 'text/html');
+
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        const retrieved = xhr.responseText;
+        console.log(retrieved);
+        //const orderRetrieval = xhr.responseText;
+       // orderReport.innerHTML = filterOrderTable(orderRetrieval);
+        
+        
+      } else {
+        console.log("Failed to retrieve data");
+      }
+    };
+
+    xhr.onerror = function() {
+      console.error('error', xhr.statusText);
+    };
+
+    //console.log(memberId);
+
+    const data = JSON.stringify({
+      memberId: memberId
+    });
+
+
+    xhr.send(data);
+}
+
+
+
+
 
 function filterOrderTable(tableHTML) {
 
