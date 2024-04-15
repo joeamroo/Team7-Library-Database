@@ -18,6 +18,7 @@ const { getItemsForAdmin, filterCatalogItems, getAdminInfo } = require('./routes
 const { updateFine, getFineAmount } = require('./routes/payFine');
 const { addItems } = require('./routes/add-items');
 const { getMemberData } = require('./routes/staffcirculationreports');
+const { addDevices } = require('./routes/addDevices');
 
 function setCorsHeaders(res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -513,6 +514,22 @@ const server = http.createServer((request, res) => {
                     try {
                         const postData = JSON.parse(body);
                         addItems(res, postData.itemType,postData.title,postData.authorDirector,postData.isbn,postData.category,postData.publisherProducer,postData.publicationReleaseDate,postData.imageLink,postData.totalCopies,postData.rating);
+                    } 
+                    catch (error) {
+                        console.error('Error parsing JSON:', error);
+                        serve404(res);
+                    }
+                });
+            }
+            else if (pathname === '/addDevices') {
+                let body = '';
+                request.on('data', (chunk) => {
+                    body += chunk.toString();
+                });
+                request.on('end', () => {
+                    try {
+                        const postData = JSON.parse(body);
+                        addItems(res, postData.deviceID,postData.model,postData.brand,postData.serialNum,postData.imageLink,postData.totalCopies);
                     } 
                     catch (error) {
                         console.error('Error parsing JSON:', error);

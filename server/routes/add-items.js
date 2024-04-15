@@ -104,7 +104,7 @@ function addItems(res, itemType, title, authorDirector, isbn, category, publishe
     }   
 
     res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ message: 'eventCreationSuccessful' }));
+    res.end(JSON.stringify({ message: 'itemCreationSuccessful' }));
     };
 
     module.exports = { addItems };
