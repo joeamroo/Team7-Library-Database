@@ -84,9 +84,15 @@ function insertEvent(res, name, des, img, sponsor, date, normalizedStartTime, st
 function deleteEvent(res, eventId) {
     connection.query(`UPDATE event SET event_status = 'ended' WHERE event_id = ?`, [eventId], (removeEventErr, result) => {
         if (removeEventErr) {
-            console.log('error entering new member into librarydev db:', removeEventErr);
+            console.log('error changing event status:', removeEventErr);
         }
     });
+
+    connection.query(`UPDATE event_alerts_for_admin SET alert_status = 'closed' WHERE event_id = ?`, [eventId], (closeAlertErr, result) => {
+        if (closeAlertErr) {
+            console.log('error changing admin alert status:', removeEventErr);
+        }
+    });  
 
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ message: 'eventDeletionSuccessful' }));
