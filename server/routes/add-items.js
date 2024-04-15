@@ -9,7 +9,6 @@ const connection = mysql.createConnection({
 });
 
 function getId(item, itemType) {
-    var Id = 0;
     if(itemType === 'author') {
         connection.query(`SELECT author_id FROM author WHERE author_name = ?`, [item], (err, result) => {
             if (err) {
@@ -18,6 +17,7 @@ function getId(item, itemType) {
             else {
                 Id = result[0]['author_id'];
                 console.log(Id);
+                return Id;
             }
         })
     }
@@ -29,16 +29,14 @@ function getId(item, itemType) {
             else {
                 Id = result[0]['genre_id'];
                 console.log(Id);
+                return Id;
             }
         })
     }
-    return Id;
 }
 
 
 function addItems(res, itemType, title, authorDirector, isbn, category, publisherProducer, publicationReleaseDate,imageLink,totalCopies,rating) {
-    var authorId = 0;
-    var genreId = 0;
     if(itemType === 'book') {
         authorId = getId(authorDirector, 'author');
         if (authorId === 0) {
@@ -69,12 +67,12 @@ function addItems(res, itemType, title, authorDirector, isbn, category, publishe
                 console.log('error entering new book into librarydev db:', err);
             }
         }),
-        connection.query(`INSERT INTO book_author_link (book.isbn,author_id) VALUES (?,?)`, [isbn,authorId], (err) => { 
+        connection.query(`INSERT INTO book_author_link (book_id,author_id) VALUES (?,?)`, [isbn,authorId], (err) => { 
             if (err) {
                 console.log('error entering new book_id into librarydev db:', err);
             }
         }),
-        connection.query(`INSERT INTO book_genres_link (book.isbn,genre_id) VALUES (?,?)`, [isbn,genreId], (err) => { 
+        connection.query(`INSERT INTO book_genres_link (isbn,genre_id) VALUES (?,?)`, [isbn,genreId], (err) => { 
             if (err) {
                 console.log('error entering new genre_id into librarydev db:', err);
             }
