@@ -48,7 +48,44 @@ function buildWhereClause(filters) {
     `;
 
   }
+
+  function generateReport(filters, callback) {
+    const whereClause = buildWhereClause(filters);
   
+     const query = `
+      SELECT m.fine, COUNT(t.transaction_id) AS holds
+      FROM member m
+      LEFT JOIN transaction t ON m.member_id = t.member_id
+      ${whereClause}
+      GROUP BY m.member_id
+    `;
   
-  module.exports = { getMemberData };
+    
+    db.query(query, (err, result) => {
+      if (err) {
+        callback(err, null);
+        return;
+      }
+  
+      let totalFine = 0;
+      let totalHolds = 0;
+  
+      result.forEach(row => {
+        totalFine += row.fine;
+        totalHolds += row.holds;
+      });
+  
+      const averageFine = totalFine / result.length;
+      const averageHolds = totalHolds / result.length;
+  
+      const reportData = {
+        averageFine,
+        averageHolds
+      };
+  
+      callback(null, reportData);
+    });
+  }
+  
+  module.exports = { getMemberData, generateReport };
   
