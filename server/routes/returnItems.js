@@ -1,9 +1,9 @@
 const mysql = require('mysql');
-//require('dotenv').config();
-//const twilio = require('twilio');
-//const accountSid = process.env.ACCOUNT_SID;
-//const authToken = process.env.AUTH_TOKEN;
-//const client = twilio(accountSid, authToken);
+require('dotenv').config();
+const twilio = require('twilio');
+const accountSid = process.env.ACCOUNT_SID;
+const authToken = process.env.AUTH_TOKEN;
+const client = twilio(accountSid, authToken);
 
 const connection = mysql.createConnection({
     host: 'library-database-sytem.mysql.database.azure.com',
