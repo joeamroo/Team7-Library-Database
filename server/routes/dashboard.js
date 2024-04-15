@@ -285,23 +285,28 @@ link.query(query, [memberId], (err, results) => {
   function getDashHoldsInfo(response, memberId) {
 
     // Searches Database for user with the memberID
-    const query_name = 'SELECT name FROM member WHERE member_id = ?';
-
-    
+    const query = 'SELECT hold_id AS "Identifier",' +
+                        'request_date AS "Date Requested",' +
+                        'item_name AS "Item"' +
+                        'FROM hold_request WHERE member_id = ?';
 
     // Gets information from backend
-    link.query(query_name, [memberId], (error, result) => {
-        if (error) {
-            console.log('Error', memberId);
-            response.writeHead(204);
-            response.end('Server error');
-            return;
-        } else {
-           const name = 'Welcome, ' + result[0].name + '!';
-           response.writeHead(200, { 'Content-Type': 'text/html' });
-           response.end(name, 'utf-8');
-        }
-    });
+    link.query(query, [memberId], (err, results) => {
+      if (err) {
+          console.error('Error executing the query:', err);
+          response.writeHead(204, { 'Content-Type': 'text/plain' });
+          response.end('Internal Server Error');
+          return;
+        }  else {
+    
+        // Converts SQL query to a table with Keys as IDs
+        const tableHTML = getSQLTable(results, 'holds-table');
+    
+        // Sends the table back to client
+        response.writeHead(200, { 'Content-Type': 'text/html' });
+        response.end(tableHTML);
+        } 
+      });
     
 }
 
