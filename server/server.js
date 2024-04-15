@@ -67,20 +67,20 @@ const server = http.createServer((request, res) => {
                 case '/getAdminAlerts':
                     getAdminAlerts(res);
                     break;
-                case '/getMemberData':
+                case '/api/members':
                     try {
                         const queryObject = url.parse(request.url, true).query;
                         const filters = {
-                            name: queryObject.name || '',
-                            memberId: queryObject.memberId || '',
-                            hasFine: queryObject.hasFine === 'true',
-                            noTransactions: queryObject.noTransactions === 'true'
+                        name: queryObject.name || '',
+                        memberId: queryObject.memberId || '',
+                        hasFine: queryObject.hasFine === 'true',
+                        noTransactions: queryObject.noTransactions === 'true',
                         };
                         getMemberData(filters, (err, result) => {
-                            if (err) throw err;
-                            res.statusCode = 200;
-                            res.setHeader('Content-Type', 'application/json');
-                            res.end(JSON.stringify(result));
+                        if (err) throw err;
+                        res.statusCode = 200;
+                        res.setHeader('Content-Type', 'application/json');
+                        res.end(JSON.stringify(result));
                         });
                     } catch (err) {
                         console.error(err);
@@ -88,20 +88,20 @@ const server = http.createServer((request, res) => {
                         res.end('Internal server error');
                     }
                     break;
-                case '/generateReport':
+                case '/api/reports':
                     try {
                         const queryObject = url.parse(request.url, true).query;
                         const filters = {
-                            name: queryObject.name || '',
-                            memberId: queryObject.memberId || '',
-                            hasFine: queryObject.hasFine === 'true',
-                            noTransactions: queryObject.noTransactions === 'true'
+                        name: queryObject.name || '',
+                        memberId: queryObject.memberId || '',
+                        hasFine: queryObject.hasFine === 'true',
+                        noTransactions: queryObject.noTransactions === 'true',
                         };
                         generateReport(filters, (err, result) => {
-                            if (err) throw err;
-                            res.statusCode = 200;
-                            res.setHeader('Content-Type', 'application/json');
-                            res.end(JSON.stringify(result));
+                        if (err) throw err;
+                        res.statusCode = 200;
+                        res.setHeader('Content-Type', 'application/json');
+                        res.end(JSON.stringify(result));
                         });
                     } catch (err) {
                         console.error(err);
