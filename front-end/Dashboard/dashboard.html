@@ -61,7 +61,7 @@
               </a></li>
               <li class="menu-item"><a id="hold-selection" href="#">Holds</a></li>
               <!--bug exists here-->
-              <li class="menu-item"><a id="waitlist-selection" href="#">Waitlist</a></li>
+              <li class="menu-item"><a id="event-selection" href="#">Events</a></li>
               <li class="menu-item"><a id="fine-selection" href="#">Fine Details</a></li>
               
 
@@ -334,48 +334,18 @@
   └───────────────────────────────────────────────────────────────────┘
  -->
 
- <div class="settings holds">Holds Test
+ <div class="settings holds">
 
 </div>
 
 <!-- 
   ┌───────────────────────────────────────────────────────────────────┐
-  │                            WaitList                               │
+  │                            Events                                 │
   └───────────────────────────────────────────────────────────────────┘
  -->
 
- <div class="settings waitlist">Waitlist Test
-  <div class="chart-container">
-    <canvas id="bookChart"></canvas>
-    <script>
-      // Sample data
-      var books = ['Book 1', 'Book 2', 'Book 3', 'Book 4', 'Book 5'];
-      var isbns = ['1234567890', '0987654321', '1122334455', '9988776655', '5544332211'];
-  
-      // Create the chart
-      var ctx = document.getElementById('bookChart').getContext('2d');
-      var chart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-              labels: books,
-              datasets: [{
-                  label: 'ISBN',
-                  data: isbns,
-                  backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                  borderColor: 'rgba(75, 192, 192, 1)',
-                  borderWidth: 1
-              }]
-          },
-          options: {
-              scales: {
-                  y: {
-                      beginAtZero: true
-                  }
-              }
-          }
-      });
-  </script>
-    
+ <div class="settings events">
+    <!--SQL QUERY-->
 </div>
 
 
