@@ -9,7 +9,6 @@ const connection = mysql.createConnection({
 });
 
 function getId(item, itemType) {
-    var Id = 0;
     if(itemType === 'author') {
         connection.query(`SELECT author_id FROM author WHERE author_name = ?`, [item], (err, result) => {
             if (err) {
