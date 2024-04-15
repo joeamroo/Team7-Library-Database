@@ -1,448 +1,744 @@
-const mysql = require('mysql');
+const loggedIn = localStorage.getItem('loggedIn');
+const memberId = localStorage.getItem('memberId');
+const loginButton = document.getElementById('myAccount');
+const logOutBtn = document.getElementById('logoutBtn');
+const updateBtn = document.querySelector(".main-btn");
+const bookLabel = document.querySelector(".book-label");
+const movieLabel = document.querySelector (".movie-label");
+const deviceLabel = document.querySelector(".device-label");
+const sendPop = document.querySelector('#submitProfileInfo');
+const profileSelect = document.getElementById('profile-selection');
+const orderSelect = document.getElementById('order-selection');
+const holdSelect = document.getElementById('hold-selection');
+const eventSelect = document.getElementById('event-selection');
+const fineSelect = document.getElementById('fine-selection');
+const profileView = document.querySelector('.settings.profile');
+const orderView = document.querySelector('.settings.orders');
+const holdsView = document.querySelector('.settings.holds');
+const eventsView = document.querySelector('.settings.events');
+const fineView = document.querySelector('.settings.fines');
+const orderReport = document.querySelector('.recent-orders');
+const eventReport = document.querySelector('.settings.events')
+const profileInfo = document.querySelector('.member-info');
+const today = new Date().toLocaleDateString();
+const notify = document.querySelector('#notify-user');
+
+/* *********************************************** */
+/* **************** BACK END ********************* */
+/* *********************************************** */
+
+const backendUrl = 'https://cougarchronicles.onrender.com'; 
+const getUserDashUrl = `${backendUrl}/getDashname`;
+const getUserInfoUrl = `${backendUrl}/getDashInfo`;
+const getUserHoldUrl = `${backendUrl}/getUserHolds`;
+const setUserInfoUrl =`${backendUrl}/setDashInfo`;
+const getUserOrderUrl =`${backendUrl}/getDashOrders`;
+const getUserEventsUrl =`${backendUrl}/getDashEvents`;
 
 
-const link = mysql.createConnection({
-    host: 'library-database-sytem.mysql.database.azure.com',
-    user: 'lbrGuest',
-    password: 'gu3st@cces$',
-    database: 'librarydev',
-    port:3306
+
+logOutBtn.addEventListener('click', function(event) {
+  console.log('logging out');
+  localStorage.setItem('loggedIn', false);
+  if(memberId !== null && memberId !== undefined) {
+    logOutBtn.href = '../Home/home.html';
+    localStorage.removeItem('memberId');
+  }
+});
+
+const container = document.getElementById('container');
+
+
+
+/* 
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │                            Dropdown List                                │
+  └─────────────────────────────────────────────────────────────────────────┘
+ */
+
+var input = document.querySelector(".input-box");
+      input.onclick = function () {
+        this.classList.toggle("open");
+        let list = this.nextElementSibling;
+        if (list.style.maxHeight) {
+          list.style.maxHeight = null;
+          list.style.boxShadow = null;
+        } else {
+          list.style.maxHeight = list.scrollHeight + "px";
+          list.style.boxShadow =
+            "0 1px 2px 0 rgba(0, 0, 0, 0.15),0 1px 3px 1px rgba(0, 0, 0, 0.1)";
+        }
+      };
+
+      var rad = document.querySelectorAll(".radio");
+      rad.forEach((item) => {
+        item.addEventListener("change", () => {
+          input.innerHTML = item.nextElementSibling.innerHTML;
+          input.click();
+        });
+      });
+
+      var label = document.querySelectorAll("label");
+      function search(searchin) {
+        let searchVal = searchin.value;
+        searchVal = searchVal.toUpperCase();
+        label.forEach((item) => {
+          let checkVal = item.querySelector(".name").innerHTML;
+          checkVal = checkVal.toUpperCase();
+          if (checkVal.indexOf(searchVal) == -1) {
+            item.style.display = "none";
+          } else {
+            item.style.display = "flex";
+          }
+          let list = input.nextElementSibling;
+          list.style.maxHeight = list.scrollHeight + "px";
+        });
+      }
+
+      // Selects item and reverts dropdown to 
+      // original form
+      bookLabel.addEventListener('click', () => {
+        input.innerHTML = "Book"
+        input.click();
+      });
+
+      movieLabel.addEventListener('click', () => {
+        input.innerHTML = 'Movie'
+        input.click();
+      });
+
+      deviceLabel.addEventListener('click', () => {
+        input.innerHTML = "Device";
+        input.click();
+      });
+
+
+/* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                         Notification Settings                               │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+
+
+      let notification = document.querySelector(".notification");
+
+      function showNotification() {
+        if (notification.classList.contains("hidden")) {
+          notification.classList.toggle("hidden");
+        }
+        notification.classList.toggle("active");
+        const timeout = setTimeout(() => {
+          if (
+            notification.classList.contains("active") &&
+            !notification.classList.contains("hidden")
+          ) {
+            notification.classList.toggle("active");
+            notification.classList.toggle("hidden");
+          } else {
+            window.clearTimeout(timeout);
+          }
+        }, 5000);
+      }
+    
+      function closeNote() {
+        notification.classList.toggle("active");
+        notification.classList.toggle("hidden");
+      }
+
+      function showDefaults() {
+        const element = document.querySelector('a#profile-selection.default-click');
+
+        // Simulate a click event
+        element.click();
+      }
+    
+      // Show notification on page load
+      //window.addEventListener("load", showNotification);
+      window.addEventListener("load", showDefaults);
+
+
+      
+      profileSelect.addEventListener('click', () => {
+        eventsView.classList.add('hide');
+        orderView.classList.add('hide');
+        holdsView.classList.add('hide');
+        fineView.classList.add('hide');
+        profileView.classList.remove('hide');
+      });
+      
+
+      orderSelect.addEventListener('click', () => {
+        profileView.classList.add('hide');
+        holdsView.classList.add('hide');
+        eventsView.classList.add('hide');
+        fineView.classList.add('hide');
+        orderView.classList.remove('hide');
+      });
+
+      holdSelect.addEventListener('click', () => { 
+        profileView.classList.add('hide');
+        orderView.classList.add('hide');
+        eventsView.classList.add('hide');
+        fineView.classList.add('hide');
+        holdsView.classList.remove('hide');
+      });
+
+      eventSelect.addEventListener('click', () => {
+        profileView.classList.add('hide');
+        orderView.classList.add('hide');
+        holdsView.classList.add('hide');
+        fineView.classList.add('hide');
+        eventsView.classList.remove('hide');
+      });
+
+      fineSelect.addEventListener('click', () => {
+        profileView.classList.add('hide');
+        orderView.classList.add('hide');
+        holdsView.classList.add('hide');
+        eventsView.classList.add('hide');
+        fineView.classList.remove('hide');
+      });
+
+      /* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                              Greets User                                    │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+
+
+
+  document.addEventListener('DOMContentLoaded', function() {
+    
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', getUserDashUrl);
+    xhr.setRequestHeader('Content-Type', 'text/html');
+
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        const greetName = document.querySelector('.user-greet');   
+        
+        /* Sets the name of the profile information */
+        greetName.innerHTML = xhr.responseText;
+        //console.log(greetName);
+      } else {
+        console.log('Error retrieving information');
+      }
+    };
+
+    xhr.onerror = function() {
+      console.error('error', xhr.statusText);
+    };
+
+    const data = JSON.stringify({
+      memberId: memberId
+    });
+
+      xhr.send(data);
+
+  });
+
+     /* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                       MemberId Retrieval from Storage                       │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+
+
+/* Gets MemberID from local storage and makes it visible on the profile */
+window.onload = function() {
+    const memberTag = document.getElementById('member-id');
+    memberTag.textContent = 'Member ID: ' + memberId;
+    getUserInfo();
+    setOrderDate();
+    getUserHoldsReport();
+};
+
+    /* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                           Updates User Info                                 │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+
+ 
+
+updateBtn.addEventListener('click', function(event) {
+
+
+    const allFieldsFilled = [
+      'firstName', 'lastName', 'phone_number', 'street_addr', 'city_addr',
+      'state', 'zipcode_addr', 'email'
+  ].every(id => document.getElementById(id).value.trim() !== "");
+
+  //console.log(allFieldsFilled);
+
+  if (!allFieldsFilled) {
+  
+
+    // Prevents dialogue from showing
+    closePop();
+
+    setTimeout(() => {
+      // Sends notification to use that they must fill out form entirely!
+       notify.textContent = 'You must fill out all sections to proceed!';
+       showNotification();
+    }, 900);
+  
+  } else {
+        setProfileInfo();
+  }
+    
+});
+
+function closePop() {
+  document.querySelector(".popup").style.display = "none";
+}
+function openPop() {
+  document.querySelector(".popup").style.display = "flex";
+}
+
+sendPop.addEventListener('click', function(event) {
+  setProfileInfo();
+  closePop();
 });
 
 
-/*function getSQLTable(data) {
+function setProfileInfo() {
   
-    const headers = Object.keys(data[0]);
+  const firstName = document.getElementById('.firstName');
+  const lastName = document.getElementById('.lastName');
+  const phone_number = document.getElementById('.phone_number');
+  const street_addr = document.getElementById('.street_addr');
+  const city_addr = document.getElementById('.city_addr');
+  const state = document.getElementById('.state');
+  const zipcode_addr = document.getElementById('.zipcode_addr');
+  const email = document.getElementById('.email');
+
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', setUserInfoUrl);
+  xhr.setRequestHeader('Content-Type', 'text/html');
+
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      //const dataRetrieved = xhr.responseText;
+      //console.log(dataRetrieved);
+      notify.innerHTML = xhr.responseText;
+      showNotification();
+    } else {
+      notify.innerHTML = "Failed: Please contact a librarian for help!";
+      showNotification();
+    }
+  };
+
+  xhr.onerror = function() {
+    console.log('error', xhr.statusText);
+  }
+
+  const data = JSON.stringify({
+    memberId: memberId,
+    firstName: firstName,
+    lastName: lastName,
+    phone_number: phone_number,
+    street_addr: street_addr,
+    city_addr: city_addr,
+    state: state,
+    zipcode_addr: zipcode_addr,
+    email: email
+  });
   
-    const tableRows = data.map(rowData => {
-    const cells = headers.map(key => htmlTemplateTag`<td>${rowData[key]}</td>`);
-    return htmlTemplateTag`<tr>${cells}</tr>`;
-    });
 
-    const tableHeader = headers.map(headerText => htmlTemplateTag`<th>${headerText}</th>`);
-    const table = htmlTemplateTag`
-    <table>
-      <thead>
-        <tr>${tableHeader}</tr>
-      </thead>
-      <tbody>
-        ${tableRows}
-      </tbody>
-    </table>
-`;
-    
-}*/
+  xhr.send(data);
+}
 
-/* 
+
+
+
+
+  /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
-  │                         Converts SQL to Tables                              │
+  │                              User Info (member-id)                          │
   └─────────────────────────────────────────────────────────────────────────────┘
  */
-  function getSQLTable(queryResult, tableName) {
-    // Check if queryResult is empty or undefined
-    if (!queryResult || queryResult.length === 0) {
-      return '<p>No entries exist for the referenced section</p>'; // Return a simple message if no data
+
+  function getUserInfo() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', getUserInfoUrl);
+    xhr.setRequestHeader('Content-Type', 'text/html');
+
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        //const dataRetrieved = xhr.responseText;
+        //console.log(dataRetrieved);
+        profileInfo.innerHTML = xhr.responseText;
+      } else {
+        console.log("Failed to retrieve data");
+      }
+    };
+
+    xhr.onerror = function() {
+      console.log('error', xhr.statusText);
     }
-  
-    const data = queryResult;
-    const headers = Object.keys(data[0]); // Get headers from the keys of the first row
-  
-    // Generate table headers with id attributes
-    const tableHeader = headers.map((headerText, index) => `<th id="header-${index}">${headerText}</th>`).join('');
-  
-    // Generate table rows
-    const tableRows = data.map(rowData => {
-      const cells = headers.map((key, index) => {
-        let value = rowData[key] === null ? "Not Applicable" : rowData[key];
-  
-        // Check if the key is 'Image' and add an <img> element if it exists
-        if (key === 'Image' && value !== "Not Applicable") {
-          value = `<img src="${value}" alt="Image">`;
-        }
-  
-        // Check if the key is 'date' and format the date
-        if (key.toLowerCase() === 'date' && value !== "Not Applicable") {
-          const dateString = value;
-          const dateParts = dateString.split(" ");
-          value = dateParts.slice(0, 4).join(" ");
-        }
-  
-        return `<td id="${key}">${value}</td>`;
-      }).join('');
-  
-      return `<tr>${cells}</tr>`;
-    }).join('');
-  
-    // Construct the table
-    const table = `
-      <table id="${tableName}">
-        <thead>
-          <tr>${tableHeader}</tr>
-        </thead>
-        <tbody>
-          ${tableRows}
-        </tbody>
-      </table>
-    `;
-  
-    return table; // Return the HTML table string
+
+    const data = JSON.stringify({
+      memberId: memberId
+    });
+
+    xhr.send(data);
   }
 
 
-/* 
+   /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
-  │                         Retrieves the full name                             │
+  │                              Orders (date form)                             │
   └─────────────────────────────────────────────────────────────────────────────┘
  */
 
-function getUserDash(response, memberId) {
+  function setOrderDate() {
 
-    // Searches Database for user with the memberID
-    const query_name = 'SELECT name FROM member WHERE member_id = ?';
+    // Get the current date
+    const currentDate = new Date();
 
-    // Gets information from backend
-    link.query(query_name, [memberId], (error, result) => {
-        if (error) {
-          console.log('Error', memberId);
-          response.writeHead(500);
-          response.end('Server error');
-          return;
-        } 
-        const greeting = 'Welcome, ' + result[0].name + '!';
-        response.writeHead(200, { 'Content-Type': 'text/html' });
-        response.end(greeting, 'utf-8');
-    });
-}
+    // Extract the year, month, and day from the current date
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    const day = currentDate.getDate();
 
-/* 
+    const startingDate = document.getElementById('start-date');
+    const endingDate = document.getElementById('end-date');
+    var sdate = new Date(today).toISOString().slice(0, 10);
+    var one_year = new Date(year + 1, month, day)
+    var edate = new Date(one_year).toISOString().slice(0, 10);
+
+    // Sets the values of each to today's date by default
+    startingDate.value = sdate;
+    endingDate.value = edate;
+  }
+
+
+     /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
-  │                         Retrieves Profile Info                              │
+  │                              Orders Report                                  │
   └─────────────────────────────────────────────────────────────────────────────┘
  */
 
-function getUserDashInfo(response, memberId) {
+function getUserOrderReport() {
 
-    // HTML Elements
-    const memberInfo = [
-        { label: "First Name", id:"firstName", type: "text", value: "Ruthless"},
-        { label: "Last Name", id: "lastName", type: "text", value: "Murthy" },
-        { label: "Phone Number", id: "phone_number", type: "tel", value: "(541) 504-5555 " },
-        { label: "Street Address", id: "street_addr", type: "text", value: "Privet Drive" },
-        { label: "City", id: "city_addr", type: "text", value: "Houston" },
-        { label: "State", id: "state", type: "text", value: "Texas" },
-        { label: "Zip Code", id: "zipcode_addr", type: "text", value: "77063" },
-        { label: "Email", id: "email", type: "email", value: "ssh!atlibrary@library.com" },
-      ];
+    const itemValue = '';
 
-    // Searches Database for user with memberID
-    const query_info = 'SELECT name, email, status, phone_number, street_addr, city_addr, state, zipcode_addr ' +
-                        'FROM member WHERE member_id = (?)';
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', getUserOrderUrl);
+    xhr.setRequestHeader('Content-Type', 'text/html');
 
-
-
-    // Gets information from backend
-    link.query(query_info, [memberId], (error, result) => {
-
-      var firstName = '';
-      var lastName = '';
-
-      result.forEach(function(row) {
-        var fullName = row.name;
-        var nameParts = fullName.split(' ');
-        firstName = nameParts[0];
-        lastName = nameParts[nameParts.length - 1];
-      });
-
-      //console.log('firstName: ' + firstName);
-      //console.log('lastName: ' + lastName);
-
-    
-      let html = '';
-
-        // New values
-        const updatedMemberInfo = memberInfo.map(info => {
-            switch (info.id) {
-              case "firstName":
-                return { ...info, value: firstName };
-              case "lastName":
-                return { ...info, value: lastName };
-              case "phone_number":
-                return { ...info, value: result[0].phone_number };
-              case "street_addr":
-                return { ...info, value: result[0].street_addr };
-              case "city_addr":
-                return { ...info, value: result[0].city_addr };
-              case "state":
-                return { ...info, value: result[0].state };
-              case "zipcode_addr":
-                return { ...info, value: result[0].zipcode_addr };
-              case "email":
-                return { ...info, value: result[0].email };
-              default:
-                return info;
-                console.log("failed");
-            }
-          });
-
-
-
-        if (error) {
-            console.log('Error', memberId);
-            response.writeHead(204);
-            response.end('Server error');
-            return;
-        } else {
-            updatedMemberInfo.forEach(info => {
-                html += `
-                  <div class="form-group">
-                    <label for="${info.id}">${info.label}</label>
-                    <input type="${info.type}" id="${info.id}" value="${info.value}">
-                  </div>
-                `;
-              });
-        }
-        response.writeHead(200, { 'Content-Type': 'text/html' });
-        response.end(html, 'utf-8');
-    });
-}
-
-/* 
-  ┌─────────────────────────────────────────────────────────────────────────────┐
-  │                              Updates User Info                              │
-  └─────────────────────────────────────────────────────────────────────────────┘
- */
-
-  function setUserDashInfo(response, memberId, firstName, lastName, phone_number,
-                           street_addr, city_addr, state, zipcode_addr, email) {
-
-
-      // Combines first name and last name
-      const fullName = firstName + " " + lastName;
-      //console.log(fullName);
-
-      // Query to search for
-      const sql_query = 'UPDATE MEMBER SET name = ?, phone_number = ?, street_addr = ?, city_addr = ?,' +
-                         'state = ?, zipcode_addr = ?, email = ? WHERE member_id = ?';
-
-    // Values to update
-    const values = [memberId, fullName, phone_number, street_addr, city_addr, state, zipcode_addr, email];
-
-    // Use the memberId parameter in the query execution
-      link.query(sql_query, values, function(err, result) {
-      if (err) {
-            console.error('Failed to insert member details:', err);
-            //console.log('Query Results: ', result);
-            response.writeHead(200, { 'Content-Type': 'text/html' });
-            response.end('Internal Server Error', 'utf-8');
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        orderReport.innerHTML = xhr.responseText;
+        //const orderRetrieval = xhr.responseText;
+       // orderReport.innerHTML = filterOrderTable(orderRetrieval);
+        
+        
       } else {
-        console.log("Update:" + result);
-        response.writeHead(200, { 'Content-Type': 'text/html' });
-        response.end('Profile settings successfully updated!', 'utf-8');
+        console.log("Failed to retrieve data");
       }
-  });
+    };
+
+    xhr.onerror = function() {
+      console.error('error', xhr.statusText);
+    };
+
+    //console.log(memberId);
+
+    const data = JSON.stringify({
+      memberId: memberId
+    });
+
+
+    xhr.send(data);
 }
 
-/* 
+     /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
-  │                           Retrieves User Order Info                         │
+  │                               Holds Report                                  │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+  function getUserHoldsReport() {
+
+    const itemValue = '';
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', getUserHoldUrl);
+    xhr.setRequestHeader('Content-Type', 'text/html');
+
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        //const retrieved = xhr.responseText;
+        //console.log(retrieved);
+        holdsView.innerHTML = xhr.responseText;
+    
+        
+        
+      } else {
+        console.log("Failed to retrieve data");
+      }
+    };
+
+    xhr.onerror = function() {
+      console.error('error', xhr.statusText);
+    };
+
+    //console.log(memberId);
+
+    const data = JSON.stringify({
+      memberId: memberId
+    });
+
+
+    xhr.send(data);
+}
+
+
+
+     /* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                               Events Report                                 │
   └─────────────────────────────────────────────────────────────────────────────┘
  */
 
-function getUserOrderInfo(response, memberId) {
-// Execute the SQL query
-const query = "SELECT TV.transaction_Id AS 'Order ID', " +
-              "T.date_created AS 'Date', " +
-              "CV.image_address AS 'Image', " +
-              "TV.asset_type AS 'Item', " +
-              "CV.year_released AS 'Year Released', " +
-              "CV.book_movie_title_model AS 'Product', " +
-              "CV.isbn AS 'ISBN', " +
-              "CV.asset_id AS 'Serial Number', " +
-              "CV.genres AS 'Genre', " +
-              "CV.languages AS 'Language', " +
-              "TV.returned AS 'Status' " +
-              "FROM TRANSACTION AS T, " +
-              "TRANSACTION_VIEW AS TV, " +
-              "CATALOG_VIEW AS CV, " +
-              "MEMBER AS M " +
-              "WHERE M.member_id = T.member_id " +
-              "AND T.transaction_id = TV.transaction_Id " +
-              "AND TV.itemId = CV.asset_id;";
+  function getUserEventsReport() {
+
+    const itemValue = '';
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', getUserEventsUrl);
+    xhr.setRequestHeader('Content-Type', 'text/html');
+
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        //const retrieved = xhr.responseText;
+        //console.log(retrieved);
+        eventsView.innerHTML = xhr.responseText;
+    
+        
+        
+      } else {
+        console.log("Failed to retrieve data");
+      }
+    };
+
+    xhr.onerror = function() {
+      console.error('error', xhr.statusText);
+    };
+
+    //console.log(memberId);
+
+    const data = JSON.stringify({
+      memberId: memberId
+    });
 
 
-link.query(query, [memberId], (err, results) => {
-  if (err) {
-      console.error('Error executing the query:', err);
-      response.writeHead(204, { 'Content-Type': 'text/plain' });
-      response.end('Internal Server Error');
-      return;
-    }  else {
+    xhr.send(data);
+}
 
-    // Converts SQL query to a table with Keys as IDs
-    const tableHTML = getSQLTable(results, 'order-table');
 
-    // Sends the table back to client
-    response.writeHead(200, { 'Content-Type': 'text/html' });
-    response.end(tableHTML);
+
+
+function filterOrderTable(tableHTML) {
+
+  // Create a temporary element to hold the table HTML
+  const tempElement = document.createElement('div');
+  tempElement.innerHTML = tableHTML;
+
+  // Select the table element from the temporary element
+  const table = tempElement.querySelector('table');
+
+  // Select all the table rows
+  const rows = table.getElementsByTagName('tr');
+
+  // Loop through each row
+  for (let i = 0; i < rows.length; i++) {
+    // Select all the cells in the current row
+    const cells = rows[i].getElementsByTagName('td');
+  
+  // Loop through each cell in the row
+  for (let j = 0; j < cells.length; j++) {
+    // Check for all items with NULL values
+    if (cells[j].id === 'item' && cells[j] === 'NULL') {
+      if(cells[j].value === 'book') {
+        // handler
+      }
     } 
-  });
+  }
 }
 
-/* 
-  ┌─────────────────────────────────────────────────────────────────────────────┐
-  │                              Gets User Holds                                │
-  └─────────────────────────────────────────────────────────────────────────────┘
- */
-
-  function getDashHoldsInfo(response, memberId) {
-
-    // Searches Database for user with the memberID
-    const query = 'SELECT hold_id AS "Identifier",' +
-                        'request_date AS "Date Requested",' +
-                        'item_name AS "Item"' +
-                        'FROM hold_request WHERE member_id = ?';
-
-    // Gets information from backend
-    link.query(query, [memberId], (err, results) => {
-      if (err) {
-          console.error('Error executing the query:', err);
-          response.writeHead(204, { 'Content-Type': 'text/plain' });
-          response.end('Internal Server Error');
-          return;
-        }  else {
-    
-        // Converts SQL query to a table with Keys as IDs
-        const tableHTML = getSQLTable(results, 'holds-table');
-    
-        // Sends the table back to client
-        response.writeHead(200, { 'Content-Type': 'text/html' });
-        response.end(tableHTML);
-        } 
-      });
-    
-}
-
-
-/* 
-  ┌─────────────────────────────────────────────────────────────────────────────┐
-  │                              Get Events List                                │
-  └─────────────────────────────────────────────────────────────────────────────┘
- */
-
-  function getUserEventsInfo(response, memberId) {
-
-    // Searches Database for user with the memberID
-    const query = `
-        SELECT
-            E.event_name AS 'Event',
-            E.date AS 'Date',
-            CONCAT(E.start_time, ' ', E.startAMPM, ' - ', E.end_time, ' ', E.endAMPM) AS 'Time',
-            E.sponsor AS 'Sponsor',
-            E.event_description AS 'Description'
-        FROM
-            member AS M
-            INNER JOIN events_member_link AS L ON M.member_id = L.member_id
-            INNER JOIN event AS E ON L.event_id = E.event_id
-        WHERE M.member_id = ?;
-    `;
-
-    // Gets information from backend
-    link.query(query, [memberId], (err, results) => {
-      if (err) {
-          console.error('Error executing the query:', err);
-          response.writeHead(204, { 'Content-Type': 'text/plain' });
-          response.end('Internal Server Error');
-          return;
-        }  else {
-    
-        // Converts SQL query to a table with Keys as IDs
-        const tableHTML = getSQLTable(results, 'events-table');
-    
-        // Sends the table back to client
-        response.writeHead(200, { 'Content-Type': 'text/html' });
-        response.end(tableHTML);
-        } 
-      });
-    
-}
+} // filterOrderTable (ends)
 
 
 
+
+
+
+
+
+        /*// Text inside form (prompt)
+    const notice = document.querySelector('#profile-flag');
+
+    // Title of Form
+    const submitTitle = document.querySelector('#submitTitle');
+
+    // Submit button
+    const submitButton = document.querySelector('#submitProfileInfo');
+
+    // Close button
+    const closePrompt = document.querySelector('#closeProfilePrompt');
+  */
+
+     /* submitTitle.textContent = 'WARNING';
+    notice.textContent = 'Make sure all sections are filled out before submitting!';
+    submitButton.disabled = true;
 
 
   
+    setTimeout(() => {
+      // Simulate close click
+    closePrompt.click();
+      // Reverts text
+      submitTitle.textContent = 'Submit Details';
+      notice.textContent = 'Are you sure you want to submit the details? You can later edit them' +
+      'in details section';
+      // Enables button again
+      submitButton.disabled = false;
+    }, 1100);
+    */
+
+      
 
 
+/* ===================== Notification Ends ===================== */
+/*
+      Reports:
 
+1. Waitlist (hold request)
+	Authors, Genres, Year, Rating, Asset Condition
+2. Transactions
+	Books, Movies, Devices (for a specific date frame), Asset Condition
+3. Returns
+      Books, Movies, Devices, Asset Condition, 
+4. Events
+	Events attended this year, or a specific year
+// Calls function to load information
+      getUserInfo();
+  */
 
-module.exports = { getUserDash, getUserDashInfo, setUserDashInfo, getUserOrderInfo, getDashHoldsInfo, getUserEventsInfo };
+      /*function getUserInfo() {
+    // Retrieves user info
+    const name = '';
 
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', getUserInfoUrl);
+    xhr.setRequestHeader('Content-Type', 'application/json');
 
- /*function getSQLTable(queryResult) {
-    // Check if queryResult is empty or undefined
-    if (!queryResult || queryResult.length === 0) {
-      return '<p>No data available</p>'; // Return a simple message if no data
-    }
-  
-    const data = queryResult;
-    const headers = Object.keys(data[0]); // Get headers from the keys of the first row
-  
-    // Generate table headers
-    const tableHeader = headers.map(headerText => `<th>${headerText}</th>`).join('');
-  
-    // Generate table rows
-    const tableRows = data.map(rowData => {
-      const cells = headers.map(key => `<td>${rowData[key]}</td>`).join('');
-      return `<tr>${cells}</tr>`;
-    }).join('');
-  
-    // Construct the table
-    const table = `
-      <table>
-        <thead>
-          <tr>${tableHeader}</tr>
-        </thead>
-        <tbody>
-          ${tableRows}
-        </tbody>
-      </table>
-    `;
-  
-    return table; // Return the HTML table string
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+       
+        const packets = JSON.parse(xhr.responseText);
+        console.log(packets);
+
+        // User info elements from top of code
+        userData.forEach(function(item) {
+          // Update the value of each element with the corresponding data from the server
+          item.element.textContent = packets[item.key];
+        });
+      } else {
+        console.error('Error fetching user info:', xhr.status);
+      }
+    };
+        
+
+    xhr.onerror = function() {
+      console.error('error', xhr.statusText);
+    };
+
+    // Sends memberID and server sends back profile info
+    xhr.send(JSON.stringify({memberId: memberId}));
   }*/
 
 
-  /*var tableHTML = '<table>' +
-    '<thead>' +
-        '<tr>' +
-            '<th>Order ID</th>' +
-            '<th>Date</th>' +
-            '<th>Image</th>' +
-            '<th>Item</th>' +
-            '<th>Year Released</th>' +
-            '<th>Product</th>' +
-            '<th>ISBN</th>' +
-            '<th>Serial Number</th>' +
-            '<th>Genre</th>' +
-            '<th>Language</th>' +
-            '<th>Status</th>' +
-        '</tr>' +
-    '</thead>' +
-    '<tbody>';*/
 
-    /*results.forEach(transaction => {
-      tableHTML += '<tr>';
-      for (let key in transaction) {
-        if(key === 'returned') {
-          tableHTML += `<td id='returned'>${transaction[key]}</td>`;
-        } else if (key === 'image_address') {
-          tableHTML += `<td><img src="${transaction[key]}" style="max-width: 100%; max-height: 100%;"></td>`;
-        } else {
-          tableHTML += `<td>${transaction[key]}</td>`;
-        }
-          
+  //Pay fine functionality (Gaby)
+
+  const updateMemberFineUrl = `${backendUrl}/updMemberFine`;
+  const getFineUrl = `${backendUrl}/getFineAmount`;
+
+  function getFine() {
+    const memberId = localStorage.getItem('memberId');
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', getFineUrl);
+
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        const responseData = JSON.parse(xhr.responseText);
+        const fine_amount = responseData.gotFine;
+
+        document.getElementById('amount').textContent = '$' + fine_amount;
+      } 
+      else {
+        console.error('Error:', xhr.statusText);
       }
-      tableHTML += '</tr>';
+    };
+
+    const data = JSON.stringify({ memberId });
+
+    xhr.send(data);
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const memberId = localStorage.getItem('memberId');
+    if (memberId !== null && memberId !== undefined) {
+      getFine();
+      console.log('entering this section');
+      setInterval(getFine, 30000);
+    }
+    else {
+      console.log('no user so no fine');
+    }
   });
 
-    tableHTML += '</tbody>' + '</table>';*/
+  document.getElementById('payFineBtn').addEventListener('click', function(event) {
+    event.preventDefault();
+    
+    const allFieldsFilled = [
+      'first-name', 'last-name', 'card-number', 'cvv', 'exp-date'
+    ].every(id => document.getElementById(id).value.trim() !== "");
+
+    if (allFieldsFilled) {
+      const memberId = localStorage.getItem('memberId');
+        
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', updateMemberFineUrl); 
+      xhr.setRequestHeader('Content-Type', 'application/json');
+
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          getFine();
+          document.getElementById('first-name').value = '';
+          document.getElementById('last-name').value = '';
+          document.getElementById('card-number').value = '';
+          document.getElementById('cvv').value = '';
+          document.getElementById('exp-date').value = '';
+        }
+        else {
+          console.error('Error:', xhr.statusText);
+        }
+      };
+
+      const data = JSON.stringify({ memberId });
+      
+      xhr.send(data);  
+    }
+    else {
+      const submitBtn = document.getElementById('payFineBtn');
+      submitBtn.classList.add('shake-button');
+
+      setTimeout(() => {
+        submitBtn.classList.remove('shake-button');
+      }, 500);
+    }
+  });

@@ -38,11 +38,10 @@ const link = mysql.createConnection({
   │                         Converts SQL to Tables                              │
   └─────────────────────────────────────────────────────────────────────────────┘
  */
-
   function getSQLTable(queryResult, tableName) {
     // Check if queryResult is empty or undefined
     if (!queryResult || queryResult.length === 0) {
-      return '<p>None</p>'; // Return a simple message if no data
+      return '<p>No entries exist for the referenced section</p>'; // Return a simple message if no data
     }
   
     const data = queryResult;
@@ -59,6 +58,13 @@ const link = mysql.createConnection({
         // Check if the key is 'Image' and add an <img> element if it exists
         if (key === 'Image' && value !== "Not Applicable") {
           value = `<img src="${value}" alt="Image">`;
+        }
+  
+        // Check if the key is 'date' and format the date
+        if (key.toLowerCase() === 'date' && value !== "Not Applicable") {
+          const dateString = value;
+          const dateParts = dateString.split(" ");
+          value = dateParts.slice(0, 4).join(" ");
         }
   
         return `<td id="${key}">${value}</td>`;
