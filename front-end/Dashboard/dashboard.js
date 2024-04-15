@@ -3,6 +3,9 @@ const memberId = localStorage.getItem('memberId');
 const loginButton = document.getElementById('myAccount');
 const logOutBtn = document.getElementById('logoutBtn');
 const updateBtn = document.querySelector(".main-btn");
+const bookLabel = document.querySelector(".book-label");
+const movieLabel = document.querySelector (".movie-label");
+const deviceLabel = document.querySelector(".device-label");
 const sendPop = document.querySelector('#submitProfileInfo');
 const profileSelect = document.getElementById('profile-selection');
 const orderSelect = document.getElementById('order-selection');
@@ -88,6 +91,23 @@ var input = document.querySelector(".input-box");
           list.style.maxHeight = list.scrollHeight + "px";
         });
       }
+
+      // Selects item and reverts dropdown to 
+      // original form
+      bookLabel.addEventListener('click', () => {
+        input.innerHTML = "Book"
+        input.click();
+      });
+
+      movieLabel.addEventListener('click', () => {
+        input.innerHTML = 'Movie'
+        input.click();
+      });
+
+      deviceLabel.addEventListener('click', () => {
+        input.innerHTML = "Device";
+        input.click();
+      });
 
 
 /* 
@@ -580,12 +600,8 @@ function filterOrderTable(tableHTML) {
   }
 
   document.addEventListener('DOMContentLoaded', function() {
-    const memberId = localStorage.getItem('memberId');
-    if (memberId !== null && memberId !== undefined) {
-      getFine();
-      console.log('entering this section');
-      setInterval(getFine, 30000);
-    }
+    getFine();
+    setInterval(getFine, 30000);
   });
 
   document.getElementById('payFineBtn').addEventListener('click', function(event) {
