@@ -13,7 +13,7 @@ const { getListedEvents, eventSignUp } = require('./routes/classesnEvents');
 const { resetPassword } = require('./routes/forgot-pwd');
 const { getEventReports } = require ('./routes/staffeventsreports');
 const { getEmployees, insertStaff, removeStaff, updateStaffRole, filterStaff } = require ('./routes/adminStaffManagement');
-const { getEventsForAdmin, insertEvent, deleteEvent, filterEvents } = require('./routes/adminEventManagement');
+const { getAdminAlerts, getEventsForAdmin, insertEvent, deleteEvent, filterEvents } = require('./routes/adminEventManagement');
 const { getItemsForAdmin, filterCatalogItems, getAdminInfo } = require('./routes/adminCatalogManagement');
 const { updateFine, getFineAmount } = require('./routes/payFine');
 const { addItems } = require('./routes/add-items');
@@ -64,48 +64,51 @@ const server = http.createServer((request, res) => {
                 case '/getItemsForAdmin':
                     getItemsForAdmin(res);
                     break;
-                    case '/getMemberData':
-                        try {
-                            const queryObject = url.parse(request.url, true).query;
-                            const filters = {
-                                name: queryObject.name || '',
-                                memberId: queryObject.memberId || '',
-                                hasFine: queryObject.hasFine === 'true',
-                                noTransactions: queryObject.noTransactions === 'true'
-                            };
-                            getMemberData(filters, (err, result) => {
-                                if (err) throw err;
-                                res.statusCode = 200;
-                                res.setHeader('Content-Type', 'application/json');
-                                res.end(JSON.stringify(result));
-                            });
-                        } catch (err) {
-                            console.error(err);
-                            res.statusCode = 500;
-                            res.end('Internal server error');
-                        }
-                        break;
-                    case '/generateReport':
-                        try {
-                            const queryObject = url.parse(request.url, true).query;
-                            const filters = {
-                                name: queryObject.name || '',
-                                memberId: queryObject.memberId || '',
-                                hasFine: queryObject.hasFine === 'true',
-                                noTransactions: queryObject.noTransactions === 'true'
-                            };
-                            generateReport(filters, (err, result) => {
-                                if (err) throw err;
-                                res.statusCode = 200;
-                                res.setHeader('Content-Type', 'application/json');
-                                res.end(JSON.stringify(result));
-                            });
-                        } catch (err) {
-                            console.error(err);
-                            res.statusCode = 500;
-                            res.end('Internal server error');
-                        }
-                        break;
+                case 'getAdminAlerts':
+                    getAdminAlerts(res);
+                    break;
+                case '/getMemberData':
+                    try {
+                        const queryObject = url.parse(request.url, true).query;
+                        const filters = {
+                            name: queryObject.name || '',
+                            memberId: queryObject.memberId || '',
+                            hasFine: queryObject.hasFine === 'true',
+                            noTransactions: queryObject.noTransactions === 'true'
+                        };
+                        getMemberData(filters, (err, result) => {
+                            if (err) throw err;
+                            res.statusCode = 200;
+                            res.setHeader('Content-Type', 'application/json');
+                            res.end(JSON.stringify(result));
+                        });
+                    } catch (err) {
+                        console.error(err);
+                        res.statusCode = 500;
+                        res.end('Internal server error');
+                    }
+                    break;
+                case '/generateReport':
+                    try {
+                        const queryObject = url.parse(request.url, true).query;
+                        const filters = {
+                            name: queryObject.name || '',
+                            memberId: queryObject.memberId || '',
+                            hasFine: queryObject.hasFine === 'true',
+                            noTransactions: queryObject.noTransactions === 'true'
+                        };
+                        generateReport(filters, (err, result) => {
+                            if (err) throw err;
+                            res.statusCode = 200;
+                            res.setHeader('Content-Type', 'application/json');
+                            res.end(JSON.stringify(result));
+                        });
+                    } catch (err) {
+                        console.error(err);
+                        res.statusCode = 500;
+                        res.end('Internal server error');
+                    }
+                    break;
                 default:
                     serve404(res, pathname);
             }

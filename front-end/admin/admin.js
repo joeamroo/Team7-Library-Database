@@ -646,6 +646,7 @@ const getEventsUrl = `${backendUrl}/getEventsForAdmin`;
 const addEventUrl = `${backendUrl}/insertEvent`;
 const removeEventUrl = `${backendUrl}/deleteEvent`;
 const filterEventsUrl = `${backendUrl}/filterEvents`;
+const adminAlertsUrl = `${backendUrl}/getAdminAlerts`;
 
 const addEventBtn = document.getElementById('addEventBtn');
 const addEventForm = document.getElementById('addEventForm');
@@ -704,7 +705,8 @@ function calculateAttendanceStatistics() {
     if (eventTotalCount) eventTotalCount.textContent = totalEvents;
   
     const averageAttendance = totalAttendance / eventRows.length || 0;
-    if (avgAttendanceSpan) avgAttendanceSpan.textContent = averageAttendance;
+    const roundedAverage = averageAttendance.toFixed(2);
+    if (avgAttendanceSpan) avgAttendanceSpan.textContent = roundedAverage;
 }
 
 function getEventList() {
@@ -751,10 +753,43 @@ function populateEventDropdown(eventIds) {
     });
 }
 
+function adjustTriggerAlertHeight() {
+    const ulElements = document.querySelectorAll('.trigEvents ul');
+    const numULs = ulElements.length;
+    const modalHeight = 200 + (numULs * 40);
+    const alertAdminModal = document.querySelector('.alert-admin');
+    alertAdminModal.style.height = modalHeight + 'px';
+}
+
+function getTriggerAlert() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', adminAlertsUrl);
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            const alertsDiv = document.querySelector('.trigEvents');
+            alertsDiv.innerHTML = xhr.responseText;
+            adjustTriggerAlertHeight();
+        } 
+    };
+    xhr.send();
+}
+
 
 document.addEventListener('DOMContentLoaded', function() {
     getEventList();
+    getTriggerAlert();
+
+    const eventsAlertModal = document.getElementById('eventsAlert');
+    eventsAlertModal.style.display = 'block';
+
+    const acceptMsgBtn = document.getElementById('accept-msg');
+    acceptMsgBtn.addEventListener('click', function() {
+        eventsAlertModal.style.display = 'none'; 
+    });
+    adjustTriggerAlertHeight();
 });
+
 
 document.getElementById('addEventSubmit').addEventListener('click', function(event) {
     event.preventDefault();
