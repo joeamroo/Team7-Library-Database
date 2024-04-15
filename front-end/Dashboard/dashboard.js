@@ -467,10 +467,10 @@ function getUserOrderReport() {
 
     xhr.onload = function() {
       if (xhr.status === 200) {
-        const retrieved = xhr.responseText;
-        console.log(retrieved);
-        //const orderRetrieval = xhr.responseText;
-       // orderReport.innerHTML = filterOrderTable(orderRetrieval);
+        //const retrieved = xhr.responseText;
+        //console.log(retrieved);
+        orderReport.innerHTML = xhr.responseText;
+    
         
         
       } else {
