@@ -124,7 +124,7 @@ function getItemsForAdmin(res) {
 }
 
 function filterCatalogItems(res, itemType, itemCondition, checkoutDate) {
-    let searchQuery = `SELECT cv.asset_type, cv.isbn, cv.asset_id, cv.asset_condition, cv.current_holds, cv.total_copies FROM catalog_view cv LEFT JOIN transaction_view tv ON ((cv.asset_type = 'book' AND cv.isbn = tv.itemId) OR (cv.asset_type IN ('movie', 'device') AND cv.asset_id = tv.itemId)) LEFT JOIN transaction t ON tv.transaction_id = t.transaction_id WHERE `;
+    let searchQuery = `SELECT DISTINCT cv.asset_type, cv.isbn, cv.asset_id, cv.asset_condition, cv.current_holds, cv.total_copies FROM catalog_view cv LEFT JOIN transaction_view tv ON ((cv.asset_type = 'book' AND cv.isbn = tv.itemId) OR (cv.asset_type IN ('movie', 'device') AND cv.asset_id = tv.itemId)) LEFT JOIN transaction t ON tv.transaction_id = t.transaction_id WHERE `;
   
     const queryParams = [];
   
