@@ -14,6 +14,14 @@ connection.connect((err) => {
   console.log('Connected to LibraryDev database');
 });
 
+const filters = {
+    name: queryObject.name || '',
+    memberId: queryObject.memberId || '',
+    hasFine: queryObject.hasFines === 'true',
+    noTransactions: queryObject.noTransactions === 'true',
+    };
+
+
 function buildWhereClause(filters) {
   const conditions = [];
 
