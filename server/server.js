@@ -105,6 +105,52 @@ const server = http.createServer((request, res) => {
                     }
                 });
             } 
+            else if (pathname === '/reportmembers'){
+                let body = '';
+                request.on('data', (chunk) => {
+                    body += chunk.toString();
+                });
+                request.on('end', () => {
+                    try {
+                        const filters = {
+                            name: queryObject.name || '',
+                            memberId: queryObject.memberId || '',
+                            hasFine: queryObject.hasFines === 'true',
+                            noTransactions: queryObject.noTransactions === 'true',
+                            };
+                        
+                        const postData = JSON.parse(body);
+                        getMemberData(postData.eventId, res);
+                    } 
+                    catch (error) {
+                        console.error('Error parsing JSON:', error);
+                        serve404(res);
+                    }
+                });
+            }
+            else if (pathname === '/reportreports'){
+            let body = '';
+            request.on('data', (chunk) => {
+                body += chunk.toString();
+            });
+            request.on('end', () => {
+                try {
+                    const filters = {
+                        name: queryObject.name || '',
+                        memberId: queryObject.memberId || '',
+                        hasFine: queryObject.hasFines === 'true',
+                        noTransactions: queryObject.noTransactions === 'true',
+                        };
+                    
+                    const postData = JSON.parse(body);
+                    generateReport(filters, res);
+                } 
+                catch (error) {
+                    console.error('Error parsing JSON:', error);
+                    serve404(res);
+                }
+            });
+        }
             else if (pathname === '/catalog-hold') {
                 let body = '';
                 request.on('data', (chunk) => {

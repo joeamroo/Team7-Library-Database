@@ -14,13 +14,6 @@ connection.connect((err) => {
   console.log('Connected to LibraryDev database');
 });
 
-const filters = {
-    name: queryObject.name || '',
-    memberId: queryObject.memberId || '',
-    hasFine: queryObject.hasFines === 'true',
-    noTransactions: queryObject.noTransactions === 'true',
-    };
-
 
 function buildWhereClause(filters) {
   const conditions = [];
@@ -48,7 +41,7 @@ function buildWhereClause(filters) {
   return '';
 }
 
-function getMemberData(filters, callback) {
+function getMemberData(filters,response) {
   const whereClause = buildWhereClause(filters);
   const query = `
     SELECT m.member_id, m.name, m.email, m.phone_number, m.state, m.city_addr, m.street_addr, m.zipcode_addr, m.fine, t.transaction_id, t.date_created, t.due_date, t.return_date
@@ -59,14 +52,17 @@ function getMemberData(filters, callback) {
 
   connection.query(query, (err, result) => {
     if (err) {
-      callback(err, null);
+        response.writeHead(500);
+        response.end('Server error');
+        return;
     } else {
-      callback(null, result);
+        response.writeHead(200, { 'Content-Type': 'application/json' });
+        response.end(JSON.stringify({ message: 'Data Generated' }));
     }
   });
 }
 
-function generateReport(filters, callback) {
+function generateReport(filters, response) {
   const whereClause = buildWhereClause(filters);
   const query = `
     SELECT m.fine, COUNT(t.transaction_id) AS holds
@@ -78,8 +74,9 @@ function generateReport(filters, callback) {
 
   connection.query(query, (err, result) => {
     if (err) {
-      callback(err, null);
-      return;
+        response.writeHead(500);
+        response.end('Server error');
+        return;
     }
 
     let totalFine = 0;
@@ -93,7 +90,8 @@ function generateReport(filters, callback) {
     const averageHolds = totalHolds / result.length;
     const reportData = { averageFine, averageHolds };
 
-    callback(null, reportData);
+    response.writeHead(200, { 'Content-Type': 'application/json' });
+    response.end(JSON.stringify({ message: 'Report Generated' }));
   });
 }
 

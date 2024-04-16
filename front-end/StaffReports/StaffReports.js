@@ -25,7 +25,7 @@ searchForm.addEventListener('submit', (event) => {
   const formData = new FormData(event.target);
   const queryParams = new URLSearchParams(formData).toString();
   const xhr = new XMLHttpRequest();
-  xhr.open('GET', getMembersUrl);
+  xhr.open('POST', getMembersUrl);
   xhr.onload = function() {
     if (xhr.status === 200) {
       const data = JSON.parse(xhr.responseText);
@@ -64,7 +64,7 @@ generateReportButton.addEventListener('click', () => {
   const generateReportUrl = `${backendUrl}/generateReport?${queryParams}`;
 
   const xhr = new XMLHttpRequest();
-  xhr.open('GET', generateReportUrl);
+  xhr.open('POST', generateReportUrl);
   xhr.onload = function() {
     if (xhr.status === 200) {
       const reportData = JSON.parse(xhr.responseText);
