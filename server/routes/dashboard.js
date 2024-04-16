@@ -256,7 +256,7 @@ const query = "SELECT TV.transaction_Id AS 'Order ID', " +
               "TV.asset_type AS 'Item', " +
               "CV.book_movie_title_model AS 'Product', " +
               "CV.isbn AS 'ISBN', " +
-              "CV.asset_id AS 'Serial Number', "
+              "CV.asset_id AS 'Serial Number'"
               "FROM TRANSACTION AS T, " +
               "TRANSACTION_VIEW AS TV, " +
               "CATALOG_VIEW AS CV, " +
