@@ -377,6 +377,8 @@ link.query(query, [memberId], (err, results) => {
 
   /* A More Modular Way to Split the Tables */
   function getHolds(query, memberId) {
+    console.log("getHolds():" + query);
+    console.log("getHolds():" + memberId);
     link.query(query, [memberId], (err, results) => {
       if (err) {
           return;
@@ -384,6 +386,7 @@ link.query(query, [memberId], (err, results) => {
     
         // Converts SQL query to a table with Keys as IDs
         const tableHTML = getSQLTable(results, 'holds-table');
+        console.log("tableHTML()" + tableHTML);
     
         // Returns the Table
           return tableHTML;
