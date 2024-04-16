@@ -100,17 +100,17 @@ var input = document.querySelector(".input-box");
       // original form
       
       bookLabel.addEventListener('click', () => {
-        //input.innerHTML = "Book"
+        input.innerHTML = "Book"
         input.click();
       });
 
       movieLabel.addEventListener('click', () => {
-        //input.innerHTML = 'Movie'
+        input.innerHTML = 'Movie'
         input.click();
       });
 
       deviceLabel.addEventListener('click', () => {
-        //input.innerHTML = "Device";
+        input.innerHTML = "Device";
         input.click();
       });
 
