@@ -257,7 +257,7 @@ function getUserDashInfo(response, memberId) {
 
 function getUserOrderInfo(response, memberId) {
 // Execute the SQL query
-const query = "SELECT TV.transaction_Id AS 'Order ID', " +
+const query = "SELECT TV.transaction_Id AS 'Order #', " +
                   "T.date_created AS 'Date', " +
                   "CV.image_address AS 'Image', " +
                   "TV.asset_type AS 'Item', " +
