@@ -22,10 +22,11 @@ const fineView = document.querySelector('.settings.fines');
 const orderReport = document.querySelector('.recent-orders');
 const eventReport = document.querySelector('.settings.events');
 const profileInfo = document.querySelector('.member-info');
-var asset = document.querySelector(".input-box");
+var asset = document.querySelector(".input-box").value.toLowerCase;
 var assetSelect = '';
 const today = new Date().toLocaleDateString();
 const notify = document.querySelector('#notify-user');
+const choice = false; // For selection of orders
 
 // Get the current date
 const currentDate = new Date();
@@ -104,6 +105,7 @@ var input = document.querySelector(".input-box");
         item.addEventListener("change", () => {
           input.innerHTML = item.nextElementSibling.innerHTML;
           input.click();
+          getUserOrderReport();
         });
       });
 
@@ -465,7 +467,7 @@ function setProfileInfo() {
 function getUserOrderReport() {
 
     const itemValue = '';
-    const assetType = retrieveAsset();
+    //const assetType = retrieveAsset();
     const strDate = getStartingDate();
     const secDate = getEndingDate();
 
@@ -476,9 +478,10 @@ function getUserOrderReport() {
 
     xhr.onload = function() {
       if (xhr.status === 200) {
+        orderReport.innerHTML = ''; // Clears it out
         orderReport.innerHTML = '<div class="order-title">Recent Orders</div>';
         orderReport.innerHTML += xhr.responseText;
-        
+        removeRowsWithKeyword('order-table', asset);
       } else {
         console.log("Failed to retrieve data");
       }
@@ -488,16 +491,17 @@ function getUserOrderReport() {
       console.error('error', xhr.statusText);
     };
 
-    console.log(memberId);
-    console.log(assetType);
-    console.log(strDate);
-    console.log(secDate);
+    //console.log(memberId);
+    //console.log(assetType);
+    //console.log(strDate);
+    //console.log(secDate);
 
     const data = JSON.stringify({
       memberId: memberId,
       asset: assetSelect,
       startDate: strDate,
-      endDate: secDate
+      endDate: secDate,
+      choice: choice
     });
 
 
@@ -505,10 +509,30 @@ function getUserOrderReport() {
 }
 
 reportBtn.addEventListener('click', function(event) {
-  event.preventDefault()
-  getUserOrderReport();
-  orderSelect.click(); // Just in case
+  event.preventDefault();
+ // Adds filters
+ getUserOrderReport();
+
+  
 });
+
+// Get the form element
+const dateSelect = document.getElementById('date-selection');
+
+// Add event listener to the form submission
+dateSelect.addEventListener('submit', function(event) {
+
+  // Get the form data
+  const startDate = document.getElementById('start-date').value;
+  const endDate = document.getElementById('end-date').value;
+
+  // Perform any necessary actions with the form data
+  console.log('Start Date:', startDate);
+  console.log('End Date:', endDate);
+
+
+});
+
 
      /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -526,10 +550,7 @@ reportBtn.addEventListener('click', function(event) {
     xhr.onload = function() {
       if (xhr.status === 200) {
         //const retrieved = xhr.responseText;
-        //console.log(retrieved);
-        holdsView.innerHTML += xhr.responseText;
-    
-        
+        holdsView.innerHTML = xhr.responseText;
         
       } else {
         console.log("Failed x to retrieve data");
@@ -549,6 +570,31 @@ reportBtn.addEventListener('click', function(event) {
 
     xhr.send(data);
 }
+
+function removeRowsWithKeyword(tableId, keyword) {
+  // Select the table element by its ID
+  const table = document.getElementById(tableId);
+
+  // Get all the rows in the table
+  const rows = table.rows;
+
+  // Iterate over each row (starting from index 1 to skip the header row)
+  for (let i = 1; i < rows.length; i++) {
+    const row = rows[i];
+    const rowText = row.textContent.toLowerCase();
+
+    // Check if the row contains the keyword
+    if (rowText.includes(keyword.toLowerCase())) {
+      // Remove the row from the table
+      table.deleteRow(i);
+
+      // Decrement the index to account for the removed row
+      i--;
+    }
+  }
+}
+
+
 
 
 
