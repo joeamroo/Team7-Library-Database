@@ -512,6 +512,8 @@ function getUserDashInfo(response, memberId) {
     
         // Converts SQL query to a table with Keys as IDs
         const tableHTML = getSQLTable(results, 'events-table');
+
+        console.log(tableHTML);
     
         // Sends the table back to client
         response.writeHead(200, { 'Content-Type': 'text/html' });
