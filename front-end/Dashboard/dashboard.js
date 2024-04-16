@@ -104,6 +104,7 @@ var input = document.querySelector(".input-box");
         item.addEventListener("change", () => {
           input.innerHTML = item.nextElementSibling.innerHTML;
           input.click();
+          getUserOrderReport();
         });
       });
 
@@ -465,7 +466,7 @@ function setProfileInfo() {
 function getUserOrderReport() {
 
     const itemValue = '';
-    const assetType = retrieveAsset();
+    //const assetType = retrieveAsset();
     const strDate = getStartingDate();
     const secDate = getEndingDate();
 
@@ -507,6 +508,7 @@ function getUserOrderReport() {
 reportBtn.addEventListener('click', function() {
   getUserOrderReport();
   orderSelect.click(); // Just in case
+  
 });
 
      /* 

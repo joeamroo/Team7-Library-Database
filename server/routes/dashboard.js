@@ -286,7 +286,7 @@ function getUserDashInfo(response, memberId) {
                       response.end(tableHTML);
                     }
                   });
-              }
+}
 
   
 
