@@ -401,7 +401,32 @@ function getUserDashInfo(response, memberId) {
   }*/
 
   function getDashHoldsInfo(response, memberId) {
-    // ...
+    // Headers for Tables
+    let html_head = '<div class="holds-title">Outstanding Holds</div>';
+    let html_books = '<div class="table-title">Books</div>';
+    let html_movies = '<div class="table-title">Movies</div>';
+    let html_devices = '<div class="table-title">Devices</div>';
+  
+    // Searches Database for books in which a user has a hold
+    const queryBooks = `
+      SELECT request_date AS "Date Requested", item_name AS "Item", status AS "Status"
+      FROM hold_request
+      WHERE member_id = (?) AND isbn IS NOT NULL;
+    `;
+  
+    // Searches Database for movies in which a user has a hold
+    const queryMovies = `
+      SELECT request_date AS "Date Requested", item_name AS "Item", status AS "Status"
+      FROM hold_request
+      WHERE member_id = (?) AND movie_id IS NOT NULL;
+    `;
+  
+    // Searches Database for devices in which a user has a hold
+    const queryDevices = `
+      SELECT request_date AS "Date Requested", item_name AS "Item", status AS "Status"
+      FROM hold_request
+      WHERE member_id = (?) AND device_id IS NOT NULL;
+    `;
   
     try {
       // Queries and Retrieves HTML table for books
@@ -440,6 +465,8 @@ function getUserDashInfo(response, memberId) {
   
     return tableHTML;
   }
+  
+
 
 
 /* 
