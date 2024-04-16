@@ -2,6 +2,7 @@ const loggedIn = localStorage.getItem('loggedIn');
 const memberId = localStorage.getItem('memberId');
 const loginButton = document.getElementById('myAccount');
 const logOutBtn = document.getElementById('logoutBtn');
+const exitBtn = document.getElementById('logout')l
 const updateBtn = document.querySelector('.main-btn');
 const reportBtn = document.querySelector(".dateButton");
 const bookLabel = document.querySelector('.book-selection');
@@ -51,6 +52,14 @@ const getUserEventsUrl =`${backendUrl}/getDashEvents`;
 
 logOutBtn.addEventListener('click', function(event) {
   console.log('logging out');
+  localStorage.setItem('loggedIn', false);
+  if(memberId !== null && memberId !== undefined) {
+    logOutBtn.href = '../Home/home.html';
+    localStorage.removeItem('memberId');
+  }
+});
+
+exitBtn.addEventListener('click', function(event) {
   localStorage.setItem('loggedIn', false);
   if(memberId !== null && memberId !== undefined) {
     logOutBtn.href = '../Home/home.html';
