@@ -55,7 +55,7 @@ searchForm.addEventListener('submit', (event) => {
   xhr.onerror = function() {
     console.error('Network error');
   };
-  xhr.send();
+  xhr.send(resultsTable);
 });
 
 generateReportButton.addEventListener('click', () => {
@@ -80,5 +80,5 @@ generateReportButton.addEventListener('click', () => {
   xhr.onerror = function() {
     console.error('Network error');
   };
-  xhr.send();
+  xhr.send(reportData);
 });
