@@ -17,11 +17,11 @@ connection.connect((err) => {
 function buildWhereClause(filters) {
   const conditions = [];
 
-  if (filters.name) {
+  if (filters.name && filters.memberId) {
+    conditions.push(`m.name LIKE '%${filters.name}%' AND m.member_id = '${filters.memberId}'`);
+  } else if (filters.name) {
     conditions.push(`m.name LIKE '%${filters.name}%'`);
-  }
-
-  if (filters.memberId) {
+  } else if (filters.memberId) {
     conditions.push(`m.member_id = '${filters.memberId}'`);
   }
 

@@ -21,8 +21,16 @@ const reportContent = document.getElementById('reportContent');
 searchForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const queryParams = new URLSearchParams(formData).toString();
-    const apiUrl = `/reportmembers?${queryParams}`;
+    const name = formData.get('name');
+    const memberId = formData.get('memberId');
+  
+    if (!name && !memberId) {
+      alert('Please enter either a name or a member ID.');
+      return;
+    }
+  
+    const queryParams = new URLSearchParams({ name, memberId });
+    const apiUrl = `/api/members?${queryParams.toString()}`;
   
     fetch(apiUrl)
       .then(response => {
@@ -88,9 +96,18 @@ function renderChart(reportData) {
 }
 
 generateReportButton.addEventListener('click', () => {
-  const formData = new FormData(searchForm);
-  const queryParams = new URLSearchParams(formData).toString();
-  const apiUrl = `/reportreports?${queryParams}`;
+    const formData = new FormData(searchForm);
+    const name = formData.get('name');
+    const memberId = formData.get('memberId');
+  
+    if (!name && !memberId) {
+      alert('Please enter either a name or a member ID.');
+      return;
+    }
+  
+    const queryParams = new URLSearchParams({ name, memberId });
+    const apiUrl = `/api/reports?${queryParams.toString()}`;
+  
 
   fetch(apiUrl)
     .then(response => response.json())
