@@ -2,20 +2,28 @@ const loggedIn = localStorage.getItem('loggedIn');
 const memberId = localStorage.getItem('memberId');
 const loginButton = document.getElementById('myAccount');
 const logOutBtn = document.getElementById('logoutBtn');
-const updateBtn = document.querySelector(".main-btn");
+const updateBtn = document.querySelector('.main-btn');
+const reportBtn = document.querySelector(".dateButton");
+const bookLabel = document.querySelector('.book-selection');
+const movieLabel = document.querySelector ('.movie-selection');
+const deviceLabel = document.querySelector('.device-selection');
 const sendPop = document.querySelector('#submitProfileInfo');
 const profileSelect = document.getElementById('profile-selection');
 const orderSelect = document.getElementById('order-selection');
 const holdSelect = document.getElementById('hold-selection');
-const waitSelect = document.getElementById('waitlist-selection');
+const eventSelect = document.getElementById('event-selection');
 const fineSelect = document.getElementById('fine-selection');
 const profileView = document.querySelector('.settings.profile');
 const orderView = document.querySelector('.settings.orders');
 const holdsView = document.querySelector('.settings.holds');
-const waitlistView = document.querySelector('.settings.waitlist');
+const eventsView = document.querySelector('.settings.events');
 const fineView = document.querySelector('.settings.fines');
 const orderReport = document.querySelector('.recent-orders');
+const eventReport = document.querySelector('.settings.events');
 const profileInfo = document.querySelector('.member-info');
+var startDate = document.getElementById('start-date');
+var endDate = document.getElementById('end-date');
+var asset = document.querySelector(".input-box");
 const today = new Date().toLocaleDateString();
 const notify = document.querySelector('#notify-user');
 
@@ -26,8 +34,10 @@ const notify = document.querySelector('#notify-user');
 const backendUrl = 'https://cougarchronicles.onrender.com'; 
 const getUserDashUrl = `${backendUrl}/getDashname`;
 const getUserInfoUrl = `${backendUrl}/getDashInfo`;
+const getUserHoldUrl = `${backendUrl}/getUserHolds`;
 const setUserInfoUrl =`${backendUrl}/setDashInfo`;
 const getUserOrderUrl =`${backendUrl}/getDashOrders`;
+const getUserEventsUrl =`${backendUrl}/getDashEvents`;
 
 
 
@@ -42,7 +52,11 @@ logOutBtn.addEventListener('click', function(event) {
 
 const container = document.getElementById('container');
 
-
+function retrieveCriteria() {
+  startDate = document.getElementById('start-date').textContent;
+  endDate = document.getElementById('end-date').textContent;
+  asset = document.querySelector(".input-box").textContent;
+}
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────┐
@@ -89,6 +103,24 @@ var input = document.querySelector(".input-box");
         });
       }
 
+      // Selects item and reverts dropdown to 
+      // original form
+      
+      bookLabel.addEventListener('click', () => {
+        input.innerHTML = "Book"
+        input.click();
+      });
+
+      movieLabel.addEventListener('click', () => {
+        input.innerHTML = 'Movie'
+        input.click();
+      });
+
+      deviceLabel.addEventListener('click', () => {
+        input.innerHTML = "Device";
+        input.click();
+      });
+
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -134,9 +166,15 @@ var input = document.querySelector(".input-box");
       window.addEventListener("load", showDefaults);
 
 
+      /* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                              Canvas View                                    │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+
       
       profileSelect.addEventListener('click', () => {
-        waitlistView.classList.add('hide');
+        eventsView.classList.add('hide');
         orderView.classList.add('hide');
         holdsView.classList.add('hide');
         fineView.classList.add('hide');
@@ -147,7 +185,7 @@ var input = document.querySelector(".input-box");
       orderSelect.addEventListener('click', () => {
         profileView.classList.add('hide');
         holdsView.classList.add('hide');
-        waitlistView.classList.add('hide');
+        eventsView.classList.add('hide');
         fineView.classList.add('hide');
         orderView.classList.remove('hide');
       });
@@ -155,26 +193,28 @@ var input = document.querySelector(".input-box");
       holdSelect.addEventListener('click', () => { 
         profileView.classList.add('hide');
         orderView.classList.add('hide');
-        waitlistView.classList.add('hide');
+        eventsView.classList.add('hide');
         fineView.classList.add('hide');
         holdsView.classList.remove('hide');
       });
 
-      waitSelect.addEventListener('click', () => {
+      eventSelect.addEventListener('click', () => {
         profileView.classList.add('hide');
         orderView.classList.add('hide');
         holdsView.classList.add('hide');
         fineView.classList.add('hide');
-        waitlistView.classList.remove('hide');
+        eventsView.classList.remove('hide');
       });
 
       fineSelect.addEventListener('click', () => {
         profileView.classList.add('hide');
         orderView.classList.add('hide');
         holdsView.classList.add('hide');
-        waitlistView.classList.add('hide');
+        eventsView.classList.add('hide');
         fineView.classList.remove('hide');
       });
+
+      
 
       /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -245,7 +285,7 @@ updateBtn.addEventListener('click', function(event) {
       'state', 'zipcode_addr', 'email'
   ].every(id => document.getElementById(id).value.trim() !== "");
 
-  console.log(allFieldsFilled);
+  //console.log(allFieldsFilled);
 
   if (!allFieldsFilled) {
   
@@ -280,14 +320,14 @@ sendPop.addEventListener('click', function(event) {
 
 function setProfileInfo() {
   
-  const firstName = document.getElementById('.firstName');
-  const lastName = document.getElementById('.lastName');
-  const phone_number = document.getElementById('.phone_number');
-  const street_addr = document.getElementById('.street_addr');
-  const city_addr = document.getElementById('.city_addr');
-  const state = document.getElementById('.state');
-  const zipcode_addr = document.getElementById('.zipcode_addr');
-  const email = document.getElementById('.email');
+  const firstName = document.getElementById('firstName').value;
+  const lastName = document.getElementById('lastName').value;
+  const phone_number = document.getElementById('phone_number').value;
+  const street_addr = document.getElementById('street_addr').value;
+  const city_addr = document.getElementById('city_addr').value;
+  const state = document.getElementById('state').value;
+  const zipcode_addr = document.getElementById('zipcode_addr').value;
+  const email = document.getElementById('email').value;
 
   const xhr = new XMLHttpRequest();
   xhr.open('POST', setUserInfoUrl);
@@ -399,6 +439,7 @@ function setProfileInfo() {
 function getUserOrderReport() {
 
     const itemValue = '';
+    retrieveCriteria(); 
 
     const xhr = new XMLHttpRequest();
     xhr.open('POST', getUserOrderUrl);
@@ -406,9 +447,55 @@ function getUserOrderReport() {
 
     xhr.onload = function() {
       if (xhr.status === 200) {
-        orderReport.innerHTML = xhr.responseText;
-        //const orderRetrieval = xhr.responseText;
-       // orderReport.innerHTML = filterOrderTable(orderRetrieval);
+        orderReport.innerHTML = '<div class="order-title">Recent Orders</div>';
+        orderReport.innerHTML += xhr.responseText;
+        
+      } else {
+        console.log("Failed to retrieve data");
+      }
+    };
+
+    xhr.onerror = function() {
+      console.error('error', xhr.statusText);
+    };
+
+
+
+    const data = JSON.stringify({
+      memberId: memberId,
+      asset: asset,
+      startDate: startDate,
+      endDate: endDate
+    });
+
+
+    xhr.send(data);
+}
+
+reportBtn.addEventListener('click', function() {
+  getUserOrderReport();
+  orderSelect.click(); // Just in case
+});
+
+     /* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                               Holds Report                                  │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+  function getUserHoldsReport() {
+
+    const itemValue = '';
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', getUserHoldUrl);
+    xhr.setRequestHeader('Content-Type', 'text/html');
+
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        //const retrieved = xhr.responseText;
+        //console.log(retrieved);
+        holdsView.innerHTML += xhr.responseText;
+    
         
         
       } else {
@@ -429,6 +516,53 @@ function getUserOrderReport() {
 
     xhr.send(data);
 }
+
+
+
+     /* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                               Events Report                                 │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+
+  function getUserEventsReport() {
+
+    const itemValue = '';
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', getUserEventsUrl);
+    xhr.setRequestHeader('Content-Type', 'text/html');
+
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        //const retrieved = xhr.responseText;
+        //console.log(retrieved);
+        eventsView.innerHTML = '<div class="event-title">Your Events</span>';
+        eventsView.innerHTML += xhr.responseText;
+    
+        
+        
+      } else {
+        console.log("Failed to retrieve data");
+      }
+    };
+
+    xhr.onerror = function() {
+      console.error('error', xhr.statusText);
+    };
+
+    //console.log(memberId);
+
+    const data = JSON.stringify({
+      memberId: memberId
+    });
+
+
+    xhr.send(data);
+}
+
+
+
 
 function filterOrderTable(tableHTML) {
 
@@ -580,8 +714,15 @@ function filterOrderTable(tableHTML) {
   }
 
   document.addEventListener('DOMContentLoaded', function() {
-    getFine();
-    setInterval(getFine, 30000);
+    const memberId = localStorage.getItem('memberId');
+    if (memberId !== null && memberId !== undefined) {
+      getFine();
+      console.log('entering this section');
+      setInterval(getFine, 30000);
+    }
+    else {
+      console.log('no user so no fine');
+    }
   });
 
   document.getElementById('payFineBtn').addEventListener('click', function(event) {

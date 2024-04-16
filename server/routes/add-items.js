@@ -9,7 +9,6 @@ const connection = mysql.createConnection({
 });
 
 function getId(item, itemType) {
-    var Id = 0;
     if(itemType === 'author') {
         connection.query(`SELECT author_id FROM author WHERE author_name = ?`, [item], (err, result) => {
             if (err) {
@@ -18,6 +17,7 @@ function getId(item, itemType) {
             else {
                 Id = result[0]['author_id'];
                 console.log(Id);
+                return Id;
             }
         })
     }
@@ -29,16 +29,14 @@ function getId(item, itemType) {
             else {
                 Id = result[0]['genre_id'];
                 console.log(Id);
+                return Id;
             }
         })
     }
-    return Id;
 }
 
 
-function addItems(res, itemType, title, authorDirector, isbn, category, publisherProducer, publicationReleaseDate,imageLink) {
-    var authorId = 0;
-    var genreId = 0;
+function addItems(res, itemType, title, authorDirector, isbn, category, publisherProducer, publicationReleaseDate,imageLink,totalCopies,rating) {
     if(itemType === 'book') {
         authorId = getId(authorDirector, 'author');
         if (authorId === 0) {
@@ -64,52 +62,49 @@ function addItems(res, itemType, title, authorDirector, isbn, category, publishe
                 }
             })
         }
-        connection.query(`INSERT INTO book (isbn,title,year_released,book_img_address) VALUES (?,?,?,?)`, [isbn,title,publicationReleaseDate,imageLink], (err) => { 
+        connection.query(`INSERT INTO book (total_copies,available_copies,current_holds,book_condition,isbn,title,year_released,book_img_address) VALUES (?,?,?,?,?,?,?,?)`, [totalCopies,totalCopies,'0','1',isbn,title,publicationReleaseDate,imageLink], (err) => { 
             if (err) {
                 console.log('error entering new book into librarydev db:', err);
             }
         }),
-        connection.query(`INSERT INTO book_author_link (isbn,author_id) VALUES ()`, [isbn,authorId], (err) => { 
+        connection.query(`INSERT INTO book_author_link (book_id,author_id) VALUES (?,(SELECT author_id from author where author_name = ?))`, [isbn,authorDirector], (err) => { 
             if (err) {
                 console.log('error entering new book_id into librarydev db:', err);
             }
         }),
-        connection.query(`INSERT INTO book_genres_link (isbn,genre_id) VALUES ()`, [isbn,genreId], (err) => { 
+        connection.query( `INSERT INTO book_genres_link (isbn,genre_id) VALUES (?,(SELECT genre_id from genres where genre_name = ?))`, [isbn,category], (err) => { 
             if (err) {
                 console.log('error entering new genre_id into librarydev db:', err);
             }
         })
     }
     else if (itemType === 'movie') {
-        connection.query(`INSERT INTO genres (genre_name) VALUES (?)`, [category], (err) => { 
+        genreId = getId(category, 'genre');
+        if (genreId === 0 ) {
+            console.log('genre not found');
+            connection.query(`INSERT INTO genres (genre_name) VALUES (?)`, [category], (err) => {
+                if (err) {
+                    console.log('error entering new genre into librarydev db:', err);
+                }
+                else {
+                    genreId = getId(category, itemType);
+                }
+            })
+        }
+        connection.query(`INSERT INTO movie (available_copies,total_copies,current_holds,movie_condition,rating,movie_id,movie_title,director,year_released,movie_img_address) VALUES (?,?,?,?,?,?,?,?,?,?)`, [totalCopies,totalCopies,'0','1',rating,isbn,title,authorDirector,publicationReleaseDate,imageLink], (err) => { 
             if (err) {
-                console.log('error entering new genre into librarydev db:', err);
+                console.log('error entering new movie into librarydev db:', err);
             }
-            else {
-                connection.query(`SELECT LAST_INSERT_ID()`, (err, result) => {
-                    if (err) {
-                        console.log('error getting new genre id:', err);
-                    }
-                    else {
-                        genreId = result[0]['LAST_INSERT_ID()'];
-                        console.log(genreId);
-                    }
-                }),
-                connection.query(`INSERT INTO movie (movie_id,movie_title,director,year_released,movie_img_address) VALUES (?,?,?,?,?)`, [isbn,title,authorDirector,publicationReleaseDate,imageLink], (err) => { 
-                    if (err) {
-                        console.log('error entering new movie into librarydev db:', err);
-                    }
-                }),
-                connection.query(`INSERT INTO movie_genres_link (isbn,genre_id) VALUES ()`, [isbn,genreId], (err) => { 
-                    if (err) {
-                        console.log('error entering new genre_id into librarydev db:', err);
-                    }
-                })
+        }),
+        connection.query(`INSERT INTO movie_genres_link (movie_id,genre_id) VALUES (?,(SELECT genre_id from genres where genre_name = ?))`, [isbn,category], (err) => { 
+            if (err) {
+                console.log('error entering new genre_id into librarydev db:', err);
             }
         })
-    }
+    }   
+
     res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ message: 'eventCreationSuccessful' }));
+    res.end(JSON.stringify({ message: 'itemCreationSuccessful' }));
     };
 
     module.exports = { addItems };

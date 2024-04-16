@@ -202,7 +202,7 @@ header {
   }
 
  #logout {
-  padding-top: 230%;
+  padding-top: 60%;
  }
 
  #logout:hover {
@@ -296,7 +296,14 @@ header {
    Section: Recent Orders Table
    ========================================================================== */
 
-  .order-title {
+   /* Sets the third column to a fixed size (image) */
+   #Image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+   }
+
+  .order-title, .holds-title, .event-title {
     font-size: x-large;
     padding-bottom: 30px;
   }
@@ -314,7 +321,7 @@ header {
   .recent-orders table {
     align-items: center;
     text-align: center;
-    width: 100%;
+    /*width: 100%;*/
     border-collapse: collapse;
   }
 
@@ -355,7 +362,133 @@ header {
     cursor: pointer;
   }
 
-/* ===================== Recent Order Ends ===================== */
+
+
+
+  /* ==========================================================================
+   Section: Holds Table
+   ========================================================================== */
+
+.settings.holds {
+  display: absolute;
+  width: 100%;
+  margin: 20px 0px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.settings.holds table {
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.settings.holds th, .settings.holds td {
+  text-align: left;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.settings.holds th {
+  background-color: #fafafa;
+  color: var(--color-black);
+}
+
+.settings-holds td {
+  color: var(--color-black);
+}
+
+
+  /* ==========================================================================
+   Section: Events Table
+   ========================================================================== */
+
+   .settings.events {
+    display: absolute;
+    width: 100%;
+    margin: 20px 0px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+  
+  .settings.events table {
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .settings.events th, .settings.events td {
+    text-align: left;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .settings.events th {
+    background-color: #fafafa;
+    color: var(--color-black);
+  }
+  
+  .settings.events td {
+    color: var(--color-black);
+  }
+
+
+
+/* ==========================================================================
+   Section: Table formatting for Displays
+   ========================================================================== */
+
+   /* Default styles for the table */
+table {
+  width: 100%;
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 600px) {
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  tr {
+    border: 1px solid #ccc;
+  }
+
+  td {
+    border: none;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  td:before {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    content: attr(data-label);
+    font-weight: bold;
+  }
+}
+
+
 
 /* ==========================================================================
    Section: Dropdown Menu
@@ -975,7 +1108,7 @@ input[type="password"] {
   display: none;
 }
 
-.settings.waitlist.hide {
+.settings.events.hide {
   display: none;
 }
 
@@ -1062,7 +1195,7 @@ input[type="date"] {
   margin-bottom: 40px;
   display: flex;
   justify-content: space-between;
-  border-bottom: 2px solid #ccc;
+  border-bottom: 1.5px solid #ccc;
   font-size: 20px;
 }
 
@@ -1071,23 +1204,20 @@ input[type="date"] {
   margin-bottom: 10px;
 }
 
+#amount {
+  margin-right: 870px;
+  margin-bottom: 10px;
+}
 
 #first-name,
 #last-name,
 #card-number,
 #cvv,
 #exp-date {
-  border-radius: 15px;
-  border-color: rgb(85, 85, 85);
-  height: 50px;
   width: 400px; 
   margin-left: 20px;
   margin-bottom: 40px;
   font-size: 16px;
-}
-
-#cvv, #exp-date {
-  width: 80px;
 }
 
 #last-name,

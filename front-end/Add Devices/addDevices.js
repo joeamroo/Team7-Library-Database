@@ -5,7 +5,7 @@ const isAdmin = localStorage.getItem('isAdmin');
 const itemTypeSelect = document.getElementById('itemType-selection');
 const publicationreleaseDate = document.getElementById('publicationReleaseDate-date');
 const backendUrl = 'https://cougarchronicles.onrender.com'; 
-const addItemURL = `${backendUrl}/add-items`;
+const addItemURL = `${backendUrl}/addDevices`;
 const addItemBtn = document.getElementById('addItemBtn');
 const addItemForm = document.getElementById('addItemForm');
 
@@ -13,20 +13,15 @@ document.getElementById('addItemBtn').addEventListener('click', function(event) 
     event.preventDefault();
     
     const allFieldsFilled = [
-        'itemType', 'title', 'authorDirector', 'isbn', 'category', 'publisherProducer', 'publicationReleaseDate','imageLink','totalCopies'
+        'model', 'brand', 'serialNum','imageLink','totalCopies'
     ].every(id => document.getElementById(id).value.trim() !== "");
 
     if (allFieldsFilled) {
-        const itemType = document.getElementById('itemType').value.trim();
-        const title = document.getElementById('title').value.trim();
-        const authorDirector = document.getElementById('authorDirector').value.trim();
-        const isbn = document.getElementById('isbn').value.trim();
-        const category = document.getElementById('category').value;
-        const publisherProducer = document.getElementById('publisherProducer').value;
-        const publicationReleaseDate = document.getElementById('publicationReleaseDate').value;
+        const model = document.getElementById('model').value;
+        const brand = document.getElementById('brand').value;
+        const serialNum = document.getElementById('serialNum').value;
         const imageLink = document.getElementById('imageLink').value;
         const totalCopies = document.getElementById('totalCopies').value;
-        const rating = document.getElementById('rating').value;
 
         const xhr = new XMLHttpRequest();
         xhr.open('POST', addItemURL); 
@@ -35,16 +30,11 @@ document.getElementById('addItemBtn').addEventListener('click', function(event) 
         xhr.onload = function() {
             if (xhr.status === 200) {
                 console.log('sucessfully added item');
-                document.getElementById('itemType').value = '';
-                document.getElementById('title').value = '';
-                document.getElementById('authorDirector').value = '';
-                document.getElementById('isbn').value = '';
-                document.getElementById('category').value = '';
-                document.getElementById('publisherProducer').value = '';
-                document.getElementById('publicationReleaseDate').value = '';
+                document.getElementById('model').value = '';
+                document.getElementById('brand').value = '';
+                document.getElementById('serialNum').value = '';
                 document.getElementById('imageLink').value = '';
                 document.getElementById('totalCopies').value = '';
-                document.getElementById('rating').value = '';
             } 
             else {
                 console.error('Error:', xhr.statusText);
@@ -52,16 +42,11 @@ document.getElementById('addItemBtn').addEventListener('click', function(event) 
         };
 
         const data = JSON.stringify({ 
-            itemType: itemType, 
-            title: title, 
-            authorDirector: authorDirector, 
-            isbn: isbn, 
-            category: category,
-            publisherProducer: publisherProducer,
-            publicationReleaseDate: publicationReleaseDate,
+            model: model,
+            brand: brand,
+            serialNum: serialNum,
             imageLink:imageLink,
             totalCopies:totalCopies,
-            rating: rating
         });
         
         xhr.send(data);
@@ -75,5 +60,3 @@ document.getElementById('addItemBtn').addEventListener('click', function(event) 
         }, 500);
     }
 });
-
-
