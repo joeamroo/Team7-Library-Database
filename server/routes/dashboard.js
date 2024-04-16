@@ -259,8 +259,8 @@ function getUserOrderInfo(response, memberId) {
 // Execute the SQL query
 const query = "SELECT TV.transaction_Id AS 'Order #', " +
                   "T.date_created AS 'Date', " +
-                  "CV.image_address AS 'Image', " +
-                  "TV.asset_type AS 'Item', " +
+                  "CV.image_address AS '', " +
+                  "TV.asset_type AS 'Asset', " +
                   "CV.book_movie_title_model AS 'Product', " +
                   "CV.isbn AS 'ISBN', " +
                   "CV.asset_id AS 'Serial Number' " +
