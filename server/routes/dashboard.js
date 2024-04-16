@@ -282,6 +282,7 @@ link.query(query, [memberId, asset, startDate, endDate], (err, results) => {
       return;
     }  else {
 
+      console.log(results);
     // Converts SQL query to a table with Keys as IDs
     const tableHTML = getSQLTable(results, 'order-table');
     console.log("Success: " + tableHTML);
