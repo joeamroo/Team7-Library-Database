@@ -296,7 +296,8 @@ function getUserDashInfo(response, memberId) {
                     }
                   });
               }
-
+            
+ if (assetSelect === 'book' || assetSelect === 'movie' || assetSelect === 'device') {
 
        const query = "SELECT TV.transaction_Id AS 'Order #', " +
                   "T.date_created AS 'Date', " +
@@ -334,7 +335,8 @@ function getUserDashInfo(response, memberId) {
       }
     });
   }
-
+}
+  
 /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
   │                              Gets User Holds                                │
