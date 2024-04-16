@@ -101,7 +101,7 @@
  
   <div class="center">
     <div class="notification">
-      <img src="../Dashboard/notify.png" alt="" />
+      <img src="../Dashboard/Notify.png" alt="" />
       <div class="details">
         <div class="name">Cougar Chronicles</div>
         <div class="hello-msg">
@@ -138,7 +138,7 @@
         </div>
       </div>
       <a class="member-id" id="member-id">Member ID: </a><br />
-      <a class="member-type" id="member-type">Member Type: Regular </a>
+      <a class="member-type" id="member-type">Member Type: Regular</a>
       <a class="member-status" id="member-status"></a>
       <input type="file" id="fileInput" accept="image/*" onchange="updateProfilePic(this)">
       
@@ -253,7 +253,7 @@
   └───────────────────────────────────────────────────────────────────┘
  -->
 
-<div class="settings orders">
+  <div class="settings orders">
 
   <div class="order-group">
 
@@ -312,19 +312,17 @@
         </label>
       </div>
     </div>
- 
+  </div> 
 
 
-    <div class="order-title">Recent Orders</div>
-    <div class="recent-orders">
+  <div class="order-title">Recent Orders</div>
+<div class="recent-orders">
   
       <!-- SQL QUERY -->
-    </div>
-   </div>
+</div>
   </div>
 
   
-
 
 
 
@@ -336,10 +334,8 @@
   └───────────────────────────────────────────────────────────────────┘
  -->
 
- <div class="holds">Outstanding Holds
  <div class="settings holds">
- 
-</div>
+
 </div>
 
 <!-- 
@@ -347,19 +343,16 @@
   │                            Events                                 │
   └───────────────────────────────────────────────────────────────────┘
  -->
- <div class="events">Events involving you!
- <div class="settings events">
-    
-</div>
-</div>
 
+ <div class="settings events">
+    <!--SQL QUERY-->
+</div>
 
 
 
 <div class="settings fines">
   <div class="total">
-    <h2 id="fine-title">Fine Amount:</h2>
-    <h2 id="amount"></h2>
+    <h2 id="fine-title">Fine Amount: <span id="amount"></span></h2>
   </div>
   <div class="name-info">
     <label for="first-name">First Name</label>
@@ -369,9 +362,9 @@
   </div>
   <div class="card-num-cvv">
     <label for="card-number">Card Number</label>
-    <input type="text" id="card-number" maxlength="16" required>
+    <input type="text" id="card-number" maxlength="16" placeholder="0000 0000 0000 0000" required>
     <label for="cvv">CVV</label>
-    <input type="text" id="cvv" name="cvv" maxlength="3" required>
+    <input type="text" id="cvv" name="cvv" maxlength="3" placeholder="XXX" required>
   </div>
   <div class="logos-and-exp">
     <label for="expiry-date">Expiry Date</label>
