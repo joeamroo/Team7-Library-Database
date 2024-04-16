@@ -297,9 +297,9 @@ link.query(query, [memberId], (err, results) => {
   function getDashHoldsInfo(response, memberId) {
 
     // Searches Database for user with the memberID
-    const query = 'SELECT hold_id AS "Identifier",' +
-                        'request_date AS "Date Requested",' +
+    const query = 'SELECT request_date AS "Date Requested",' +
                         'item_name AS "Item"' +
+                        'status AS "Status"' 
                         'FROM hold_request WHERE member_id = ?';
 
     // Gets information from backend
