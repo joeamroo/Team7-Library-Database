@@ -61,10 +61,14 @@ logOutBtn.addEventListener('click', function(event) {
 
 exitBtn.addEventListener('click', function(event) {
   localStorage.setItem('loggedIn', false);
-  if(memberId !== null && memberId !== undefined) {
-    logOutBtn.href = '../Home/home.html';
-    localStorage.removeItem('memberId');
-  }
+  localStorage.removeItem('memberId');
+
+  notify.innerHTML = "You have now been logged off!";
+  showNotification();
+
+  setTimeout(() => {
+    window.location.href = '../Home/home.html';
+  }, 1100);
 });
 
 const container = document.getElementById('container');
