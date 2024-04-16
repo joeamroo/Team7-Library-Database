@@ -237,7 +237,7 @@ function getUserDashInfo(response, memberId) {
         response.writeHead(500, { 'Content-Type': 'text/html' });
         response.end('Internal Server Error', 'utf-8');
       } else {
-        console.log("Update:" + result);
+        //console.log("Update:" + result);
         response.writeHead(200, { 'Content-Type': 'text/html' });
         response.end('Profile settings successfully updated!', 'utf-8');
       }
@@ -319,16 +319,16 @@ function getUserDashInfo(response, memberId) {
   
     link.query(query, [memberId, assetSelect,  startDate, endDate], (err, results) => {
       if (err) {
-        console.log("Failed: " + results);
+        //console.log("Failed: " + results);
         console.error('Error executing the query:', err);
         response.writeHead(500, { 'Content-Type': 'text/plain' });
         response.end('Internal Server Error');
         return;
       } else {
-        console.log(results);
+        //console.log(results);
         // Converts SQL query to a table with Keys as IDs
         const tableHTML = getSQLTable(results, 'order-table');
-        console.log("Success: " + tableHTML);
+        //console.log("Success: " + tableHTML);
         // Sends the table back to client
         response.writeHead(200, { 'Content-Type': 'text/html' });
         response.end(tableHTML);
