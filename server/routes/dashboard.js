@@ -300,31 +300,91 @@ link.query(query, [memberId], (err, results) => {
 
   function getDashHoldsInfo(response, memberId) {
 
-    // Searches Database for user with the memberID
-    const query = 'SELECT request_date AS "Date Requested",' +
-                        'item_name AS "Item",' +
-                        'status AS "Status"' 
-                        'FROM hold_request WHERE member_id = ?';
+    // Headers for Tables
+    const html_books = '<div class="table-title">Books</div>';
+    const html_movies = '<div class="table-title">Movies</div>';
+    const html_devices = '<div class="table-title">Devices</div>';
+    
+    // Searches Database for books in which a user has a hold
+    const queryBooks = `
+    SELECT
+      request_date AS "Date Requested",
+      item_name AS "Item",
+      status AS "Status"
+    FROM
+      hold_request
+    WHERE
+      member_id = (?)
+      AND isbn IS NOT NULL;
+    `;
 
-    // Gets information from backend
+    // Queries and Retrieves HTML table for books
+    html_books += getHolds(queryBooks, memberId);
+
+
+    // Searches Database for movies in which a user has a hold
+    const queryMovies = `
+    SELECT 
+      request_date AS "Date Requested",
+      item_name AS "Item",
+      status AS "Status"
+    FROM 
+      hold_request
+    WHERE 
+      member_id = (?)
+      AND movie_id IS NOT NULL;
+  `;
+    
+   // Queries and Retrieves HTML table for movies
+    html_movies += getHolds(queryMovies, memberId);
+
+    const queryDevices = `
+    SELECT
+      request_date AS "Date Requested",
+      item_name AS "Item",
+      status AS "Status"
+    FROM
+      hold_request
+    WHERE
+      member_id = (?)
+      AND device_id IS NOT NULL;
+    `
+
+    // Queries and Retrieves HTML table for devices
+    html_devices += getHolds(queryDevices, memberId);
+  
+
+    try {
+      // Combines all tables together
+      const tableHTML = html_books + html_movies + html_devices;
+
+      // Sends it to the client
+      response.writeHead(200, { 'Content-Type': 'text/html' });
+      response.end(tableHTML);
+      
+    } catch(error) {
+      console.log('Error retrieving values');
+      response.writeHead(204, { 'Content-Type': 'text/html'});
+      response.end('<a>Please contact your administrator</a>');
+    }
+
+}
+
+  /* A More Modular Way to Split the Tables */
+  function getHolds(query, memberId) {
     link.query(query, [memberId], (err, results) => {
       if (err) {
-          console.error('Error executing the query:', err);
-          response.writeHead(204, { 'Content-Type': 'text/plain' });
-          response.end('Internal Server Error');
           return;
         }  else {
     
         // Converts SQL query to a table with Keys as IDs
         const tableHTML = getSQLTable(results, 'holds-table');
     
-        // Sends the table back to client
-        response.writeHead(200, { 'Content-Type': 'text/html' });
-        response.end(tableHTML);
+        // Returns the Table
+          return tableHTML;
         } 
       });
-    
-}
+  }
 
 
 /* 
