@@ -21,11 +21,19 @@ const fineView = document.querySelector('.settings.fines');
 const orderReport = document.querySelector('.recent-orders');
 const eventReport = document.querySelector('.settings.events');
 const profileInfo = document.querySelector('.member-info');
-var startDate = document.getElementById('start-date');
-var endDate = document.getElementById('end-date');
 var asset = document.querySelector(".input-box");
 const today = new Date().toLocaleDateString();
 const notify = document.querySelector('#notify-user');
+
+// Get the current date
+const currentDate = new Date();
+let startDate = document.getElementById('start-date');
+let endDate = document.getElementById('end-date');
+
+// Extract the year, month, and day from the current date
+const year = currentDate.getFullYear();
+const month = currentDate.getMonth();
+const day = currentDate.getDate();
 
 /* *********************************************** */
 /* **************** BACK END ********************* */
@@ -52,10 +60,9 @@ logOutBtn.addEventListener('click', function(event) {
 
 const container = document.getElementById('container');
 
-function retrieveCriteria() {
-  startDate = document.getElementById('start-date').textContent;
-  endDate = document.getElementById('end-date').textContent;
+function retrieveAsset() {
   asset = document.querySelector(".input-box").textContent;
+  return asset;
 }
 
 /* 
@@ -410,23 +417,25 @@ function setProfileInfo() {
 
   function setOrderDate() {
 
-    // Get the current date
-    const currentDate = new Date();
-
-    // Extract the year, month, and day from the current date
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
-    const day = currentDate.getDate();
-
-    const startingDate = document.getElementById('start-date');
-    const endingDate = document.getElementById('end-date');
     var sdate = new Date(today).toISOString().slice(0, 10);
     var one_year = new Date(year + 1, month, day)
     var edate = new Date(one_year).toISOString().slice(0, 10);
 
     // Sets the values of each to today's date by default
-    startingDate.value = sdate;
-    endingDate.value = edate;
+    startDate.value = sdate;
+    endDate.value = edate;
+  }
+
+  function getStartingDate() {
+    startDate = document.getElementById('start-date');
+    var sdate = startDate.toISOString().slice(0, 10);
+    return sdate;
+  }
+
+  function getEndingDate() {
+    endDate = document.getElementById('end-date');
+    var edate = endDate.toISOString().slice(0, 10);
+    return edate;
   }
 
 
@@ -439,7 +448,10 @@ function setProfileInfo() {
 function getUserOrderReport() {
 
     const itemValue = '';
-    retrieveCriteria(); 
+    const assetType = retrieveAsset();
+    const strDate = getStartingDate();
+    const secDate = getEndingDate();
+
 
     const xhr = new XMLHttpRequest();
     xhr.open('POST', getUserOrderUrl);
@@ -463,9 +475,9 @@ function getUserOrderReport() {
 
     const data = JSON.stringify({
       memberId: memberId,
-      asset: asset,
-      startDate: startDate,
-      endDate: endDate
+      asset: assetType,
+      startDate: strDate,
+      endDate: secDate
     });
 
 
