@@ -508,11 +508,15 @@ function getUserOrderReport() {
     xhr.send(data);
 }
 
-reportBtn.addEventListener('click', function() {
+/*reportBtn.addEventListener('click', function() {
  // Adds filters
  orderSelect.click();
   
-});
+});*/
+
+function executeFilter() {
+  orderSelect.click();
+}
 
      /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
