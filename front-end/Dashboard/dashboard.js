@@ -488,10 +488,10 @@ function getUserOrderReport() {
       console.error('error', xhr.statusText);
     };
 
-    console.log(memberId);
-    console.log(assetType);
-    console.log(strDate);
-    console.log(secDate);
+    //console.log(memberId);
+    //console.log(assetType);
+    //console.log(strDate);
+    //console.log(secDate);
 
     const data = JSON.stringify({
       memberId: memberId,
