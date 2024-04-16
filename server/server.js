@@ -67,21 +67,26 @@ const server = http.createServer((request, res) => {
                 case '/getAdminAlerts':
                     getAdminAlerts(res);
                     break;
-                case '/api/members':
+                    case '/api/members':
                     try {
                         const queryObject = url.parse(request.url, true).query;
                         const filters = {
                         name: queryObject.name || '',
                         memberId: queryObject.memberId || '',
-                        hasFine: queryObject.hasFine === 'true',
+                        hasFine: queryObject.hasFines === 'true',
                         noTransactions: queryObject.noTransactions === 'true',
                         };
                         getMemberData(filters, (err, result) => {
-                        if (err) throw err;
-                        console.log('Server Response:', results);
-                        res.statusCode = 200;
-                        res.setHeader('Content-Type', 'application/json');
-                        res.end(JSON.stringify(result));
+                        if (err) {
+                            console.error(err);
+                            res.statusCode = 500;
+                            res.end('Internal server error');
+                        } else {
+                            console.log('Server Response:', result);
+                            res.statusCode = 200;
+                            res.setHeader('Content-Type', 'application/json');
+                            res.end(JSON.stringify(result));
+                        }
                         });
                     } catch (err) {
                         console.error(err);

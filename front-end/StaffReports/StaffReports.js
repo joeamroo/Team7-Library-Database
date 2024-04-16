@@ -23,32 +23,37 @@ searchForm.addEventListener('submit', (event) => {
     const formData = new FormData(event.target);
     const queryParams = new URLSearchParams(formData).toString();
     const apiUrl = `/api/members?${queryParams}`;
-
+  
     fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-            resultsTable.innerHTML = '';
-            data.forEach(member => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${member.member_id}</td>
-                    <td>${member.name}</td>
-                    <td>${member.email}</td>
-                    <td>${member.status}</td>
-                    <td>${member.mem_type}</td>
-                    <td>${member.phone_number}</td>
-                    <td>${member.street_addr}, ${member.city_addr}, ${member.state} ${member.zipcode_addr}</td>
-                    <td>${member.fine}</td>
-                    <td>${member.transaction_id || '-'}</td>
-                    <td>${member.date_created || '-'}</td>
-                    <td>${member.due_date || '-'}</td>
-                    <td>${member.return_date || '-'}</td>
-                `;
-                resultsTable.appendChild(row);
-            });
-        })
-        .catch(error => console.error(error));
-});
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        resultsTable.innerHTML = '';
+        data.forEach(member => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${member.member_id}</td>
+            <td>${member.name}</td>
+            <td>${member.email}</td>
+            <td>${member.status}</td>
+            <td>${member.mem_type}</td>
+            <td>${member.phone_number}</td>
+            <td>${member.street_addr}, ${member.city_addr}, ${member.state} ${member.zipcode_addr}</td>
+            <td>${member.fine}</td>
+            <td>${member.transaction_id || '-'}</td>
+            <td>${member.date_created || '-'}</td>
+            <td>${member.due_date || '-'}</td>
+            <td>${member.return_date || '-'}</td>
+          `;
+          resultsTable.appendChild(row);
+        });
+      })
+      .catch(error => console.error(error));
+  });
 
 function renderChart(reportData) {
   const chartData = {
