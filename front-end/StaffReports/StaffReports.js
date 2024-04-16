@@ -17,8 +17,8 @@ const generateReportButton = document.getElementById('generateReport');
 const reportContainer = document.getElementById('reportContainer');
 const reportContent = document.getElementById('reportContent');
 const backendUrl = 'https://cougarchronicles.onrender.com';
-const getMembersUrl = `${backendUrl}/reportmembers?${queryParams}`;
-const generateReportUrl = `${backendUrl}/reportreports?${queryParams}`;
+const getMembersUrl = `${backendUrl}/reportmembers?`;
+const generateReportUrl = `${backendUrl}/reportreports?`;
 
 searchForm.addEventListener('submit', (event) => {
   event.preventDefault();
