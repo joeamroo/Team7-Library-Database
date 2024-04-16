@@ -18,7 +18,7 @@ const holdsView = document.querySelector('.settings.holds');
 const eventsView = document.querySelector('.settings.events');
 const fineView = document.querySelector('.settings.fines');
 const orderReport = document.querySelector('.recent-orders');
-const eventReport = document.querySelector('.settings.events')
+const eventReport = document.querySelector('.settings.events');
 const profileInfo = document.querySelector('.member-info');
 const today = new Date().toLocaleDateString();
 const notify = document.querySelector('#notify-user');
@@ -479,7 +479,8 @@ function getUserOrderReport() {
       if (xhr.status === 200) {
         //const retrieved = xhr.responseText;
         //console.log(retrieved);
-        holdsView.innerHTML = xhr.responseText;
+        holdsView.innerHTML(' <div class="holds-title">Outstanding Holds</span>');
+        holdsView.innerHTML += xhr.responseText;
     
         
         
@@ -522,7 +523,8 @@ function getUserOrderReport() {
       if (xhr.status === 200) {
         //const retrieved = xhr.responseText;
         //console.log(retrieved);
-        eventsView.innerHTML = xhr.responseText;
+        eventsView.innerHTML = '<div class="event-title">Your Events</span>';
+        eventsView.innerHTML += xhr.responseText;
     
         
         
