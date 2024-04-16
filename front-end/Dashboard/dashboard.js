@@ -106,7 +106,6 @@ var input = document.querySelector(".input-box");
           input.innerHTML = item.nextElementSibling.innerHTML;
           input.click();
           getUserOrderReport();
-          orderSelective();
         });
       });
 
@@ -199,13 +198,6 @@ var input = document.querySelector(".input-box");
   └─────────────────────────────────────────────────────────────────────────────┘
  */
 
-      function orderSelective() {
-        profileView.classList.add('hide');
-        holdsView.classList.add('hide');
-        eventsView.classList.add('hide');
-        fineView.classList.add('hide');
-        orderView.classList.remove('hide');
-      }
       
       profileSelect.addEventListener('click', () => {
         eventsView.classList.add('hide');
@@ -489,7 +481,6 @@ function getUserOrderReport() {
         orderReport.innerHTML = ''; // Clears it out
         orderReport.innerHTML = '<div class="order-title">Recent Orders</div>';
         orderReport.innerHTML += xhr.responseText;
-        orderSelective();
       } else {
         console.log("Failed to retrieve data");
       }
@@ -520,7 +511,6 @@ reportBtn.addEventListener('click', function(event) {
   event.preventDefault();
  // Adds filters
  getUserOrderReport();
- orderSelective.click();
 
   
 });
