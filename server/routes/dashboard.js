@@ -356,6 +356,7 @@ link.query(query, [memberId, asset, startDate, endDate], (err, results) => {
         if (err) {
           reject(err);
         } else {
+          console.log('Query results:', results); // Log the query results
           // Converts SQL query to a table with Keys as IDs
           const tableHTML = getSQLTable(results, 'holds-table');
           // Resolves the promise with the table HTML
@@ -364,7 +365,7 @@ link.query(query, [memberId, asset, startDate, endDate], (err, results) => {
       });
     });
   }
-  
+
 /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
   │                              Get Events List                                │
