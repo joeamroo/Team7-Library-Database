@@ -252,7 +252,43 @@ function getUserDashInfo(response, memberId) {
 
   function getUserOrderInfo(response, memberId, asset, startDate, endDate) {
 
-    const assetSelect = '';
+    const query = "SELECT TV.transaction_Id AS 'Order #', " +
+                  "T.date_created AS 'Date', " +
+                  "CV.image_address AS 'Image', " +
+                  "TV.asset_type AS 'Asset', " +
+                  "CV.book_movie_title_model AS 'Product', " +
+                  "CV.isbn AS 'ISBN', " +
+                  "CV.asset_id AS 'Serial Number' " +
+                  "FROM TRANSACTION AS T, " +
+                  "TRANSACTION_VIEW AS TV, " +
+                  "CATALOG_VIEW AS CV, " +
+                  "MEMBER AS M " +
+                  "WHERE M.member_id = ? " +
+                  "AND T.transaction_id = TV.transaction_Id " +
+                  "AND TV.itemId = CV.asset_id " +
+                  "AND T.date_created BETWEEN ? AND ? " +
+                  "LIMIT 30;";
+
+                  link.query(query, [memberId, startDate, endDate], (err, results) => {
+                    if (err) {
+                      console.log("Failed: " + results);
+                      console.error('Error executing the query:', err);
+                      response.writeHead(500, { 'Content-Type': 'text/plain' });
+                      response.end('Internal Server Error');
+                      return;
+                    } else {
+                      console.log(results);
+                      // Converts SQL query to a table with Keys as IDs
+                      const tableHTML = getSQLTable(results, 'order-table');
+                      console.log("Success: " + tableHTML);
+                      // Sends the table back to client
+                      response.writeHead(200, { 'Content-Type': 'text/html' });
+                      response.end(tableHTML);
+                    }
+                  });
+              }
+
+    /*const assetSelect = '';
 
     if (asset === '1') {
       assetSelect = "book";
@@ -295,9 +331,9 @@ function getUserDashInfo(response, memberId) {
                       response.end(tableHTML);
                     }
                   });
-              }
+              } */
             
- if (assetSelect === 'book' || assetSelect === 'movie' || assetSelect === 'device') {
+ /*if (assetSelect === 'book' || assetSelect === 'movie' || assetSelect === 'device') {
 
        const query = "SELECT TV.transaction_Id AS 'Order #', " +
                   "T.date_created AS 'Date', " +
@@ -334,7 +370,7 @@ function getUserDashInfo(response, memberId) {
         response.end(tableHTML);
       }
     });
-  }
+  }*/
 }
   
 /* 
