@@ -2,12 +2,18 @@ const logOutBtn = document.getElementById('logoutBtn');
 const staffId = localStorage.getItem('staffId');
 const backButton = document.getElementById('backButton');
 
-backButton.addEventListener('click', () => {
+const reportBackButton = document.getElementById('reportBackButton');
+const resultsBackButton = document.getElementById('resultsBackButton');
+
+reportBackButton.addEventListener('click', () => {
   searchForm.style.display = 'block';
   reportContainer.style.display = 'none';
-  chartContainer.style.display = 'none';
 });
 
+resultsBackButton.addEventListener('click', () => {
+  searchForm.style.display = 'block';
+  resultsContainer.style.display = 'none';
+});
  
 
 logOutBtn.addEventListener('click', function(event) {
