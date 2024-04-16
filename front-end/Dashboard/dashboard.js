@@ -560,7 +560,7 @@ dateSelect.addEventListener('submit', function(event) {
       if (xhr.status === 200) {
         //const retrieved = xhr.responseText;
         holdsView.innerHTML = xhr.responseText;
-        //removeRowsWithKeyword('order-table', 'movie');
+        removeRowsWithKeyword('order-table', 'movie');
         
         
       } else {
