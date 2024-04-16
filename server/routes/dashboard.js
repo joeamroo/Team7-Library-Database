@@ -61,7 +61,7 @@ const link = mysql.createConnection({
         }
   
         // Check if the key is 'date' and format the date
-        if (key.toLowerCase() === 'date' && value !== "Not Applicable") {
+        if (key.toLowerCase() === 'date' || key.toLowerCase() === "date requested" && value !== "Not Applicable") {
           const dateString = value.toString(); // Convert value to string
           const dateParts = dateString.split(" ");
           value = dateParts.slice(0, 4).join(" ");
