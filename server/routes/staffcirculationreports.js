@@ -21,6 +21,14 @@ function buildWhereClause(filters) {
       conditions.push(`m.name LIKE '%${filters.name}%'`);
     }
   
+    if (filters.hasFines) {
+      conditions.push('m.fine > 0');
+    }
+  
+    if (filters.noTransactions) {
+      conditions.push('t.transaction_id IS NULL');
+    }
+  
     if (conditions.length > 0) {
       return 'WHERE ' + conditions.join(' AND ');
     }

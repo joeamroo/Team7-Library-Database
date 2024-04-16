@@ -19,16 +19,27 @@
           <div class="form-container">
             <form id="searchForm">
                 <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" placeholder="Enter member name">
+                  <label for="name">Name:</label>
+                  <input type="text" id="name" name="name" placeholder="Enter member name">
+                </div>
+                <div class="form-group">
+                  <label>
+                    <input type="checkbox" name="hasFines" value="true"> Members with Fines
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label>
+                    <input type="checkbox" name="noTransactions" value="true"> Members with No Transactions
+                  </label>
                 </div>
                 <button type="submit" class="btn">Search</button>
                 <button type="button" id="generateReport" class="btn">Generate Report</button>
-            </form>
+              </form>
         </div>
       </div>
-      <div id="resultsContainer">
-            <table id="resultsTable">
+      <button id="backButton" class="btn">Back</button>
+      <div id="resultsContainer" class="results-container">
+        <table id="resultsTable">
                 <thead>
                     <tr>
                         <th>Member ID</th>
@@ -48,6 +59,7 @@
         </div>
     </div>
     <br>
+    <button id="backButton" class="btn">Back</button>
     <div id="reportContainer" style="display: none;">
       <h2>Report</h2>
       <br>
@@ -58,7 +70,6 @@
       <div id="chartContainer" style="display: none;">
         <canvas id="reportChart"></canvas>
       </div>
-      <button id="backButton" class="btn">Back</button>
     </div>
   </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
