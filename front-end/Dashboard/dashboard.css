@@ -296,6 +296,12 @@ header {
    Section: Recent Orders Table
    ========================================================================== */
 
+   /* Sets the third column to a fixed size (image) */
+   #Image img {
+    max-width: 100%;
+    height: auto;
+   }
+
   .order-title {
     font-size: x-large;
     padding-bottom: 30px;
@@ -314,7 +320,7 @@ header {
   .recent-orders table {
     align-items: center;
     text-align: center;
-    width: 100%;
+    /*width: 100%;*/
     border-collapse: collapse;
   }
 
@@ -354,6 +360,8 @@ header {
     text-decoration: underline;
     cursor: pointer;
   }
+
+
 
 
   /* ==========================================================================
