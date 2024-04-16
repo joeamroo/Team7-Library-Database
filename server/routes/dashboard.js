@@ -301,9 +301,9 @@ link.query(query, [memberId], (err, results) => {
   function getDashHoldsInfo(response, memberId) {
 
     // Headers for Tables
-    const html_books = '<div class="table-title">Books</div>';
-    const html_movies = '<div class="table-title">Movies</div>';
-    const html_devices = '<div class="table-title">Devices</div>';
+    let html_books = '<div class="table-title">Books</div>';
+    let html_movies = '<div class="table-title">Movies</div>';
+    let html_devices = '<div class="table-title">Devices</div>';
     
     // Searches Database for books in which a user has a hold
     const queryBooks = `
