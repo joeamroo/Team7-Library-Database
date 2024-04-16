@@ -221,11 +221,18 @@ function getUserDashInfo(response, memberId) {
       //console.log(fullName);
 
       // Query to search for
-      const sql_query = 'UPDATE MEMBER SET name = ?, phone_number = ?, street_addr = ?, city_addr = ?,' +
-                         'state = ?, zipcode_addr = ?, email = ? WHERE member_id = ?';
+      const sql_query = 'UPDATE member' +
+                        'SET name = ?,' +
+                          'phone_number = ?,' +
+                          'street_addr = ?,' + 
+                          'city_addr = ?,' +
+                          'state = ?,' +
+                          'zipcode_addr = ?,' + 
+                          'email = ?'
+                        'WHERE member_id = ?';
 
     // Values to update
-    const values = [memberId, fullName, phone_number, street_addr, city_addr, state, zipcode_addr, email];
+    const values = [fullName, phone_number, street_addr, city_addr, state, zipcode_addr, email, member_id];
 
     // Use the memberId parameter in the query execution
       link.query(sql_query, values, function(err, result) {
