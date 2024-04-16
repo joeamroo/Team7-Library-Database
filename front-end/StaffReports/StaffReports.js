@@ -22,7 +22,7 @@ searchForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const queryParams = new URLSearchParams(formData).toString();
-    const apiUrl = `/api/members?${queryParams}`;
+    const apiUrl = `/reportmembers?${queryParams}`;
   
     fetch(apiUrl)
       .then(response => {
@@ -90,7 +90,7 @@ function renderChart(reportData) {
 generateReportButton.addEventListener('click', () => {
   const formData = new FormData(searchForm);
   const queryParams = new URLSearchParams(formData).toString();
-  const apiUrl = `/api/reports?${queryParams}`;
+  const apiUrl = `/reportreports?${queryParams}`;
 
   fetch(apiUrl)
     .then(response => response.json())

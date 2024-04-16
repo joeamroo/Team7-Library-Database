@@ -17,7 +17,7 @@ const { getAdminAlerts, getEventsForAdmin, insertEvent, deleteEvent, filterEvent
 const { getItemsForAdmin, filterCatalogItems, getAdminInfo } = require('./routes/adminCatalogManagement');
 const { updateFine, getFineAmount } = require('./routes/payFine');
 const { addItems } = require('./routes/add-items');
-const { getMemberData, generateReport } = require('./routes/staffcirculationreports');
+const { reportreports, reportmembers } = require('./routes/staffcirculationreports');
 const { addDevices } = require('./routes/addDevices');
 
 function setCorsHeaders(res) {
@@ -67,34 +67,34 @@ const server = http.createServer((request, res) => {
                 case '/getAdminAlerts':
                     getAdminAlerts(res);
                     break;
-                    case '/api/members':
-                    try {
-                        const queryObject = url.parse(request.url, true).query;
-                        const filters = {
-                        name: queryObject.name || '',
-                        memberId: queryObject.memberId || '',
-                        hasFine: queryObject.hasFines === 'true',
-                        noTransactions: queryObject.noTransactions === 'true',
-                        };
-                        getMemberData(filters, (err, result) => {
-                        if (err) {
-                            console.error(err);
-                            res.statusCode = 500;
-                            res.end('Internal server error');
-                        } else {
-                            console.log('Server Response:', result);
-                            res.statusCode = 200;
-                            res.setHeader('Content-Type', 'application/json');
-                            res.end(JSON.stringify(result));
-                        }
-                        });
-                    } catch (err) {
+                case '/reportmembers':
+                try {
+                    const queryObject = url.parse(request.url, true).query;
+                    const filters = {
+                    name: queryObject.name || '',
+                    memberId: queryObject.memberId || '',
+                    hasFine: queryObject.hasFines === 'true',
+                    noTransactions: queryObject.noTransactions === 'true',
+                    };
+                    getMemberData(filters, (err, result) => {
+                    if (err) {
                         console.error(err);
                         res.statusCode = 500;
                         res.end('Internal server error');
+                    } else {
+                        console.log('Server Response:', result);
+                        res.statusCode = 200;
+                        res.setHeader('Content-Type', 'application/json');
+                        res.end(JSON.stringify(result));
                     }
+                    });
+                } catch (err) {
+                    console.error(err);
+                    res.statusCode = 500;
+                    res.end('Internal server error');
+                }
                     break;
-                case '/api/reports':
+                case '/reportreports':
                     try {
                         const queryObject = url.parse(request.url, true).query;
                         const filters = {
