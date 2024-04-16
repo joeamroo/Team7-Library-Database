@@ -428,13 +428,13 @@ function setProfileInfo() {
 
   function getStartingDate() {
     startDate = document.getElementById('start-date');
-    var sdate = startDate.toISOString().slice(0, 10);
+    var sdate = startDate.itemValue;
     return sdate;
   }
 
   function getEndingDate() {
     endDate = document.getElementById('end-date');
-    var edate = endDate.toISOString().slice(0, 10);
+    var edate = endDate.itemValue;
     return edate;
   }
 
