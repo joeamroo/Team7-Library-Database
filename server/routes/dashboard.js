@@ -400,7 +400,7 @@ function getUserDashInfo(response, memberId) {
     });
   }*/
 
-  function getDashHoldsInfo(response, memberId) {
+  /*function getDashHoldsInfo(response, memberId) {
     // Headers for Tables
     let html_head = '<div class="holds-title">Outstanding Holds</div>';
     let html_books = '<div class="table-title">Books</div>';
@@ -488,8 +488,38 @@ function getUserDashInfo(response, memberId) {
     tableHTML += '</table>';
   
     return tableHTML;
-  }
-  
+  } */
+
+
+  function getDashHoldsInfo(response, memberId) {
+
+    // Searches Database for user with the memberID
+    const query = `
+          SELECT 
+              request_date AS "Date Requested", item_name AS "Item", status AS "Status"
+          FROM hold_request
+          WHERE member_id = (?);
+    `;
+
+    // Gets information from backend
+    link.query(query, [memberId], (err, results) => {
+      if (err) {
+          console.error('Error executing the query:', err);
+          response.writeHead(204, { 'Content-Type': 'text/plain' });
+          response.end('Internal Server Error');
+          return;
+        }  else {
+    
+        // Converts SQL query to a table with Keys as IDs
+        const tableHTML = getSQLTable(results, 'events-table');
+    
+        // Sends the table back to client
+        response.writeHead(200, { 'Content-Type': 'text/html' });
+        response.end(tableHTML);
+        } 
+      });
+    
+}
 
 
 
