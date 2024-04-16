@@ -92,43 +92,42 @@ searchForm.addEventListener('submit', (event) => {
         reportContent.innerHTML = reportHTML;
   
         // Populate chart data
-        // Populate chart data
-// Populate chart data
-const chartData = {
-    labels: reportData.memberData.map(member => member.member_id),
-    datasets: [
-      {
-        label: 'Fine',
-        data: reportData.memberData.map(member => member.fine),
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: 'rgba(255, 99, 132, 1)',
-        borderWidth: 1,
-      },
-      {
-        label: 'Holds',
-        data: reportData.memberData.map(member => member.holds),
-        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-        borderColor: 'rgba(54, 162, 235, 1)',
-        borderWidth: 1,
-      },
-      {
-        label: 'Average Fine',
-        data: reportData.memberData.map(() => reportData.averageFine),
-        type: 'line',
-        borderColor: 'rgba(255, 99, 132, 0.8)',
-        borderWidth: 2,
-        fill: false,
-      },
-      {
-        label: 'Average Holds',
-        data: reportData.memberData.map(() => reportData.averageHolds),
-        type: 'line',
-        borderColor: 'rgba(54, 162, 235, 0.8)',
-        borderWidth: 2,
-        fill: false,
-      },
-    ],
-  };
+        const chartData = {
+          labels: reportData.memberData.map(member => member.member_id),
+          datasets: [
+            {
+              label: 'Fine',
+              data: reportData.memberData.map(member => member.fine),
+              backgroundColor: 'rgba(255, 99, 132, 0.2)',
+              borderColor: 'rgba(255, 99, 132, 1)',
+              borderWidth: 1,
+            },
+            {
+              label: 'Holds',
+              data: reportData.memberData.map(member => member.holds),
+              backgroundColor: 'rgba(54, 162, 235, 0.2)',
+              borderColor: 'rgba(54, 162, 235, 1)',
+              borderWidth: 1,
+            },
+            {
+              label: 'Average Fine',
+              data: reportData.memberData.map(() => reportData.averageFine),
+              type: 'line',
+              borderColor: 'rgba(255, 99, 132, 0.8)',
+              borderWidth: 2,
+              fill: false,
+            },
+            {
+              label: 'Average Holds',
+              data: reportData.memberData.map(() => reportData.averageHolds),
+              type: 'line',
+              borderColor: 'rgba(54, 162, 235, 0.8)',
+              borderWidth: 2,
+              fill: false,
+            },
+          ],
+        };
+  
         // Create chart
         const ctx = document.getElementById('reportChart').getContext('2d');
         new Chart(ctx, {
@@ -153,3 +152,5 @@ const chartData = {
     };
     xhr.send();
   });
+  
+  

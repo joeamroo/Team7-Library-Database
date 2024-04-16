@@ -17,8 +17,12 @@ connection.connect((err) => {
 function buildWhereClause(filters) {
     const conditions = [];
   
-    if (filters.name) {
+    if (filters.name && filters.memberId) {
+      conditions.push(`m.name LIKE '%${filters.name}%' AND m.member_id = '${filters.memberId}'`);
+    } else if (filters.name) {
       conditions.push(`m.name LIKE '%${filters.name}%'`);
+    } else if (filters.memberId) {
+      conditions.push(`m.member_id = '${filters.memberId}'`);
     }
   
     if (conditions.length > 0) {
@@ -35,7 +39,6 @@ function buildWhereClause(filters) {
       FROM member m
       LEFT JOIN transaction t ON m.member_id = t.member_id
       ${whereClause}
-      GROUP BY m.member_id
     `;
   
     connection.query(query, (err, result) => {
