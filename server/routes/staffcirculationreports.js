@@ -52,7 +52,7 @@ function getMemberData(filters, callback) {
 function generateReport(filters, callback) {
     const whereClause = buildWhereClause(filters);
     const query = `
-      SELECT m.fine, COUNT(t.transaction_id) AS holds
+      SELECT m.member_id, m.fine, COUNT(t.transaction_id) AS holds
       FROM member m
       LEFT JOIN transaction t ON m.member_id = t.member_id
       ${whereClause}
@@ -72,13 +72,14 @@ function generateReport(filters, callback) {
         totalHolds += row.holds;
       });
   
-      const averageFine = totalFine / result.length;
-      const averageHolds = totalHolds / result.length;
-      const reportData = { averageFine, averageHolds };
+      const averageFine = result.length > 0 ? totalFine / result.length : 0;
+      const averageHolds = result.length > 0 ? totalHolds / result.length : 0;
+      const reportData = { averageFine, averageHolds, memberData: result };
   
       callback(null, reportData);
     });
   }
+
 
 module.exports = {
   getMemberData,

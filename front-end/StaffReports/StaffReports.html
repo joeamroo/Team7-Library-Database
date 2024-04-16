@@ -15,7 +15,8 @@
         </div>
     </header>
     <div class="content-container">
-        <div class="form-container">
+        <div id="searchContainer">
+          <div class="form-container">
             <form id="searchForm">
                 <div class="form-group">
                     <label for="name">Name:</label>
@@ -29,7 +30,8 @@
                 <button type="button" id="generateReport" class="btn">Generate Report</button>
             </form>
         </div>
-        <div id="resultsContainer">
+      </div>
+      <div id="resultsContainer">
             <table id="resultsTable">
                 <thead>
                     <tr>
@@ -48,14 +50,15 @@
                 <tbody></tbody>
             </table>
         </div>
-        <div id="reportContainer" style="display: none;">
-            <h2>Report</h2>
-            <div id="reportContent"></div>
-            <div id="chartContainer" style="display: none;">
-                <canvas id="reportChart"></canvas>
-            </div>
-        </div>
     </div>
+    <div id="reportContainer" style="display: none;">
+      <h2>Report</h2>
+      <div id="reportContent"></div>
+      <div id="chartContainer" style="display: none;">
+        <canvas id="reportChart"></canvas>
+      </div>
+    </div>
+  </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="StaffReports.js"></script>
 </body>

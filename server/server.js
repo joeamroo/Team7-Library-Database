@@ -120,30 +120,31 @@ const server = http.createServer((request, res) => {
                     }
                                 break;
                 case '/generateReport':
-                try {
-                    const queryObject = url.parse(request.url, true).query;
-                    const filters = {
-                        name: queryObject.name || '',
-                        memberId: queryObject.memberId || '',
-                    };
-                    generateReport(filters, (err, result) => {
-                        if (err) {
-                            console.error(err);
-                            res.statusCode = 500;
-                            res.end('Internal server error');
-                        } else {
-                            console.log('Server Response:', result);
-                            res.statusCode = 200;
-                            res.setHeader('Content-Type', 'application/json');
-                            res.end(JSON.stringify(result));
+                    case '/generateReport':
+                        try {
+                          const queryObject = url.parse(request.url, true).query;
+                          const filters = {
+                            name: queryObject.name || '',
+                            memberId: queryObject.memberId || '',
+                          };
+                          generateReport(filters, (err, result) => {
+                            if (err) {
+                              console.error(err);
+                              res.statusCode = 500;
+                              res.end('Internal server error');
+                            } else {
+                              console.log('Server Response:', result);
+                              res.statusCode = 200;
+                              res.setHeader('Content-Type', 'application/json');
+                              res.end(JSON.stringify(result));
+                            }
+                          });
+                        } catch (err) {
+                          console.error(err);
+                          res.statusCode = 500;
+                          res.end('Internal server error');
                         }
-                    });
-                } catch (err) {
-                    console.error(err);
-                    res.statusCode = 500;
-                    res.end('Internal server error');
-                }
-                break;
+                        break;
 
                 default:
                     serve404(res, pathname);
