@@ -500,7 +500,8 @@ function getUserOrderReport() {
       memberId: memberId,
       asset: assetSelect,
       startDate: strDate,
-      endDate: secDate
+      endDate: secDate,
+      choice: choice
     });
 
 

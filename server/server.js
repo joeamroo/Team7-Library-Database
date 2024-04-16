@@ -320,7 +320,7 @@ const server = http.createServer((request, res) => {
                 request.on('end', () => {
                     try {
                         const postData = JSON.parse(body);
-                        getUserOrderInfo(res, postData.memberId, postData.asset, postData.startDate, postData.endDate);
+                        getUserOrderInfo(res, postData.memberId, postData.asset, postData.startDate, postData.endDate, postData.choice);
                     } catch (error) {
                         console.error('Error parsing JSON: ', error);
                         serve404(res);

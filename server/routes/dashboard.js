@@ -250,9 +250,9 @@ function getUserDashInfo(response, memberId) {
   └─────────────────────────────────────────────────────────────────────────────┘
  */
 
-  function getUserOrderInfo(response, memberId, asset, startDate, endDate) {
+  function getUserOrderInfo(response, memberId, asset, startDate, endDate, choice) {
 
-    const assetSelect = '';
+    let assetSelect = '';
 
     if (asset === '1') {
       assetSelect = 'book';
