@@ -351,7 +351,7 @@ function getUserDashInfo(response, memberId) {
   └─────────────────────────────────────────────────────────────────────────────┘
  */
 
-  function getDashHoldsInfo(response, memberId) {
+  /*function getDashHoldsInfo(response, memberId) {
     // ...
   
     // Declare variables to store the table HTML
@@ -398,6 +398,47 @@ function getUserDashInfo(response, memberId) {
         }
       });
     });
+  }*/
+
+  function getDashHoldsInfo(response, memberId) {
+    // ...
+  
+    try {
+      // Queries and Retrieves HTML table for books
+      html_books += getHolds(queryBooks, memberId);
+  
+      // Queries and Retrieves HTML table for movies
+      html_movies += getHolds(queryMovies, memberId);
+  
+      // Queries and Retrieves HTML table for devices
+      html_devices += getHolds(queryDevices, memberId);
+  
+      // Combines all tables together
+      const tableHTML = html_head + html_books + html_movies + html_devices;
+      console.log("try(): " + tableHTML);
+  
+      // Sends it to the client
+      response.writeHead(200, { 'Content-Type': 'text/html' });
+      response.end(tableHTML);
+    } catch (error) {
+      console.log('Error retrieving values', error);
+      response.writeHead(204, { 'Content-Type': 'text/html' });
+      response.end('<a>Please contact your administrator</a>');
+    }
+  }
+  
+  function getHolds(query, memberId) {
+    let tableHTML = '';
+  
+    try {
+      const results = link.query(query, [memberId]);
+      // Converts SQL query to a table with Keys as IDs
+      tableHTML = getSQLTable(results, 'holds-table');
+    } catch (error) {
+      console.log('Error executing query', error);
+    }
+  
+    return tableHTML;
   }
 
 
