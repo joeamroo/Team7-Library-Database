@@ -270,7 +270,7 @@ function getUserDashInfo(response, memberId) {
                   "AND T.date_created BETWEEN ? AND ? " +
                   "LIMIT 30;";
   
-    link.query(query, [memberId, asset, startDate, endDate], (err, results) => {
+    link.query(query, [memberId, asset.toLowerCase(), startDate, endDate], (err, results) => {
       if (err) {
         console.log("Failed: " + results);
         console.error('Error executing the query:', err);
