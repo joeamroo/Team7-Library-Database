@@ -9,6 +9,14 @@ const connection = mysql.createConnection({
   port: 3306,
 });
 
+const filters = {
+    name: queryObject.name || '',
+    memberId: queryObject.memberId || '',
+    hasFine: queryObject.hasFines === 'true',
+    noTransactions: queryObject.noTransactions === 'true',
+    };
+
+
 connection.connect((err) => {
   if (err) throw err;
   console.log('Connected to LibraryDev database');
