@@ -1,13 +1,6 @@
 const logOutBtn = document.getElementById('logoutBtn');
 const staffId = localStorage.getItem('staffId');
  
-const filters = {
-    name: queryObject.name || '',
-    memberId: queryObject.memberId || '',
-    hasFine: queryObject.hasFines === 'true',
-    noTransactions: queryObject.noTransactions === 'true',
-    };
-
 
 logOutBtn.addEventListener('click', function(event) {
   console.log('logging out');
