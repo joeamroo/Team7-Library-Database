@@ -986,7 +986,7 @@ input[type="date"] {
   color: var(--mainColor);
 }
 
-#employeeTable, #eventTable, #memberTable{
+#employeeTable, #eventTable{
   table-layout: auto;
   margin-top: 40px;
   align-items: center;
@@ -997,9 +997,7 @@ input[type="date"] {
 #employeeTable th,
 #employeeTable td,
 #eventTable th,
-#eventTable td,
-#memberTable th,
-#memberTable td{
+#eventTable td{
   text-align: left;
 }
 
@@ -1009,10 +1007,6 @@ input[type="date"] {
 }
 
 #employeeTable tbody tr td {
-  font-size: 18px; 
-  font-weight: normal; 
-}
-#memberTable tbody tr td {
   font-size: 18px; 
   font-weight: normal; 
 }
@@ -1035,15 +1029,14 @@ input[type="date"] {
   color: rgb(165, 91, 91);
 }
 
-.employee-btns i, .event-btns i, .member-btns{
+.employee-btns i, .event-btns i {
   font-size: 22px;
   margin-right: 5px;
 }
 
 .employee-btns, 
 #addEventBtn, 
-#removeEventBtn,
-.member-btns {
+#removeEventBtn {
   padding: 10px 15px;
   border-radius: 10px;
   margin-right: 5px;
@@ -1052,12 +1045,12 @@ input[type="date"] {
   margin-bottom: 20px;
 }
 
-#addEmployeeBtn:hover, #removeEmployeeBtn:hover, #addEventBtn:hover, #removeEventBtn:hover, #addMemberBtn:hover, #removeMemberBtn:hover {
+#addEmployeeBtn:hover, #removeEmployeeBtn:hover, #addEventBtn:hover, #removeEventBtn:hover  {
   cursor: pointer;
   opacity: 0.8;
 }
 
-#addEmployeeForm, #addEventForm ,#addMemberForm{
+#addEmployeeForm, #addEventForm {
   border-radius: 20px;
   margin: 20px 10px;
   width: 85%;
@@ -1069,7 +1062,7 @@ input[type="date"] {
   margin-bottom: 15px;
 }
 
-#removeEmployeeForm, #removeEventForm ,#removeMemberForm{
+#removeEmployeeForm, #removeEventForm {
   border-radius: 20px;
   margin: 20px 10px;
   width: 85%;
@@ -1266,8 +1259,8 @@ button[type='submit']:hover {
 }
 
 .circle {
-  width: 200px; 
-  height: 200px; 
+  width: 300px; 
+  height: 300px; 
   border-radius: 50%;
   background-color: var(--mainColor);
   display: flex;
@@ -1286,8 +1279,8 @@ button[type='submit']:hover {
 }
 
 .inner-circle {
-  width: 150px; 
-  height: 150px; 
+  width: 250px; 
+  height: 250px; 
   border-radius: 50%;
   background-color: white;
   display: flex;
@@ -1297,15 +1290,15 @@ button[type='submit']:hover {
 }
 
 .circle-number {
-  font-size: 40px; 
+  font-size: 60px; 
   font-weight: bold; 
   position: absolute;
   top: 30%; 
 }
 
 .circle-text {
-  margin-top: 20%; 
-  font-size: 14px; 
+  margin-top: 28%; 
+  font-size: 16px; 
   font-weight: bold; 
 }
 
