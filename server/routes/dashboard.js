@@ -237,7 +237,7 @@ function getUserDashInfo(response, memberId) {
                         'WHERE member_id = ?';
 
     // Values to update
-    const values = [fullName, phone_number, street_addr, city_addr, state, zipcode_addr, email, member_id];
+    const values = [fullName, phone_number, street_addr, city_addr, state, zipcode_addr, email, memberId];
 
     // Use the memberId parameter in the query execution
       link.query(sql_query, values, function(err, result) {
@@ -361,7 +361,8 @@ link.query(query, [memberId], (err, results) => {
 
     try {
       // Combines all tables together
-      const tableHTML = html_head + html_books + html_movies + html_devices;
+      const tableHTML = CONCAT(html_head, html_books, html_movies, html_devices);
+      console.log("try(): " + tableHTML);
 
       // Sends it to the client
       response.writeHead(200, { 'Content-Type': 'text/html' });
@@ -377,8 +378,7 @@ link.query(query, [memberId], (err, results) => {
 
   /* A More Modular Way to Split the Tables */
   function getHolds(query, memberId) {
-    console.log("getHolds():" + query);
-    console.log("getHolds():" + memberId);
+
     link.query(query, [memberId], (err, results) => {
       if (err) {
           return;
@@ -386,7 +386,6 @@ link.query(query, [memberId], (err, results) => {
     
         // Converts SQL query to a table with Keys as IDs
         const tableHTML = getSQLTable(results, 'holds-table');
-        console.log("tableHTML()" + tableHTML);
     
         // Returns the Table
           return tableHTML;
