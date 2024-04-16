@@ -474,6 +474,8 @@ function setProfileInfo() {
 
 function getUserOrderReport() {
 
+    preventDefault();
+
     const itemValue = '';
     //const assetType = retrieveAsset();
     const strDate = getStartingDate();
@@ -517,9 +519,11 @@ function getUserOrderReport() {
 }
 
 reportBtn.addEventListener('click', function() {
+  preventDefault();
  // Adds filters
  getUserOrderReport();
  orderSelective.click();
+
   
 });
 
