@@ -538,7 +538,7 @@ function executeFilter() {
         const retrieved = xhr.responseText;
         console.log(retrieved);
         holdsView.innerHTML += retrieved;
-    
+        removeRowsWithKeyword('order-table', 'movie');
         
         
       } else {
@@ -559,6 +559,31 @@ function executeFilter() {
 
     xhr.send(data);
 }
+
+function removeRowsWithKeyword(tableId, keyword) {
+  // Select the table element by its ID
+  const table = document.getElementById(tableId);
+
+  // Get all the rows in the table
+  const rows = table.rows;
+
+  // Iterate over each row (starting from index 1 to skip the header row)
+  for (let i = 1; i < rows.length; i++) {
+    const row = rows[i];
+    const rowText = row.textContent.toLowerCase();
+
+    // Check if the row contains the keyword
+    if (rowText.includes(keyword.toLowerCase())) {
+      // Remove the row from the table
+      table.deleteRow(i);
+
+      // Decrement the index to account for the removed row
+      i--;
+    }
+  }
+}
+
+
 
 
 
