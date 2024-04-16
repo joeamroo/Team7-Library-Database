@@ -8,13 +8,11 @@ const updateBtn = document.querySelector(".main-btn");
 const profileSelect = document.getElementById('profile-selection');
 const employeeSelect = document.getElementById('employee-selection');
 const eventSelect = document.getElementById('event-selection');
-const memberSelect = document.getElementById('member-selection');
 const inboxSelect = document.getElementById('inbox-selection');
 const profileView = document.querySelector('.settings.profile');
 const employeeView = document.querySelector('.settings.employees');
 const eventView = document.querySelector('.settings.event');
 const inboxView = document.querySelector('.settings.inbox');
-const memberView = document.querySelector('.settings.member');
 const profileInfo = document.querySelector('.member-info');
 const today = new Date().toLocaleDateString();
 
@@ -127,7 +125,6 @@ window.addEventListener("load", showDefaults);
 profileSelect.addEventListener('click', () => {
     getAdminInfo();
     employeeView.classList.add('hide');
-    memberView.classList.add('hide');
     eventView.classList.add('hide');
     inboxView.classList.add('hide');
     profileView.classList.remove('hide');
@@ -138,7 +135,6 @@ employeeSelect.addEventListener('click', () => {
     profileView.classList.add('hide');
     eventView.classList.add('hide');
     inboxView.classList.add('hide');
-    memberView.classList.add('hide');
     employeeView.classList.remove('hide');
 });
 
@@ -146,7 +142,6 @@ eventSelect.addEventListener('click', () => {
     profileView.classList.add('hide');
     employeeView.classList.add('hide');
     inboxView.classList.add('hide');
-    memberView.classList.add('hide');
     eventView.classList.remove('hide');
 });
 
@@ -154,22 +149,14 @@ inboxSelect.addEventListener('click', () => {
     profileView.classList.add('hide');
     employeeView.classList.add('hide');
     eventView.classList.add('hide');
-    memberView.classList.add('hide');
     inboxView.classList.remove('hide');
 });
-memberSelect.addEventListener('click', () => {
-    profileView.classList.add('hide');
-    employeeView.classList.add('hide');
-    eventView.classList.add('hide');
-    inboxView.classList.add('hide');
-    memberView.classList.remove('hide');
-});
+
 
 document.getElementById('employeeConnection').addEventListener('click', () => {
     profileView.classList.add('hide');
     eventView.classList.add('hide');
     inboxView.classList.add('hide');
-    memberView.classList.add('hide');
     employeeView.classList.remove('hide');
 });
 
@@ -177,23 +164,14 @@ document.getElementById('eventsConnection').addEventListener('click', () => {
     profileView.classList.add('hide');
     employeeView.classList.add('hide');
     inboxView.classList.add('hide');
-    memberView.classList.add('hide');
     eventView.classList.remove('hide');
 });
 
 document.getElementById('inventoryConnection').addEventListener('click', () => {
     profileView.classList.add('hide');
     employeeView.classList.add('hide');
-    memberView.classList.add('hide');
     eventView.classList.add('hide');
     inboxView.classList.remove('hide');
-});
-document.getElementById('memberConnection').addEventListener('click', () => {
-    profileView.classList.add('hide');
-    eventView.classList.add('hide');
-    inboxView.classList.add('hide');
-    employeeView.classList.add('hide');
-    memberView.classList.remove('hide');
 });
 
 
@@ -663,204 +641,6 @@ function updateTotalEmployeesCount() {
 
 /*Manage Employees Tab End */
 
-
-/*Manage Member Tab */
-
-const addMemberUrl = `${backendUrl}/insertMember`;
-const removeMemberUrl = `${backendUrl}/deleteMember`;
-const getMemberUrl = `${backendUrl}/getMember`;
-
-
-
-const addMemberBtn = document.getElementById('addMemberBtn');
-const addMemberForm = document.getElementById('addMemberForm');
-const removeMemberBtn = document.getElementById('removeMemberBtn');
-const removeMemberForm = document.getElementById('removeMemberForm');
-
-addMemberBtn.addEventListener('click', () => {
-    toggleForm(addMemberBtn, addMemberForm);
-    hideFormIfOpen(removeMemberForm);
-  });
-removeMemberBtn.addEventListener('click', () => {
-  toggleForm(removeMemberBtn, removeMemberForm);
-  hideFormIfOpen(addMemberForm);
-});
-function toggleForm(btn, form) {
-    const icon = btn.querySelector('i');
-  
-    if (form.style.display === 'none') {
-      form.style.display = 'block';
-      icon.className = 'uil uil-angle-up';
-    } else {
-      form.style.display = 'none';
-      icon.className = 'uil uil-angle-down';
-    }
-  }
-
-
-function getMemberList() {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', getMemberUrl);
-
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            const memberDiv = document.querySelector('.table-content');
-            memberDiv.innerHTML = xhr.responseText;
-            updateTotalmemberCount(); 
-            
-            const memberIds = getMemberIds();
-            populateMemberIdsDropdown(memberIds);
-
-
-        } 
-    };
-    xhr.send();
-}
-function getMemberIds() {
-    const table = document.getElementById('memberTable');
-    const rows = table.getElementsByClassName('member-item');
-    const memberIds = [];
-
-    for (const row of rows) {
-        const memberId = row.getElementsByClassName('member_id')[0].textContent;
-        memberIds.push(memberId);
-    }
-    return memberIds;
-}
-function populateMemberIdsDropdown(memberIds) {
-    const dropdown = document.getElementById('removeMemberId');
-
-    while (dropdown.options.length > 1) {
-        dropdown.remove(1);
-    }
-
-    memberIds.forEach(memberId => {
-        const option = document.createElement('option');
-        option.value = memberId;
-        option.textContent = memberId;
-        dropdown.appendChild(option);
-    });
-}
-document.addEventListener('DOMContentLoaded', function() {
-    getMemberList();
-});
-document.getElementById('addMemberSubmit').addEventListener('click', function(event) {
-    event.preventDefault();
-    
-    const allFieldsFilled = [
-        'addMemberName', 'addMemberPhoneNum', 'addMemberEmail', 'addMemberPassword', 'memberResidency', 'addMemberAddress', 'addMemberCity', 'addMemberState', 'addMemberZip'
-    ].every(id => document.getElementById(id).value.trim() !== "");
-
-    if (allFieldsFilled) {
-        const name = document.getElementById('addMemberName').value.trim();
-        const phoneNum = document.getElementById('addMemberPhoneNum').value.trim();
-        const email = document.getElementById('addMemberEmail').value.trim();
-        const password = document.getElementById('addMemberPassword').value.trim();
-        const residencyType = document.getElementById('memberResidency').value.trim();
-        const address = document.getElementById('addMemberAddress').value.toLowerCase();
-        const city = document.getElementById('addMemberCity').value.trim();
-        const state = document.getElementById('addMemberState').value.trim();
-        const zip = document.getElementById('addMemberZip').value.trim();
-
-
-
-        
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', addMemberUrl); 
-        xhr.setRequestHeader('Content-Type', 'application/json');
-
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                console.log('sucessfully added employee');
-                document.getElementById('addMemberName').value = '';
-                document.getElementById('addMemberPhoneNum').value = '';
-                document.getElementById('memberEmail').value = '';
-                document.getElementById('memberPassword').value = '';
-                document.getElementById('MemberResidency').value = '';
-                document.getElementById('addMemberAddress').value = '';
-                document.getElementById('addMemberCity').value = '';
-                document.getElementById('addMemberState').value = '';
-                document.getElementById('addMemberZip').value = '';
-
-                getMemberList();
-                updateTotalMemberCount();
-            } 
-            else {
-                console.error('Error:', xhr.statusText);
-            }
-        };
-
-        const data = JSON.stringify({ 
-            name: name, 
-            phoneNum: phoneNum, 
-            email: email, 
-            password: password, 
-            residencyType: residencyType, 
-            address: address,
-            city: city,
-            state:state,
-            zip:zip
-
-        });
-        
-        xhr.send(data);
-    }
-    else {
-        const submitBtn = document.getElementById('addMemberSubmit');
-        submitBtn.classList.add('shake-button');
-
-        setTimeout(() => {
-            submitBtn.classList.remove('shake-button');
-        }, 500);
-    }
-});
-
-
-    
-document.getElementById('removeMemberSubmit').addEventListener('click', function(event) {
-    event.preventDefault();
-    
-    const allFieldsFilled = document.getElementById('memberId').value.trim() !== "";
-
-    if (allFieldsFilled) {
-        const memberId = document.getElementById('memberId').value.trim();
-        
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', removeMemberUrl); 
-        xhr.setRequestHeader('Content-Type', 'application/json');
-
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                console.log('sucessfully removed member');
-                document.getElementById('memberId').value = '';
-                getMemberList();
-                updateTotalMemberCount();
-            } 
-            else {
-                console.error('Error:', xhr.statusText);
-            }
-        };
-
-        const data = JSON.stringify({ memberId });
-        
-        xhr.send(data);
-    }
-    else {
-        const submitBtn = document.getElementById('removeMemberSubmit');
-        submitBtn.classList.add('shake-button');
-
-        setTimeout(() => {
-            submitBtn.classList.remove('shake-button');
-        }, 500);
-    }
-});
-
-function updateTotalMemberCount() {
-    const totalMember = document.getElementById('total-count');
-    const rowCount = document.getElementById('memberTable').rows.length - 2;
-    totalMember.textContent = rowCount;
-}
-/*Manage Member Tab End */
 
 
 /*Manage Events Tab*/

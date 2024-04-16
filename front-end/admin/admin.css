@@ -916,9 +916,7 @@ input[type="password"] {
 .settings.inbox.hide {
   display: none;
 }
-.settings.member.hide {
-  display: none;
-}
+
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
