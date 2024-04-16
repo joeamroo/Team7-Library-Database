@@ -212,42 +212,37 @@ function getUserDashInfo(response, memberId) {
   └─────────────────────────────────────────────────────────────────────────────┘
  */
 
-  function setUserDashInfo(response, memberId, firstName, lastName, phone_number,
-                           street_addr, city_addr, state, zipcode_addr, email) {
-
-
-      // Combines first name and last name
-      const fullName = firstName + " " + lastName;
-      //console.log(fullName);
-
-      // Query to search for
-      const sql_query = 'UPDATE member' +
-                        'SET name = ?,' +
-                          'phone_number = ?,' +
-                          'street_addr = ?,' + 
-                          'city_addr = ?,' +
-                          'state = ?,' +
-                          'zipcode_addr = ?,' + 
-                          'email = ?'
-                        'WHERE member_id = ?';
-
+  function setUserDashInfo(response, memberId, firstName, lastName, phone_number, street_addr, city_addr, state, zipcode_addr, email) {
+    // Combines first name and last name
+    const fullName = firstName + " " + lastName;
+  
+    // Query to search for
+    const sql_query = 'UPDATE member ' +
+                      'SET name = ?, ' +
+                      'phone_number = ?, ' +
+                      'street_addr = ?, ' +
+                      'city_addr = ?, ' +
+                      'state = ?, ' +
+                      'zipcode_addr = ?, ' +
+                      'email = ? ' +
+                      'WHERE member_id = ?';
+  
     // Values to update
     const values = [fullName, phone_number, street_addr, city_addr, state, zipcode_addr, email, memberId];
-
+  
     // Use the memberId parameter in the query execution
-      link.query(sql_query, values, function(err, result) {
+    link.query(sql_query, values, function(err, result) {
       if (err) {
-            console.error('Failed to insert member details:', err);
-            //console.log('Query Results: ', result);
-            response.writeHead(200, { 'Content-Type': 'text/html' });
-            response.end('Internal Server Error', 'utf-8');
+        console.error('Failed to update member details:', err);
+        response.writeHead(500, { 'Content-Type': 'text/html' });
+        response.end('Internal Server Error', 'utf-8');
       } else {
         console.log("Update:" + result);
         response.writeHead(200, { 'Content-Type': 'text/html' });
         response.end('Profile settings successfully updated!', 'utf-8');
       }
-  });
-}
+    });
+  }
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
