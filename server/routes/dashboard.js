@@ -58,6 +58,7 @@ const link = mysql.createConnection({
         // Check if the key is 'Image' and add an <img> element if it exists
         if (key === 'Image' && value !== "Not Applicable") {
           value = `<img src="${value}" alt="Image">`;
+          key = ''; // Removes title
         }
   
         // Check if the key is 'date' and format the date
@@ -259,7 +260,7 @@ function getUserOrderInfo(response, memberId) {
 // Execute the SQL query
 const query = "SELECT TV.transaction_Id AS 'Order #', " +
                   "T.date_created AS 'Date', " +
-                  "CV.image_address AS '', " +
+                  "CV.image_address AS 'Image', " +
                   "TV.asset_type AS 'Asset', " +
                   "CV.book_movie_title_model AS 'Product', " +
                   "CV.isbn AS 'ISBN', " +

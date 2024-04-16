@@ -302,7 +302,7 @@ header {
     max-height: 100%;
    }
 
-  .order-title {
+  .order-title, .holds-title, .event-title {
     font-size: x-large;
     padding-bottom: 30px;
   }
