@@ -267,9 +267,9 @@ const query = "SELECT TV.transaction_Id AS 'Order #', " +
                 "WHERE M.member_id = T.member_id " +
                       "AND T.transaction_id = TV.transaction_Id " +
                       "AND TV.itemId = CV.asset_id " +
-                      "AND TV.asset_type = ?" +
+                      "AND CV.book_movie_title_model = ?" +
                       "AND TV.date_created BETWEEN ? " +
-                      "AND TV.date_created ?"
+                      "AND ?"
                     "LIMIT 30;";
 
 
