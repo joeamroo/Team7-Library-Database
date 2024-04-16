@@ -22,7 +22,7 @@ const fineView = document.querySelector('.settings.fines');
 const orderReport = document.querySelector('.recent-orders');
 const eventReport = document.querySelector('.settings.events');
 const profileInfo = document.querySelector('.member-info');
-var asset = document.querySelector(".input-box");
+var asset = document.querySelector(".input-box").value.toLowerCase;
 var assetSelect = '';
 const today = new Date().toLocaleDateString();
 const notify = document.querySelector('#notify-user');
@@ -481,6 +481,7 @@ function getUserOrderReport() {
         orderReport.innerHTML = ''; // Clears it out
         orderReport.innerHTML = '<div class="order-title">Recent Orders</div>';
         orderReport.innerHTML += xhr.responseText;
+        removeRowsWithKeyword('order-table', asset);
       } else {
         console.log("Failed to retrieve data");
       }
@@ -550,8 +551,6 @@ dateSelect.addEventListener('submit', function(event) {
       if (xhr.status === 200) {
         //const retrieved = xhr.responseText;
         holdsView.innerHTML = xhr.responseText;
-        removeRowsWithKeyword('order-table', 'movie');
-        
         
       } else {
         console.log("Failed x to retrieve data");
