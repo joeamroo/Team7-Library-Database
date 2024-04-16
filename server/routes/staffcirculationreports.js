@@ -21,14 +21,6 @@ function buildWhereClause(filters) {
       conditions.push(`m.name LIKE '%${filters.name}%'`);
     }
   
-    if (filters.hasFines) {
-      conditions.push('m.fine > 0');
-    }
-  
-    if (filters.noTransactions) {
-      conditions.push('t.transaction_id IS NULL');
-    }
-  
     if (conditions.length > 0) {
       return 'WHERE ' + conditions.join(' AND ');
     }
@@ -55,7 +47,7 @@ function buildWhereClause(filters) {
     });
   }
 
-function generateReport(filters, callback) {
+  function generateReport(filters, callback) {
     const whereClause = buildWhereClause(filters);
     const query = `
       SELECT m.member_id, m.fine, COUNT(t.transaction_id) AS holds
@@ -65,42 +57,27 @@ function generateReport(filters, callback) {
       GROUP BY m.member_id
     `;
   
-    connection.query(query, (err, memberData) => {
+    connection.query(query, (err, result) => {
       if (err) {
         callback(err, null);
         return;
       }
   
-      const averageQuery = `
-        SELECT AVG(m.fine) AS averageFine, AVG(holds) AS averageHolds
-        FROM (
-          SELECT m.fine, COUNT(t.transaction_id) AS holds
-          FROM member m
-          LEFT JOIN transaction t ON m.member_id = t.member_id
-          GROUP BY m.member_id
-        ) AS aggregated
-      `;
-  
-      connection.query(averageQuery, (err, averageData) => {
-        if (err) {
-          callback(err, null);
-          return;
-        }
-  
-        const averageFine = averageData[0].averageFine || 0;
-        const averageHolds = averageData[0].averageHolds || 0;
-  
-        const reportData = {
-          averageFine,
-          averageHolds,
-          memberData,
-        };
-  
-        callback(null, reportData);
+      let totalFine = 0;
+      let totalHolds = 0;
+      result.forEach((row) => {
+        totalFine += row.fine;
+        totalHolds += row.holds;
       });
+  
+      const averageFine = result.length > 0 ? totalFine / result.length : 0;
+      const averageHolds = result.length > 0 ? totalHolds / result.length : 0;
+      const reportData = { averageFine, averageHolds, memberData: result };
+  
+      callback(null, reportData);
     });
   }
-
+  
 
 module.exports = {
   getMemberData,
