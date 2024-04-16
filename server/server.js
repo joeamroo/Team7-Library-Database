@@ -17,7 +17,7 @@ const { getAdminAlerts, getEventsForAdmin, insertEvent, deleteEvent, filterEvent
 const { getItemsForAdmin, filterCatalogItems, getAdminInfo } = require('./routes/adminCatalogManagement');
 const { updateFine, getFineAmount } = require('./routes/payFine');
 const { addItems } = require('./routes/add-items');
-const { generateReport, getMemberData } = require('./routes/staffcirculationreports');
+const { getMemberData, generateReport } = require('./routes/staffcirculationreports');
 const { addDevices } = require('./routes/addDevices');
 
 
@@ -68,6 +68,83 @@ const server = http.createServer((request, res) => {
                 case '/getAdminAlerts':
                     getAdminAlerts(res);
                     break;
+                case '/reportmembers':
+                    try {
+                        const queryObject = url.parse(request.url, true).query;
+                        const filters = {
+                            name: queryObject.name || '',
+                            memberId: queryObject.memberId || '',
+                        };
+                        getMemberData(filters, (err, result) => {
+                            if (err) {
+                                console.error(err);
+                                res.statusCode = 500;
+                                res.end('Internal server error');
+                            } else {
+                                console.log('Server Response:', result);
+                                res.statusCode = 200;
+                                res.setHeader('Content-Type', 'application/json');
+                                res.end(JSON.stringify(result));
+                            }
+                        });
+                    } catch (err) {
+                        console.error(err);
+                        res.statusCode = 500;
+                        res.end('Internal server error');
+                    }
+                
+                    break;
+                case '/reportmembers':
+                    try {
+                        const queryObject = url.parse(request.url, true).query;
+                        const filters = {
+                            name: queryObject.name || '',
+                            memberId: queryObject.memberId || '',
+                        };
+                        getMemberData(filters, (err, result) => {
+                            if (err) {
+                                console.error(err);
+                                res.statusCode = 500;
+                                res.end('Internal server error');
+                            } else {
+                                console.log('Server Response:', result);
+                                res.statusCode = 200;
+                                res.setHeader('Content-Type', 'application/json');
+                                res.end(JSON.stringify(result));
+                            }
+                        });
+                    } catch (err) {
+                        console.error(err);
+                        res.statusCode = 500;
+                        res.end('Internal server error');
+                    }
+                                break;
+                case '/generateReport':
+                try {
+                    const queryObject = url.parse(request.url, true).query;
+                    const filters = {
+                        name: queryObject.name || '',
+                        memberId: queryObject.memberId || '',
+                    };
+                    generateReport(filters, (err, result) => {
+                        if (err) {
+                            console.error(err);
+                            res.statusCode = 500;
+                            res.end('Internal server error');
+                        } else {
+                            console.log('Server Response:', result);
+                            res.statusCode = 200;
+                            res.setHeader('Content-Type', 'application/json');
+                            res.end(JSON.stringify(result));
+                        }
+                    });
+                } catch (err) {
+                    console.error(err);
+                    res.statusCode = 500;
+                    res.end('Internal server error');
+                }
+                break;
+
                 default:
                     serve404(res, pathname);
             }
@@ -105,52 +182,6 @@ const server = http.createServer((request, res) => {
                     }
                 });
             } 
-            else if (pathname === '/reportmembers'){
-                let body = '';
-                request.on('data', (chunk) => {
-                    body += chunk.toString();
-                });
-                request.on('end', () => {
-                    try {
-                        const filters = {
-                            name: queryObject.name || '',
-                            memberId: queryObject.memberId || '',
-                            hasFine: queryObject.hasFines === 'true',
-                            noTransactions: queryObject.noTransactions === 'true',
-                            };
-                        
-                        const postData = JSON.parse(body);
-                        getMemberData(filters, res);
-                    } 
-                    catch (error) {
-                        console.error('Error parsing JSON:', error);
-                        serve404(res);
-                    }
-                });
-            }
-            else if (pathname === '/reportreports'){
-            let body = '';
-            request.on('data', (chunk) => {
-                body += chunk.toString();
-            });
-            request.on('end', () => {
-                try {
-                    const filters = {
-                        name: queryObject.name || '',
-                        memberId: queryObject.memberId || '',
-                        hasFine: queryObject.hasFines === 'true',
-                        noTransactions: queryObject.noTransactions === 'true',
-                        };
-                    
-                    const postData = JSON.parse(body);
-                    generateReport(filters, res);
-                } 
-                catch (error) {
-                    console.error('Error parsing JSON:', error);
-                    serve404(res);
-                }
-            });
-        }
             else if (pathname === '/catalog-hold') {
                 let body = '';
                 request.on('data', (chunk) => {

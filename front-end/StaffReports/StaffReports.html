@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="StaffReports.css">
-   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
-   <title>Member Search</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="StaffReports.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+    <title>Member Search</title>
 </head>
-
 <body>
     <header>
         <div class="top-bar">
-          <h1 class="library-name"><a href="../Home/home.html">Cougar Chronicles</a></h1>
-          <button id="logoutBtn" class="logoutBtn">Logout</button>
+            <h1 class="library-name"><a href="../Home/home.html">Cougar Chronicles</a></h1>
+            <button id="logoutBtn" class="logoutBtn">Logout</button>
         </div>
     </header>
     <div class="content-container">
@@ -26,31 +25,17 @@
                     <label for="memberId">Member ID:</label>
                     <input type="text" id="memberId" name="memberId" placeholder="Enter member ID">
                 </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="hasFines" value="true"> Members with Fines
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="noTransactions" value="true"> Members with No Transactions
-                        </label>
-                    </div>
-                </div>
                 <button type="submit" class="btn">Search</button>
                 <button type="button" id="generateReport" class="btn">Generate Report</button>
             </form>
         </div>
-        <div id="resultsContainer" style="display: none;">
+        <div id="resultsContainer">
             <table id="resultsTable">
                 <thead>
                     <tr>
                         <th>Member ID</th>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Status</th>
-                        <th>Member Type</th>
                         <th>Phone Number</th>
                         <th>Address</th>
                         <th>Fine</th>
@@ -66,10 +51,12 @@
         <div id="reportContainer" style="display: none;">
             <h2>Report</h2>
             <div id="reportContent"></div>
-            <canvas id="reportChart"></canvas>
+            <div id="chartContainer" style="display: none;">
+                <canvas id="reportChart"></canvas>
+            </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="StaffReports.js"></script>
 </body>
 </html>

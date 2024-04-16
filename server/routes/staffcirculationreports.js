@@ -9,19 +9,10 @@ const connection = mysql.createConnection({
   port: 3306,
 });
 
-const filters = {
-    name: queryObject.name || '',
-    memberId: queryObject.memberId || '',
-    hasFine: queryObject.hasFines === 'true',
-    noTransactions: queryObject.noTransactions === 'true',
-    };
-
-
 connection.connect((err) => {
   if (err) throw err;
   console.log('Connected to LibraryDev database');
 });
-
 
 function buildWhereClause(filters) {
   const conditions = [];
@@ -34,22 +25,13 @@ function buildWhereClause(filters) {
     conditions.push(`m.member_id = '${filters.memberId}'`);
   }
 
-  if (filters.hasFines) {
-    conditions.push('m.fine > 0');
-  }
-
-  if (filters.noTransactions) {
-    conditions.push('t.transaction_id IS NULL');
-  }
-
   if (conditions.length > 0) {
     return 'WHERE ' + conditions.join(' AND ');
   }
-
   return '';
 }
 
-function getMemberData(filters,response) {
+function getMemberData(filters, callback) {
   const whereClause = buildWhereClause(filters);
   const query = `
     SELECT m.member_id, m.name, m.email, m.phone_number, m.state, m.city_addr, m.street_addr, m.zipcode_addr, m.fine, t.transaction_id, t.date_created, t.due_date, t.return_date
@@ -60,48 +42,43 @@ function getMemberData(filters,response) {
 
   connection.query(query, (err, result) => {
     if (err) {
-        response.writeHead(500);
-        response.end('Server error');
-        return;
+      callback(err, null);
     } else {
-        response.writeHead(200, { 'Content-Type': 'text/html' });
-        response.end(JSON.stringify({ message: 'Data Generated' }));
+      callback(null, result);
     }
   });
 }
 
-function generateReport(filters, response) {
-  const whereClause = buildWhereClause(filters);
-  const query = `
-    SELECT m.fine, COUNT(t.transaction_id) AS holds
-    FROM member m
-    LEFT JOIN transaction t ON m.member_id = t.member_id
-    ${whereClause}
-    GROUP BY m.member_id
-  `;
-
-  connection.query(query, (err, result) => {
-    if (err) {
-        response.writeHead(500);
-        response.end('Server error');
+function generateReport(filters, callback) {
+    const whereClause = buildWhereClause(filters);
+    const query = `
+      SELECT m.fine, COUNT(t.transaction_id) AS holds
+      FROM member m
+      LEFT JOIN transaction t ON m.member_id = t.member_id
+      ${whereClause}
+      GROUP BY m.member_id
+    `;
+  
+    connection.query(query, (err, result) => {
+      if (err) {
+        callback(err, null);
         return;
-    }
-
-    let totalFine = 0;
-    let totalHolds = 0;
-    result.forEach((row) => {
-      totalFine += row.fine;
-      totalHolds += row.holds;
+      }
+  
+      let totalFine = 0;
+      let totalHolds = 0;
+      result.forEach((row) => {
+        totalFine += row.fine;
+        totalHolds += row.holds;
+      });
+  
+      const averageFine = totalFine / result.length;
+      const averageHolds = totalHolds / result.length;
+      const reportData = { averageFine, averageHolds };
+  
+      callback(null, reportData);
     });
-
-    const averageFine = totalFine / result.length;
-    const averageHolds = totalHolds / result.length;
-    const reportData = { averageFine, averageHolds };
-
-    response.writeHead(200, { 'Content-Type': 'text/html' });
-    response.end(JSON.stringify({ message: 'Report Generated' }));
-  });
-}
+  }
 
 module.exports = {
   getMemberData,
