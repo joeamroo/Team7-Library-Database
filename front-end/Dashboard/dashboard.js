@@ -2,11 +2,10 @@ const loggedIn = localStorage.getItem('loggedIn');
 const memberId = localStorage.getItem('memberId');
 const loginButton = document.getElementById('myAccount');
 const logOutBtn = document.getElementById('logoutBtn');
-const updateBtn = document.querySelector('.main-btn');
-const reportBtn = document.querySelector(".dateButton");
-const bookLabel = document.querySelector('.book-selection');
-const movieLabel = document.querySelector ('.movie-selection');
-const deviceLabel = document.querySelector('.device-selection');
+const updateBtn = document.querySelector(".main-btn");
+const bookLabel = document.querySelector(".book-selection");
+const movieLabel = document.querySelector (".movie-selection");
+const deviceLabel = document.querySelector(".device-selection");
 const sendPop = document.querySelector('#submitProfileInfo');
 const profileSelect = document.getElementById('profile-selection');
 const orderSelect = document.getElementById('order-selection');
@@ -313,14 +312,14 @@ sendPop.addEventListener('click', function(event) {
 
 function setProfileInfo() {
   
-  const firstName = document.getElementById('firstName').value;
-  const lastName = document.getElementById('lastName').value;
-  const phone_number = document.getElementById('phone_number').value;
-  const street_addr = document.getElementById('street_addr').value;
-  const city_addr = document.getElementById('city_addr').value;
-  const state = document.getElementById('state').value;
-  const zipcode_addr = document.getElementById('zipcode_addr').value;
-  const email = document.getElementById('email').value;
+  const firstName = document.getElementById('.firstName');
+  const lastName = document.getElementById('.lastName');
+  const phone_number = document.getElementById('.phone_number');
+  const street_addr = document.getElementById('.street_addr');
+  const city_addr = document.getElementById('.city_addr');
+  const state = document.getElementById('.state');
+  const zipcode_addr = document.getElementById('.zipcode_addr');
+  const email = document.getElementById('.email');
 
   const xhr = new XMLHttpRequest();
   xhr.open('POST', setUserInfoUrl);
@@ -439,7 +438,7 @@ function getUserOrderReport() {
 
     xhr.onload = function() {
       if (xhr.status === 200) {
-        orderReport.innerHTML = '<div class="order-title">Recent Orders</div>';
+        orderReport.innerHTML = '  <div class="order-title">Recent Orders</div>';
         orderReport.innerHTML += xhr.responseText;
         //const orderRetrieval = xhr.responseText;
        // orderReport.innerHTML = filterOrderTable(orderRetrieval);
@@ -464,11 +463,6 @@ function getUserOrderReport() {
     xhr.send(data);
 }
 
-reportBtn.addEventListener('click', function() {
-  getUserOrderReport();
-  orderSelect.click(); // Just in case
-});
-
      /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
   │                               Holds Report                                  │
@@ -486,6 +480,7 @@ reportBtn.addEventListener('click', function() {
       if (xhr.status === 200) {
         //const retrieved = xhr.responseText;
         //console.log(retrieved);
+        holdsView.innerHTML(' <div class="holds-title">Outstanding Holds</span>');
         holdsView.innerHTML += xhr.responseText;
     
         
