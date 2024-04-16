@@ -253,19 +253,20 @@ function getUserDashInfo(response, memberId) {
 function getUserOrderInfo(response, memberId) {
 // Execute the SQL query
 const query = "SELECT TV.transaction_Id AS 'Order #', " +
-                  "T.date_created AS 'Date', " +
-                  "CV.image_address AS 'Image', " +
-                  "TV.asset_type AS 'Asset', " +
-                  "CV.book_movie_title_model AS 'Product', " +
-                  "CV.isbn AS 'ISBN', " +
-                  "CV.asset_id AS 'Serial Number' " +
-              "FROM TRANSACTION AS T, " +
-                  "TRANSACTION_VIEW AS TV, " +
-                  "CATALOG_VIEW AS CV, " +
-                  "MEMBER AS M " +
-              "WHERE M.member_id = T.member_id " +
-                  "AND T.transaction_id = TV.transaction_Id " +
-                  "AND TV.itemId = CV.asset_id;";
+                      "T.date_created AS 'Date', " +
+                      "CV.image_address AS 'Image', " +
+                      "TV.asset_type AS 'Asset', " +
+                      "CV.book_movie_title_model AS 'Product', " +
+                      "CV.isbn AS 'ISBN', " +
+                      "CV.asset_id AS 'Serial Number' " +
+                "FROM TRANSACTION AS T, " +
+                      "TRANSACTION_VIEW AS TV, " +
+                      "CATALOG_VIEW AS CV, " +
+                      "MEMBER AS M " +
+                "WHERE M.member_id = T.member_id " +
+                      "AND T.transaction_id = TV.transaction_Id " +
+                      "AND TV.itemId = CV.asset_id " +
+                    "LIMIT 30;";
 
 
 link.query(query, [memberId], (err, results) => {
