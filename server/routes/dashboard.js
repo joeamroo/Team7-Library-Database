@@ -266,7 +266,7 @@ function getUserDashInfo(response, memberId) {
                   "WHERE M.member_id = ? " +
                   "AND T.transaction_id = TV.transaction_Id " +
                   "AND TV.itemId = CV.asset_id " +
-                  "AND CV.book_movie_title_model = ? " +
+                  "AND LOWER(CV.book_movie_title_model) = LOWER(?) " +
                   "AND T.date_created BETWEEN ? AND ? " +
                   "LIMIT 30;";
   
