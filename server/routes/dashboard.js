@@ -46,11 +46,6 @@ const link = mysql.createConnection({
   
     const data = queryResult;
     const headers = Object.keys(data[0]); // Get headers from the keys of the first row
-
-    // Removes the Header title for Images
-    if (headers[2] === 'Image') {
-      headers[2] = "";
-    }
   
     // Generate table headers with id attributes
     const tableHeader = headers.map((headerText, index) => `<th id="header-${index}">${headerText}</th>`).join('');
