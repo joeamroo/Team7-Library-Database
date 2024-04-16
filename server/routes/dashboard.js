@@ -301,6 +301,7 @@ link.query(query, [memberId], (err, results) => {
   function getDashHoldsInfo(response, memberId) {
 
     // Headers for Tables
+    let html_head = '<div class="holds-title">Outstanding Holds</span>';
     let html_books = '<div class="table-title">Books</div>';
     let html_movies = '<div class="table-title">Movies</div>';
     let html_devices = '<div class="table-title">Devices</div>';
@@ -356,7 +357,7 @@ link.query(query, [memberId], (err, results) => {
 
     try {
       // Combines all tables together
-      const tableHTML = html_books + html_movies + html_devices;
+      const tableHTML = html_head + html_books + html_movies + html_devices;
 
       // Sends it to the client
       response.writeHead(200, { 'Content-Type': 'text/html' });

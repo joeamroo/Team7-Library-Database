@@ -480,7 +480,6 @@ function getUserOrderReport() {
       if (xhr.status === 200) {
         //const retrieved = xhr.responseText;
         //console.log(retrieved);
-        holdsView.innerHTML(' <div class="holds-title">Outstanding Holds</span>');
         holdsView.innerHTML += xhr.responseText;
     
         
