@@ -458,10 +458,34 @@ function getUserDashInfo(response, memberId) {
     try {
       const results = link.query(query, [memberId]);
       // Converts SQL query to a table with Keys as IDs
-      tableHTML = getSQLTable(results, 'holds-table');
+      tableHTML = getTable(results, 'holds-table');
     } catch (error) {
       console.log('Error executing query', error);
     }
+  
+    return tableHTML;
+  }
+
+  function getTable(results, tableClass) {
+    let tableHTML = `<table class="${tableClass}">`;
+  
+    // Table headers
+    tableHTML += '<tr>';
+    for (const key in results[0]) {
+      tableHTML += `<th>${key}</th>`;
+    }
+    tableHTML += '</tr>';
+  
+    // Table rows
+    for (const row of results) {
+      tableHTML += '<tr>';
+      for (const key in row) {
+        tableHTML += `<td>${row[key]}</td>`;
+      }
+      tableHTML += '</tr>';
+    }
+  
+    tableHTML += '</table>';
   
     return tableHTML;
   }
