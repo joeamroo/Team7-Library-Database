@@ -250,7 +250,8 @@ function getUserDashInfo(response, memberId) {
   └─────────────────────────────────────────────────────────────────────────────┘
  */
 
-function getUserOrderInfo(response, memberId) {
+function getUserOrderInfo(response, memberId, asset, startDate, endDate) { 
+
 // Execute the SQL query
 const query = "SELECT TV.transaction_Id AS 'Order #', " +
                       "T.date_created AS 'Date', " +
@@ -266,10 +267,13 @@ const query = "SELECT TV.transaction_Id AS 'Order #', " +
                 "WHERE M.member_id = T.member_id " +
                       "AND T.transaction_id = TV.transaction_Id " +
                       "AND TV.itemId = CV.asset_id " +
+                      "AND TV.asset_type = ?" +
+                      "AND TV.date_created BETWEEN ? " +
+                      "AND TV.date_created ?"
                     "LIMIT 30;";
 
 
-link.query(query, [memberId], (err, results) => {
+link.query(query, [memberId, asset, startDate, endDate], (err, results) => {
   if (err) {
       console.error('Error executing the query:', err);
       response.writeHead(204, { 'Content-Type': 'text/plain' });

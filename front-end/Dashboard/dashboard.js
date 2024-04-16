@@ -21,6 +21,9 @@ const fineView = document.querySelector('.settings.fines');
 const orderReport = document.querySelector('.recent-orders');
 const eventReport = document.querySelector('.settings.events');
 const profileInfo = document.querySelector('.member-info');
+var startDate = document.getElementById('start-date');
+var endDate = document.getElementById('end-date');
+var asset = document.querySelector(".input-box");
 const today = new Date().toLocaleDateString();
 const notify = document.querySelector('#notify-user');
 
@@ -49,7 +52,11 @@ logOutBtn.addEventListener('click', function(event) {
 
 const container = document.getElementById('container');
 
-
+function retrieveCriteria() {
+  startDate = document.getElementById('start-date').value;
+  endDate = document.getElementById('end-date').value;
+  asset = document.querySelector(".input-box").value;
+}
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────┐
@@ -432,6 +439,7 @@ function setProfileInfo() {
 function getUserOrderReport() {
 
     const itemValue = '';
+    retrieveCriteria(); 
 
     const xhr = new XMLHttpRequest();
     xhr.open('POST', getUserOrderUrl);
@@ -441,9 +449,6 @@ function getUserOrderReport() {
       if (xhr.status === 200) {
         orderReport.innerHTML = '<div class="order-title">Recent Orders</div>';
         orderReport.innerHTML += xhr.responseText;
-        //const orderRetrieval = xhr.responseText;
-       // orderReport.innerHTML = filterOrderTable(orderRetrieval);
-        
         
       } else {
         console.log("Failed to retrieve data");
@@ -454,10 +459,13 @@ function getUserOrderReport() {
       console.error('error', xhr.statusText);
     };
 
-    //console.log(memberId);
+
 
     const data = JSON.stringify({
-      memberId: memberId
+      memberId: memberId,
+      asset: asset,
+      startDate: startDate,
+      endDate: endDate
     });
 
 
