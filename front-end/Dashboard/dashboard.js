@@ -2,7 +2,6 @@ const loggedIn = localStorage.getItem('loggedIn');
 const memberId = localStorage.getItem('memberId');
 const loginButton = document.getElementById('myAccount');
 const logOutBtn = document.getElementById('logoutBtn');
-const exitBtn = document.getElementById('logout');
 const updateBtn = document.querySelector('.main-btn');
 const reportBtn = document.querySelector(".dateButton");
 const bookLabel = document.querySelector('.book-selection');
@@ -22,21 +21,8 @@ const fineView = document.querySelector('.settings.fines');
 const orderReport = document.querySelector('.recent-orders');
 const eventReport = document.querySelector('.settings.events');
 const profileInfo = document.querySelector('.member-info');
-var asset = document.querySelector(".input-box").value.toLowerCase;
-var assetSelect = '';
 const today = new Date().toLocaleDateString();
 const notify = document.querySelector('#notify-user');
-const choice = false; // For selection of orders
-
-// Get the current date
-const currentDate = new Date();
-let startDate = document.getElementById('start-date');
-let endDate = document.getElementById('end-date');
-
-// Extract the year, month, and day from the current date
-const year = currentDate.getFullYear();
-const month = currentDate.getMonth();
-const day = currentDate.getDate();
 
 /* *********************************************** */
 /* **************** BACK END ********************* */
@@ -61,24 +47,9 @@ logOutBtn.addEventListener('click', function(event) {
   }
 });
 
-exitBtn.addEventListener('click', function(event) {
-  localStorage.setItem('loggedIn', false);
-  localStorage.removeItem('memberId');
-
-  notify.innerHTML = "You have now been logged off!";
-  showNotification();
-
-  setTimeout(() => {
-    window.location.href = '../Home/home.html';
-  }, 1100);
-});
-
 const container = document.getElementById('container');
 
-function retrieveAsset() {
-  asset = document.querySelector(".input-box").textContent;
-  return asset;
-}
+
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────┐
@@ -105,7 +76,6 @@ var input = document.querySelector(".input-box");
         item.addEventListener("change", () => {
           input.innerHTML = item.nextElementSibling.innerHTML;
           input.click();
-          getUserOrderReport();
         });
       });
 
@@ -130,21 +100,18 @@ var input = document.querySelector(".input-box");
       // original form
       
       bookLabel.addEventListener('click', () => {
-        input.innerHTML = "Book"
+        //input.innerHTML = "Book"
         input.click();
-        assetSelect = '1';
       });
 
       movieLabel.addEventListener('click', () => {
-        input.innerHTML = 'Movie'
+        //input.innerHTML = 'Movie'
         input.click();
-        assetSelect = '2';
       });
 
       deviceLabel.addEventListener('click', () => {
-        input.innerHTML = "Device";
+        //input.innerHTML = "Device";
         input.click();
-        assetSelect = '3';
       });
 
 
@@ -436,25 +403,23 @@ function setProfileInfo() {
 
   function setOrderDate() {
 
+    // Get the current date
+    const currentDate = new Date();
+
+    // Extract the year, month, and day from the current date
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    const day = currentDate.getDate();
+
+    const startingDate = document.getElementById('start-date');
+    const endingDate = document.getElementById('end-date');
     var sdate = new Date(today).toISOString().slice(0, 10);
     var one_year = new Date(year + 1, month, day)
     var edate = new Date(one_year).toISOString().slice(0, 10);
 
     // Sets the values of each to today's date by default
-    startDate.value = sdate;
-    endDate.value = edate;
-  }
-
-  function getStartingDate() {
-    startDate = document.getElementById('start-date');
-    const sdate = startDate.value;
-    return sdate;
-  }
-
-  function getEndingDate() {
-    endDate = document.getElementById('end-date');
-    const edate = endDate.value;
-    return edate;
+    startingDate.value = sdate;
+    endingDate.value = edate;
   }
 
 
@@ -467,10 +432,6 @@ function setProfileInfo() {
 function getUserOrderReport() {
 
     const itemValue = '';
-    //const assetType = retrieveAsset();
-    const strDate = getStartingDate();
-    const secDate = getEndingDate();
-
 
     const xhr = new XMLHttpRequest();
     xhr.open('POST', getUserOrderUrl);
@@ -478,82 +439,14 @@ function getUserOrderReport() {
 
     xhr.onload = function() {
       if (xhr.status === 200) {
-        orderReport.innerHTML = ''; // Clears it out
         orderReport.innerHTML = '<div class="order-title">Recent Orders</div>';
         orderReport.innerHTML += xhr.responseText;
-        removeRowsWithKeyword('order-table', asset);
-      } else {
-        console.log("Failed to retrieve data");
-      }
-    };
-
-    xhr.onerror = function() {
-      console.error('error', xhr.statusText);
-    };
-
-    //console.log(memberId);
-    //console.log(assetType);
-    //console.log(strDate);
-    //console.log(secDate);
-
-    const data = JSON.stringify({
-      memberId: memberId,
-      asset: assetSelect,
-      startDate: strDate,
-      endDate: secDate,
-      choice: choice
-    });
-
-
-    xhr.send(data);
-}
-
-reportBtn.addEventListener('click', function(event) {
-  event.preventDefault();
- // Adds filters
- getUserOrderReport();
-
-  
-});
-
-// Get the form element
-const dateSelect = document.getElementById('date-selection');
-
-// Add event listener to the form submission
-dateSelect.addEventListener('submit', function(event) {
-
-  // Get the form data
-  const startDate = document.getElementById('start-date').value;
-  const endDate = document.getElementById('end-date').value;
-
-  // Perform any necessary actions with the form data
-  console.log('Start Date:', startDate);
-  console.log('End Date:', endDate);
-
-
-});
-
-
-     /* 
-  ┌─────────────────────────────────────────────────────────────────────────────┐
-  │                               Holds Report                                  │
-  └─────────────────────────────────────────────────────────────────────────────┘
- */
-  function getUserHoldsReport() {
-
-    const itemValue = '';
-
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', getUserHoldUrl);
-    xhr.setRequestHeader('Content-Type', 'text/html');
-
-    xhr.onload = function() {
-      if (xhr.status === 200) {
-        //const retrieved = xhr.responseText;
-        holdsView.innerHTML = xhr.responseText;
+        //const orderRetrieval = xhr.responseText;
+       // orderReport.innerHTML = filterOrderTable(orderRetrieval);
+        
         
       } else {
-        console.log("Failed x to retrieve data");
+        console.log("Failed to retrieve data");
       }
     };
 
@@ -571,30 +464,50 @@ dateSelect.addEventListener('submit', function(event) {
     xhr.send(data);
 }
 
-function removeRowsWithKeyword(tableId, keyword) {
-  // Select the table element by its ID
-  const table = document.getElementById(tableId);
+reportBtn.addEventListener('click', function() {
+  getUserOrderReport();
+  orderSelect.click(); // Just in case
+});
 
-  // Get all the rows in the table
-  const rows = table.rows;
+     /* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                               Holds Report                                  │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+  function getUserHoldsReport() {
 
-  // Iterate over each row (starting from index 1 to skip the header row)
-  for (let i = 1; i < rows.length; i++) {
-    const row = rows[i];
-    const rowText = row.textContent.toLowerCase();
+    const itemValue = '';
 
-    // Check if the row contains the keyword
-    if (rowText.includes(keyword.toLowerCase())) {
-      // Remove the row from the table
-      table.deleteRow(i);
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', getUserHoldUrl);
+    xhr.setRequestHeader('Content-Type', 'text/html');
 
-      // Decrement the index to account for the removed row
-      i--;
-    }
-  }
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        //const retrieved = xhr.responseText;
+        //console.log(retrieved);
+        holdsView.innerHTML += xhr.responseText;
+    
+        
+        
+      } else {
+        console.log("Failed to retrieve data");
+      }
+    };
+
+    xhr.onerror = function() {
+      console.error('error', xhr.statusText);
+    };
+
+    //console.log(memberId);
+
+    const data = JSON.stringify({
+      memberId: memberId
+    });
+
+
+    xhr.send(data);
 }
-
-
 
 
 

@@ -41,7 +41,7 @@ const link = mysql.createConnection({
   function getSQLTable(queryResult, tableName) {
     // Check if queryResult is empty or undefined
     if (!queryResult || queryResult.length === 0) {
-      return; // Return no data
+      return '<p>None</p>'; // Return a simple message if no data
     }
   
     const data = queryResult;
@@ -250,90 +250,41 @@ function getUserDashInfo(response, memberId) {
   └─────────────────────────────────────────────────────────────────────────────┘
  */
 
-  function getUserOrderInfo(response, memberId, asset, startDate, endDate) {
-
-    const assetSelect = '';
-
-    if (asset === '1') {
-      assetSelect = "book";
-    } else if (asset === '2') {
-      assetSelect = "movie";
-    } else if (asset === '3') {
-      assetSelect = 'device';
-    } else { // In case of failure
-        const query = "SELECT TV.transaction_Id AS 'Order #', " +
+function getUserOrderInfo(response, memberId) {
+// Execute the SQL query
+const query = "SELECT TV.transaction_Id AS 'Order #', " +
                   "T.date_created AS 'Date', " +
                   "CV.image_address AS 'Image', " +
                   "TV.asset_type AS 'Asset', " +
                   "CV.book_movie_title_model AS 'Product', " +
                   "CV.isbn AS 'ISBN', " +
                   "CV.asset_id AS 'Serial Number' " +
-                  "FROM TRANSACTION AS T, " +
+              "FROM TRANSACTION AS T, " +
                   "TRANSACTION_VIEW AS TV, " +
                   "CATALOG_VIEW AS CV, " +
                   "MEMBER AS M " +
-                  "WHERE M.member_id = ? " +
+              "WHERE M.member_id = T.member_id " +
                   "AND T.transaction_id = TV.transaction_Id " +
-                  "AND TV.itemId = CV.asset_id " +
-                  "AND T.date_created BETWEEN ? AND ? " +
-                  "LIMIT 30;";
-
-                  link.query(query, [memberId, startDate, endDate], (err, results) => {
-                    if (err) {
-                      console.log("Failed: " + results);
-                      console.error('Error executing the query:', err);
-                      response.writeHead(500, { 'Content-Type': 'text/plain' });
-                      response.end('Internal Server Error');
-                      return;
-                    } else {
-                      console.log(results);
-                      // Converts SQL query to a table with Keys as IDs
-                      const tableHTML = getSQLTable(results, 'order-table');
-                      console.log("Success: " + tableHTML);
-                      // Sends the table back to client
-                      response.writeHead(200, { 'Content-Type': 'text/html' });
-                      response.end(tableHTML);
-                    }
-                  });
-              }
+                  "AND TV.itemId = CV.asset_id;";
 
 
-       const query = "SELECT TV.transaction_Id AS 'Order #', " +
-                  "T.date_created AS 'Date', " +
-                  "CV.image_address AS 'Image', " +
-                  "TV.asset_type AS 'Asset', " +
-                  "CV.book_movie_title_model AS 'Product', " +
-                  "CV.isbn AS 'ISBN', " +
-                  "CV.asset_id AS 'Serial Number' " +
-                  "FROM TRANSACTION AS T, " +
-                  "TRANSACTION_VIEW AS TV, " +
-                  "CATALOG_VIEW AS CV, " +
-                  "MEMBER AS M " +
-                  "WHERE M.member_id = ? " +
-                  "AND CV.book_movie_title_model = ? " +
-                  "AND T.transaction_id = TV.transaction_Id " +
-                  "AND TV.itemId = CV.asset_id " +
-                  "AND T.date_created BETWEEN ? AND ? " +
-                  "LIMIT 30;";
-  
-    link.query(query, [memberId, assetSelect,  startDate, endDate], (err, results) => {
-      if (err) {
-        console.log("Failed: " + results);
-        console.error('Error executing the query:', err);
-        response.writeHead(500, { 'Content-Type': 'text/plain' });
-        response.end('Internal Server Error');
-        return;
-      } else {
-        console.log(results);
-        // Converts SQL query to a table with Keys as IDs
-        const tableHTML = getSQLTable(results, 'order-table');
-        console.log("Success: " + tableHTML);
-        // Sends the table back to client
-        response.writeHead(200, { 'Content-Type': 'text/html' });
-        response.end(tableHTML);
-      }
-    });
-  }
+link.query(query, [memberId], (err, results) => {
+  if (err) {
+      console.error('Error executing the query:', err);
+      response.writeHead(204, { 'Content-Type': 'text/plain' });
+      response.end('Internal Server Error');
+      return;
+    }  else {
+
+    // Converts SQL query to a table with Keys as IDs
+    const tableHTML = getSQLTable(results, 'order-table');
+
+    // Sends the table back to client
+    response.writeHead(200, { 'Content-Type': 'text/html' });
+    response.end(tableHTML);
+    } 
+  });
+}
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -342,69 +293,96 @@ function getUserDashInfo(response, memberId) {
  */
 
   function getDashHoldsInfo(response, memberId) {
+
     // Headers for Tables
-    let html_head = '<div class="holds-title">Outstanding Holds</div>';
+    let html_head = '<div class="holds-title">Outstanding Holds</span>';
     let html_books = '<div class="table-title">Books</div>';
     let html_movies = '<div class="table-title">Movies</div>';
     let html_devices = '<div class="table-title">Devices</div>';
-  
+    
     // Searches Database for books in which a user has a hold
     const queryBooks = `
-      SELECT request_date AS "Date Requested", item_name AS "Item", status AS "Status"
-      FROM hold_request
-      WHERE member_id = (?) AND isbn IS NOT NULL;
+    SELECT
+      request_date AS "Date Requested",
+      item_name AS "Item",
+      status AS "Status"
+    FROM
+      hold_request
+    WHERE
+      member_id = (?)
+      AND isbn IS NOT NULL;
     `;
-  
+
+    // Queries and Retrieves HTML table for books
+    html_books += getHolds(queryBooks, memberId);
+
+
     // Searches Database for movies in which a user has a hold
     const queryMovies = `
-      SELECT request_date AS "Date Requested", item_name AS "Item", status AS "Status"
-      FROM hold_request
-      WHERE member_id = (?) AND movie_id IS NOT NULL;
-    `;
-  
-    // Searches Database for devices in which a user has a hold
+    SELECT 
+      request_date AS "Date Requested",
+      item_name AS "Item",
+      status AS "Status"
+    FROM 
+      hold_request
+    WHERE 
+      member_id = (?)
+      AND movie_id IS NOT NULL;
+  `;
+    
+   // Queries and Retrieves HTML table for movies
+    html_movies += getHolds(queryMovies, memberId);
+
     const queryDevices = `
-      SELECT request_date AS "Date Requested", item_name AS "Item", status AS "Status"
-      FROM hold_request
-      WHERE member_id = (?) AND device_id IS NOT NULL;
-    `;
+    SELECT
+      request_date AS "Date Requested",
+      item_name AS "Item",
+      status AS "Status"
+    FROM
+      hold_request
+    WHERE
+      member_id = (?)
+      AND device_id IS NOT NULL;
+    `
+
+    // Queries and Retrieves HTML table for devices
+    html_devices += getHolds(queryDevices, memberId);
   
-    // Queries and Retrieves HTML tables for books, movies, and devices
-    Promise.all([
-      getHolds(queryBooks, memberId),
-      getHolds(queryMovies, memberId),
-      getHolds(queryDevices, memberId)
-    ])
-      .then(([booksTable, moviesTable, devicesTable]) => {
-        // Combines all tables together
-        const tableHTML = html_head + booksTable + moviesTable + devicesTable;
-        console.log("try(): " + tableHTML);
-  
-        // Sends it to the client
-        response.writeHead(200, { 'Content-Type': 'text/html' });
-        response.end(tableHTML);
-      })
-      .catch(error => {
-        console.log('Error retrieving values:', error);
-        response.writeHead(500, { 'Content-Type': 'text/html' });
-        response.end('<span>Please contact your administrator!</span>');
-      });
-  }
-  
+
+    try {
+      // Combines all tables together
+      const tableHTML = CONCAT(html_head, html_books, html_movies, html_devices);
+      console.log("try(): " + tableHTML);
+
+      // Sends it to the client
+      response.writeHead(200, { 'Content-Type': 'text/html' });
+      response.end(tableHTML);
+      
+    } catch(error) {
+      console.log('Error retrieving values');
+      response.writeHead(204, { 'Content-Type': 'text/html'});
+      response.end('<a>Please contact your administrator</a>');
+    }
+
+}
+
+  /* A More Modular Way to Split the Tables */
   function getHolds(query, memberId) {
-    return new Promise((resolve, reject) => {
-      link.query(query, [memberId], (err, results) => {
-        if (err) {
-          reject(err);
-        } else {
-          // Converts SQL query to a table with Keys as IDs
-          const tableHTML = getSQLTable(results, 'holds-table');
-          // Resolves the promise with the table HTML
-          resolve(tableHTML);
-        }
+
+    link.query(query, [memberId], (err, results) => {
+      if (err) {
+          return;
+        }  else {
+    
+        // Converts SQL query to a table with Keys as IDs
+        const tableHTML = getSQLTable(results, 'holds-table');
+    
+        // Returns the Table
+          return tableHTML;
+        } 
       });
-    });
   }
+
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
