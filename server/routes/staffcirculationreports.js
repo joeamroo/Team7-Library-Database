@@ -15,21 +15,18 @@ connection.connect((err) => {
 });
 
 function buildWhereClause(filters) {
-  const conditions = [];
-
-  if (filters.name && filters.memberId) {
-    conditions.push(`m.name LIKE '%${filters.name}%' AND m.member_id = '${filters.memberId}'`);
-  } else if (filters.name) {
-    conditions.push(`m.name LIKE '%${filters.name}%'`);
-  } else if (filters.memberId) {
-    conditions.push(`m.member_id = '${filters.memberId}'`);
+    const conditions = [];
+  
+    if (filters.name) {
+      conditions.push(`m.name LIKE '%${filters.name}%'`);
+    }
+  
+    if (conditions.length > 0) {
+      return 'WHERE ' + conditions.join(' AND ');
+    }
+    return '';
   }
-
-  if (conditions.length > 0) {
-    return 'WHERE ' + conditions.join(' AND ');
-  }
-  return '';
-}
+  
 
 function getMemberData(filters, callback) {
   const whereClause = buildWhereClause(filters);

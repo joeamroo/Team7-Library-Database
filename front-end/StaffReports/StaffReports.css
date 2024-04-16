@@ -134,3 +134,15 @@
    margin-top: 20px;
    align-self: flex-start;
  }
+
+ #chartContainer {
+   width: 100%;
+   max-width: 800px;
+   margin: 0 auto;
+   margin-top: 40px;
+ }
+ 
+ #reportChart {
+   width: 100% !important;
+   height: 400px !important;
+ }
