@@ -355,7 +355,80 @@ header {
     cursor: pointer;
   }
 
-/* ===================== Recent Order Ends ===================== */
+
+  /* ==========================================================================
+   Section: Holds Table
+   ========================================================================== */
+
+.settings.holds {
+  display: absolute;
+  width: 100%;
+  margin: 20px 0px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.settings.holds table {
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.settings.holds th, .settings.holds td {
+  text-align: left;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.settings.holds th {
+  background-color: #fafafa;
+  color: var(--color-black);
+}
+
+.settings-holds td {
+  color: var(--color-black);
+}
+
+
+  /* ==========================================================================
+   Section: Events Table
+   ========================================================================== */
+
+   .settings.events {
+    display: absolute;
+    width: 100%;
+    margin: 20px 0px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+  
+  .settings.events table {
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .settings.events th, .settings.events td {
+    text-align: left;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .settings.events th {
+    background-color: #fafafa;
+    color: var(--color-black);
+  }
+  
+  .settings.events td {
+    color: var(--color-black);
+  }
+
 
 
 /* ==========================================================================
