@@ -294,7 +294,7 @@ link.query(query, [memberId], (err, results) => {
 
     // Searches Database for user with the memberID
     const query = 'SELECT request_date AS "Date Requested",' +
-                        'item_name AS "Item"' +
+                        'item_name AS "Item",' +
                         'status AS "Status"' 
                         'FROM hold_request WHERE member_id = ?';
 
