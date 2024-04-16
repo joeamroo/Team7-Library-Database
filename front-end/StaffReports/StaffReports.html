@@ -24,12 +24,12 @@
                 </div>
                 <div class="form-group">
                   <label>
-                    <input type="checkbox" name="hasFines" value="true"> Members with Fines
+                    Members with Fines <input type="checkbox" name="hasFines" value="true">
                   </label>
                 </div>
                 <div class="form-group">
                   <label>
-                    <input type="checkbox" name="noTransactions" value="true"> Members with No Transactions
+                    Members with No Transactions <input type="checkbox" name="noTransactions" value="true">
                   </label>
                 </div>
                 <button type="submit" class="btn">Search</button>
@@ -37,7 +37,6 @@
               </form>
         </div>
       </div>
-      <button id="backButton" class="btn">Back</button>
       <div id="resultsContainer" class="results-container">
         <table id="resultsTable">
                 <thead>
@@ -56,10 +55,11 @@
                 </thead>
                 <tbody></tbody>
             </table>
+            <button id="backButton" class="btn">Back</button>
         </div>
     </div>
     <br>
-    <button id="backButton" class="btn">Back</button>
+    
     <div id="reportContainer" style="display: none;">
       <h2>Report</h2>
       <br>
@@ -67,9 +67,11 @@
       <br>
       <br>
       <div id="reportContent"></div>
+      <button id="backButton" class="btn">Back</button>
       <div id="chartContainer" style="display: none;">
         <canvas id="reportChart"></canvas>
       </div>
+      <button id="backButton" class="btn">Back</button>
     </div>
   </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
