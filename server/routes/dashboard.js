@@ -364,6 +364,7 @@ link.query(query, [memberId, asset, startDate, endDate], (err, results) => {
       });
     });
   }
+  
 /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
   │                              Get Events List                                │
