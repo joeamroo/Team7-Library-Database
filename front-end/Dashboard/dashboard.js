@@ -544,14 +544,9 @@ dateSelect.addEventListener('submit', function(event) {
   console.log('End Date:', endDate);
 
   // Reset the form (optional)
-  form.reset();
+  dateSelect.reset();
 });
 
-function executeFilter() {
-  orderReport.innerHTML = '';
-  orderSelective.click();
-  
-}
 
      /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
