@@ -275,6 +275,7 @@ const query = "SELECT TV.transaction_Id AS 'Order #', " +
 
 link.query(query, [memberId, asset, startDate, endDate], (err, results) => {
   if (err) {
+      console.log("Failed: " + results);
       console.error('Error executing the query:', err);
       response.writeHead(204, { 'Content-Type': 'text/plain' });
       response.end('Internal Server Error');
@@ -283,6 +284,7 @@ link.query(query, [memberId, asset, startDate, endDate], (err, results) => {
 
     // Converts SQL query to a table with Keys as IDs
     const tableHTML = getSQLTable(results, 'order-table');
+    console.log("Success: " + tableHTML);
 
     // Sends the table back to client
     response.writeHead(200, { 'Content-Type': 'text/html' });
