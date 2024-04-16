@@ -515,7 +515,9 @@ function getUserOrderReport() {
 });*/
 
 function executeFilter() {
+  orderReport.innerHTML = '';
   orderSelect.click();
+  
 }
 
      /* 
