@@ -916,6 +916,9 @@ input[type="password"] {
 .settings.inbox.hide {
   display: none;
 }
+.settings.member.hide {
+  display: none;
+}
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -985,7 +988,7 @@ input[type="date"] {
   color: var(--mainColor);
 }
 
-#employeeTable, #eventTable {
+#employeeTable, #eventTable, #memberTable{
   table-layout: auto;
   margin-top: 40px;
   align-items: center;
@@ -996,7 +999,9 @@ input[type="date"] {
 #employeeTable th,
 #employeeTable td,
 #eventTable th,
-#eventTable td {
+#eventTable td,
+#memberTable th,
+#memberTable td{
   text-align: left;
 }
 
@@ -1006,6 +1011,10 @@ input[type="date"] {
 }
 
 #employeeTable tbody tr td {
+  font-size: 18px; 
+  font-weight: normal; 
+}
+#memberTable tbody tr td {
   font-size: 18px; 
   font-weight: normal; 
 }
@@ -1028,14 +1037,15 @@ input[type="date"] {
   color: rgb(165, 91, 91);
 }
 
-.employee-btns i, .event-btns i {
+.employee-btns i, .event-btns i, .member-btns{
   font-size: 22px;
   margin-right: 5px;
 }
 
 .employee-btns, 
 #addEventBtn, 
-#removeEventBtn {
+#removeEventBtn,
+.member-btns {
   padding: 10px 15px;
   border-radius: 10px;
   margin-right: 5px;
@@ -1044,12 +1054,12 @@ input[type="date"] {
   margin-bottom: 20px;
 }
 
-#addEmployeeBtn:hover, #removeEmployeeBtn:hover, #addEventBtn:hover, #removeEventBtn:hover {
+#addEmployeeBtn:hover, #removeEmployeeBtn:hover, #addEventBtn:hover, #removeEventBtn:hover, #addMemberBtn:hover, #removeMemberBtn:hover {
   cursor: pointer;
   opacity: 0.8;
 }
 
-#addEmployeeForm, #addEventForm {
+#addEmployeeForm, #addEventForm ,#addMemberForm{
   border-radius: 20px;
   margin: 20px 10px;
   width: 85%;
@@ -1061,7 +1071,7 @@ input[type="date"] {
   margin-bottom: 15px;
 }
 
-#removeEmployeeForm, #removeEventForm {
+#removeEmployeeForm, #removeEventForm ,#removeMemberForm{
   border-radius: 20px;
   margin: 20px 10px;
   width: 85%;
@@ -1257,10 +1267,9 @@ button[type='submit']:hover {
   width: 100%;
 }
 
-
 .circle {
-  width: 300px; 
-  height: 300px; 
+  width: 200px; 
+  height: 200px; 
   border-radius: 50%;
   background-color: var(--mainColor);
   display: flex;
@@ -1279,8 +1288,8 @@ button[type='submit']:hover {
 }
 
 .inner-circle {
-  width: 250px; 
-  height: 250px; 
+  width: 150px; 
+  height: 150px; 
   border-radius: 50%;
   background-color: white;
   display: flex;
@@ -1290,17 +1299,18 @@ button[type='submit']:hover {
 }
 
 .circle-number {
-  font-size: 60px; 
+  font-size: 40px; 
   font-weight: bold; 
   position: absolute;
-  top: 30%;
+  top: 30%; 
 }
 
 .circle-text {
-  margin-top: 28%;
-  font-size: 16px;
+  margin-top: 20%; 
+  font-size: 14px; 
   font-weight: bold; 
 }
+
 
 #tabs-name {
   margin-top: 60px;
