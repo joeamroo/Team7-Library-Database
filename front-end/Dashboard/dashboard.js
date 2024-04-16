@@ -313,14 +313,14 @@ sendPop.addEventListener('click', function(event) {
 
 function setProfileInfo() {
   
-  const firstName = document.getElementById('firstName').textContent;
-  const lastName = document.getElementById('lastName').textContent;
+  const firstName = document.getElementById('firstName').value;
+  const lastName = document.getElementById('lastName').value;
   const phone_number = document.getElementById('phone_number').value;
-  const street_addr = document.getElementById('street_addr').textContent;
-  const city_addr = document.getElementById('city_addr').textContent;
-  const state = document.getElementById('state').textContent;
-  const zipcode_addr = document.getElementById('zipcode_addr').textContent;
-  const email = document.getElementById('email').textContent;
+  const street_addr = document.getElementById('street_addr').value;
+  const city_addr = document.getElementById('city_addr').value;
+  const state = document.getElementById('state').value;
+  const zipcode_addr = document.getElementById('zipcode_addr').value;
+  const email = document.getElementById('email').value;
 
   const xhr = new XMLHttpRequest();
   xhr.open('POST', setUserInfoUrl);
