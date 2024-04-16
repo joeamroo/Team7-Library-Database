@@ -64,7 +64,7 @@ function getMemberData(filters,response) {
         response.end('Server error');
         return;
     } else {
-        response.writeHead(200, { 'Content-Type': 'application/json' });
+        response.writeHead(200, { 'Content-Type': 'text/html' });
         response.end(JSON.stringify({ message: 'Data Generated' }));
     }
   });
@@ -98,7 +98,7 @@ function generateReport(filters, response) {
     const averageHolds = totalHolds / result.length;
     const reportData = { averageFine, averageHolds };
 
-    response.writeHead(200, { 'Content-Type': 'application/json' });
+    response.writeHead(200, { 'Content-Type': 'text/html' });
     response.end(JSON.stringify({ message: 'Report Generated' }));
   });
 }

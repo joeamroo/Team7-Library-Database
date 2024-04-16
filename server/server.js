@@ -120,7 +120,7 @@ const server = http.createServer((request, res) => {
                             };
                         
                         const postData = JSON.parse(body);
-                        getMemberData(postData.eventId, res);
+                        getMemberData(filters, res);
                     } 
                     catch (error) {
                         console.error('Error parsing JSON:', error);
