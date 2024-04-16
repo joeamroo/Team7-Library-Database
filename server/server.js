@@ -19,6 +19,8 @@ const { updateFine, getFineAmount } = require('./routes/payFine');
 const { addItems } = require('./routes/add-items');
 const { reportreports, reportmembers } = require('./routes/staffcirculationreports');
 const { addDevices } = require('./routes/addDevices');
+const { getMembers, insertMember, removeMember} = require ('./routes/adminMemberManagement');
+
 
 function setCorsHeaders(res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -61,6 +63,10 @@ const server = http.createServer((request, res) => {
                 case '/getEventsForAdmin':
                     getEventsForAdmin(res);
                     break;
+                case '/getMembers':
+                    getMembers(res);
+                    break;
+            
                 case '/getItemsForAdmin':
                     getItemsForAdmin(res);
                     break;
@@ -432,6 +438,38 @@ const server = http.createServer((request, res) => {
                     try {
                         const postData = JSON.parse(body);
                         filterStaff(res, postData.empStatus, postData.empPosition);
+                    } 
+                    catch (error) {
+                        console.error('Error parsing JSON:', error);
+                        serve404(res);
+                    }
+                });
+            }
+            else if (pathname === '/insertMember') {
+                let body = '';
+                request.on('data', (chunk) => {
+                    body += chunk.toString();
+                });
+                request.on('end', () => {
+                    try {
+                        const postData = JSON.parse(body);
+                        insertMember(res, postData.name, postData.phoneNum, postData.email, postData.password, postData.residencyType, postData.address, postData.city, postData.state, postData.zip);
+                    } 
+                    catch (error) {
+                        console.error('Error parsing JSON:', error);
+                        serve404(res);
+                    }
+                });
+            }
+            else if (pathname === '/removeMember') {
+                let body = '';
+                request.on('data', (chunk) => {
+                    body += chunk.toString();
+                });
+                request.on('end', () => {
+                    try {
+                        const postData = JSON.parse(body);
+                        removeMember(res, postData.memberId);
                     } 
                     catch (error) {
                         console.error('Error parsing JSON:', error);
