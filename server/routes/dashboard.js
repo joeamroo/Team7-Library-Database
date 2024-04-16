@@ -298,98 +298,51 @@ function getUserDashInfo(response, memberId) {
  */
 
   function getDashHoldsInfo(response, memberId) {
-
-    // Headers for Tables
-    let html_head = '<div class="holds-title">Outstanding Holds</div>';
-    let html_books = '<div class="table-title">Books</div>';
-    let html_movies = '<div class="table-title">Movies</div>';
-    let html_devices = '<div class="table-title">Devices</div>';
-    
+    // ...
   
-    // Searches Database for books in which a user has a hold
-    const queryBooks = `
-    SELECT
-      request_date AS "Date Requested",
-      item_name AS "Item",
-      status AS "Status"
-    FROM
-      hold_request
-    WHERE
-      member_id = (?)
-      AND isbn IS NOT NULL;
-      SELECT request_date AS "Date Requested", item_name AS "Item", status AS "Status"
-      FROM hold_request
-      WHERE member_id = (?) AND isbn IS NOT NULL;
-    `;
-
-    // Queries and Retrieves HTML table for books
-    html_books += getHolds(queryBooks, memberId);
-
-
+    // Declare variables to store the table HTML
+    let html_books = '';
+    let html_movies = '';
+    let html_devices = '';
   
-    // Searches Database for movies in which a user has a hold
-    const queryMovies = `
-    SELECT 
-      request_date AS "Date Requested",
-      item_name AS "Item",
-      status AS "Status"
-    FROM 
-      hold_request
-    WHERE 
-      member_id = (?)
-      AND movie_id IS NOT NULL;
-  `;
-    // Queries and Retrieves HTML table for books
-    html_movies += getHolds(queryMovies, memberId);
-
-   // Searches Database for movies in which a user has a hold
-   const queryDevices = `
-   SELECT 
-     request_date AS "Date Requested",
-     item_name AS "Item",
-     status AS "Status"
-   FROM 
-     hold_request
-   WHERE 
-     member_id = (?)
-     AND movie_id IS NOT NULL;
- `;
-   // Queries and Retrieves HTML table for books
-   html_devices += getHolds(queryDevices, memberId);
-
+    // Use Promise.all to wait for all the getHolds calls to complete
+    Promise.all([
+      getHolds(queryBooks, memberId),
+      getHolds(queryMovies, memberId),
+      getHolds(queryDevices, memberId)
+    ])
+      .then(([booksTable, moviesTable, devicesTable]) => {
+        // Assign the table HTML to the respective variables
+        html_books += booksTable;
+        html_movies += moviesTable;
+        html_devices += devicesTable;
   
-
-    try {
-      // Combines all tables together
-      const tableHTML = CONCAT(html_head, html_books, html_movies, html_devices);
-      console.log("try(): " + tableHTML);
-
-      // Sends it to the client
-      response.writeHead(200, { 'Content-Type': 'text/html' });
-      response.end(tableHTML);
-      
-    } catch(error) {
-      console.log('Error retrieving values');
-      response.writeHead(204, { 'Content-Type': 'text/html'});
-      response.end('<a>Please contact your administrator</a>');
-    }
-
-}
-
-  /* A More Modular Way to Split the Tables */
+        // Combine all tables together
+        const tableHTML = html_head + html_books + html_movies + html_devices;
+        console.log("try(): " + tableHTML);
+  
+        // Send the response to the client
+        response.writeHead(200, { 'Content-Type': 'text/html' });
+        response.end(tableHTML);
+      })
+      .catch(error => {
+        console.log('Error retrieving values', error);
+        response.writeHead(204, { 'Content-Type': 'text/html' });
+        response.end('<a>Please contact your administrator</a>');
+      });
+  }
+  
   function getHolds(query, memberId) {
-
-    link.query(query, [memberId], (err, results) => {
-      if (err) {
-          return;
-        }  else {
-    
-        // Converts SQL query to a table with Keys as IDs
-        const tableHTML = getSQLTable(results, 'holds-table');
-    
-        // Returns the Table
-          return tableHTML;
+    return new Promise((resolve, reject) => {
+      link.query(query, [memberId], (err, results) => {
+        if (err) {
+          reject(err);
+        } else {
+          // Converts SQL query to a table with Keys as IDs
+          const tableHTML = getSQLTable(results, 'holds-table');
+          resolve(tableHTML);
         }
+      });
     });
   }
 
