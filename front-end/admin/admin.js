@@ -704,7 +704,7 @@ function getMemberList() {
 
     xhr.onload = function() {
         if (xhr.status === 200) {
-            const memberDiv = document.querySelector('.memberTable-content');
+            const memberDiv = document.querySelector('.table-content');
             memberDiv.innerHTML = xhr.responseText;
             updateTotalmemberCount(); 
             
