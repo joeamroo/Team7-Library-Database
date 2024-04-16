@@ -477,6 +477,7 @@ function getUserOrderReport() {
 
     xhr.onload = function() {
       if (xhr.status === 200) {
+        orderReport.innerHTML = ''; // Clears it out
         orderReport.innerHTML = '<div class="order-title">Recent Orders</div>';
         orderReport.innerHTML += xhr.responseText;
         
