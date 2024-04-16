@@ -17,13 +17,13 @@ const generateReportButton = document.getElementById('generateReport');
 const reportContainer = document.getElementById('reportContainer');
 const reportContent = document.getElementById('reportContent');
 const backendUrl = 'https://cougarchronicles.onrender.com';
-const getMembersUrl = `${backendUrl}/reportmembers?${queryParams}`;
-const generateReportUrl = `${backendUrl}/reportreports?${queryParams}`;
+
 
 searchForm.addEventListener('submit', (event) => {
   event.preventDefault();
   const formData = new FormData(event.target);
   const queryParams = new URLSearchParams(formData).toString();
+  const getMembersUrl = `${backendUrl}/reportmembers?${queryParams}`;
   const xhr = new XMLHttpRequest();
   xhr.open('POST', getMembersUrl);
   xhr.onload = function() {
@@ -61,7 +61,7 @@ searchForm.addEventListener('submit', (event) => {
 generateReportButton.addEventListener('click', () => {
   const formData = new FormData(searchForm);
   const queryParams = new URLSearchParams(formData).toString();
-
+  const generateReportUrl = `${backendUrl}/reportreports?${queryParams}`;
   const xhr = new XMLHttpRequest();
   xhr.open('POST', generateReportUrl);
   xhr.onload = function() {
