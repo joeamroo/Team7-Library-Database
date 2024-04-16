@@ -299,7 +299,7 @@ header {
    /* Sets the third column to a fixed size (image) */
    #Image img {
     max-width: 100%;
-    height: auto;
+    max-height: 100%;
    }
 
   .order-title {
