@@ -254,13 +254,9 @@ const query = "SELECT TV.transaction_Id AS 'Order ID', " +
               "T.date_created AS 'Date', " +
               "CV.image_address AS 'Image', " +
               "TV.asset_type AS 'Item', " +
-              "CV.year_released AS 'Year Released', " +
               "CV.book_movie_title_model AS 'Product', " +
               "CV.isbn AS 'ISBN', " +
-              "CV.asset_id AS 'Serial Number', " +
-              "CV.genres AS 'Genre', " +
-              "CV.languages AS 'Language', " +
-              "TV.returned AS 'Status' " +
+              "CV.asset_id AS 'Serial Number', "
               "FROM TRANSACTION AS T, " +
               "TRANSACTION_VIEW AS TV, " +
               "CATALOG_VIEW AS CV, " +
