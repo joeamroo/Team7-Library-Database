@@ -504,7 +504,8 @@ function getUserOrderReport() {
     xhr.send(data);
 }
 
-reportBtn.addEventListener('click', function() {
+reportBtn.addEventListener('click', function(event) {
+  event.preventDefault()
   getUserOrderReport();
   orderSelect.click(); // Just in case
 });
