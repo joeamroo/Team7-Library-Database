@@ -72,7 +72,7 @@ searchForm.addEventListener('submit', (event) => {
     };
     xhr.send();
   });
-  
+  /*
   generateReportButton.addEventListener('click', () => {
     const formData = new FormData(searchForm);
     const queryParams = new URLSearchParams(formData).toString();
@@ -151,6 +151,6 @@ searchForm.addEventListener('submit', (event) => {
       console.error('Network error');
     };
     xhr.send();
-  });
+  });*/
   
   

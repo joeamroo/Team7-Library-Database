@@ -17,7 +17,7 @@ const { getAdminAlerts, getEventsForAdmin, insertEvent, deleteEvent, filterEvent
 const { getItemsForAdmin, filterCatalogItems, getAdminInfo } = require('./routes/adminCatalogManagement');
 const { updateFine, getFineAmount } = require('./routes/payFine');
 const { addItems } = require('./routes/add-items');
-const { getMemberData, generateReport } = require('./routes/staffcirculationreports');
+//const { getMemberData, generateReport } = require('./routes/staffcirculationreports');
 const { addDevices } = require('./routes/addDevices');
 
 
@@ -68,6 +68,7 @@ const server = http.createServer((request, res) => {
                 case '/getAdminAlerts':
                     getAdminAlerts(res);
                     break;
+                    /*
                 case '/reportmembers':
                     try {
                         const queryObject = url.parse(request.url, true).query;
@@ -145,7 +146,7 @@ const server = http.createServer((request, res) => {
                           res.end('Internal server error');
                         }
                         break;
-
+*/
                 default:
                     serve404(res, pathname);
             }
