@@ -26,6 +26,7 @@ var asset = document.querySelector(".input-box");
 var assetSelect = '';
 const today = new Date().toLocaleDateString();
 const notify = document.querySelector('#notify-user');
+const choice = false; // For selection of orders
 
 // Get the current date
 const currentDate = new Date();
