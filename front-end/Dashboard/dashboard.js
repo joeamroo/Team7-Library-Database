@@ -474,8 +474,6 @@ function setProfileInfo() {
 
 function getUserOrderReport() {
 
-    preventDefault();
-
     const itemValue = '';
     //const assetType = retrieveAsset();
     const strDate = getStartingDate();
@@ -518,8 +516,8 @@ function getUserOrderReport() {
     xhr.send(data);
 }
 
-reportBtn.addEventListener('click', function() {
-  preventDefault();
+reportBtn.addEventListener('click', function(event) {
+  event.preventDefault();
  // Adds filters
  getUserOrderReport();
  orderSelective.click();
@@ -532,8 +530,6 @@ const dateSelect = document.getElementById('date-selection');
 
 // Add event listener to the form submission
 dateSelect.addEventListener('submit', function(event) {
-  // Prevent the default form submission behavior
-  event.preventDefault();
 
   // Get the form data
   const startDate = document.getElementById('start-date').value;
@@ -543,8 +539,7 @@ dateSelect.addEventListener('submit', function(event) {
   console.log('Start Date:', startDate);
   console.log('End Date:', endDate);
 
-  // Reset the form (optional)
-  dateSelect.reset();
+
 });
 
 
