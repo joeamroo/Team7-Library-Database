@@ -296,70 +296,32 @@ function getUserDashInfo(response, memberId) {
  */
 
   function getDashHoldsInfo(response, memberId) {
-    // Headers for Tables
-    let html_head = '<div class="holds-title">Outstanding Holds</div>';
-    let html_books = '<div class="table-title">Books</div>';
-    let html_movies = '<div class="table-title">Movies</div>';
-    let html_devices = '<div class="table-title">Devices</div>';
-  
-    // Searches Database for books in which a user has a hold
-    const queryBooks = `
-      SELECT request_date AS "Date Requested", item_name AS "Item", status AS "Status"
-      FROM hold_request
-      WHERE member_id = (?) AND isbn IS NOT NULL;
-    `;
-  
-    // Searches Database for movies in which a user has a hold
-    const queryMovies = `
-      SELECT request_date AS "Date Requested", item_name AS "Item", status AS "Status"
-      FROM hold_request
-      WHERE member_id = (?) AND movie_id IS NOT NULL;
-    `;
-  
-    // Searches Database for devices in which a user has a hold
-    const queryDevices = `
-      SELECT request_date AS "Date Requested", item_name AS "Item", status AS "Status"
-      FROM hold_request
-      WHERE member_id = (?) AND device_id IS NOT NULL;
-    `;
-  
-    // Queries and Retrieves HTML tables for books, movies, and devices
-    Promise.all([
-      getHolds(queryBooks, memberId),
-      getHolds(queryMovies, memberId),
-      getHolds(queryDevices, memberId)
-    ])
-      .then(([booksTable, moviesTable, devicesTable]) => {
-        // Combines all tables together
-        const tableHTML = html_head + booksTable + moviesTable + devicesTable;
-        console.log("try(): " + tableHTML);
-  
-        // Sends it to the client
+
+    // Searches Database for user with the memberID
+    const query = 'SELECT request_date AS "Date Requested",' +
+                        'item_name AS "Item"' +
+                        'status AS "Status"' 
+                        'FROM hold_request WHERE member_id = ?';
+
+    // Gets information from backend
+    link.query(query, [memberId], (err, results) => {
+      if (err) {
+          console.error('Error executing the query:', err);
+          response.writeHead(204, { 'Content-Type': 'text/plain' });
+          response.end('Internal Server Error');
+          return;
+        }  else {
+    
+        // Converts SQL query to a table with Keys as IDs
+        const tableHTML = getSQLTable(results, 'holds-table');
+    
+        // Sends the table back to client
         response.writeHead(200, { 'Content-Type': 'text/html' });
         response.end(tableHTML);
-      })
-      .catch(error => {
-        console.log('Error retrieving values:', error);
-        response.writeHead(500, { 'Content-Type': 'text/html' });
-        response.end('<span>Please contact your administrator!</span>');
+        } 
       });
-  }
-  
-  function getHolds(query, memberId) {
-    return new Promise((resolve, reject) => {
-      link.query(query, [memberId], (err, results) => {
-        if (err) {
-          reject(err);
-        } else {
-          console.log('Query results:', results); // Log the query results
-          // Converts SQL query to a table with Keys as IDs
-          const tableHTML = getSQLTable(results, 'holds-table');
-          // Resolves the promise with the table HTML
-          resolve(tableHTML);
-        }
-      });
-    });
-  }
+    
+}
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐

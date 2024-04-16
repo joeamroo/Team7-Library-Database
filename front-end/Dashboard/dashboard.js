@@ -428,13 +428,13 @@ function setProfileInfo() {
 
   function getStartingDate() {
     startDate = document.getElementById('start-date');
-    var sdate = startDate.itemValue;
+    const sdate = startDate.value;
     return sdate;
   }
 
   function getEndingDate() {
     endDate = document.getElementById('end-date');
-    var edate = endDate.itemValue;
+    const edate = endDate.value;
     return edate;
   }
 
@@ -471,7 +471,10 @@ function getUserOrderReport() {
       console.error('error', xhr.statusText);
     };
 
-
+    console.log(memberId);
+    console.log(assetType);
+    console.log(strDate);
+    console.log(secDate);
 
     const data = JSON.stringify({
       memberId: memberId,
@@ -511,7 +514,7 @@ reportBtn.addEventListener('click', function() {
         
         
       } else {
-        console.log("Failed to retrieve data");
+        console.log("Failed x to retrieve data");
       }
     };
 
