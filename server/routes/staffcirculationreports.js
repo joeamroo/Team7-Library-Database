@@ -36,23 +36,24 @@ function buildWhereClause(filters) {
   }
   
 
-function getMemberData(filters, callback) {
-  const whereClause = buildWhereClause(filters);
-  const query = `
-    SELECT m.member_id, m.name, m.email, m.phone_number, m.state, m.city_addr, m.street_addr, m.zipcode_addr, m.fine, t.transaction_id, t.date_created, t.due_date, t.return_date
-    FROM member m
-    LEFT JOIN transaction t ON m.member_id = t.member_id
-    ${whereClause}
-  `;
-
-  connection.query(query, (err, result) => {
-    if (err) {
-      callback(err, null);
-    } else {
-      callback(null, result);
-    }
-  });
-}
+  function getMemberData(filters, callback) {
+    const whereClause = buildWhereClause(filters);
+    const query = `
+      SELECT m.member_id, m.name, m.email, m.phone_number, m.state, m.city_addr, m.street_addr, m.zipcode_addr, m.fine, t.transaction_id, t.date_created, t.due_date, t.return_date
+      FROM member m
+      LEFT JOIN transaction t ON m.member_id = t.member_id
+      ${whereClause}
+      GROUP BY m.member_id
+    `;
+  
+    connection.query(query, (err, result) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, result);
+      }
+    });
+  }
 
 function generateReport(filters, callback) {
     const whereClause = buildWhereClause(filters);
