@@ -2,10 +2,11 @@ const loggedIn = localStorage.getItem('loggedIn');
 const memberId = localStorage.getItem('memberId');
 const loginButton = document.getElementById('myAccount');
 const logOutBtn = document.getElementById('logoutBtn');
-const updateBtn = document.querySelector(".main-btn");
-const bookLabel = document.querySelector(".book-selection");
-const movieLabel = document.querySelector (".movie-selection");
-const deviceLabel = document.querySelector(".device-selection");
+const updateBtn = document.querySelector('.main-btn');
+const reportBtn = document.querySelector(".dateButton");
+const bookLabel = document.querySelector('.book-selection');
+const movieLabel = document.querySelector ('.movie-selection');
+const deviceLabel = document.querySelector('.device-selection');
 const sendPop = document.querySelector('#submitProfileInfo');
 const profileSelect = document.getElementById('profile-selection');
 const orderSelect = document.getElementById('order-selection');
@@ -462,6 +463,10 @@ function getUserOrderReport() {
 
     xhr.send(data);
 }
+
+reportBtn.addEventListener('click', function() {
+  getUserOrderReport();
+});
 
      /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
