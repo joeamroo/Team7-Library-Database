@@ -13,7 +13,7 @@ connection.connect((err) => {
   if (err) throw err;
   console.log('Connected to LibraryDev database');
 });
-
+/*
 function buildWhereClause(filters) {
     const conditions = [];
   
@@ -105,4 +105,4 @@ function generateReport(filters, callback) {
 module.exports = {
   getMemberData,
   generateReport,
-};
+};*/
