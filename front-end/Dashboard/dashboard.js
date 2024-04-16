@@ -535,9 +535,9 @@ function executeFilter() {
 
     xhr.onload = function() {
       if (xhr.status === 200) {
-        //const retrieved = xhr.responseText;
-        //console.log(retrieved);
-        holdsView.innerHTML += xhr.responseText;
+        const retrieved = xhr.responseText;
+        console.log(retrieved);
+        holdsView.innerHTML += retrieved;
     
         
         
