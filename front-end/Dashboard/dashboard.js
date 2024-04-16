@@ -23,6 +23,7 @@ const orderReport = document.querySelector('.recent-orders');
 const eventReport = document.querySelector('.settings.events');
 const profileInfo = document.querySelector('.member-info');
 var asset = document.querySelector(".input-box");
+var assetSelect = '';
 const today = new Date().toLocaleDateString();
 const notify = document.querySelector('#notify-user');
 
@@ -129,16 +130,19 @@ var input = document.querySelector(".input-box");
       bookLabel.addEventListener('click', () => {
         input.innerHTML = "Book"
         input.click();
+        assetSelect = '1';
       });
 
       movieLabel.addEventListener('click', () => {
         input.innerHTML = 'Movie'
         input.click();
+        assetSelect = '2';
       });
 
       deviceLabel.addEventListener('click', () => {
         input.innerHTML = "Device";
         input.click();
+        assetSelect = '3';
       });
 
 
@@ -491,7 +495,7 @@ function getUserOrderReport() {
 
     const data = JSON.stringify({
       memberId: memberId,
-      asset: assetType,
+      asset: assetSelect,
       startDate: strDate,
       endDate: secDate
     });
