@@ -507,8 +507,8 @@ function getUserOrderReport() {
 }
 
 reportBtn.addEventListener('click', function() {
-  getUserOrderReport();
-  orderSelect.click(); // Just in case
+ // Adds filters
+ orderSelect.click();
   
 });
 
