@@ -438,7 +438,7 @@ function getUserOrderReport() {
 
     xhr.onload = function() {
       if (xhr.status === 200) {
-        orderReport.innerHTML = '  <div class="order-title">Recent Orders</div>';
+        orderReport.innerHTML = '<div class="order-title">Recent Orders</div>';
         orderReport.innerHTML += xhr.responseText;
         //const orderRetrieval = xhr.responseText;
        // orderReport.innerHTML = filterOrderTable(orderRetrieval);
