@@ -53,9 +53,9 @@ logOutBtn.addEventListener('click', function(event) {
 const container = document.getElementById('container');
 
 function retrieveCriteria() {
-  startDate = document.getElementById('start-date').value;
-  endDate = document.getElementById('end-date').value;
-  asset = document.querySelector(".input-box").value;
+  startDate = document.getElementById('start-date').textContent;
+  endDate = document.getElementById('end-date').textContent;
+  asset = document.querySelector(".input-box").textContent;
 }
 
 /* 
