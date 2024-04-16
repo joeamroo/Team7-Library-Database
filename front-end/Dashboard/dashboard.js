@@ -535,9 +535,8 @@ function executeFilter() {
 
     xhr.onload = function() {
       if (xhr.status === 200) {
-        const retrieved = xhr.responseText;
-        console.log(retrieved);
-        holdsView.innerHTML += retrieved;
+        //const retrieved = xhr.responseText;
+        holdsView.innerHTML = xhr.responseText;
         removeRowsWithKeyword('order-table', 'movie');
         
         
