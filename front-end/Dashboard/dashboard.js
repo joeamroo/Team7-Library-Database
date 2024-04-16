@@ -527,6 +527,26 @@ reportBtn.addEventListener('click', function() {
   
 });
 
+// Get the form element
+const dateSelect = document.getElementById('date-selection');
+
+// Add event listener to the form submission
+dateSelect.addEventListener('submit', function(event) {
+  // Prevent the default form submission behavior
+  event.preventDefault();
+
+  // Get the form data
+  const startDate = document.getElementById('start-date').value;
+  const endDate = document.getElementById('end-date').value;
+
+  // Perform any necessary actions with the form data
+  console.log('Start Date:', startDate);
+  console.log('End Date:', endDate);
+
+  // Reset the form (optional)
+  form.reset();
+});
+
 function executeFilter() {
   orderReport.innerHTML = '';
   orderSelective.click();
