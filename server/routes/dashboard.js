@@ -58,7 +58,6 @@ const link = mysql.createConnection({
         // Check if the key is 'Image' and add an <img> element if it exists
         if (key === 'Image' && value !== "Not Applicable") {
           value = `<img src="${value}" alt="Image">`;
-          key = ''; // Removes title
         }
   
         // Check if the key is 'date' and format the date
@@ -213,42 +212,37 @@ function getUserDashInfo(response, memberId) {
   └─────────────────────────────────────────────────────────────────────────────┘
  */
 
-  function setUserDashInfo(response, memberId, firstName, lastName, phone_number,
-                           street_addr, city_addr, state, zipcode_addr, email) {
-
-
-      // Combines first name and last name
-      const fullName = firstName + " " + lastName;
-      //console.log(fullName);
-
-      // Query to search for
-      const sql_query = 'UPDATE member' +
-                        'SET name = ?,' +
-                          'phone_number = ?,' +
-                          'street_addr = ?,' + 
-                          'city_addr = ?,' +
-                          'state = ?,' +
-                          'zipcode_addr = ?,' + 
-                          'email = ?'
-                        'WHERE member_id = ?';
-
+  function setUserDashInfo(response, memberId, firstName, lastName, phone_number, street_addr, city_addr, state, zipcode_addr, email) {
+    // Combines first name and last name
+    const fullName = firstName + " " + lastName;
+  
+    // Query to search for
+    const sql_query = 'UPDATE member ' +
+                      'SET name = ?, ' +
+                      'phone_number = ?, ' +
+                      'street_addr = ?, ' +
+                      'city_addr = ?, ' +
+                      'state = ?, ' +
+                      'zipcode_addr = ?, ' +
+                      'email = ? ' +
+                      'WHERE member_id = ?';
+  
     // Values to update
-    const values = [fullName, phone_number, street_addr, city_addr, state, zipcode_addr, email, member_id];
-
+    const values = [fullName, phone_number, street_addr, city_addr, state, zipcode_addr, email, memberId];
+  
     // Use the memberId parameter in the query execution
-      link.query(sql_query, values, function(err, result) {
+    link.query(sql_query, values, function(err, result) {
       if (err) {
-            console.error('Failed to insert member details:', err);
-            //console.log('Query Results: ', result);
-            response.writeHead(200, { 'Content-Type': 'text/html' });
-            response.end('Internal Server Error', 'utf-8');
+        console.error('Failed to update member details:', err);
+        response.writeHead(500, { 'Content-Type': 'text/html' });
+        response.end('Internal Server Error', 'utf-8');
       } else {
         console.log("Update:" + result);
         response.writeHead(200, { 'Content-Type': 'text/html' });
         response.end('Profile settings successfully updated!', 'utf-8');
       }
-  });
-}
+    });
+  }
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -300,31 +294,94 @@ link.query(query, [memberId], (err, results) => {
 
   function getDashHoldsInfo(response, memberId) {
 
-    // Searches Database for user with the memberID
-    const query = 'SELECT request_date AS "Date Requested",' +
-                        'item_name AS "Item",' +
-                        'status AS "Status"' 
-                        'FROM hold_request WHERE member_id = ?';
+    // Headers for Tables
+    let html_head = '<div class="holds-title">Outstanding Holds</span>';
+    let html_books = '<div class="table-title">Books</div>';
+    let html_movies = '<div class="table-title">Movies</div>';
+    let html_devices = '<div class="table-title">Devices</div>';
+    
+    // Searches Database for books in which a user has a hold
+    const queryBooks = `
+    SELECT
+      request_date AS "Date Requested",
+      item_name AS "Item",
+      status AS "Status"
+    FROM
+      hold_request
+    WHERE
+      member_id = (?)
+      AND isbn IS NOT NULL;
+    `;
 
-    // Gets information from backend
+    // Queries and Retrieves HTML table for books
+    html_books += getHolds(queryBooks, memberId);
+
+
+    // Searches Database for movies in which a user has a hold
+    const queryMovies = `
+    SELECT 
+      request_date AS "Date Requested",
+      item_name AS "Item",
+      status AS "Status"
+    FROM 
+      hold_request
+    WHERE 
+      member_id = (?)
+      AND movie_id IS NOT NULL;
+  `;
+    
+   // Queries and Retrieves HTML table for movies
+    html_movies += getHolds(queryMovies, memberId);
+
+    const queryDevices = `
+    SELECT
+      request_date AS "Date Requested",
+      item_name AS "Item",
+      status AS "Status"
+    FROM
+      hold_request
+    WHERE
+      member_id = (?)
+      AND device_id IS NOT NULL;
+    `
+
+    // Queries and Retrieves HTML table for devices
+    html_devices += getHolds(queryDevices, memberId);
+  
+
+    try {
+      // Combines all tables together
+      const tableHTML = CONCAT(html_head, html_books, html_movies, html_devices);
+      console.log("try(): " + tableHTML);
+
+      // Sends it to the client
+      response.writeHead(200, { 'Content-Type': 'text/html' });
+      response.end(tableHTML);
+      
+    } catch(error) {
+      console.log('Error retrieving values');
+      response.writeHead(204, { 'Content-Type': 'text/html'});
+      response.end('<a>Please contact your administrator</a>');
+    }
+
+}
+
+  /* A More Modular Way to Split the Tables */
+  function getHolds(query, memberId) {
+
     link.query(query, [memberId], (err, results) => {
       if (err) {
-          console.error('Error executing the query:', err);
-          response.writeHead(204, { 'Content-Type': 'text/plain' });
-          response.end('Internal Server Error');
           return;
         }  else {
     
         // Converts SQL query to a table with Keys as IDs
         const tableHTML = getSQLTable(results, 'holds-table');
     
-        // Sends the table back to client
-        response.writeHead(200, { 'Content-Type': 'text/html' });
-        response.end(tableHTML);
+        // Returns the Table
+          return tableHTML;
         } 
       });
-    
-}
+  }
 
 
 /* 
