@@ -100,7 +100,7 @@ function deleteEvent(res, eventId) {
 }
 
 function filterEvents(res, startDate, endDate, sponsor, memType, time) {
-    let searchQuery = 'SELECT DISTINCT e.* FROM event e INNER JOIN events_member_link eml ON e.event_id = eml.event_id INNER JOIN member m ON eml.member_id = m.member_id WHERE (e.date BETWEEN ? AND ?)';
+    let searchQuery = 'SELECT DISTINCT e.* FROM event e LEFT JOIN events_member_link eml ON e.event_id = eml.event_id LEFT JOIN member m ON eml.member_id = m.member_id WHERE (e.date BETWEEN ? AND ?)';
   
     const queryParams = [startDate, endDate];
   
