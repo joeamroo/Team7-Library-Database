@@ -19,6 +19,7 @@ function createEventHtml(item) {
     eventHtml += `<td class="event_id">${item.event_id}</td>`;
     eventHtml += `<td id="event_name">${item.event_name}</td>`;
     eventHtml += `<td id="event_date">${item.date}</td>`;
+    eventHtml += `<td id="event_type">${item.event_type}</td>`;
     eventHtml += `<td id="sponsor">${item.sponsor}</td>`;
     eventHtml += `<td id="attendance">${item.attendance_count}</td>`;
     eventHtml += `<td id="event_status">${capitalizeFirstLetter(item.event_status)}</td>`;
@@ -53,7 +54,7 @@ function getAdminAlerts(res) {
 }
 
 function getEventsForAdmin(res) {
-    connection.query('SELECT event_id, event_name, date, sponsor, attendance_count, event_status FROM event ORDER BY event_id ASC', (err, results) => {
+    connection.query('SELECT event_id, event_name, date, sponsor, attendance_count, event_status, event_type FROM event ORDER BY event_id ASC', (err, results) => {
         if (err) {
             console.error('Error querying staff data:', err);
             response.writeHead(500);
