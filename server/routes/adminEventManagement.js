@@ -105,7 +105,7 @@ function filterEvents(res, startDate, endDate, sponsor, memType, time) {
     const queryParams = [startDate, endDate];
   
     if (sponsor !== '') {
-      searchQuery += 'AND e.sponsor = ? ';
+      searchQuery += 'AND e.event_type = ? ';
       queryParams.push(sponsor);
     }
   
