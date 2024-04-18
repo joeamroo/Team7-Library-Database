@@ -934,10 +934,16 @@ document.getElementById('removeEventSubmit').addEventListener('click', function(
 const fromDateInput = document.getElementById('fromDate');
 const toDateInput = document.getElementById('toDate');
 const searchButton = document.getElementById('searchEventsButton');
+const sponsorInput = document.getElementById('limitSponsor');
+const memTypeInput = document.getElementById('limitMember');
+const timeInput = document.getElementById('limitTime');
 
 searchButton.addEventListener('click', () => {
   const startDate = fromDateInput.value;
   const endDate = toDateInput.value;
+  const sponsor = sponsorInput.value;
+  const memType = memTypeInput.value;
+  const time = timeInput.value;
 
   if (startDate && endDate) {
     const xhr = new XMLHttpRequest();
@@ -956,7 +962,13 @@ searchButton.addEventListener('click', () => {
         }
     };
 
-    const data = JSON.stringify({ startDate: startDate, endDate: endDate });
+    const data = JSON.stringify({ 
+        startDate: startDate, 
+        endDate: endDate,
+        sponsor: sponsor,
+        memType: memType,
+        time: time
+    });
         
     xhr.send(data);
   } 

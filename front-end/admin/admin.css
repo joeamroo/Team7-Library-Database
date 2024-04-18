@@ -1100,6 +1100,12 @@ input[type="date"] {
   margin-right: 10px;
 }
 
+.event-label {
+  width: 150px;
+  text-align: left;
+  margin-right: 2px;
+}
+
 input[type=text],
 input[type=email],
 input[type=password],
@@ -1115,6 +1121,7 @@ input[type=url],
 .form-select {
   width: 500px;
 }
+
 
 input[type=date],
 input[type=time] {
@@ -1166,6 +1173,10 @@ button[type='submit']:hover {
 #limitEmpStat, #limitPosition, #fromDate, #toDate {
   margin-top: 10px;
   margin-right: 50px;
+}
+
+#limitEventSection {
+  margin-bottom: 50px;
 }
 
 @keyframes shake {
@@ -1227,8 +1238,25 @@ button[type='submit']:hover {
   margin-top: 60px;
 }
 
-#itemType, #item-condition {
+#itemType, #item-condition, #limitSponsor {
   width: 800px;
+}
+
+#limitMember, #limitTime {
+  width: 300px;
+}
+
+#limitMember {
+  margin-right: 47px;
+}
+
+label[for="fromDate"],
+label[for="toDate"] {
+  margin-right: 15px;
+}
+
+#eventReportTitle {
+  margin-bottom: 20px;
 }
 
 .mb-3i {

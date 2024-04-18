@@ -510,7 +510,7 @@ const server = http.createServer((request, res) => {
                 request.on('end', () => {
                     try {
                         const postData = JSON.parse(body);
-                        filterEvents(res, postData.startDate, postData.endDate);
+                        filterEvents(res, postData.startDate, postData.endDate, postData.sponsor, postData.memType, postData.time);
                     } 
                     catch (error) {
                         console.error('Error parsing JSON:', error);

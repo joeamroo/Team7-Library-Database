@@ -99,20 +99,50 @@ function deleteEvent(res, eventId) {
     res.end(JSON.stringify({ message: 'eventDeletionSuccessful' }));
 }
 
-function filterEvents(res, startDate, endDate) {
-    filterByDate = 'SELECT * FROM event WHERE date BETWEEN ? AND ? ORDER BY date ASC';
-
-    connection.query(filterByDate, [startDate, endDate], (err, results) => {
-        if (err) {
-            console.log('error getting filtered info from event into librarydev db:', err);
+function filterEvents(res, startDate, endDate, sponsor, memType, time) {
+    let searchQuery = 'SELECT DISTINCT e.* FROM event e INNER JOIN events_member_link eml ON e.event_id = eml.event_id INNER JOIN member m ON eml.member_id = m.member_id WHERE (e.date BETWEEN ? AND ?)';
+  
+    const queryParams = [startDate, endDate];
+  
+    if (sponsor !== '') {
+      searchQuery += 'AND e.sponsor = ? ';
+      queryParams.push(sponsor);
+    }
+  
+    if (memType !== '') {
+      searchQuery += (queryParams.length > 0 ? ' AND ' : '') + 'm.mem_type = ? ';
+      queryParams.push(memType);
+    }
+  
+    if (time !== '' && time != null) {
+        if (time === 'morning') {
+            searchQuery += (queryParams.length > 0 ? ' AND ' : '') + `e.start_time < 12 AND e.startAMPM ='AM'`;
         }
+        else if (time === 'afternoon') {
+            searchQuery += (queryParams.length > 0 ? ' AND ' : '') + `e.start_time >= 12 AND e.startAMPM ='PM' AND e.start_time < 5`;
+        }
+        else if (time === 'evening') {
+            searchQuery += (queryParams.length > 0 ? ' AND ' : '') + `e.start_time >= 5 AND e.startAMPM ='PM'`;
+        }
+    }
 
-        let eventHtml = '';
+    searchQuery += ' ORDER BY date ASC';
+  
+    connection.query(searchQuery, queryParams, (err, results) => {
+      if (err) {
+        console.error('Error filtering event report data:', err);
+        res.writeHead(500);
+        res.end('Server error');
+        return;
+      }
+  
+      let eventHtml = '';
+      
+      results.forEach(item => { eventHtml += createEventHtml(item); });
         
-        results.forEach(item => { eventHtml += createEventHtml(item); });
-        
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end(eventHtml, 'utf-8');
+  
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(eventHtml, 'utf-8');
     });
 }
 
