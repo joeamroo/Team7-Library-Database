@@ -9,10 +9,12 @@ const profileSelect = document.getElementById('profile-selection');
 const employeeSelect = document.getElementById('employee-selection');
 const eventSelect = document.getElementById('event-selection');
 const inboxSelect = document.getElementById('inbox-selection');
+const moneySelect = document.getElementById('money-selection');
 const profileView = document.querySelector('.settings.profile');
 const employeeView = document.querySelector('.settings.employees');
 const eventView = document.querySelector('.settings.event');
 const inboxView = document.querySelector('.settings.inbox');
+const moneyView = document.querySelector('.settings.money');
 const profileInfo = document.querySelector('.member-info');
 const today = new Date().toLocaleDateString();
 
@@ -31,51 +33,6 @@ const container = document.getElementById('container');
 
 
 
-/* 
-  ┌─────────────────────────────────────────────────────────────────────────┐
-  │                            Dropdown List                                │
-  └─────────────────────────────────────────────────────────────────────────┘
- */
-/*
-var input = document.querySelector(".input-box");
-      input.onclick = function () {
-        this.classList.toggle("open");
-        let list = this.nextElementSibling;
-        if (list.style.maxHeight) {
-          list.style.maxHeight = null;
-          list.style.boxShadow = null;
-        } else {
-          list.style.maxHeight = list.scrollHeight + "px";
-          list.style.boxShadow =
-            "0 1px 2px 0 rgba(0, 0, 0, 0.15),0 1px 3px 1px rgba(0, 0, 0, 0.1)";
-        }
-      };
-
-      var rad = document.querySelectorAll(".radio");
-      rad.forEach((item) => {
-        item.addEventListener("change", () => {
-          input.innerHTML = item.nextElementSibling.innerHTML;
-          input.click();
-        });
-      });
-
-      var label = document.querySelectorAll("label");
-      function search(searchin) {
-        let searchVal = searchin.value;
-        searchVal = searchVal.toUpperCase();
-        label.forEach((item) => {
-          let checkVal = item.querySelector(".name").innerHTML;
-          checkVal = checkVal.toUpperCase();
-          if (checkVal.indexOf(searchVal) == -1) {
-            item.style.display = "none";
-          } else {
-            item.style.display = "flex";
-          }
-          let list = input.nextElementSibling;
-          list.style.maxHeight = list.scrollHeight + "px";
-        });
-      }
-*/
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -127,6 +84,7 @@ profileSelect.addEventListener('click', () => {
     employeeView.classList.add('hide');
     eventView.classList.add('hide');
     inboxView.classList.add('hide');
+    moneyView.classList.add('hide')
     profileView.classList.remove('hide');
 });
                 
@@ -135,6 +93,7 @@ employeeSelect.addEventListener('click', () => {
     profileView.classList.add('hide');
     eventView.classList.add('hide');
     inboxView.classList.add('hide');
+    moneyView.classList.add('hide')
     employeeView.classList.remove('hide');
 });
 
@@ -142,6 +101,7 @@ eventSelect.addEventListener('click', () => {
     profileView.classList.add('hide');
     employeeView.classList.add('hide');
     inboxView.classList.add('hide');
+    moneyView.classList.add('hide')
     eventView.classList.remove('hide');
 });
 
@@ -149,7 +109,16 @@ inboxSelect.addEventListener('click', () => {
     profileView.classList.add('hide');
     employeeView.classList.add('hide');
     eventView.classList.add('hide');
+    moneyView.classList.add('hide')
     inboxView.classList.remove('hide');
+});
+
+moneySelect.addEventListener('click', () => {
+    profileView.classList.add('hide');
+    employeeView.classList.add('hide');
+    eventView.classList.add('hide');
+    inboxView.classList.add('hide');
+    moneyView.classList.remove('hide');
 });
 
 
@@ -157,6 +126,7 @@ document.getElementById('employeeConnection').addEventListener('click', () => {
     profileView.classList.add('hide');
     eventView.classList.add('hide');
     inboxView.classList.add('hide');
+    moneyView.classList.add('hide')
     employeeView.classList.remove('hide');
 });
 
@@ -164,6 +134,7 @@ document.getElementById('eventsConnection').addEventListener('click', () => {
     profileView.classList.add('hide');
     employeeView.classList.add('hide');
     inboxView.classList.add('hide');
+    moneyView.classList.add('hide')
     eventView.classList.remove('hide');
 });
 
@@ -171,8 +142,10 @@ document.getElementById('inventoryConnection').addEventListener('click', () => {
     profileView.classList.add('hide');
     employeeView.classList.add('hide');
     eventView.classList.add('hide');
+    moneyView.classList.add('hide')
     inboxView.classList.remove('hide');
 });
+
 
 
 function setOrderDate() {
@@ -980,6 +953,15 @@ searchButton.addEventListener('click', () => {
             submitBtn.classList.remove('shake-button');
         }, 500);
   }
+});
+
+document.getElementById('resetEventFilters').addEventListener('click', function(event) {
+    document.getElementById('limitSponsor').value = '';
+    document.getElementById('limitMember').value = '';
+    document.getElementById('limitTime').value = '';
+    document.getElementById('toDate').value = '';
+    document.getElementById('fromDate').value = '';
+    getEventList();
 });
 
 

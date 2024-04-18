@@ -913,6 +913,10 @@ input[type="password"] {
   display: none;
 }
 
+.settings.money.hide {
+  display: none;
+}
+
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -982,7 +986,7 @@ input[type="date"] {
   color: var(--mainColor);
 }
 
-#employeeTable, #eventTable{
+#employeeTable, #eventTable, #moneyTable, #catalogTable{
   table-layout: auto;
   margin-top: 40px;
   align-items: center;
@@ -1023,6 +1027,10 @@ input[type="date"] {
 
 .table-striped tbody tr:nth-child(even) {
   color: rgb(165, 91, 91);
+}
+
+#summary {
+  font-size: 18px;
 }
 
 .employee-btns i, .event-btns i {
@@ -1100,7 +1108,7 @@ input[type="date"] {
   margin-right: 10px;
 }
 
-.event-label {
+.event-label, .money-label {
   width: 150px;
   text-align: left;
   margin-right: 2px;
@@ -1162,7 +1170,7 @@ button[type='submit']:hover {
   color: red;
 }
 
-#limitBySection, #limitEventSection {
+#limitBySection, #limitEventSection, #limitMoneySection {
   margin-top: 15px;
 }
 
@@ -1170,12 +1178,12 @@ button[type='submit']:hover {
   color: var(--mainColor);
 }
 
-#limitEmpStat, #limitPosition, #fromDate, #toDate {
+#limitEmpStat, #limitPosition, #fromDate, #toDate, #monFromDate, #monToDate {
   margin-top: 10px;
   margin-right: 50px;
 }
 
-#limitEventSection {
+#limitEventSection, #limitMoneySection {
   margin-bottom: 50px;
 }
 
@@ -1198,7 +1206,11 @@ button[type='submit']:hover {
   animation: shake 0.5s ease-in-out;
 }
 
-#searchEventsButton, #searchCatalogButton, #resetTable, #searchEmplsButton, #resetEmplSearch {
+#searchEventsButton, #searchFinancialButton {
+  margin-right: 20px;
+}
+
+#searchEventsButton, #searchCatalogButton, #resetTable, #searchEmplsButton, #resetEmplSearch, #resetEventFilters, #searchFinancialButton {
   border-radius: 20px;
   background-color: var(--mainColor);
   color: white;
@@ -1210,7 +1222,7 @@ button[type='submit']:hover {
   margin-right: 25px;
 }
 
-#searchEventsButton:hover, #searchCatalogButton:hover, #resetTable:hover, #searchEmplsButton:hover, #resetEmplSearch:hover {
+#searchEventsButton:hover, #searchCatalogButton:hover, #resetTable:hover, #searchEmplsButton:hover, #resetEmplSearch:hover, #resetEventFilters:hover, #searchFinancialButton:hover {
   cursor: pointer;
   background-color: #ad2727;
 }
@@ -1238,11 +1250,12 @@ button[type='submit']:hover {
   margin-top: 60px;
 }
 
-#itemType, #item-condition, #limitSponsor {
+#itemType, #item-condition, #limitSponsor, #limitCat {
   width: 800px;
 }
 
-#limitMember, #limitTime {
+
+#limitMember, #limitTime, #limitX, #limitY {
   width: 300px;
 }
 
@@ -1251,7 +1264,9 @@ button[type='submit']:hover {
 }
 
 label[for="fromDate"],
-label[for="toDate"] {
+label[for="toDate"],
+label[for="monFromDate"],
+label[for="monToDate"] {
   margin-right: 15px;
 }
 
