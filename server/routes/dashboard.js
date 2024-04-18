@@ -233,7 +233,7 @@ function getUserDashInfo(response, memberId) {
                         'WHERE member_id = ?';
 
     // Values to update
-    const values = [fullName, phone_number, street_addr, city_addr, state, zipcode_addr, email, member_id];
+    const values = [fullName, phone_number, street_addr, city_addr, state, zipcode_addr, email, memberId];
 
     // Use the memberId parameter in the query execution
       link.query(sql_query, values, function(err, result) {
