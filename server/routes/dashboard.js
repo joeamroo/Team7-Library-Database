@@ -282,7 +282,7 @@ const query = "SELECT TV.transaction_Id AS 'Order #', " +
                   "AND TV.itemId = CV.asset_id;";
 
 
-link.query(query, [memberId], (err, results) => {
+/*link.query(query, [memberId], (err, results) => {
   if (err) {
       console.error('Error executing the query:', err);
       response.writeHead(204, { 'Content-Type': 'text/plain' });
@@ -297,7 +297,7 @@ link.query(query, [memberId], (err, results) => {
     response.writeHead(200, { 'Content-Type': 'text/html' });
     response.end(tableHTML);
     } 
-  });
+  });*/
 }
 
 /* 
@@ -317,14 +317,17 @@ link.query(query, [memberId], (err, results) => {
     // Gets the movies
     html_books = getDashBooks(memberId);
     html_movies = getDashMovies(memberId);
+    html_devices = getDashDevices(memberId);
     html = html_books + html_movies + html_devices;
+
+    console.log("Dashholds: " + html);
 
     try {
       response.writeHead(200, { 'Content-Type': 'text/html'});
       response.end(html)
     } catch (error) {
       response.writeHead(402, { 'Content-Type': 'text/plain'});
-      respond.end('Failed to retrieve information.');
+      responce.end('Failed to retrieve information.');
     }
   } // getDashHoldsInfo (ends)
 
@@ -334,7 +337,7 @@ link.query(query, [memberId], (err, results) => {
     const query = 'SELECT CV.image_address, H.item_name, CV.isbn, CV.year_released, CV.authors, CV.genres, CV.languages, H.request_date, H.status ' +
                   'FROM MEMBER AS M, HOLD_REQUEST AS H, CATALOG_VIEW AS CV ' +
                   'WHERE M.member_id = H.member_id AND H.isbn = CV.asset_id AND M.member_id = ?';
-    let html = '';
+    const html = '';
     
     link.query(query, [memberId], (error, result) => {
       if (error) {
@@ -497,13 +500,14 @@ WHERE M.member_id = H.member_id AND H.movie_id = CV.asset_id;*/
         WHERE M.member_id = ?;
     `;
 
-    if (error) {
-      respond.writeHead(204, { 'Content-Type': 'text/plain'});
-      respond.end('Error: Retrieving events');
-    } else {
+    try {
       html = getEvents(query);
-      respond.writeHead(200, { 'Content-Type': 'text/html'});
-      respond.end(html);
+      console.log("Events: " + html);
+      responce.writeHead(200, { 'Content-Type': 'text/html'});
+      responce.end(html);
+    } catch (error) {
+      responce.writeHead(204, { 'Content-Type': 'text/plain'});
+      responce.end('Error: Retrieving events');
     }
   }
 

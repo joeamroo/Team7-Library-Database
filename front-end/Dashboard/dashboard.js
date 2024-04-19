@@ -259,6 +259,12 @@ var input = document.querySelector(".input-box");
 
   });
 
+
+ document.addEventListener('DOMContentLoaded', function() {
+  const sidepanel = document.querySelector('.sidebar');
+  sidepanel.classList.add('expanded');
+});
+
      /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
   │                       MemberId Retrieval from Storage                       │
@@ -451,8 +457,8 @@ function getUserOrderReport() {
 
     xhr.onload = function() {
       if (xhr.status === 200) {
-        orderReport.innerHTML = '  <div class="order-title">Recent Orders</div>';
-        orderReport.innerHTML += xhr.responseText;
+       // orderReport.innerHTML = '  <div class="order-title">Recent Orders</div>';
+       // orderReport.innerHTML += xhr.responseText;
         //const orderRetrieval = xhr.responseText;
        // orderReport.innerHTML = filterOrderTable(orderRetrieval);
         
@@ -495,13 +501,7 @@ function getUserOrderReport() {
 
     xhr.onload = function() {
       if (xhr.status === 200) {
-        //const retrieved = xhr.responseText;
-        //console.log(retrieved);
-        holdsView.innerHTML(' <div class="holds-title">Outstanding Holds</span>');
-        holdsView.innerHTML += xhr.responseText;
-    
-        
-        
+        holdsView.innerHTML += xhr.responseText;        
       } else {
         console.log("Failed to retrieve data");
       }
