@@ -320,6 +320,8 @@ const query = "SELECT TV.transaction_Id AS 'Order #', " +
     html_devices = getDashDevices(memberId);
     html = html_books + html_movies + html_devices;
 
+    console.log("Dashholds: " + html);
+
     try {
       response.writeHead(200, { 'Content-Type': 'text/html'});
       response.end(html)
