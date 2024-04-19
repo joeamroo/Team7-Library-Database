@@ -1,5 +1,5 @@
 # Project Files
-Our files are structured by front-end and back-end. We have a front-end directory that holds all the HTML, CSS, and JS files relevant to the front-end. We then have a server folder that contains our server.js file that handles the routing of back-end requests. Within the server folder is also a routes directory that contains all the handlers for specific pages/tabs within the front-end. These js files have multiple functions that are referenced in the server.js file when handling routes. 
+Our files are structured by front-end and back-end. We have a front-end directory that holds all the HTML, CSS, and JS files relevant to the front-end. We then have a server folder that contains our server.js file that handles the routing of back-end requests. Within the server folder is also a routes directory that contains all the handlers for specific pages/tabs within the front-end. These js files have multiple functions that are referenced in the server.js file when handling routes. Also, our notification system for items on hold being available relies on using Twilio to send text messages, however, since we are using the trial version, the phone number must be added to the Twilio portal for the message to be sent. At this moment only one of the teammate's phone number is active and they are the one receiving the notification. We can add your phone number so that you can see the notification system.
 
 
 ## Cloning the Repository 
@@ -10,7 +10,7 @@ Using the link to the repository, you can click on the "code" and clone the repo
 https://github.com/joeamroo/Team7-Library-Database
 ```
 
-If you would like to test the website locally, you can simply "show preview" on the home page. Since we are hosting our back-end in a seperate platform, the back-end will still be active even when only looking at the html preview. 
+If you would like to test the website locally, you can simply "show preview" on the home.html file. Since we are hosting our back-end in a seperate platform, the back-end will still be active even when only looking at the html preview. 
 
 
 ## Triggers
