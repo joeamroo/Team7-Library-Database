@@ -30,6 +30,8 @@ function buildWhereClause(filters) {
     }
     return '';
   }
+
+  //, t.transaction_id, t.date_created, t.due_date, t.return_date
   
 //   LEFT JOIN transaction t ON m.member_id = t.member_id
 
@@ -37,7 +39,7 @@ function buildWhereClause(filters) {
   function getMemberData(filters, callback) {
     const whereClause = buildWhereClause(filters);
     const query = `
-      SELECT m.member_id, m.name, m.email, m.phone_number, m.state, m.city_addr, m.street_addr, m.zipcode_addr, m.fine, t.transaction_id, t.date_created, t.due_date, t.return_date
+      SELECT m.member_id, m.name, m.email, m.phone_number, m.state, m.city_addr, m.street_addr, m.zipcode_addr, m.fine
       FROM member m
       ${whereClause}
     `;

@@ -68,7 +68,6 @@ const server = http.createServer((request, res) => {
                 case '/getAdminAlerts':
                     getAdminAlerts(res);
                     break;
-                    /*
                 case '/reportmembers':
                     try {
                         const queryObject = url.parse(request.url, true).query;
@@ -146,7 +145,6 @@ const server = http.createServer((request, res) => {
                           res.end('Internal server error');
                         }
                         break;
-*/
                 default:
                     serve404(res, pathname);
             }

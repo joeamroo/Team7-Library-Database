@@ -55,10 +55,6 @@ searchForm.addEventListener('submit', (event) => {
             <td>${member.phone_number}</td>
             <td>${member.street_addr}, ${member.city_addr}, ${member.state} ${member.zipcode_addr}</td>
             <td>${member.fine}</td>
-            <td>${member.transaction_id || '-'}</td>
-            <td>${member.date_created || '-'}</td>
-            <td>${member.due_date || '-'}</td>
-            <td>${member.return_date || '-'}</td>
           `;
           resultsTable.appendChild(row);
         });
@@ -72,7 +68,7 @@ searchForm.addEventListener('submit', (event) => {
     };
     xhr.send();
   });
-  /*
+  
   generateReportButton.addEventListener('click', () => {
     const formData = new FormData(searchForm);
     const queryParams = new URLSearchParams(formData).toString();
@@ -151,6 +147,6 @@ searchForm.addEventListener('submit', (event) => {
       console.error('Network error');
     };
     xhr.send();
-  });*/
+  });
   
   
