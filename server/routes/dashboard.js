@@ -454,7 +454,8 @@ WHERE M.member_id = H.member_id AND H.movie_id = CV.asset_id;*/
       // Formats the SQL query to HTML code
       html += '<td id="Event">' + Event + '</td>';
       html += '<td id="Date">' + fDate + '</td>';
-      html += '<td id="Time">' + Time + '</td>';
+      html += '<td id="Time">' + start_time + startAMPM + ' - ' +
+                               + end_time + endAMPM +  '</td>';
       html += '<td id="Description">' + Description + '</td>';
       }
 
