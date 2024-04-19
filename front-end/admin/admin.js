@@ -9,12 +9,10 @@ const profileSelect = document.getElementById('profile-selection');
 const employeeSelect = document.getElementById('employee-selection');
 const eventSelect = document.getElementById('event-selection');
 const inboxSelect = document.getElementById('inbox-selection');
-const moneySelect = document.getElementById('money-selection');
 const profileView = document.querySelector('.settings.profile');
 const employeeView = document.querySelector('.settings.employees');
 const eventView = document.querySelector('.settings.event');
 const inboxView = document.querySelector('.settings.inbox');
-const moneyView = document.querySelector('.settings.money');
 const profileInfo = document.querySelector('.member-info');
 const today = new Date().toLocaleDateString();
 
@@ -84,7 +82,6 @@ profileSelect.addEventListener('click', () => {
     employeeView.classList.add('hide');
     eventView.classList.add('hide');
     inboxView.classList.add('hide');
-    moneyView.classList.add('hide')
     profileView.classList.remove('hide');
 });
                 
@@ -93,7 +90,6 @@ employeeSelect.addEventListener('click', () => {
     profileView.classList.add('hide');
     eventView.classList.add('hide');
     inboxView.classList.add('hide');
-    moneyView.classList.add('hide')
     employeeView.classList.remove('hide');
 });
 
@@ -101,7 +97,6 @@ eventSelect.addEventListener('click', () => {
     profileView.classList.add('hide');
     employeeView.classList.add('hide');
     inboxView.classList.add('hide');
-    moneyView.classList.add('hide')
     eventView.classList.remove('hide');
 });
 
@@ -109,16 +104,7 @@ inboxSelect.addEventListener('click', () => {
     profileView.classList.add('hide');
     employeeView.classList.add('hide');
     eventView.classList.add('hide');
-    moneyView.classList.add('hide')
     inboxView.classList.remove('hide');
-});
-
-moneySelect.addEventListener('click', () => {
-    profileView.classList.add('hide');
-    employeeView.classList.add('hide');
-    eventView.classList.add('hide');
-    inboxView.classList.add('hide');
-    moneyView.classList.remove('hide');
 });
 
 
@@ -126,7 +112,6 @@ document.getElementById('employeeConnection').addEventListener('click', () => {
     profileView.classList.add('hide');
     eventView.classList.add('hide');
     inboxView.classList.add('hide');
-    moneyView.classList.add('hide')
     employeeView.classList.remove('hide');
 });
 
@@ -134,7 +119,6 @@ document.getElementById('eventsConnection').addEventListener('click', () => {
     profileView.classList.add('hide');
     employeeView.classList.add('hide');
     inboxView.classList.add('hide');
-    moneyView.classList.add('hide')
     eventView.classList.remove('hide');
 });
 
@@ -142,7 +126,6 @@ document.getElementById('inventoryConnection').addEventListener('click', () => {
     profileView.classList.add('hide');
     employeeView.classList.add('hide');
     eventView.classList.add('hide');
-    moneyView.classList.add('hide')
     inboxView.classList.remove('hide');
 });
 
