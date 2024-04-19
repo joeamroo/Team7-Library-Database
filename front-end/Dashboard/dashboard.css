@@ -645,6 +645,15 @@ input:checked + label::before {
   color: --color-black;
 }
 
+.order-choice {
+  position: relative;
+}
+
+#choice {
+  position: absolute;
+  top: 1.8px;
+}
+
 /* ===================== Drop Down Menu Ends ===================== */
 
 /* ==========================================================================

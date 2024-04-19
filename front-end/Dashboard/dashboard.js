@@ -99,17 +99,29 @@ var input = document.querySelector(".input-box");
       // original form
       
       bookLabel.addEventListener('click', () => {
-        //input.innerHTML = "Book"
+        var book_input = '<div class="order-choice">';
+        book_input += '<span class="material-icons-outlined"> auto_stories </span>';
+        book_input += '<span class="book-label" id="choice">Book</span>';
+        book_input += '</div>';
+        input.innerHTML = book_input;
         input.click();
       });
 
       movieLabel.addEventListener('click', () => {
-        //input.innerHTML = 'Movie'
+        var movie_input = '<div class="order-choice">';
+        movie_input += '<span class="material-icons-outlined"> movie </span>';
+        movie_input += '<span class="movie-label" id="choice">Movie</span>';
+        movie_input += '</div>';
+        input.innerHTML = movie_input;
         input.click();
       });
 
       deviceLabel.addEventListener('click', () => {
-        //input.innerHTML = "Device";
+        var movie_input = '<div class="order-choice">';
+        movie_input += '<span class="material-icons-outlined"> devices </span>';
+        movie_input += '<span class="device-label" id="choice">Device</span>';
+        movie_input += '</div>';
+        input.innerHTML = movie_input;
         input.click();
       });
 
