@@ -12,5 +12,10 @@ https://github.com/joeamroo/Team7-Library-Database
 
 If you would like to test the website locally, you can simply "show preview" on the home page. Since we are hosting our back-end in a seperate platform, the back-end will still be active even when only looking at the html preview. 
 
+
+## Triggers
+One of the triggers works by having an event reach a threshold of 10 members signing up for it, so the following events have been left at a registration of 9, so that if you were to sign up for them the registration will reach 10 and the trigger will be shown.
+Events: Computer Lab, DIY Yarn Art, Family Dancing Night, and Toddler Time: Teddy Bear, Teddy Bear
+
 ## Alert!
 #### We are hosting the back-end on Render and are currently under the free tier, thus our server shuts down after 30 minutes of inactivity. So when going to the site, whether locally or hosted you will have to wait 30-60 seconds for the server to become "live" again. However, you can reach out to the team beforehand so that we may start it up without making you wait that time. (Sorry!)
