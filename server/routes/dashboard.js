@@ -309,12 +309,15 @@ link.query(query, [memberId], (err, results) => {
   function getDashHoldsInfo(response, memberId) {
 
     // Contains html formatted code
+    var html_books = '';
     var html_movies = '';
+    var html_devices = '';
     var html = '';
 
     // Gets the movies
+    html_books = getDashBooks(memberId);
     html_movies = getDashMovies(memberId);
-    html = html_movies;
+    html = html_books + html_movies + html_devices;
 
     if (error) {
       response.writeHead(402, { 'Content-Type': 'text/plain'});
@@ -323,21 +326,60 @@ link.query(query, [memberId], (err, results) => {
       response.writeHead(200, { 'Content-Type': 'text/html'});
       response.end(html)
     }
+  } // getDashHoldsInfo (ends)
 
+
+
+  function getDashBooks(memberId) {
+    const query = 'SELECT CV.image_address, H.item_name, CV.isbn, CV.year_released, CV.authors, CV.genres, CV.languages, H.request_date, H.status ' +
+                  'FROM MEMBER AS M, HOLD_REQUEST AS H, CATALOG_VIEW AS CV ' +
+                  'WHERE M.member_id = H.member_id AND H.isbn = CV.asset_id AND M.member_id = ?';
+    const html = '';
     
-}
+    link.query(query, [memberId], (error, result) => {
+      if (error) {
+        response.writeHead(204, { 'Content-Type': 'text/plain'});
+        response.end('Failed to retrieve books.');
+      } else {
+
+       /* Dynamically creates a variable type
+       with the name being the ID of the query,
+       and the value being the key. */
+       for (const row of query) {
+        const variableName = row.id;
+        global[variableName] = row.key;
+
+        // Creates HTML from SQL
+        html += '<div class="poster-container>"';
+        html += '<img class="poster" src="' + image_address + '"';
+        html += '<div class="info">';
+        html += '<p id="item-title">' + item_name + ' (' + isbn + ')</p>';
+        html += '<p>Author: ' + authors + '</p>';
+        html += '<p>Release Year: ' + year_released + '</p>';
+        html += '<p>Genre: ' + genres + '</p>';
+        html += '<p>Languages: ' + languages + '</p>';
+        html += '</div>';
+
+        html += '<div>';
+        html += '<span id="request-date">Date Requested: <b>' + request_date + '</b></span><br>';
+        html += '<div id="item-status">Status: <span id="status">' + status + '</span></div></div></div>';
+      } // for loop ends
+      return html;
+      } // if statement ends
+    }); // query function ends
+    } // end of function
 
   function getDashMovies(memberId) {
     const query = 'SELECT CV.image_address, H.item_name, CV.year_released, CV.director_brand,' +
                           'CV.genres, CV.rating, H.request_date, H.status' 
                   'FROM MEMBER AS M, HOLD_REQUEST AS H, CATALOG_VIEW AS CV ' +
-                  'WHERE M.member_id = H.member_id AND H.movie_id = CV.asset_id;';
+                  'WHERE M.member_id = H.member_id AND H.movie_id = CV.asset_id AND M.member_id = (?);';
     const html = '';
     
     link.query(query, [memberId], (error, result) => {
         if (error) {
           response.writeHead(204, { 'Content-Type': 'text/plain'});
-          response.end('Failed to retrieve books.');
+          response.end('Failed to retrieve movies.');
         } else {
 
           /* Dynamically creates a variable type
@@ -351,7 +393,7 @@ link.query(query, [memberId], (err, results) => {
           html += '<div class="poster-container>"';
           html += '<img class="poster" src="' + image_address + '"';
           html += '<div class="info">';
-          html += '<p id="item-title">' + item_title + '</p>';
+          html += '<p id="item-title">' + item_name + '</p>';
           html += '<p>Director: ' + director_brand + '</p>';
           html += '<p>Release Year: ' + year_released + '</p>';
           html += '<p>Genre: ' + genres + '</p>';
@@ -360,12 +402,52 @@ link.query(query, [memberId], (err, results) => {
 
           html += '<div>';
           html += '<span id="request-date">Date Requested: <b>' + request_date + '</b></span><br>';
-          html += '<div id="item-status">Condition: <span id="status">' + status + '</span></div></div></div>';
+          html += '<div id="item-status">Status: <span id="status">' + status + '</span></div></div></div>';
         }
         return html;
       }
     });
   }
+
+  function getDashDevices(memberId) {
+    const query = 'SELECT CV.image_address, H.item_name, CV.director_brand, CV.serial_number, CV.asset_condition ' +
+                  'FROM MEMBER AS M, HOLD_REQUEST AS H, CATALOG_VIEW AS CV ' +
+                  'WHERE M.member_id = H.member_id AND H.device_id = CV.asset_id AND member_id = ?;';
+
+    const html = '';
+
+    link.query(query, [memberId], (error, result) => {
+      if (error) {
+        response.writeHead(204, { 'Content-Type': 'text/plain'});
+        response.end('Failed to retrieve devices.');
+      } else {
+
+     /* Dynamically creates a variable type
+     with the name being the ID of the query,
+     and the value being the key. */
+      for (const row of query) {
+        const variableName = row.id;
+        global[variableName] = row.key;
+
+        // Creates HTML from SQL
+        html += '<div class="poster-container>"';
+        html += '<img class="poster" src="' + image_address + '"';
+        html += '<div class="info">';
+        html += '<p id="item-title">' + item_name + '</p>';
+        html += '<p>Brand: ' + director_brand + '</p>';
+        html += '<p>Serial #: ' + serial_number + '</p>';
+        html += '<p>Condition: ' + asset_condition + '</p>';
+        html += '</div>';
+
+        html += '<div>';
+        html += '<span id="request-date">Date Requested: <b>' + request_date + '</b></span><br>';
+        html += '<div id="item-status">Status: <span id="status">' + status + '</span></div></div></div>';
+      }
+      return html;
+    }
+  });
+}
+      
 
   /*<div class="settings holds">
   <div class="poster-container">
@@ -415,19 +497,14 @@ WHERE M.member_id = H.member_id AND H.movie_id = CV.asset_id;*/
         WHERE M.member_id = ?;
     `;
 
-    // First gets the number of rows
-    link.query(query, [memberId], (err, results) => {
-      if (err) {
-        console.log("Error retrieving count in query:", err);
-        response.writeHead(204, { 'Content-Type': 'text/plain' });
-        response.end('Internal Server Error');
-      } else {
-        html = getEvents(results);
-        console.log('UserEvents: ' + html);
-        response.writeHead(200, { 'Content-Type': 'text/html' });
-        respond.end(html);
-      }
-    });
+    if (error) {
+      respond.writeHead(204, { 'Content-Type': 'text/plain'});
+      respond.end('Error: Retrieving events');
+    } else {
+      html = getEvents(query);
+      respond.writeHead(200, { 'Content-Type': 'text/html'});
+      respond.end(html);
+    }
   }
 
 
@@ -464,8 +541,10 @@ WHERE M.member_id = H.member_id AND H.movie_id = CV.asset_id;*/
       html += '</table>';
 
       return html;      
-      
   }
+
+
+
 
 
 
