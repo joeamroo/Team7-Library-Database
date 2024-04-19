@@ -40,7 +40,7 @@ function buildWhereClause(filters) {
     const whereClause = buildWhereClause(filters);
     const query = `
       SELECT m.member_id, m.name, m.email, m.phone_number, m.state, m.city_addr, m.street_addr, m.zipcode_addr, m.fine
-      FROM member m
+      FROM librarydev.member m
       ${whereClause}
     `;
   
@@ -60,7 +60,7 @@ function buildWhereClause(filters) {
     const whereClause = buildWhereClause(filters);
     const query = `
       SELECT m.member_id, m.fine
-      FROM member m
+      FROM librarydev.member m
       ${whereClause}
       GROUP BY m.member_id
     `;
