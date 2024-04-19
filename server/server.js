@@ -17,7 +17,7 @@ const { getAdminAlerts, getEventsForAdmin, insertEvent, deleteEvent, filterEvent
 const { getItemsForAdmin, filterCatalogItems, getAdminInfo } = require('./routes/adminCatalogManagement');
 const { updateFine, getFineAmount } = require('./routes/payFine');
 const { addItems } = require('./routes/add-items');
-//const { getMemberData, generateReport } = require('./routes/staffcirculationreports');
+const { getMemberData, generateReport } = require('./routes/staffcirculationreports');
 const { addDevices } = require('./routes/addDevices');
 
 
