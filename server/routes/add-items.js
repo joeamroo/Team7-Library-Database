@@ -13,6 +13,7 @@ function getId(item, itemType) {
         connection.query(`SELECT author_id FROM author WHERE author_name = ?`, [item], (err, result) => {
             if (err) {
                 console.log('error getting author id:', err);
+                return 0;
             }
             else {
                 Id = result[0]['author_id'];
@@ -25,6 +26,7 @@ function getId(item, itemType) {
         connection.query(`SELECT genre_id FROM genres WHERE genre_name = ?`, [item], (err, result) => {
             if (err) {
                 console.log('error getting genre id:', err);
+                return 0;
             }
             else {
                 Id = result[0]['genre_id'];
