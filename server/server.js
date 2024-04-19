@@ -478,7 +478,7 @@ const server = http.createServer((request, res) => {
                 request.on('end', () => {
                     try {
                         const postData = JSON.parse(body);
-                        insertEvent(res, postData.name, postData.des, postData.img, postData.sponsor, postData.date, postData.normalizedStartTime, postData.stPeriod, postData.normalizedEndTime, postData.endPeriod);
+                        insertEvent(res, postData.name, postData.des, postData.img, postData.category, postData.sponsor, postData.date, postData.normalizedStartTime, postData.stPeriod, postData.normalizedEndTime, postData.endPeriod);
                     } 
                     catch (error) {
                         console.error('Error parsing JSON:', error);

@@ -780,7 +780,6 @@ input[type="password"] {
   padding: 15px 25px;
   border-radius: 3mm;
   display: flex;
-  /*align-items: flex-start;*/
   justify-content: space-between;
   flex-direction: column;
   font-family: poppins;
@@ -986,7 +985,7 @@ input[type="date"] {
   color: var(--mainColor);
 }
 
-#employeeTable, #eventTable, #moneyTable, #catalogTable{
+#employeeTable, #eventTable, #catalogTable{
   table-layout: auto;
   margin-top: 40px;
   align-items: center;
@@ -1114,6 +1113,7 @@ input[type="date"] {
   margin-right: 2px;
 }
 
+
 input[type=text],
 input[type=email],
 input[type=password],
@@ -1126,6 +1126,7 @@ input[type=url],
 #updEmployeePosition,
 #updEmployeeSupervisor,
 #addEventDes,
+#eventCategory,
 .form-select {
   width: 500px;
 }
@@ -1206,11 +1207,11 @@ button[type='submit']:hover {
   animation: shake 0.5s ease-in-out;
 }
 
-#searchEventsButton, #searchFinancialButton {
+#searchEventsButton, #searchFinancialButton, #resetFinancialFilters {
   margin-right: 20px;
 }
 
-#searchEventsButton, #searchCatalogButton, #resetTable, #searchEmplsButton, #resetEmplSearch, #resetEventFilters, #searchFinancialButton {
+#searchEventsButton, #searchCatalogButton, #resetTable, #searchEmplsButton, #resetEmplSearch, #resetEventFilters, #searchFinancialButton, #resetFinancialFilters {
   border-radius: 20px;
   background-color: var(--mainColor);
   color: white;
@@ -1222,7 +1223,7 @@ button[type='submit']:hover {
   margin-right: 25px;
 }
 
-#searchEventsButton:hover, #searchCatalogButton:hover, #resetTable:hover, #searchEmplsButton:hover, #resetEmplSearch:hover, #resetEventFilters:hover, #searchFinancialButton:hover {
+#searchEventsButton:hover, #searchCatalogButton:hover, #resetTable:hover, #searchEmplsButton:hover, #resetEmplSearch:hover, #resetEventFilters:hover, #searchFinancialButton:hover, #resetFinancialFilters:hover {
   cursor: pointer;
   background-color: #ad2727;
 }

@@ -334,7 +334,7 @@ const query = "SELECT TV.transaction_Id AS 'Order #', " +
     const query = 'SELECT CV.image_address, H.item_name, CV.isbn, CV.year_released, CV.authors, CV.genres, CV.languages, H.request_date, H.status ' +
                   'FROM MEMBER AS M, HOLD_REQUEST AS H, CATALOG_VIEW AS CV ' +
                   'WHERE M.member_id = H.member_id AND H.isbn = CV.asset_id AND M.member_id = ?';
-    var html = '';
+    let html = '';
     
     link.query(query, [memberId], (error, result) => {
       if (error) {

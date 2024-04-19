@@ -41,7 +41,6 @@
               <li class="menu-item"><a id="employee-selection" href="#">Manage Employees</a></li>
               <li class="menu-item"><a id="event-selection" href="#">Manage Events</a></li>
               <li class="menu-item"><a id="inbox-selection" href="#">Inventory Reports</a></li>
-              <li class="menu-item"><a id="money-selection" href="#">Financial Reports</a></li>
               <li class="menu-item"><a id="logout-selection" href="#">Logout</a></li>
           </ul> 
       </div>
@@ -285,6 +284,17 @@
         <input type="url" class="form-control" id="eventImg" autocomplete="off" required>
       </div>
       <div class="mb-3">
+        <label class="form-label">Category<span id="req">*</span></label>
+        <select class="form-select" id="eventCategory" required>
+          <option value="">Select Category</option>
+          <option value="Storytime">Storytime</option>
+          <option value="Arts and Crafts">Arts and Crafts</option>
+          <option value="Book Club">Book Club</option>
+          <option value="Lifestyle">Lifestyle</option>
+          <option value="E-learning">E-learning</option>
+        </select>
+      </div>
+      <div class="mb-3">
         <label class="form-label">Sponsor<span id="req">*</span></label>
         <input type="text" class="form-control" id="eventSponsor" autocomplete="off" required>
       </div>
@@ -449,72 +459,6 @@
     <tbody class="catalogTable-content" id="catalogTableItems">
       <!--Employee info here-->
     </tbody>
-  </table>
- </div>
-
-
-
- <div class="settings money">
-  <h3 id="table-name">Financial Reports</h3>
-
-  <div id="limitMoneySection">
-    <div class="mb-3i">
-      <label class="money-label">Event Category:</label>
-      <select class="form-select" id="limitCat" required>
-        <option value="">Select Category</option>
-      </select>
-    </div>
-
-    <div class="mb-3i">
-      <label class="money-label">Member Type:</label>
-      <select class="form-select" id="limitX" required>
-        <option value="">Select Member Type</option>
-        <option value="InState">In-State Members</option>
-        <option value="OutState">Out-of-state Members</option>
-      </select>
-
-      <label class="money-label">Time of Day:</label>
-      <select class="form-select" id="limitY" required>
-        <option value="">Select Time</option>
-        <option value="morning">Morning</option>
-        <option value="afternoon">Afternoon</option>
-        <option value="evening">Evening</option>
-      </select>
-    </div>
-
-    <label for="monFromDate">From:</label>
-    <input type="date" id="monFromDate" required>
-  
-    <label for="monToDate">To:</label>
-    <input type="date" id="monToDate" required>
-
-    <button id="searchFinancialButton">Get Report</button>
-  </div>
-
-  <table id="moneyTable" class="table table-striped table-hover text-info shadow">
-    <thead>
-      <tr class="text-dark">
-        <th scope="col">Event ID</th>
-        <th scope="col">Event Name</th>
-        <th scope="col">Date</th>
-        <th scope="col">Category</th>
-        <th scope="col">Sponsor</th>
-        <th scope="col">Attendance</th>
-        <th scope="col">Event Status</th>
-      </tr>
-    </thead>
-    <tbody class="moneyTable-content" id="moneyTableItems">
-      <!--Employee info here-->
-    </tbody>
-    <tfoot id="summary" class="fw-bold text-dark">
-      <tr>
-        <th style="width: 14%;">Total Events:  <span id="eventTotal-count"></span></th>
-        <td style="width: 18%; color: #841717;">Max Attendance: <span id="max-attend">0</span></td>
-        <td style="width: 16%; color: #841717;">Min Attendance: <span id="spanID">0</span></td>
-        <td style="width: 16%; color: #841717;">Avg Attendance: <span id="avg-attend">0</span></td>
-        <td style="width: 18%; color: #841717;">Total Attendance: <span id="total-atend">0</span></td>
-      </tr>
-    </tfoot>
   </table>
  </div>
 
