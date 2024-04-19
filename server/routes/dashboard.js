@@ -317,6 +317,7 @@ const query = "SELECT TV.transaction_Id AS 'Order #', " +
     // Gets the movies
     html_books = getDashBooks(memberId);
     html_movies = getDashMovies(memberId);
+    html_devices = getDashDevices(memberId);
     html = html_books + html_movies + html_devices;
 
     try {
@@ -334,7 +335,7 @@ const query = "SELECT TV.transaction_Id AS 'Order #', " +
     const query = 'SELECT CV.image_address, H.item_name, CV.isbn, CV.year_released, CV.authors, CV.genres, CV.languages, H.request_date, H.status ' +
                   'FROM MEMBER AS M, HOLD_REQUEST AS H, CATALOG_VIEW AS CV ' +
                   'WHERE M.member_id = H.member_id AND H.isbn = CV.asset_id AND M.member_id = ?';
-    let html = '';
+    const html = '';
     
     link.query(query, [memberId], (error, result) => {
       if (error) {
