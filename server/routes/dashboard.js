@@ -35,6 +35,19 @@ const link = mysql.createConnection({
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                       Converts Dates to Proper Format                       │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+
+  function getDate(time) {
+    const dateString = time.toString();
+    const dateParts = dateString.split(" ");
+    time = dateParts.slice(0, 4).join(" ");
+    return time;
+  }
+
+/* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
   │                         Converts SQL to Tables                              │
   └─────────────────────────────────────────────────────────────────────────────┘
  */
@@ -366,19 +379,8 @@ link.query(query, [memberId], (err, results) => {
 }
 
   /* A More Modular Way to Split the Tables */
-  function getHolds(query, memberId) {
-    link.query(query, [memberId], (err, results) => {
-      if (err) {
-          return;
-        }  else {
+  function getHolds(query, count) {
     
-        // Converts SQL query to a table with Keys as IDs
-        const tableHTML = getSQLTable(results, 'holds-table');
-    
-        // Returns the Table
-          return tableHTML;
-        } 
-      });
   }
 
 
@@ -389,6 +391,8 @@ link.query(query, [memberId], (err, results) => {
  */
 
   function getUserEventsInfo(response, memberId) {
+
+    var html;  // The query in HTML format
 
     // Searches Database for user with the memberID
     const query = `
@@ -405,25 +409,59 @@ link.query(query, [memberId], (err, results) => {
         WHERE M.member_id = ?;
     `;
 
-    // Gets information from backend
+    // First gets the number of rows
     link.query(query, [memberId], (err, results) => {
       if (err) {
-          console.error('Error executing the query:', err);
-          response.writeHead(204, { 'Content-Type': 'text/plain' });
-          response.end('Internal Server Error');
-          return;
-        }  else {
-    
-        // Converts SQL query to a table with Keys as IDs
-        const tableHTML = getSQLTable(results, 'events-table');
-    
-        // Sends the table back to client
+        console.log("Error retrieving count in query:", err);
+        response.writeHead(204, { 'Content-Type': 'text/plain' });
+        response.end('Internal Server Error');
+      } else {
+        html = getEvents(results);
+        console.log('UserEvents: ' + html);
         response.writeHead(200, { 'Content-Type': 'text/html' });
-        response.end(tableHTML);
-        } 
-      });
-    
+      }
+    });
+  }
+
+  for (const row of results) {
+    const variableName = row.id;
+    global[variableName] = row.key;
 }
+
+  function getEvents(query) {
+
+    let html = ''; // Stores HTML formatted query
+    var fDate;     // Stores date in proper format
+
+    // Adds headers
+    html += '<table id="events_table">';
+    html += '<thead>';
+    html += '<tr>';
+
+    /* Dynamically creates a variable type
+       with the name being the ID of the query,
+       and the value being the key. */
+      for (const row of query) {
+        const variableName = row.id;
+        global[variableName] = row.key;
+
+      // Gets the date
+      fDate = getDate(Date);
+
+      // Formats the SQL query to HTML code
+      html += '<td id="Event">' + Event + '</td>';
+      html += '<td id="Date">' + fDate + '</td>';
+      html += '<td id="Time">' + Time + '</td>';
+      html += '<td id="Description">' + Description + '</td>';
+      }
+
+      html += '</tr>';
+      html += '</thead>';
+      html += '</table>';
+
+      return html;      
+      
+  }
 
 
 
