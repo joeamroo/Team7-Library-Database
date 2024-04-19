@@ -10,7 +10,7 @@ Using the link to the repository, you can click on the "code" and clone the repo
 https://github.com/joeamroo/Team7-Library-Database
 ```
 
-If you would like to test the website locally, you can simply "show preview" on the home page. Since we are hosting our back-end in a seperate platform, the back-end will still be active even when only looking at the html preview. 
+If you would like to test the website locally, you can simply "show preview" on the home.html file. Since we are hosting our back-end in a seperate platform, the back-end will still be active even when only looking at the html preview. 
 
 
 ## Triggers
