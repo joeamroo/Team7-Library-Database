@@ -16,6 +16,9 @@ function getId(item, itemType) {
                 return 0;
             }
             else {
+                if(result.length === 0){
+                    return 0;
+                }
                 console.log(result);
                 Id = result[0].author_id;
                 console.log(Id);
