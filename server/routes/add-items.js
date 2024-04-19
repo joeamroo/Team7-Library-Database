@@ -51,7 +51,6 @@ function getId(item, itemType) {
 }
 
 
-
 function addItems(res, itemType, title, authorDirector, isbn, category, publisherProducer, publicationReleaseDate,imageLink,totalCopies,rating) {
     if(itemType === 'book') {
         authorId = getId(authorDirector, 'author');
