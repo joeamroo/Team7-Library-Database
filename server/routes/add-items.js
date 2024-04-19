@@ -9,45 +9,36 @@ const connection = mysql.createConnection({
 });
 
 function getId(item, itemType) {
-    return new Promise((resolve, reject) => {
-        if(itemType === 'author') {
-            connection.query(`SELECT author_id FROM author WHERE author_name = ?`, [item], (err, result) => {
-                if (err) {
-                    console.log('error getting author id:', err);
-                    reject(err);
+    if(itemType === 'author') {
+        connection.query(`SELECT author_id FROM author WHERE author_name = ?`, [item], (err, result) => {
+            if (err) {
+                console.log('error getting author id:', err);
+                return 0;
+            }
+            else {
+                if(result.length === 0){
+                    return 0;
                 }
-                else {
-                    if(result.length === 0){
-                        resolve(0);
-                    }
-                    else {
-                        console.log(result);
-                        const Id = result[0]['author_id'];
-                        console.log(Id);
-                        resolve(Id);
-                    }
-                }
-            })
-        }
-        else if(itemType === 'genre') {
-            connection.query(`SELECT genre_id FROM genres WHERE genre_name = ?`, [item], (err, result) => {
-                if (err) {
-                    console.log('error getting genre id:', err);
-                    reject(err);
-                }
-                else {
-                    if(result.length === 0){
-                        resolve(0);
-                    }
-                    else {
-                        const Id = result[0]['genre_id'];
-                        console.log(Id);
-                        resolve(Id);
-                    }
-                }
-            })
-        }
-    });
+                console.log(result);
+                Id = result[0]['author_id'];
+                console.log(Id);
+                return Id;
+            }
+        })
+    }
+    else if(itemType === 'genre') {
+        connection.query(`SELECT genre_id FROM genres WHERE genre_name = ?`, [item], (err, result) => {
+            if (err) {
+                console.log('error getting genre id:', err);
+                return 0;
+            }
+            else {
+                Id = result[0]['genre_id'];
+                console.log(Id);
+                return Id;
+            }
+        })
+    }
 }
 
 
@@ -55,7 +46,7 @@ function addItems(res, itemType, title, authorDirector, isbn, category, publishe
     if(itemType === 'book') {
         authorId = getId(authorDirector, 'author');
         console.log(authorId);
-        if (authorId === 0) {
+        if (authorId === 0 || authorId === null) {
             console.log('author not found');
             connection.query(`INSERT INTO author (author_name) VALUES (?)`, [authorDirector], (err) => { 
                 if (err) {
