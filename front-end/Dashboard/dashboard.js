@@ -3,6 +3,7 @@ const memberId = localStorage.getItem('memberId');
 const loginButton = document.getElementById('myAccount');
 const logOutBtn = document.getElementById('logoutBtn');
 const updateBtn = document.querySelector(".main-btn");
+const orderBtn = document.querySelector(".dateButton");
 const bookLabel = document.querySelector(".book-selection");
 const movieLabel = document.querySelector (".movie-selection");
 const deviceLabel = document.querySelector(".device-selection");
@@ -320,7 +321,7 @@ sendPop.addEventListener('click', function(event) {
   setProfileInfo();
   closePop();
 });
-ß
+
 
 function setProfileInfo() {
   
@@ -474,6 +475,10 @@ function getUserOrderReport() {
 
     xhr.send(data);
 }
+
+  orderBtn.addEventListener('click', function(event) {
+    event.preventDefault();
+  });
 
      /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
