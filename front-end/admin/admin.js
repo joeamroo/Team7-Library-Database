@@ -757,13 +757,14 @@ document.getElementById('addEventSubmit').addEventListener('click', function(eve
     event.preventDefault();
     
     const allFieldsFilled = [
-        'addEventName', 'addEventDes', 'eventImg', 'eventSponsor', 'eventDate', 'eventStart', 'eventEnd'
+        'addEventName', 'addEventDes', 'eventImg', 'eventCategory', 'eventSponsor', 'eventDate', 'eventStart', 'eventEnd'
     ].every(id => document.getElementById(id).value.trim() !== "");
 
     if (allFieldsFilled) {
         const name = document.getElementById('addEventName').value.trim();
         const des = document.getElementById('addEventDes').value.trim();
         const img = document.getElementById('eventImg').value.trim();
+        const category = document.getElementById('eventCategory').value;
         const sponsor = document.getElementById('eventSponsor').value.trim();
         const date = document.getElementById('eventDate').value;
         const startTime = document.getElementById('eventStart').value;
@@ -812,6 +813,7 @@ document.getElementById('addEventSubmit').addEventListener('click', function(eve
                 console.log('sucessfully added employee');
                 document.getElementById('addEventName').value = '';
                 document.getElementById('addEventDes').value = '';
+                document.getElementById('eventCategory').value = '';
                 document.getElementById('eventImg').value = '';
                 document.getElementById('eventSponsor').value = '';
                 document.getElementById('eventDate').value = '';
@@ -829,6 +831,7 @@ document.getElementById('addEventSubmit').addEventListener('click', function(eve
             name: name, 
             des: des, 
             img: img, 
+            category: category,
             sponsor: sponsor, 
             date: date, 
             normalizedStartTime: normalizedStartTime,

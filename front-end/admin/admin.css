@@ -1126,6 +1126,7 @@ input[type=url],
 #updEmployeePosition,
 #updEmployeeSupervisor,
 #addEventDes,
+#eventCategory,
 .form-select {
   width: 500px;
 }
