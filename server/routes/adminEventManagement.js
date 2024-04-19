@@ -19,6 +19,7 @@ function createEventHtml(item) {
     eventHtml += `<td class="event_id">${item.event_id}</td>`;
     eventHtml += `<td id="event_name">${item.event_name}</td>`;
     eventHtml += `<td id="event_date">${item.date}</td>`;
+    eventHtml += `<td id="event_type">${item.event_type}</td>`;
     eventHtml += `<td id="sponsor">${item.sponsor}</td>`;
     eventHtml += `<td id="attendance">${item.attendance_count}</td>`;
     eventHtml += `<td id="event_status">${capitalizeFirstLetter(item.event_status)}</td>`;
@@ -53,7 +54,7 @@ function getAdminAlerts(res) {
 }
 
 function getEventsForAdmin(res) {
-    connection.query('SELECT event_id, event_name, date, sponsor, attendance_count, event_status FROM event ORDER BY event_id ASC', (err, results) => {
+    connection.query('SELECT event_id, event_name, date, sponsor, attendance_count, event_status, event_type FROM event ORDER BY event_id ASC', (err, results) => {
         if (err) {
             console.error('Error querying staff data:', err);
             response.writeHead(500);
@@ -70,8 +71,8 @@ function getEventsForAdmin(res) {
     });
 }
 
-function insertEvent(res, name, des, img, sponsor, date, normalizedStartTime, stPeriod, normalizedEndTime, endPeriod) {
-    connection.query(`INSERT INTO event (event_name, event_description, event_img, date, start_time, startAMPM, end_time, endAMPM, event_status, sponsor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [name, des, img, date, normalizedStartTime, stPeriod, normalizedEndTime, endPeriod, 'active', sponsor ], (newEventErr, result) => {
+function insertEvent(res, name, des, img, category, sponsor, date, normalizedStartTime, stPeriod, normalizedEndTime, endPeriod) {
+    connection.query(`INSERT INTO event (event_name, event_description, event_img, date, start_time, startAMPM, end_time, endAMPM, event_status, sponsor, event_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [name, des, img, date, normalizedStartTime, stPeriod, normalizedEndTime, endPeriod, 'active', sponsor, category], (newEventErr, result) => {
         if (newEventErr) {
             console.log('error entering new event into librarydev db:', newEventErr);
         }
@@ -98,20 +99,50 @@ function deleteEvent(res, eventId) {
     res.end(JSON.stringify({ message: 'eventDeletionSuccessful' }));
 }
 
-function filterEvents(res, startDate, endDate) {
-    filterByDate = 'SELECT * FROM event WHERE date BETWEEN ? AND ? ORDER BY date ASC';
-
-    connection.query(filterByDate, [startDate, endDate], (err, results) => {
-        if (err) {
-            console.log('error getting filtered info from event into librarydev db:', err);
+function filterEvents(res, startDate, endDate, sponsor, memType, time) {
+    let searchQuery = 'SELECT DISTINCT e.* FROM event e LEFT JOIN events_member_link eml ON e.event_id = eml.event_id LEFT JOIN member m ON eml.member_id = m.member_id WHERE (e.date BETWEEN ? AND ?)';
+  
+    const queryParams = [startDate, endDate];
+  
+    if (sponsor !== '') {
+      searchQuery += 'AND e.event_type = ? ';
+      queryParams.push(sponsor);
+    }
+  
+    if (memType !== '') {
+      searchQuery += (queryParams.length > 0 ? ' AND ' : '') + 'm.mem_type = ? ';
+      queryParams.push(memType);
+    }
+  
+    if (time !== '' && time != null) {
+        if (time === 'morning') {
+            searchQuery += (queryParams.length > 0 ? ' AND ' : '') + `e.start_time < 12 AND e.startAMPM ='AM'`;
         }
+        else if (time === 'afternoon') {
+            searchQuery += (queryParams.length > 0 ? ' AND ' : '') + `e.start_time >= 12 AND e.startAMPM ='PM' AND e.start_time < 5`;
+        }
+        else if (time === 'evening') {
+            searchQuery += (queryParams.length > 0 ? ' AND ' : '') + `e.start_time >= 5 AND e.startAMPM ='PM'`;
+        }
+    }
 
-        let eventHtml = '';
+    searchQuery += ' ORDER BY date ASC';
+  
+    connection.query(searchQuery, queryParams, (err, results) => {
+      if (err) {
+        console.error('Error filtering event report data:', err);
+        res.writeHead(500);
+        res.end('Server error');
+        return;
+      }
+  
+      let eventHtml = '';
+      
+      results.forEach(item => { eventHtml += createEventHtml(item); });
         
-        results.forEach(item => { eventHtml += createEventHtml(item); });
-        
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end(eventHtml, 'utf-8');
+  
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(eventHtml, 'utf-8');
     });
 }
 

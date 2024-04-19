@@ -33,7 +33,7 @@
    
        </div>
 
-      <div class="sidebar">
+  <div class="sidebar">
           <div class="top">
 
 
@@ -101,7 +101,7 @@
  
   <div class="center">
     <div class="notification">
-      <img src="../Dashboard/notify.png" alt="" />
+      <img src="../Dashboard/Notify.png" alt="" />
       <div class="details">
         <div class="name">Cougar Chronicles</div>
         <div class="hello-msg">
@@ -115,138 +115,88 @@
   <a class="user-greet"></a>
 
   
-   <div class="rounded-rectangle profile" id="profile-class">
+
     <!----------------------------------------------------------------->
    
 
 
-<!-- 
+ <!-- 
   ┌───────────────────────────────────────────────────────────────────┐
   │                             Profile                               │
   └───────────────────────────────────────────────────────────────────┘
  -->
  
-  
-    <div class="settings profile">
-      <!-- User settings panel goes here -->
-      <!-- Include the form from the previous code snippet -->
-
-      <div class="profile-pic-container">
-        <img src="Profile.png" alt="Profile Picture" class="profile-pic" id="profilePic">
-        <div class="update-overlay" onclick="document.getElementById('fileInput').click();">
-          <p>Update Pic</p>
-        </div>
+ <div class="rounded-rectangle profile" id="profile-class">
+  <div class="settings profile">
+    <!-- User settings panel goes here -->
+    <!-- Include the form from the previous code snippet -->
+    <div class="profile-pic-container">
+      <img src="Profile.png" alt="Profile Picture" class="profile-pic" id="profilePic">
+      <div class="update-overlay" onclick="document.getElementById('fileInput').click();">
+        <p>Update Pic</p>
       </div>
-      <a class="member-id" id="member-id">Member ID: </a><br />
-      <a class="member-type" id="member-type">Member Type: Regular </a>
-      <a class="member-status" id="member-status"></a>
-      <input type="file" id="fileInput" accept="image/*" onchange="updateProfilePic(this)">
-      
-      <script>
+    </div>
+    <a class="member-id" id="member-id">Member ID: </a><br />
+    <a class="member-type" id="member-type">Member Type: Regular</a>
+    <a class="member-status" id="member-status"></a>
+    <input type="file" id="fileInput" accept="image/*" onchange="updateProfilePic(this)">
+    <script>
       function updateProfilePic(input) {
         if (input.files && input.files[0]) {
           var reader = new FileReader();
-          
           reader.onload = function(e) {
             document.getElementById('profilePic').src = e.target.result;
             // TODO: Upload the image to the server
           }
-          
           reader.readAsDataURL(input.files[0]);
         }
       }
-      </script>
-
-      <div class="account-container"> <h2 id="my-account-label">My Account</h2> <p id="my-account-label-2">
-        Manage your User Account Information and Settings</p></div> <div class="profile-info"> 
-
-       
-       
-      </div> <div class="personal-info"> <h3>Personal Information</h3>
-    
-       <div class="member-info" id="member-info">
-        <!--
-        <div class="form-group">
-          <label for="firstName">First Name</label>
-          <input type="text" id="firstName" value="Darth">
-        </div>
-        
-        <div class="form-group">  
-          <label for="lastName">Last Name</label>
-          <input type="text" id="lastName" value="Murthy">
-        </div>
-
-        <div class="form-group">
-          <label for="phone_number">Phone Number</label>  
-          <input type="tel" id="phone_number" value="(541) 504-5555 ">
-        </div>
-
-        <div class="form-group">
-          <label for="street_addr">Street Address</label>
-          <input type="text" id="street_addr" value="Privet Drive">
-        </div>
-
-        <div class="form-group">
-          <label for="city_addr">City</label>
-          <input type="text" id="city_addr" value="Houston">
-        </div>
-
-        <div class="form-group">
-          <label for="state">State</label>
-          <input type="text" id="state" value="Texas">
-        </div>
-
-        <div class="form-group">
-          <label for="zipcode_addr">Zip Code</label>
-          <input type="text" id="zipcode_addr" value="77063">
-        </div>
-        
-        <div class="form-group">
-          <label for="email">Email</label>  
-          <input type="email" id="email" value="ssh!atlibrary@library.com">
-        </div>
-        
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" value="ilikebigbooks@icannotlie.com">  
-        </div>
-        -->
-
+    </script>
+    <div class="account-container">
+      <h2 id="my-account-label">My Account</h2>
+      <p id="my-account-label-2">
+        Manage your User Account Information and Settings
+      </p>
+    </div>
+    <div class="profile-info">
+      <!-- Profile info goes here -->
+    </div>
+    <div class="personal-info">
+      <h3>Personal Information</h3>
+      <div class="member-info" id="member-info">
+        <!--SQL QUERY-->
       </div>
-        
-        <!--<button class="update-info" id="updateInfo">Update Information</button>-->
-
-        <button type="button" class="main-btn">Submit</button>
-
-        <div class="update-container">
-          <div class="popup">
-            <div class="popup-content">
-              <div class="close" onclick="closePop()">
-                <span class="material-icons-round">cancel</span>
-              </div>
-              <div class="head" id="submitTitle">Submit Details</div>
-              <div class="text" id="profile-flag">
-                Are you sure you want to submit the details? You can later edit them
-                in details section
-              </div>
-              <div class="input">
-                <input type="checkbox" id="repeatWarning" />
-                <label for="repeatWarning"> Do not show this anymore</label>
-              </div>
-              <div class="btns">
-                <button type="button" class="btn" id="closeProfilePrompt" onclick="closePop()">
-                  Cancel
-                </button>
-                <button type="button" class="btn" id="submitProfileInfo">
-                  Submit
-                </button>
-              </div>
+      <!--<button class="update-info" id="updateInfo">Update Information</button>-->
+      <button type="button" class="main-btn">Submit</button>
+      <div class="update-container">
+        <div class="popup">
+          <div class="popup-content">
+            <div class="close" onclick="closePop()">
+              <span class="material-icons-round">cancel</span>
+            </div>
+            <div class="head" id="submitTitle">Submit Details</div>
+            <div class="text" id="profile-flag">
+              Are you sure you want to submit the details? You can later edit them in details section
+            </div>
+            <div class="input">
+              <input type="checkbox" id="repeatWarning" />
+              <label for="repeatWarning">Do not show this anymore</label>
+            </div>
+            <div class="btns">
+              <button type="button" class="btn" id="closeProfilePrompt" onclick="closePop()">
+                Cancel
+              </button>
+              <button type="button" class="btn" id="submitProfileInfo">
+                Submit
+              </button>
             </div>
           </div>
         </div>
-    </div>
-   </div>
-
+     </div>
+     </div>
+  </div>
+  
+  
 <!-- 
   ┌───────────────────────────────────────────────────────────────────┐
   │                             Orders                                │
@@ -292,21 +242,21 @@
 
         <!-- BOOK DROPDOWN -->
         <input type="radio" name="book" id="#book" class="radio" />
-        <label for="book-label">
+        <label class="book-selection" for="book-label">
           <span class="material-icons-outlined"> auto_stories </span>
           <span class="book-label">Book</span>
         </label>
 
         <!-- MOVIE DROPDOWN -->
         <input type="radio" name="movie" id="#movie" class="radio" />
-        <label for="movie-label">
+        <label class="movie-selection" for="movie-label">
           <span class="material-icons-outlined"> movie </span>
           <span class="movie-label">Movie</span>
         </label>
 
         <!-- DEVICE DROPDOWN -->
         <input type="radio" name="device" id="#device" class="radio" />
-        <label for="device-label">
+        <label class="device-selection" for="device-label">
           <span class="material-icons-outlined"> devices </span>
           <span class="device-label">Device</span>
         </label>
@@ -315,15 +265,53 @@
   </div> 
 
 
-  <div class="order-title">Recent Orders</div>
+
 <div class="recent-orders">
+  <div class="gallery">
+    <img src="https://m.media-amazon.com/images/I/91eoXf--ljL._AC_UY327_FMwebp_QL65_.jpg" alt="Movie 1" onclick="openModal('Movie 1', 'Description for Movie 1')">
+    <img src="https://m.media-amazon.com/images/I/91eoXf--ljL._AC_UY327_FMwebp_QL65_.jpg" alt="Movie 2" onclick="openModal('Movie 2', 'Description for Movie 2')">
+    <img src="https://m.media-amazon.com/images/I/91eoXf--ljL._AC_UY327_FMwebp_QL65_.jpg" alt="Movie 3" onclick="openModal('Movie 3', 'Description for Movie 3')">
+    <img src="https://m.media-amazon.com/images/I/91eoXf--ljL._AC_UY327_FMwebp_QL65_.jpg" alt="Movie 4" onclick="openModal('Movie 4', 'Description for Movie 4')">
+    <img src="https://m.media-amazon.com/images/I/91eoXf--ljL._AC_UY327_FMwebp_QL65_.jpg" alt="Movie 5" onclick="openModal('Movie 5', 'Description for Movie 5')">
+    <img src="https://m.media-amazon.com/images/I/91eoXf--ljL._AC_UY327_FMwebp_QL65_.jpg" alt="Movie 6" onclick="openModal('Movie 6', 'Description for Movie 6')">
+    <img src="https://m.media-amazon.com/images/I/91eoXf--ljL._AC_UY327_FMwebp_QL65_.jpg" alt="Movie 7" onclick="openModal('Movie 7', 'Description for Movie 7')">
+    <img src="https://m.media-amazon.com/images/I/91eoXf--ljL._AC_UY327_FMwebp_QL65_.jpg" alt="Movie 7" onclick="openModal('Movie 8', 'Description for Movie ')">
+   
+
+    <!-- Add more images as needed -->
+  </div>
+  
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span onclick="closeModal()" style="float:right;cursor:pointer;">&times;</span>
+      <h2 id="modalTitle"></h2>
+      <p id="modalDescription"></p>
+    </div>
+  </div>
+
+  <script>
+    function openModal(title, description) {
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalDescription').innerText = description;
+      document.getElementById('myModal').style.display = 'block';
+    }
+    
+    function closeModal() {
+      document.getElementById('myModal').style.display = 'none';
+    }
+    
+    window.onclick = function(event) {
+      if (event.target === document.getElementById('myModal')) {
+        closeModal();
+      }
+    }
+    </script>
   
       <!-- SQL QUERY -->
 </div>
-  </div>
+ </div> <!-- End of Orders-->
 
   
-
 
 
 
@@ -335,8 +323,11 @@
   └───────────────────────────────────────────────────────────────────┘
  -->
 
+
  <div class="settings holds">
+
 </div>
+
 
 <!-- 
   ┌───────────────────────────────────────────────────────────────────┐
@@ -345,18 +336,14 @@
  -->
 
  <div class="settings events">
-  
-    
+    <!--SQL QUERY-->
 </div>
-
-
 
 
 
 <div class="settings fines">
   <div class="total">
-    <h2 id="fine-title">Fine Amount:</h2>
-    <h2 id="amount"></h2>
+    <h2 id="fine-title">Fine Amount: <span id="amount"></span></h2>
   </div>
   <div class="name-info">
     <label for="first-name">First Name</label>
@@ -366,9 +353,9 @@
   </div>
   <div class="card-num-cvv">
     <label for="card-number">Card Number</label>
-    <input type="text" id="card-number" maxlength="16" required>
+    <input type="text" id="card-number" maxlength="16" placeholder="0000 0000 0000 0000" required>
     <label for="cvv">CVV</label>
-    <input type="text" id="cvv" name="cvv" maxlength="3" required>
+    <input type="text" id="cvv" name="cvv" maxlength="3" placeholder="XXX" required>
   </div>
   <div class="logos-and-exp">
     <label for="expiry-date">Expiry Date</label>

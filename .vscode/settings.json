@@ -1,5 +1,5 @@
 {
-    "livePreview.defaultPreviewPath": "/front-end/admin/admin.html",
+    "livePreview.defaultPreviewPath": "/front-end/Dashboard/dashboard.html",
     "sqltools.connections": [
         {
             "mysqlOptions": {

@@ -653,12 +653,8 @@ input[type="file"] {
 }
 
 .account-container {
-  
   margin-left: 20px;
   padding: 1px;
-  
-
-
 }
 
 h2 {
@@ -784,7 +780,6 @@ input[type="password"] {
   padding: 15px 25px;
   border-radius: 3mm;
   display: flex;
-  /*align-items: flex-start;*/
   justify-content: space-between;
   flex-direction: column;
   font-family: poppins;
@@ -917,6 +912,11 @@ input[type="password"] {
   display: none;
 }
 
+.settings.money.hide {
+  display: none;
+}
+
+
 /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
   │                                  Orders                                     │
@@ -985,7 +985,7 @@ input[type="date"] {
   color: var(--mainColor);
 }
 
-#employeeTable, #eventTable {
+#employeeTable, #eventTable, #catalogTable{
   table-layout: auto;
   margin-top: 40px;
   align-items: center;
@@ -996,7 +996,7 @@ input[type="date"] {
 #employeeTable th,
 #employeeTable td,
 #eventTable th,
-#eventTable td {
+#eventTable td{
   text-align: left;
 }
 
@@ -1028,6 +1028,10 @@ input[type="date"] {
   color: rgb(165, 91, 91);
 }
 
+#summary {
+  font-size: 18px;
+}
+
 .employee-btns i, .event-btns i {
   font-size: 22px;
   margin-right: 5px;
@@ -1044,7 +1048,7 @@ input[type="date"] {
   margin-bottom: 20px;
 }
 
-#addEmployeeBtn:hover, #removeEmployeeBtn:hover, #addEventBtn:hover, #removeEventBtn:hover {
+#addEmployeeBtn:hover, #removeEmployeeBtn:hover, #addEventBtn:hover, #removeEventBtn:hover  {
   cursor: pointer;
   opacity: 0.8;
 }
@@ -1103,6 +1107,13 @@ input[type="date"] {
   margin-right: 10px;
 }
 
+.event-label, .money-label {
+  width: 150px;
+  text-align: left;
+  margin-right: 2px;
+}
+
+
 input[type=text],
 input[type=email],
 input[type=password],
@@ -1115,9 +1126,11 @@ input[type=url],
 #updEmployeePosition,
 #updEmployeeSupervisor,
 #addEventDes,
+#eventCategory,
 .form-select {
   width: 500px;
 }
+
 
 input[type=date],
 input[type=time] {
@@ -1158,7 +1171,7 @@ button[type='submit']:hover {
   color: red;
 }
 
-#limitBySection, #limitEventSection {
+#limitBySection, #limitEventSection, #limitMoneySection {
   margin-top: 15px;
 }
 
@@ -1166,9 +1179,13 @@ button[type='submit']:hover {
   color: var(--mainColor);
 }
 
-#limitEmpStat, #limitPosition, #fromDate, #toDate {
+#limitEmpStat, #limitPosition, #fromDate, #toDate, #monFromDate, #monToDate {
   margin-top: 10px;
   margin-right: 50px;
+}
+
+#limitEventSection, #limitMoneySection {
+  margin-bottom: 50px;
 }
 
 @keyframes shake {
@@ -1190,7 +1207,11 @@ button[type='submit']:hover {
   animation: shake 0.5s ease-in-out;
 }
 
-#searchEventsButton, #searchCatalogButton, #resetTable, #searchEmplsButton, #resetEmplSearch {
+#searchEventsButton, #searchFinancialButton, #resetFinancialFilters {
+  margin-right: 20px;
+}
+
+#searchEventsButton, #searchCatalogButton, #resetTable, #searchEmplsButton, #resetEmplSearch, #resetEventFilters, #searchFinancialButton, #resetFinancialFilters {
   border-radius: 20px;
   background-color: var(--mainColor);
   color: white;
@@ -1202,7 +1223,7 @@ button[type='submit']:hover {
   margin-right: 25px;
 }
 
-#searchEventsButton:hover, #searchCatalogButton:hover, #resetTable:hover, #searchEmplsButton:hover, #resetEmplSearch:hover {
+#searchEventsButton:hover, #searchCatalogButton:hover, #resetTable:hover, #searchEmplsButton:hover, #resetEmplSearch:hover, #resetEventFilters:hover, #searchFinancialButton:hover, #resetFinancialFilters:hover {
   cursor: pointer;
   background-color: #ad2727;
 }
@@ -1230,8 +1251,28 @@ button[type='submit']:hover {
   margin-top: 60px;
 }
 
-#itemType, #item-condition {
+#itemType, #item-condition, #limitSponsor, #limitCat {
   width: 800px;
+}
+
+
+#limitMember, #limitTime, #limitX, #limitY {
+  width: 300px;
+}
+
+#limitMember {
+  margin-right: 47px;
+}
+
+label[for="fromDate"],
+label[for="toDate"],
+label[for="monFromDate"],
+label[for="monToDate"] {
+  margin-right: 15px;
+}
+
+#eventReportTitle {
+  margin-bottom: 20px;
 }
 
 .mb-3i {
@@ -1256,7 +1297,6 @@ button[type='submit']:hover {
   align-items: center;
   width: 100%;
 }
-
 
 .circle {
   width: 300px; 
@@ -1293,14 +1333,15 @@ button[type='submit']:hover {
   font-size: 60px; 
   font-weight: bold; 
   position: absolute;
-  top: 30%;
+  top: 30%; 
 }
 
 .circle-text {
-  margin-top: 28%;
-  font-size: 16px;
+  margin-top: 28%; 
+  font-size: 16px; 
   font-weight: bold; 
 }
+
 
 #tabs-name {
   margin-top: 60px;

@@ -3,9 +3,10 @@ const memberId = localStorage.getItem('memberId');
 const loginButton = document.getElementById('myAccount');
 const logOutBtn = document.getElementById('logoutBtn');
 const updateBtn = document.querySelector(".main-btn");
-const bookLabel = document.querySelector(".book-label");
-const movieLabel = document.querySelector (".movie-label");
-const deviceLabel = document.querySelector(".device-label");
+const orderBtn = document.querySelector(".dateButton");
+const bookLabel = document.querySelector(".book-selection");
+const movieLabel = document.querySelector (".movie-selection");
+const deviceLabel = document.querySelector(".device-selection");
 const sendPop = document.querySelector('#submitProfileInfo');
 const profileSelect = document.getElementById('profile-selection');
 const orderSelect = document.getElementById('order-selection');
@@ -18,7 +19,7 @@ const holdsView = document.querySelector('.settings.holds');
 const eventsView = document.querySelector('.settings.events');
 const fineView = document.querySelector('.settings.fines');
 const orderReport = document.querySelector('.recent-orders');
-const eventReport = document.querySelector('.settings.events')
+const eventReport = document.querySelector('.settings.events');
 const profileInfo = document.querySelector('.member-info');
 const today = new Date().toLocaleDateString();
 const notify = document.querySelector('#notify-user');
@@ -97,18 +98,31 @@ var input = document.querySelector(".input-box");
 
       // Selects item and reverts dropdown to 
       // original form
+      
       bookLabel.addEventListener('click', () => {
-        input.innerHTML = "Book"
+        var book_input = '<div class="order-choice">';
+        book_input += '<span class="material-icons-outlined"> auto_stories </span>';
+        book_input += '<span class="book-label" id="choice">Book</span>';
+        book_input += '</div>';
+        input.innerHTML = book_input;
         input.click();
       });
 
       movieLabel.addEventListener('click', () => {
-        input.innerHTML = 'Movie'
+        var movie_input = '<div class="order-choice">';
+        movie_input += '<span class="material-icons-outlined"> movie </span>';
+        movie_input += '<span class="movie-label" id="choice">Movie</span>';
+        movie_input += '</div>';
+        input.innerHTML = movie_input;
         input.click();
       });
 
       deviceLabel.addEventListener('click', () => {
-        input.innerHTML = "Device";
+        var movie_input = '<div class="order-choice">';
+        movie_input += '<span class="material-icons-outlined"> devices </span>';
+        movie_input += '<span class="device-label" id="choice">Device</span>';
+        movie_input += '</div>';
+        input.innerHTML = movie_input;
         input.click();
       });
 
@@ -245,6 +259,12 @@ var input = document.querySelector(".input-box");
 
   });
 
+
+ document.addEventListener('DOMContentLoaded', function() {
+  const sidepanel = document.querySelector('.sidebar');
+  sidepanel.classList.add('expanded');
+});
+
      /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
   │                       MemberId Retrieval from Storage                       │
@@ -311,14 +331,14 @@ sendPop.addEventListener('click', function(event) {
 
 function setProfileInfo() {
   
-  const firstName = document.getElementById('.firstName');
-  const lastName = document.getElementById('.lastName');
-  const phone_number = document.getElementById('.phone_number');
-  const street_addr = document.getElementById('.street_addr');
-  const city_addr = document.getElementById('.city_addr');
-  const state = document.getElementById('.state');
-  const zipcode_addr = document.getElementById('.zipcode_addr');
-  const email = document.getElementById('.email');
+  const firstName = document.getElementById('firstName').value;
+  const lastName = document.getElementById('lastName').value;
+  const phone_number = document.getElementById('phone_number').value;
+  const street_addr = document.getElementById('street_addr').value;
+  const city_addr = document.getElementById('city_addr').value;
+  const state = document.getElementById('state').value;
+  const zipcode_addr = document.getElementById('zipcode_addr').value;
+  const email = document.getElementById('email').value;
 
   const xhr = new XMLHttpRequest();
   xhr.open('POST', setUserInfoUrl);
@@ -437,7 +457,8 @@ function getUserOrderReport() {
 
     xhr.onload = function() {
       if (xhr.status === 200) {
-        orderReport.innerHTML = xhr.responseText;
+       // orderReport.innerHTML = '  <div class="order-title">Recent Orders</div>';
+       // orderReport.innerHTML += xhr.responseText;
         //const orderRetrieval = xhr.responseText;
        // orderReport.innerHTML = filterOrderTable(orderRetrieval);
         
@@ -461,6 +482,10 @@ function getUserOrderReport() {
     xhr.send(data);
 }
 
+  orderBtn.addEventListener('click', function(event) {
+    event.preventDefault();
+  });
+
      /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
   │                               Holds Report                                  │
@@ -476,12 +501,7 @@ function getUserOrderReport() {
 
     xhr.onload = function() {
       if (xhr.status === 200) {
-        //const retrieved = xhr.responseText;
-        //console.log(retrieved);
-        holdsView.innerHTML = xhr.responseText;
-    
-        
-        
+        holdsView.innerHTML += xhr.responseText;        
       } else {
         console.log("Failed to retrieve data");
       }
@@ -503,6 +523,7 @@ function getUserOrderReport() {
 
 
 
+
      /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
   │                               Events Report                                 │
@@ -521,7 +542,8 @@ function getUserOrderReport() {
       if (xhr.status === 200) {
         //const retrieved = xhr.responseText;
         //console.log(retrieved);
-        eventsView.innerHTML = xhr.responseText;
+        eventsView.innerHTML = '<div class="event-title">Your Events</span>';
+        eventsView.innerHTML += xhr.responseText;
     
         
         

@@ -1,56 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="StaffReports.css">
-   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
-   <title>Member Search</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="StaffReports.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+    <title>Member Search</title>
 </head>
-
 <body>
     <header>
         <div class="top-bar">
-          <h1 class="library-name"><a href="../Home/home.html">Cougar Chronicles</a></h1>
-          <button id="logoutBtn" class="logoutBtn">Logout</button>
+            <h1 class="library-name"><a href="../Home/home.html">Cougar Chronicles</a></h1>
+            <button id="logoutBtn" class="logoutBtn">Logout</button>
         </div>
     </header>
     <div class="content-container">
-        <div class="form-container">
+        <div id="searchContainer">
+          <div class="form-container">
             <form id="searchForm">
                 <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" placeholder="Enter member name">
+                  <label for="name">Name:</label>
+                  <input type="text" id="name" name="name" placeholder="Enter member name">
                 </div>
                 <div class="form-group">
-                    <label for="memberId">Member ID:</label>
-                    <input type="text" id="memberId" name="memberId" placeholder="Enter member ID">
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="hasFines" value="true"> Members with Fines
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="noTransactions" value="true"> Members with No Transactions
-                        </label>
-                    </div>
+                  <label for="memberId">Member ID:</label>
+                  <input type="text" id="memberId" name="memberId" placeholder="Enter member ID">
                 </div>
                 <button type="submit" class="btn">Search</button>
                 <button type="button" id="generateReport" class="btn">Generate Report</button>
-            </form>
+              </form>
         </div>
-        <div id="resultsContainer" style="display: none;">
-            <table id="resultsTable">
+      </div>
+      <div id="resultsContainer" class="results-container" style="display: none;">
+        <button id="resultsBackButton" class="btn">Back</button>
+        <table id="resultsTable">
                 <thead>
                     <tr>
                         <th>Member ID</th>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Status</th>
-                        <th>Member Type</th>
                         <th>Phone Number</th>
                         <th>Address</th>
                         <th>Fine</th>
@@ -63,13 +51,25 @@
                 <tbody></tbody>
             </table>
         </div>
-        <div id="reportContainer" style="display: none;">
-            <h2>Report</h2>
-            <div id="reportContent"></div>
-            <canvas id="reportChart"></canvas>
-        </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+    <br>
+    
+    <div id="reportContainer" style="display: none;">
+        <button id="reportBackButton" class="btn">Back</button>
+      <h2>Report</h2>
+      <br>
+      <br>
+      <br>
+      <br>
+      <div id="reportContent"></div>
+      <button id="backButton" class="btn">Back</button>
+      <div id="chartContainer" style="display: none;">
+        <canvas id="reportChart"></canvas>
+      </div>
+      <button id="backButton" class="btn">Back</button>
+    </div>
+  </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="StaffReports.js"></script>
 </body>
 </html>

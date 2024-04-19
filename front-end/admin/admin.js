@@ -31,51 +31,6 @@ const container = document.getElementById('container');
 
 
 
-/* 
-  ┌─────────────────────────────────────────────────────────────────────────┐
-  │                            Dropdown List                                │
-  └─────────────────────────────────────────────────────────────────────────┘
- */
-/*
-var input = document.querySelector(".input-box");
-      input.onclick = function () {
-        this.classList.toggle("open");
-        let list = this.nextElementSibling;
-        if (list.style.maxHeight) {
-          list.style.maxHeight = null;
-          list.style.boxShadow = null;
-        } else {
-          list.style.maxHeight = list.scrollHeight + "px";
-          list.style.boxShadow =
-            "0 1px 2px 0 rgba(0, 0, 0, 0.15),0 1px 3px 1px rgba(0, 0, 0, 0.1)";
-        }
-      };
-
-      var rad = document.querySelectorAll(".radio");
-      rad.forEach((item) => {
-        item.addEventListener("change", () => {
-          input.innerHTML = item.nextElementSibling.innerHTML;
-          input.click();
-        });
-      });
-
-      var label = document.querySelectorAll("label");
-      function search(searchin) {
-        let searchVal = searchin.value;
-        searchVal = searchVal.toUpperCase();
-        label.forEach((item) => {
-          let checkVal = item.querySelector(".name").innerHTML;
-          checkVal = checkVal.toUpperCase();
-          if (checkVal.indexOf(searchVal) == -1) {
-            item.style.display = "none";
-          } else {
-            item.style.display = "flex";
-          }
-          let list = input.nextElementSibling;
-          list.style.maxHeight = list.scrollHeight + "px";
-        });
-      }
-*/
 
 /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -152,6 +107,7 @@ inboxSelect.addEventListener('click', () => {
     inboxView.classList.remove('hide');
 });
 
+
 document.getElementById('employeeConnection').addEventListener('click', () => {
     profileView.classList.add('hide');
     eventView.classList.add('hide');
@@ -172,6 +128,7 @@ document.getElementById('inventoryConnection').addEventListener('click', () => {
     eventView.classList.add('hide');
     inboxView.classList.remove('hide');
 });
+
 
 
 function setOrderDate() {
@@ -641,6 +598,7 @@ function updateTotalEmployeesCount() {
 /*Manage Employees Tab End */
 
 
+
 /*Manage Events Tab*/
 const getEventsUrl = `${backendUrl}/getEventsForAdmin`;
 const addEventUrl = `${backendUrl}/insertEvent`;
@@ -685,13 +643,12 @@ function calculateAttendanceStatistics() {
     const totalAttendanceSpan = document.getElementById('total-atend');
   
     let maxAttendance = 0;
-    let minAttendance = 0; 
+    let minAttendance = 10000000; 
     let totalAttendance = 0;
     let totalEvents = 0;
   
     for (const row of eventRows) {
       const attendance = parseInt(row.querySelector('#attendance').textContent, 10);
-      console.log(attendance);
   
       maxAttendance = Math.max(maxAttendance, attendance);
       minAttendance = Math.min(minAttendance, attendance);
@@ -799,13 +756,14 @@ document.getElementById('addEventSubmit').addEventListener('click', function(eve
     event.preventDefault();
     
     const allFieldsFilled = [
-        'addEventName', 'addEventDes', 'eventImg', 'eventSponsor', 'eventDate', 'eventStart', 'eventEnd'
+        'addEventName', 'addEventDes', 'eventImg', 'eventCategory', 'eventSponsor', 'eventDate', 'eventStart', 'eventEnd'
     ].every(id => document.getElementById(id).value.trim() !== "");
 
     if (allFieldsFilled) {
         const name = document.getElementById('addEventName').value.trim();
         const des = document.getElementById('addEventDes').value.trim();
         const img = document.getElementById('eventImg').value.trim();
+        const category = document.getElementById('eventCategory').value;
         const sponsor = document.getElementById('eventSponsor').value.trim();
         const date = document.getElementById('eventDate').value;
         const startTime = document.getElementById('eventStart').value;
@@ -854,6 +812,7 @@ document.getElementById('addEventSubmit').addEventListener('click', function(eve
                 console.log('sucessfully added employee');
                 document.getElementById('addEventName').value = '';
                 document.getElementById('addEventDes').value = '';
+                document.getElementById('eventCategory').value = '';
                 document.getElementById('eventImg').value = '';
                 document.getElementById('eventSponsor').value = '';
                 document.getElementById('eventDate').value = '';
@@ -871,6 +830,7 @@ document.getElementById('addEventSubmit').addEventListener('click', function(eve
             name: name, 
             des: des, 
             img: img, 
+            category: category,
             sponsor: sponsor, 
             date: date, 
             normalizedStartTime: normalizedStartTime,
@@ -932,10 +892,16 @@ document.getElementById('removeEventSubmit').addEventListener('click', function(
 const fromDateInput = document.getElementById('fromDate');
 const toDateInput = document.getElementById('toDate');
 const searchButton = document.getElementById('searchEventsButton');
+const sponsorInput = document.getElementById('limitSponsor');
+const memTypeInput = document.getElementById('limitMember');
+const timeInput = document.getElementById('limitTime');
 
 searchButton.addEventListener('click', () => {
   const startDate = fromDateInput.value;
   const endDate = toDateInput.value;
+  const sponsor = sponsorInput.value;
+  const memType = memTypeInput.value;
+  const time = timeInput.value;
 
   if (startDate && endDate) {
     const xhr = new XMLHttpRequest();
@@ -954,7 +920,13 @@ searchButton.addEventListener('click', () => {
         }
     };
 
-    const data = JSON.stringify({ startDate: startDate, endDate: endDate });
+    const data = JSON.stringify({ 
+        startDate: startDate, 
+        endDate: endDate,
+        sponsor: sponsor,
+        memType: memType,
+        time: time
+    });
         
     xhr.send(data);
   } 
@@ -966,6 +938,15 @@ searchButton.addEventListener('click', () => {
             submitBtn.classList.remove('shake-button');
         }, 500);
   }
+});
+
+document.getElementById('resetEventFilters').addEventListener('click', function(event) {
+    document.getElementById('limitSponsor').value = '';
+    document.getElementById('limitMember').value = '';
+    document.getElementById('limitTime').value = '';
+    document.getElementById('toDate').value = '';
+    document.getElementById('fromDate').value = '';
+    getEventList();
 });
 
 
@@ -1046,3 +1027,4 @@ function updateTotalCatalogItemsCount() {
 
 
 
+ 

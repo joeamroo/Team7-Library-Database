@@ -29,7 +29,7 @@ body{
   user-select: none;
   overflow-x: hidden;
   color: var(--color-dark);
-  background: linear-gradient(to bottom, #ffffff 0%, #f9f9f9 100%);
+  background: white;
 }
 
 header {
@@ -108,17 +108,41 @@ header {
     position: relative;
   }
 
-  .wrapper {
+  .sidebar {
     display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-top: auto;
+    height: 100vh;
+    overflow-y: auto;
   }
 
 
-  .wrapper .sidebar ul li{
-    padding: 15px;
-    border-bottom: 1px solid #bdb8d7;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-    border-top: 1px solid rgba(255,255,255,0.05);
-  }    
+  .sidebar.expanded {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-top: auto;
+    height: 100vh;
+    overflow-y: auto;
+    background-color: #000;
+    color: #fff;
+    overflow: hidden;
+    animation: expand-height 2s ease forwards;
+  }
+  
+  @keyframes expand-height {
+    from {
+      height: 0;
+    }
+    to {
+      height: 100vh;
+    }
+  }
+
+  .wrapper {
+    display: flex;
+  } 
 
   .wrapper .sidebar ul li a{
     color: var(--color-white);
@@ -133,6 +157,8 @@ header {
     color: var(--color-white);
   }
 
+ 
+
   .top {
     font-size: 15px;
     position: relative;
@@ -141,12 +167,12 @@ header {
 
   /*Outer Rectangle*/
   .rounded-rectangle {
-    display: absolute;
+    display: relative;
     background-color: var(--f9f9f9);
     border-radius: 20px; /* Adjust the px value to increase or decrease the roundness */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    padding: 20px;
-    height: 94.5%;
+    box-shadow: 0 4px 8px rgba(254, 0, 0, 0.1);
+    padding: 10px;
+    height: 100%;
     width: 90%;
     margin: 20px auto;
   }
@@ -202,7 +228,15 @@ header {
   }
 
  #logout {
-  padding-top: 230%;
+  margin-top: auto;
+  bottom: -140%;
+  width: 100%;
+  overflow-y: auto;
+ 
+ }
+
+ .user-greet {
+  opacity: 100%;
  }
 
  #logout:hover {
@@ -222,19 +256,31 @@ header {
   .user-greet {
     font-size: xx-large;
     margin-left: 80px;
+    margin-bottom: 35px;
+  }
+
+  #profile-class {
+    margin-top: -30px;
+    height: 100vh;
   }
 
   .sidebar {
     display: flex;
     border-radius: 15px;
     flex-direction: column;
-    top:5rem;
-    height: 90vh;
+    flex: 1;
+    top:6rem;
+    overflow-y: auto;
     position: relative;
     left: 20px;
     background-color: var(--darkGray);
-    padding: 30px 0;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    margin-left: 30px;
+    margin-top: 50px; 
+    box-shadow: none;
+  }
+
+  #profile-class {
+    color: black;
   }
 
   .sidebar a {
@@ -248,9 +294,9 @@ header {
 
   .menu-item {
     padding: 15px 20px;
-    list-style: none;
     position: relative;
   }
+
 
   .menu-item a {
     color: var(--color-white);
@@ -296,7 +342,13 @@ header {
    Section: Recent Orders Table
    ========================================================================== */
 
-  .order-title {
+   /* Sets the third column to a fixed size (image) */
+   #Image img {
+    max-width: 100%;
+    max-height: 100%;
+   }
+
+  .order-title, .holds-title, .event-title {
     font-size: x-large;
     padding-bottom: 30px;
   }
@@ -314,7 +366,7 @@ header {
   .recent-orders table {
     align-items: center;
     text-align: center;
-    width: 100%;
+    /*width: 100%;*/
     border-collapse: collapse;
   }
 
@@ -355,7 +407,82 @@ header {
     cursor: pointer;
   }
 
-/* ===================== Recent Order Ends ===================== */
+
+
+
+  /* ==========================================================================
+   Section: Holds Table
+   ========================================================================== */
+
+.settings.holds {
+  display: absolute;
+  width: 100%;
+  margin: 20px 0px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.settings.holds table {
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.settings.holds th, .settings.holds td {
+  text-align: left;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.settings.holds th {
+  background-color: #fafafa;
+  color: var(--color-black);
+}
+
+.settings-holds td {
+  color: var(--color-black);
+}
+
+
+  /* ==========================================================================
+   Section: Events Table
+   ========================================================================== */
+
+   .settings.events {
+    display: absolute;
+    width: 100%;
+    margin: 20px 0px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+  
+  .settings.events table {
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .settings.events th, .settings.events td {
+    text-align: left;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .settings.events th {
+    background-color: #fafafa;
+    color: var(--color-black);
+  }
+  
+  .settings.events td {
+    color: var(--color-black);
+  }
+
 
 
 /* ==========================================================================
@@ -564,6 +691,15 @@ input:checked + label::before {
   color: --color-black;
 }
 
+.order-choice {
+  position: relative;
+}
+
+#choice {
+  position: absolute;
+  top: 1.8px;
+}
+
 /* ===================== Drop Down Menu Ends ===================== */
 
 /* ==========================================================================
@@ -725,7 +861,7 @@ input:checked + label::before {
   margin: 20px;
   border-radius: 50%;
   overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 1px rgba(0,0,0,0.2);
 }
 
 .profile-pic {
@@ -752,9 +888,6 @@ input:checked + label::before {
   cursor: pointer;
 }
 
-.profile-pic-container:hover .update-overlay {
-  opacity: 1;
-}
 
 .update-overlay p {
   font-size: 18px;
@@ -769,9 +902,6 @@ input[type="file"] {
   
   margin-left: 20px;
   padding: 1px;
-  
-
-
 }
 
 h2 {
@@ -779,7 +909,7 @@ h2 {
 }
 
 .profile-info {
-  display: flex;
+  display: absolute;
   align-items: center;
   margin-bottom: 20px;
 }
@@ -1083,8 +1213,6 @@ input[type="date"] {
   padding-bottom: 1px;
 }
 
-
-
 .date-group {
   display: inline-block;
 }
@@ -1098,13 +1226,12 @@ input[type="date"] {
 }
 
 
-.chart-container {
-  width: 600px;
-  height: 400px;
-  margin: 0 auto;
-}
 
-
+/* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                                   Fines                                     │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
 
 /*Added for fine*/
 
@@ -1205,3 +1332,76 @@ label[for="expiry-date"] {
 }
 
 /* End of Fine*/
+
+
+/* Posters */
+.poster-container {
+  display: flex;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  margin-right: 460px;
+}
+
+.poster {
+  width: 100px;
+  height: auto;
+  margin-right: 20px;
+}
+
+.info {
+  flex: 1;
+}
+
+.info h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.info p {
+  margin-bottom: 5px;
+}
+
+#condition-status {
+  color: green;
+  text-align: center;
+}
+
+/* Order Container */
+
+.gallery {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 20px;
+  background: #222;
+}
+.gallery img {
+  margin-right: 10px;
+  height: 200px;
+  width: auto;
+  transition: transform 0.5s ease;
+  cursor: pointer;
+}
+.gallery img:hover {
+  transform: scale(1.1);
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  color: black;
+}
