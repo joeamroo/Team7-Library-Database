@@ -1286,3 +1286,37 @@ label[for="expiry-date"] {
 }
 
 /* End of Fine*/
+
+
+/* Posters */
+.poster-container {
+  display: flex;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  margin-right: 460px;
+}
+
+.poster {
+  width: 100px;
+  height: auto;
+  margin-right: 20px;
+}
+
+.info {
+  flex: 1;
+}
+
+.info h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.info p {
+  margin-bottom: 5px;
+}
+
+#condition-status {
+  color: green;
+  text-align: center;
+}

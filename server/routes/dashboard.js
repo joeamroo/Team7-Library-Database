@@ -308,80 +308,86 @@ link.query(query, [memberId], (err, results) => {
 
   function getDashHoldsInfo(response, memberId) {
 
-    // Headers for Tables
-    const html_books = '<div class="table-title">Books</div>';
-    const html_movies = '<div class="table-title">Movies</div>';
-    const html_devices = '<div class="table-title">Devices</div>';
-    
-    // Searches Database for books in which a user has a hold
-    const queryBooks = `
-    SELECT
-      request_date AS "Date Requested",
-      item_name AS "Item",
-      status AS "Status"
-    FROM
-      hold_request
-    WHERE
-      member_id = (?)
-      AND isbn IS NOT NULL;
-    `;
+    // Contains html formatted code
+    var html_movies = '';
+    var html = '';
 
-    // Queries and Retrieves HTML table for books
-    html_books += getHolds(queryBooks, memberId);
+    // Gets the movies
+    html_movies = getDashMovies(memberId);
+    html = html_movies;
 
-
-    // Searches Database for movies in which a user has a hold
-    const queryMovies = `
-    SELECT 
-      request_date AS "Date Requested",
-      item_name AS "Item",
-      status AS "Status"
-    FROM 
-      hold_request
-    WHERE 
-      member_id = (?)
-      AND movie_id IS NOT NULL;
-  `;
-    
-   // Queries and Retrieves HTML table for movies
-    html_movies += getHolds(queryMovies, memberId);
-
-    const queryDevices = `
-    SELECT
-      request_date AS "Date Requested",
-      item_name AS "Item",
-      status AS "Status"
-    FROM
-      hold_request
-    WHERE
-      member_id = (?)
-      AND device_id IS NOT NULL;
-    `
-
-    // Queries and Retrieves HTML table for devices
-    html_devices += getHolds(queryDevices, memberId);
-  
-
-    try {
-      // Combines all tables together
-      const tableHTML = html_books + html_movies + html_devices;
-
-      // Sends it to the client
-      response.writeHead(200, { 'Content-Type': 'text/html' });
-      response.end(tableHTML);
-      
-    } catch(error) {
-      console.log('Error retrieving values');
-      response.writeHead(204, { 'Content-Type': 'text/html'});
-      response.end('<a>Please contact your administrator</a>');
+    if (error) {
+      response.writeHead(402, { 'Content-Type': 'text/plain'});
+      respond.end('Failed to retrieve information.');
+    } else {
+      response.writeHead(200, { 'Content-Type': 'text/html'});
+      response.end(html)
     }
 
+    
 }
 
-  /* A More Modular Way to Split the Tables */
-  function getHolds(query, count) {
+  function getDashMovies(memberId) {
+    const query = 'SELECT CV.image_address, H.item_name, CV.year_released, CV.director_brand,' +
+                          'CV.genres, CV.rating, H.request_date, H.status' 
+                  'FROM MEMBER AS M, HOLD_REQUEST AS H, CATALOG_VIEW AS CV ' +
+                  'WHERE M.member_id = H.member_id AND H.movie_id = CV.asset_id;';
+    const html = '';
     
+    link.query(query, [memberId], (error, result) => {
+        if (error) {
+          response.writeHead(204, { 'Content-Type': 'text/plain'});
+          response.end('Failed to retrieve books.');
+        } else {
+
+          /* Dynamically creates a variable type
+       with the name being the ID of the query,
+       and the value being the key. */
+        for (const row of query) {
+          const variableName = row.id;
+          global[variableName] = row.key;
+
+          // Creates HTML from SQL
+          html += '<div class="poster-container>"';
+          html += '<img class="poster" src="' + image_address + '"';
+          html += '<div class="info">';
+          html += '<p id="item-title">' + item_title + '</p>';
+          html += '<p>Director: ' + director_brand + '</p>';
+          html += '<p>Release Year: ' + year_released + '</p>';
+          html += '<p>Genre: ' + genres + '</p>';
+          html += '<p>Rating: ' + rating + '</p>';
+          html += '</div>';
+
+          html += '<div>';
+          html += '<span id="request-date">Date Requested: <b>' + request_date + '</b></span><br>';
+          html += '<div id="item-status">Condition: <span id="status">' + status + '</span></div></div></div>';
+        }
+        return html;
+      }
+    });
   }
+
+  /*<div class="settings holds">
+  <div class="poster-container">
+    <img class="poster" src="Profile.png" alt="Movie Poster">
+    <div class="info">
+      <p>Director: John Doe</p>
+      <p>Release Year: 2023</p>
+      <p>Genre: Action, Adventure</p>
+      <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor, magna a bibendum bibendum, augue magna tincidunt enim, eget ultricies magna augue eget est.</p>
+    </div>
+    <div>
+      <span id="request-date">Date Requested: <b>April 28, 2024</b></span><br>
+      <div id="item-status">Condition: <span id="status">Good</span></div>
+    </div>
+  </div>
+
+</div>
+
+SELECT CV.book_movie_title_model, CV.year_released, CV.director_brand, CV.genres, 
+       CV.rating, H.request_date, H.status 
+FROM MEMBER AS M, HOLD_REQUEST AS H, CATALOG_VIEW AS CV 
+WHERE M.member_id = H.member_id AND H.movie_id = CV.asset_id;*/
 
 
 /* 
@@ -419,14 +425,11 @@ link.query(query, [memberId], (err, results) => {
         html = getEvents(results);
         console.log('UserEvents: ' + html);
         response.writeHead(200, { 'Content-Type': 'text/html' });
+        respond.end(html);
       }
     });
   }
 
-  for (const row of results) {
-    const variableName = row.id;
-    global[variableName] = row.key;
-}
 
   function getEvents(query) {
 
