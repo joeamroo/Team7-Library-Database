@@ -643,13 +643,12 @@ function calculateAttendanceStatistics() {
     const totalAttendanceSpan = document.getElementById('total-atend');
   
     let maxAttendance = 0;
-    let minAttendance = 0; 
+    let minAttendance = 10000000; 
     let totalAttendance = 0;
     let totalEvents = 0;
   
     for (const row of eventRows) {
       const attendance = parseInt(row.querySelector('#attendance').textContent, 10);
-      console.log(attendance);
   
       maxAttendance = Math.max(maxAttendance, attendance);
       minAttendance = Math.min(minAttendance, attendance);
