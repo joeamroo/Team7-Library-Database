@@ -77,7 +77,7 @@ const server = http.createServer((request, res) => {
                         };
                         getMemberData(filters, (err, result) => {
                             if (err) {
-                                console.error(err);
+                                console.error('Error fetching member data:', err);
                                 res.statusCode = 500;
                                 res.end('Internal server error');
                             } else {
@@ -88,7 +88,7 @@ const server = http.createServer((request, res) => {
                             }
                         });
                     } catch (err) {
-                        console.error(err);
+                        console.error('Error in /reportmembers route:', err);
                         res.statusCode = 500;
                         res.end('Internal server error');
                     }
@@ -104,7 +104,7 @@ const server = http.createServer((request, res) => {
                             if (err) {
                               console.error(err);
                               res.statusCode = 500;
-                              res.end('Internal server error');
+                              console.error('Error fetching member data:', err);
                             } else {
                               console.log('Server Response:', result);
                               res.statusCode = 200;
@@ -113,8 +113,8 @@ const server = http.createServer((request, res) => {
                             }
                           });
                         } catch (err) {
-                          console.error(err);
-                          res.statusCode = 500;
+                            console.error('Error in /generateReport route:', err);
+                            res.statusCode = 500;
                           res.end('Internal server error');
                         }
                         break;
