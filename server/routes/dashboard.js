@@ -499,13 +499,13 @@ WHERE M.member_id = H.member_id AND H.movie_id = CV.asset_id;*/
     `;
 
     try {
-      responce.writeHead(204, { 'Content-Type': 'text/plain'});
-      responce.end('Error: Retrieving events');
-    } catch (error) {
       html = getEvents(query);
       console.log("Events: " + html);
       responce.writeHead(200, { 'Content-Type': 'text/html'});
       responce.end(html);
+    } catch (error) {
+      responce.writeHead(204, { 'Content-Type': 'text/plain'});
+      responce.end('Error: Retrieving events');
     }
   }
 
