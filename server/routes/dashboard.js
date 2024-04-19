@@ -319,12 +319,12 @@ link.query(query, [memberId], (err, results) => {
     html_movies = getDashMovies(memberId);
     html = html_books + html_movies + html_devices;
 
-    if (error) {
-      response.writeHead(402, { 'Content-Type': 'text/plain'});
-      respond.end('Failed to retrieve information.');
-    } else {
+    try {
       response.writeHead(200, { 'Content-Type': 'text/html'});
       response.end(html)
+    } catch (error) {
+      response.writeHead(402, { 'Content-Type': 'text/plain'});
+      respond.end('Failed to retrieve information.');
     }
   } // getDashHoldsInfo (ends)
 
