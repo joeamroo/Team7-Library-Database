@@ -46,7 +46,7 @@ function addItems(res, itemType, title, authorDirector, isbn, category, publishe
     if(itemType === 'book') {
         authorId = getId(authorDirector, 'author');
         console.log(authorId);
-        if (authorId === 0 || authorId === null) {
+        if (authorId === 0 || typeof authorId === "undefined") {
             console.log('author not found');
             connection.query(`INSERT INTO author (author_name) VALUES (?)`, [authorDirector], (err) => { 
                 if (err) {
