@@ -70,18 +70,6 @@ function buildWhereClause(filters) {
         callback(err, null);
         return;
       }
-  
-      let totalFine = 0;
-      let totalHolds = 0;
-      result.forEach((row) => {
-        totalFine += row.fine;
-        totalHolds += row.holds;
-      });
-  
-      const averageFine = result.length > 0 ? totalFine / result.length : 0;
-      const averageHolds = result.length > 0 ? totalHolds / result.length : 0;
-      const reportData = { averageFine, averageHolds, memberData: result };
-  
       callback(null, reportData);
     });
   }
