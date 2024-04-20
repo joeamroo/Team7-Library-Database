@@ -264,10 +264,115 @@ function getUserDashInfo(response, memberId) {
   └─────────────────────────────────────────────────────────────────────────────┘
  */
 
-function getUserOrderInfo(response, memberId) {
+function getUserOrderInfo(response, memberId, startDate, endDate, choice) {
 // Execute the SQL query
+const query = `
+SELECT 
+    T.transaction_id AS 'Transaction', 
+    T.date_created AS 'Date_Created', 
+    T.due_date AS 'Due_Date',
+    T.return_date AS 'Return_By', 
+    TV.returned AS 'Returned_Status', 
+    CV.asset_type AS 'Asset',
+    TV.itemId AS 'ISBN_SERIAL', 
+    CV.book_movie_title_model AS 'Product', 
+    CV.asset_condition AS 'Condition',
+    CV.image_address AS 'Image', 
+    CV.year_released AS 'Released', 
+    CV.authors AS 'Authors',  
+    CV.genres AS 'Genres', 
+    CV.director_brand AS 'Director_Brand'
+FROM 
+    member AS M, 
+    catalog_view AS CV, 
+    transaction AS T, 
+    transaction_view AS TV  
+WHERE 
+    M.member_id = T.member_id AND 
+    T.transaction_id = TV.transaction_id AND 
+    (TV.itemId = CV.isbn OR TV.itemId = CV.asset_id) AND
+    M.member_id = ? AND TV.asset_type = ?;
+`;
+
+Promise.all([
+  getDashBooks(memberId, query, choice),
+  getDashMovies(memberId, query, choice),
+  getDashDevices(memberId, query, choice)
+])
+  .then(([htmlBooks, htmlMovies, htmlDevices]) => {
+    const html = htmlBooks + htmlMovies + htmlDevices;
+    //console.log("Dashholds: " + html);
+    response.writeHead(200, { 'Content-Type': 'text/html' });
+    response.end(html);
+  })
+  .catch((error) => {
+    console.error(error);
+    response.writeHead(500, { 'Content-Type': 'text/plain' });
+    response.end('Failed to retrieve information.');
+  });
 
 
+}
+
+function getBookInfo(memberId, query, choice) {
+  return new Promise((resolve, reject) => {
+
+    link.query(query, [memberId, choice], (error, results) => {
+      if (error) {
+        reject(error);
+      } else {
+        let html = '';
+        for (const row of results) {
+          
+          // English by Default
+          if (row.languages === null) {
+            row.languages = 'English';
+          }
+
+          // Converts date
+          row.request_date = getDate(row.request_date);
+
+          html += `
+          <div class="gallery">
+            <img src="${Image}" onclick="openModal("${Product}")>
+          </div>
+
+          <div class="modal-content">
+            <span onclick="closeModal()" style="float:right;cursor:pointer;">x</span>
+            <h2 id="modalTitle"></h2>
+            <p id="modalDescription"></p>
+          </div>
+          `
+
+
+          html += `
+            <div class="poster-container">
+              <img class="poster" src="${row.image_address}" alt="${row.item_name}">
+              <div class="info">
+                <p id="item-title">${row.item_name} (<b>ISBN</b>: ${row.isbn})</p>
+                <p>Author: ${row.authors}</p>
+                <p>Release Year: ${row.year_released}</p>
+                <p>Genre: ${row.genres}</p>
+                <p>Languages: ${row.languages}</p>
+              </div>
+              <div>
+                <span id="request-date">Date Requested: <b>${row.request_date}</b></span><br>
+                <div id="item-status">Status: <span id="status">${row.status}</span></div>
+              </div>
+            </div>
+          `;
+        }
+        resolve(html);
+      }
+    });
+  });
+}
+
+function getMovieInfo(memberId, query) {
+
+}
+
+function getDeviceInfo(memberId, query) {
 
 }
 

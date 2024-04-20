@@ -21,6 +21,7 @@ const { getMemberData, generateReport } = require('./routes/staffcirculationrepo
 const { addDevices } = require('./routes/addDevices');
 
 
+
 function setCorsHeaders(res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -158,7 +159,7 @@ const server = http.createServer((request, res) => {
                         // Fetch notifications from the alerts_for_staff table
             else if (pathname === '/getNotifications') {
                 try {
-                const query = 'SELECT * FROM alerts_for_staff WHERE continue_alerting = 1';
+                const query = 'SELECT * FROM librarydev.alerts_for_staff WHERE continue_alerting = 1';
                 connection.query(query, (error, results) => {
                     if (error) {
                     console.error('Error fetching notifications:', error);
@@ -180,7 +181,7 @@ const server = http.createServer((request, res) => {
             // Fetch holds from the alerts_for_staff table
             else if (pathname === '/getHolds') {
                 try {
-                const query = 'SELECT * FROM alerts_for_staff WHERE continue_alerting = 1';
+                const query = 'SELECT * FROM librarydev.alerts_for_staff WHERE continue_alerting = 1';
                 connection.query(query, (error, results) => {
                     if (error) {
                     console.error('Error fetching holds:', error);
@@ -230,26 +231,38 @@ const server = http.createServer((request, res) => {
             }
             
             // Fetch high-demand books
-            else if (pathname === '/getHighDemandBooks') {
+            else if (pathname === '/getHighDemandItems') {
                 try {
-                const query = 'SELECT * FROM book WHERE current_holds >= 7';
-                connection.query(query, (error, results) => {
+                  const query = `
+                    SELECT 'Book' AS item_type, title AS item_name, current_holds 
+                    FROM librarydev.book
+                    WHERE current_holds >= 7
+                    UNION
+                    SELECT 'Movie' AS item_type, title AS item_name, current_holds
+                    FROM librarydev.movie
+                    WHERE current_holds >= 7
+                    UNION
+                    SELECT 'Device' AS item_type, model AS item_name, current_holds
+                    FROM librarydev.device
+                    WHERE current_holds >= 7
+                  `;
+                  connection.query(query, (error, results) => {
                     if (error) {
-                    console.error('Error fetching high-demand books:', error);
-                    res.statusCode = 500;
-                    res.end('Internal Server Error');
+                      console.error('Error fetching high-demand items:', error);
+                      res.statusCode = 500;
+                      res.end('Internal Server Error');
                     } else {
-                    res.statusCode = 200;
-                    res.setHeader('Content-Type', 'application/json');
-                    res.end(JSON.stringify(results));
+                      res.statusCode = 200;
+                      res.setHeader('Content-Type', 'application/json');
+                      res.end(JSON.stringify(results));
                     }
-                });
+                  });
                 } catch (error) {
-                console.error('Error in /getHighDemandBooks route:', error);
-                res.statusCode = 500;
-                res.end('Internal Server Error');
+                  console.error('Error in /getHighDemandItems route:', error);
+                  res.statusCode = 500;
+                  res.end('Internal Server Error');
                 }
-            }
+              }
             else if (pathname === '/catalog-hold') {
                 let body = '';
                 request.on('data', (chunk) => {
