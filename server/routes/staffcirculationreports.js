@@ -39,8 +39,9 @@ function buildWhereClause(filters) {
   function getMemberData(filters, callback) {
     const whereClause = buildWhereClause(filters);
     const query = `
-      SELECT m.member_id, m.name, m.email, m.phone_number, m.state, m.city_addr, m.street_addr, m.zipcode_addr, m.fine
+      SELECT m.member_id, m.name, m.email, m.phone_number, m.state, m.city_addr, m.street_addr, m.zipcode_addr, m.fine, t.transaction_id, t.date_created, t.due_date, t.return_date
       FROM librarydev.member m
+      LEFT JOIN transaction t ON m.member_id = t.member_id
       ${whereClause}
     `;
   
@@ -59,9 +60,10 @@ function buildWhereClause(filters) {
   function generateReport(filters, callback) {
     const whereClause = buildWhereClause(filters);
     const query = `
-      SELECT m.member_id, m.fine
+      SELECT m.member_id, m.fine , COUNT(t.transaction_id) AS holds
       FROM librarydev.member m
       ${whereClause}
+      LEFT JOIN transaction t ON m.member_id = t.member_id
       GROUP BY m.member_id
     `;
   
@@ -70,7 +72,18 @@ function buildWhereClause(filters) {
         callback(err, null);
         return;
       }
-      callback(null, reportData);
+      let totalFine = 0;
+    let totalHolds = 0;
+    result.forEach((row) => {
+      totalFine += row.fine;
+      totalHolds += row.holds;
+    });
+
+    const averageFine = result.length > 0 ? totalFine / result.length : 0;
+    const averageHolds = result.length > 0 ? totalHolds / result.length : 0;
+    const reportData = { averageFine, averageHolds, memberData: result };
+
+    callback(null, reportData);
     });
   }
   
