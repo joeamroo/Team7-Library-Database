@@ -48,6 +48,7 @@ logOutBtn.addEventListener('click', function(event) {
 });
 
 const container = document.getElementById('container');
+var choice = 'all'; // Books, Movies, Devices
 
 
 
@@ -106,6 +107,7 @@ var input = document.querySelector(".input-box");
         book_input += '</div>';
         input.innerHTML = book_input;
         input.click();
+        choice = 'book';
       });
 
       movieLabel.addEventListener('click', () => {
@@ -115,6 +117,7 @@ var input = document.querySelector(".input-box");
         movie_input += '</div>';
         input.innerHTML = movie_input;
         input.click();
+        choice = 'movies';
       });
 
       deviceLabel.addEventListener('click', () => {
@@ -124,6 +127,7 @@ var input = document.querySelector(".input-box");
         movie_input += '</div>';
         input.innerHTML = movie_input;
         input.click();
+        choice = 'devices';
       });
 
 
@@ -449,7 +453,13 @@ function setProfileInfo() {
 
 function getUserOrderReport() {
 
-    const itemValue = '';
+  // Date Range
+  const startingDate = document.getElementById('start-date');
+  const endingDate = document.getElementById('end-date');
+
+  // Books, Movies, Devices
+  const opt = choice;
+
 
     const xhr = new XMLHttpRequest();
     xhr.open('POST', getUserOrderUrl);
@@ -457,12 +467,7 @@ function getUserOrderReport() {
 
     xhr.onload = function() {
       if (xhr.status === 200) {
-       // orderReport.innerHTML = '  <div class="order-title">Recent Orders</div>';
-       // orderReport.innerHTML += xhr.responseText;
-        //const orderRetrieval = xhr.responseText;
-       // orderReport.innerHTML = filterOrderTable(orderRetrieval);
-        
-        
+        orderReport.innerHTML = xhr.responseText;
       } else {
         console.log("Failed to retrieve data");
       }
@@ -475,7 +480,10 @@ function getUserOrderReport() {
     //console.log(memberId);
 
     const data = JSON.stringify({
-      memberId: memberId
+      memberId: memberId,
+      startDate: startingDate,
+      endDate: endingDate,
+      choice: opt
     });
 
 
@@ -501,7 +509,7 @@ function getUserOrderReport() {
 
     xhr.onload = function() {
       if (xhr.status === 200) {
-        holdsView.innerHTML += xhr.responseText;        
+        holdsView.innerHTML = xhr.responseText;        
       } else {
         console.log("Failed to retrieve data");
       }
@@ -543,7 +551,7 @@ function getUserOrderReport() {
         //const retrieved = xhr.responseText;
         //console.log(retrieved);
         eventsView.innerHTML = '<div class="event-title">Your Events</span>';
-        eventsView.innerHTML += xhr.responseText;
+        eventsView.innerHTML = xhr.responseText;
     
         
         
