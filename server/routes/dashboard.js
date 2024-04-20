@@ -472,71 +472,69 @@ WHERE M.member_id = H.member_id AND H.movie_id = CV.asset_id;*/
  */
 
   function getUserEventsInfo(response, memberId) {
-
-    var html;  // The query in HTML format
-
-    // Searches Database for user with the memberID
     const query = `
-        SELECT
-            E.event_name AS 'Event',
-            E.date AS 'Date',
-            CONCAT(E.start_time, ' ', E.startAMPM, ' - ', E.end_time, ' ', E.endAMPM) AS 'Time',
-            E.sponsor AS 'Sponsor',
-            E.event_description AS 'Description'
-        FROM
-            member AS M
-            INNER JOIN events_member_link AS L ON M.member_id = L.member_id
-            INNER JOIN event AS E ON L.event_id = E.event_id
-        WHERE M.member_id = ?;
+      SELECT E.event_name AS 'Event', E.date AS 'Date',
+             CONCAT(E.start_time, ' ', E.startAMPM, ' - ', E.end_time, ' ', E.endAMPM) AS 'Time',
+             E.sponsor AS 'Sponsor', E.event_description AS 'Description'
+      FROM member AS M
+      INNER JOIN events_member_link AS L ON M.member_id = L.member_id
+      INNER JOIN event AS E ON L.event_id = E.event_id
+      WHERE M.member_id = ?;
     `;
-
-    try {
-      html = getEvents(query);
-      console.log("Events: " + html);
-      responce.writeHead(200, { 'Content-Type': 'text/html'});
-      responce.end(html);
-    } catch (error) {
-      responce.writeHead(204, { 'Content-Type': 'text/plain'});
-      responce.end('Error: Retrieving events');
-    }
+  
+    link.query(query, [memberId], (error, results) => {
+      if (error) {
+        console.error(error);
+        response.writeHead(500, { 'Content-Type': 'text/plain' });
+        response.end('Error: Retrieving events');
+      } else {
+        const html = getEvents(results);
+        console.log("Events: " + html);
+        response.writeHead(200, { 'Content-Type': 'text/html' });
+        response.end(html);
+      }
+    });
   }
-
-
-  function getEvents(query) {
-
-    let html = ''; // Stores HTML formatted query
-    var fDate;     // Stores date in proper format
-
+  
+  function getEvents(results) {
+    let html = '';
+  
     // Adds headers
     html += '<table id="events_table">';
     html += '<thead>';
     html += '<tr>';
-
-    /* Dynamically creates a variable type
-       with the name being the ID of the query,
-       and the value being the key. */
-      for (const row of query) {
-        const variableName = row.id;
-        global[variableName] = row.key;
-
-      // Gets the date
-      fDate = getDate(Date);
-
-      // Formats the SQL query to HTML code
-      html += '<td id="Event">' + Event + '</td>';
-      html += '<td id="Date">' + fDate + '</td>';
-      html += '<td id="Time">' + start_time + startAMPM + ' - ' +
-                               + end_time + endAMPM +  '</td>';
-      html += '<td id="Description">' + Description + '</td>';
-      }
-
+    html += '<th>Event</th>';
+    html += '<th>Date</th>';
+    html += '<th>Time</th>';
+    html += '<th>Sponsor</th>';
+    html += '<th>Description</th>';
+    html += '</tr>';
+    html += '</thead>';
+    html += '<tbody>';
+  
+    // Formats the SQL query results to HTML code
+    for (const row of results) {
+      const fDate = formatDate(row.Date);
+      html += '<tr>';
+      html += '<td>' + row.Event + '</td>';
+      html += '<td>' + fDate + '</td>';
+      html += '<td>' + row.Time + '</td>';
+      html += '<td>' + row.Sponsor + '</td>';
+      html += '<td>' + row.Description + '</td>';
       html += '</tr>';
-      html += '</thead>';
-      html += '</table>';
-
-      return html;      
+    }
+  
+    html += '</tbody>';
+    html += '</table>';
+  
+    return html;
   }
-
+  
+  function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const date = new Date(dateString);
+    return date.toLocaleDateString(undefined, options);
+  }
 
 
 
