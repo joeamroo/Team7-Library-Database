@@ -538,6 +538,7 @@ WHERE M.member_id = H.member_id AND H.movie_id = CV.asset_id;*/
     html += '<th>Time</th>';
     html += '<th>Sponsor</th>';
     html += '<th>Description</th>';
+    html += '<th></th>';
     html += '</tr>';
     html += '</thead>';
     html += '<tbody>';
