@@ -288,6 +288,19 @@
       <p id="modalDescription"></p>
     </div>
   </div>
+
+  <script>
+    function checkContent() {
+        var p = document.getElementById("status");
+        if (p.textContent.includes("active")) {
+            p.style.color = "green";
+            p.style.fontWeight = "bold";
+        } else {
+          p.style.color = "red";
+          p.style.fontWeight = "bold";
+        }
+    }
+    </script>
   
       <!-- SQL QUERY -->
 </div>
