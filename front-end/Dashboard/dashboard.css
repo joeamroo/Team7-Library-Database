@@ -1374,9 +1374,12 @@ label[for="expiry-date"] {
   margin-bottom: 5px;
 }
 
-#condition-status {
-  color: green;
-  text-align: center;
+
+hr {
+  border: none;           /* Remove the default border */
+  height: 3px;            /* Set the thickness of the line */
+  background-color: #333; /* Set the color of the line */
+  margin: 20px 0;         /* Add some vertical spacing around the line */
 }
 
 /* Order Container */
@@ -1416,4 +1419,8 @@ label[for="expiry-date"] {
   border: 1px solid #888;
   width: 80%;
   color: black;
+}
+
+#status {
+  color: green;
 }
