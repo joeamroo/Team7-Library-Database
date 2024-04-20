@@ -6,7 +6,8 @@ require("dotenv").config();
 const { getInitialCatalogInfo, getCatalogSearchWithRestrictions, insertDataToDatabase } = require('./routes/catalog');
 const { insertTransactionInfo } = require('./routes/checkout');
 const { getTransactionItems, returnItems } = require('./routes/returnItems');
-const { getUserDash, getUserDashInfo, setUserDashInfo, getUserOrderInfo, getDashHoldsInfo, getUserEventsInfo } = require('./routes/dashboard');
+const { getUserDash, getUserDashInfo, setUserDashInfo, getUserOrderInfo, getDashHoldsInfo, getUserEventsInfo,
+        updateUserEventsInfo} = require('./routes/dashboard');
 const { loginUser } = require('./routes/login');
 const { registerMember } = require('./routes/register');
 const { getListedEvents, eventSignUp } = require('./routes/classesnEvents');
@@ -463,6 +464,21 @@ const server = http.createServer((request, res) => {
                     try {
                         const postData = JSON.parse(body);
                         getUserEventsInfo(res, postData.memberId);
+                    } catch (error) {
+                        console.error('Error parsing JSON: ', error);
+                        serve404(res);
+                    }
+                });
+            }
+            else if (pathname === '/setDashEvents') {
+                let body = '';
+                request.on('data', (chunk) => {
+                    body += chunk.toString();
+                });
+                request.on('end', () => {
+                    try {
+                        const postData = JSON.parse(body);
+                        setUserEventsInfo(res, postData.memberID, postData.eventId);
                     } catch (error) {
                         console.error('Error parsing JSON: ', error);
                         serve404(res);

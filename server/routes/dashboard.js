@@ -258,13 +258,59 @@ function getUserDashInfo(response, memberId) {
     });
   }
 
-/* 
+  /* 
   ┌─────────────────────────────────────────────────────────────────────────────┐
   │                           Retrieves User Order Info                         │
   └─────────────────────────────────────────────────────────────────────────────┘
  */
 
 function getUserOrderInfo(response, memberId, startDate, endDate, choice) {
+
+  const assetSelect = '';
+      // Old working code
+      const query = "SELECT TV.transaction_Id AS 'Order #', " +
+                "T.date_created AS 'Date', " +
+                "CV.image_address AS 'Image', " +
+                "TV.asset_type AS 'Asset', " +
+                "CV.book_movie_title_model AS 'Product', " +
+                "CV.isbn AS 'ISBN', " +
+                "CV.asset_id AS 'Serial Number' " +
+                "FROM TRANSACTION AS T, " +
+                "TRANSACTION_VIEW AS TV, " +
+                "CATALOG_VIEW AS CV, " +
+                "MEMBER AS M " +
+                "WHERE M.member_id = ? " +
+                "AND T.transaction_id = TV.transaction_Id " +
+                "AND TV.itemId = CV.asset_id " +
+                "AND T.date_created BETWEEN ? AND ? " +
+                "LIMIT 30;";
+
+                link.query(query, [memberId, startDate, endDate, choice], (err, results) => {
+                  if (err) {
+                    console.log("Failed: " + results);
+                    console.error('Error executing the query:', err);
+                    response.writeHead(500, { 'Content-Type': 'text/plain' });
+                    response.end('Internal Server Error');
+                    return;
+                  } else {
+                    console.log(results);
+                    // Converts SQL query to a table with Keys as IDs
+                    const tableHTML = getSQLTable(results, 'order-table');
+                    console.log("Success: " + tableHTML);
+                    // Sends the table back to client
+                    response.writeHead(200, { 'Content-Type': 'text/html' });
+                    response.end(tableHTML);
+                  }
+                });
+            }
+          
+/* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                           Retrieves User Order Info                         │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+
+/*function getUserOrderInfo(response, memberId, startDate, endDate, choice) {
 // Execute the SQL query
 const query = `
 SELECT 
@@ -323,11 +369,6 @@ function getBookInfo(memberId, query, choice) {
       } else {
         let html = '';
         for (const row of results) {
-          
-          // English by Default
-          if (row.languages === null) {
-            row.languages = 'English';
-          }
 
           // Converts date
           row.request_date = getDate(row.request_date);
@@ -366,7 +407,7 @@ function getBookInfo(memberId, query, choice) {
       }
     });
   });
-}
+}*/
 
 function getMovieInfo(memberId, query) {
 
@@ -634,7 +675,7 @@ WHERE M.member_id = H.member_id AND H.movie_id = CV.asset_id;*/
       html += '<td>' + row.Time + '</td>';
       html += '<td>' + row.Sponsor + '</td>';
       html += '<td>' + row.Description + '</td>';
-      html += '<td><button class="event-cancel" id="' + row.ID + '" onClick="cancelEvent()">Cancel</button></td>';
+      html += '<td><button class="event-cancel" id="' + row.ID + '" onClick="cancelEvent(' + row.ID + ')">Cancel</button></td>';
       html += '</tr>';
     }
   
@@ -650,6 +691,32 @@ WHERE M.member_id = H.member_id AND H.movie_id = CV.asset_id;*/
     return date.toLocaleDateString(undefined, options);
   }
 
+  function updateUserEventsInfo(response, memberId, eventId) {
+
+    // Query to search for
+    const sql_query = 'UPDATE events_member_link ' +
+                      'SET event_id = ? ' +
+                      'WHERE member_id = ?';
+  
+   
+     // Values to update
+     const values = [eventId, memberId];
+   
+     // Use the memberId parameter in the query execution
+     link.query(sql_query, values, function(err, result) {
+       if (err) {
+         console.error('Failed to update member details:', err);
+         response.writeHead(500, { 'Content-Type': 'text/html' });
+         response.end('Internal Server Error', 'utf-8');
+       } else {
+         //console.log("Update:" + result);
+         response.writeHead(200, { 'Content-Type': 'text/html' });
+         response.end('Event settings successfully updated!', 'utf-8');
+       }
+     });
+
+  }
+
 
 
 
@@ -661,7 +728,7 @@ WHERE M.member_id = H.member_id AND H.movie_id = CV.asset_id;*/
 
 
 
-module.exports = { getUserDash, getUserDashInfo, setUserDashInfo, getUserOrderInfo, getDashHoldsInfo, getUserEventsInfo };
+module.exports = { getUserDash, getUserDashInfo, setUserDashInfo, getUserOrderInfo, getDashHoldsInfo, getUserEventsInfo, updateUserEventsInfo };
 
 
  /*function getSQLTable(queryResult) {

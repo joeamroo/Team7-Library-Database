@@ -35,6 +35,7 @@ const getUserHoldUrl = `${backendUrl}/getUserHolds`;
 const setUserInfoUrl =`${backendUrl}/setDashInfo`;
 const getUserOrderUrl =`${backendUrl}/getDashOrders`;
 const getUserEventsUrl =`${backendUrl}/getDashEvents`;
+const setUserEventsUrl = `${backendUrl}/setDashEvents`;
 
 
 
@@ -49,7 +50,7 @@ logOutBtn.addEventListener('click', function(event) {
 
 const container = document.getElementById('container');
 var choice = 'all'; // Books, Movies, Devices
-
+var eventCancel = '';
 
 
 /* 
@@ -454,8 +455,8 @@ function setProfileInfo() {
 function getUserOrderReport() {
 
   // Date Range
-  const startingDate = document.getElementById('start-date');
-  const endingDate = document.getElementById('end-date');
+  const startingDate = document.getElementById('start-date').value;
+  const endingDate = document.getElementById('end-date').value;
 
   // Books, Movies, Devices
   const opt = choice;
@@ -597,7 +598,43 @@ function getUserOrderReport() {
     xhr.send(data);
 }
 
+function cancelEvent(id) {
+  eventCancel = id;
+}
 
+function setUserEventsReport() {
+
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', setUserEventsUrl);
+  xhr.setRequestHeader('Content-Type', 'text/html');
+
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      //const retrieved = xhr.responseText;
+      //console.log(retrieved);
+      notify.innerHTML = xhr.responseText;
+      notification();
+
+      
+    } else {
+      console.log("Failed to retrieve data");
+    }
+  };
+
+  xhr.onerror = function() {
+    console.error('error', xhr.statusText);
+  };
+
+  //console.log(memberId);
+
+  const data = JSON.stringify({
+    memberId: memberId,
+    eventId: eventCancel
+  });
+
+
+  xhr.send(data);
+}
 
 
 function filterOrderTable(tableHTML) {
