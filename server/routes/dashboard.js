@@ -336,7 +336,7 @@ function getUserOrderInfo(response, memberId) {
               <div class="poster-container">
                 <img class="poster" src="${row.image_address}" alt="${row.item_name}">
                 <div class="info">
-                  <p id="item-title">${row.item_name} (${row.isbn})</p>
+                  <p id="item-title">${row.item_name} (ISBN: ${row.isbn})</p>
                   <p>Author: ${row.authors}</p>
                   <p>Release Year: ${row.year_released}</p>
                   <p>Genre: ${row.genres}</p>
