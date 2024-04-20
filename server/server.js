@@ -232,7 +232,7 @@ const server = http.createServer((request, res) => {
             // Fetch high-demand books
             else if (pathname === '/getHighDemandBooks') {
                 try {
-                const query = 'SELECT * FROM books WHERE current_holds >= 7';
+                const query = 'SELECT * FROM book WHERE current_holds >= 7';
                 connection.query(query, (error, results) => {
                     if (error) {
                     console.error('Error fetching high-demand books:', error);
