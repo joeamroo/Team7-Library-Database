@@ -462,6 +462,7 @@ const query = "SELECT TV.transaction_Id AS 'Order #', " +
                   <span id="request-date">Date Requested: <b>${row.request_date}</b></span><br>
                   <div id="item-status">Status: <span id="status">${row.status}</span></div>
                 </div>
+                <hr>
               </div>
             `;
           }
