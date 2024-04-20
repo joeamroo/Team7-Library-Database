@@ -329,7 +329,7 @@ function getUserOrderInfo(response, memberId) {
             }
 
             // Converts date
-            row.request_date = getDate(request_date);
+            row.request_date = getDate(row.request_date);
 
 
             html += `
