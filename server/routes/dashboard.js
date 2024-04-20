@@ -367,12 +367,21 @@ const query = "SELECT TV.transaction_Id AS 'Order #', " +
   function getDashMovies(memberId) {
     return new Promise((resolve, reject) => {
       const query = `
-        SELECT CV.image_address, H.item_name, CV.year_released, CV.director_brand, CV.genres, CV.rating, H.request_date, H.status
-        FROM MEMBER AS M
-        JOIN HOLD_REQUEST AS H ON M.member_id = H.member_id
-        JOIN CATALOG_VIEW AS CV ON H.movie_id = CV.asset_id
-        WHERE M.member_id = ?
-      `;
+          SELECT 
+              CV.book_movie_title_model, 
+              CV.year_released, 
+              CV.director_brand, 
+              CV.genres,
+              CV.rating, 
+              H.status
+          FROM 
+              member AS M
+              INNER JOIN hold_request AS H ON M.member_id = H.member_id
+              INNER JOIN catalog_view AS CV ON H.movie_id = CV.asset_id
+          WHERE 
+              M.member_id = ?;
+        `;
+
   
       link.query(query, [memberId], (error, results) => {
         if (error) {
