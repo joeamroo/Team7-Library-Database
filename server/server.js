@@ -72,9 +72,9 @@ const server = http.createServer((request, res) => {
                     try {
                         const queryObject = url.parse(request.url, true).query;
                         const filters = {
-                            name: queryObject.name || '',
-                            memberId: queryObject.memberId || '',
-                        };
+                            name: queryObject.name,
+                            memberId: queryObject.memberId,
+                          };
                         getMemberData(filters, (err, result) => {
                             if (err) {
                                 console.error('Error fetching member data:', err);
@@ -97,8 +97,8 @@ const server = http.createServer((request, res) => {
                         try {
                           const queryObject = url.parse(request.url, true).query;
                           const filters = {
-                            name: queryObject.name || '',
-                            memberId: queryObject.memberId || '',
+                            name: queryObject.name,
+                            memberId: queryObject.memberId,
                           };
                           generateReport(filters, (err, result) => {
                             if (err) {
