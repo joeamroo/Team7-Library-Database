@@ -657,7 +657,12 @@ function calculateAttendanceStatistics() {
     }
 
     if (maxAttendanceSpan) maxAttendanceSpan.textContent = maxAttendance;
-    if (minAttendanceSpan) minAttendanceSpan.textContent = minAttendance;
+    if (minAttendance === 10000000) {
+        minAttendanceSpan.textContent = 0;
+    }
+    else {
+        minAttendanceSpan.textContent = minAttendance;
+    }
     if (totalAttendanceSpan) totalAttendanceSpan.textContent = totalAttendance;
     if (eventTotalCount) eventTotalCount.textContent = totalEvents;
   
@@ -931,6 +936,7 @@ searchButton.addEventListener('click', () => {
     xhr.send(data);
   } 
   else {
+    alert("Date range required");
     const submitBtn = document.getElementById('searchEventsButton');
         submitBtn.classList.add('shake-button');
 
