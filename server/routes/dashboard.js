@@ -537,7 +537,7 @@ WHERE M.member_id = H.member_id AND H.movie_id = CV.asset_id;*/
   
     // Formats the SQL query results to HTML code
     for (const row of results) {
-      const fDate = formatDate(row.Date);
+      const fDate = getDate(row.Date);
       html += '<tr>';
       html += '<td>' + row.Event + '</td>';
       html += '<td>' + fDate + '</td>';
