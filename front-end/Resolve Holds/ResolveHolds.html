@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="ResolveHolds.css">
+   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+   <title>Renew Items and Manage Holds</title>
+</head>
+<body>
+    <header>
+        <div class="top-bar">
+          <h1 class="library-name"><a href="../Home/home.html">Cougar Chronicles</a></h1>
+        </div>
+    </header>
+    <div class="form-container">
+        <div style="display:flex; flex-direction: row;">  
+            <button id="RenewButton" style="margin-right: 10px; transition: background-color 2s;">Renew Items</button>
+            <button id="ManageButton" style="margin-left: 10px; transition: background-color 2s;">Manage Holds</button>
+        </div>
+        <br> 
+        <div class="tab" id="tab1" style="display:block;">
+            <h2>Resolve Hold</h2>
+            <form>
+              <div class="form-group">
+                <label for="holdList">Select Hold:</label>
+                <select id="holdList" name="holdList"></select>
+              </div>
+              <button type="submit" id="resolveHoldButton">Stop Alerting</button>
+            </form>
+            <div id="resolveHoldMessage"></div>
+          </div>
+          
+          <div class="tab" id="tab2" style="display:none;">
+            <h2>High Demand Books</h2>
+            <div id="highDemandBooks"></div>
+          </div>
+    <script src="ResolveHolds.js"></script>
+</body>

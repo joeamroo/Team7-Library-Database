@@ -155,6 +155,101 @@ const server = http.createServer((request, res) => {
                     }
                 });
             } 
+                        // Fetch notifications from the alerts_for_staff table
+            else if (pathname === '/getNotifications') {
+                try {
+                const query = 'SELECT * FROM alerts_for_staff WHERE continue_alerting = 1';
+                connection.query(query, (error, results) => {
+                    if (error) {
+                    console.error('Error fetching notifications:', error);
+                    res.statusCode = 500;
+                    res.end('Internal Server Error');
+                    } else {
+                    res.statusCode = 200;
+                    res.setHeader('Content-Type', 'application/json');
+                    res.end(JSON.stringify(results));
+                    }
+                });
+                } catch (error) {
+                console.error('Error in /getNotifications route:', error);
+                res.statusCode = 500;
+                res.end('Internal Server Error');
+                }
+            }
+            
+            // Fetch holds from the alerts_for_staff table
+            else if (pathname === '/getHolds') {
+                try {
+                const query = 'SELECT * FROM alerts_for_staff WHERE continue_alerting = 1';
+                connection.query(query, (error, results) => {
+                    if (error) {
+                    console.error('Error fetching holds:', error);
+                    res.statusCode = 500;
+                    res.end('Internal Server Error');
+                    } else {
+                    res.statusCode = 200;
+                    res.setHeader('Content-Type', 'application/json');
+                    res.end(JSON.stringify(results));
+                    }
+                });
+                } catch (error) {
+                console.error('Error in /getHolds route:', error);
+                res.statusCode = 500;
+                res.end('Internal Server Error');
+                }
+            }
+            
+            // Resolve a hold and update the continue_alerting value
+            else if (pathname === '/resolveHold') {
+                let body = '';
+                request.on('data', (chunk) => {
+                body += chunk.toString();
+                });
+                request.on('end', () => {
+                try {
+                    const postData = JSON.parse(body);
+                    const alertId = postData.alertId;
+                    const query = 'UPDATE alerts_for_staff SET continue_alerting = 0 WHERE alert_id = ?';
+                    connection.query(query, [alertId], (error, results) => {
+                    if (error) {
+                        console.error('Error resolving hold:', error);
+                        res.statusCode = 500;
+                        res.end('Internal Server Error');
+                    } else {
+                        res.statusCode = 200;
+                        res.setHeader('Content-Type', 'application/json');
+                        res.end(JSON.stringify({ message: 'Hold resolved successfully' }));
+                    }
+                    });
+                } catch (error) {
+                    console.error('Error parsing JSON:', error);
+                    res.statusCode = 400;
+                    res.end('Bad Request');
+                }
+                });
+            }
+            
+            // Fetch high-demand books
+            else if (pathname === '/getHighDemandBooks') {
+                try {
+                const query = 'SELECT * FROM books WHERE current_holds >= 7';
+                connection.query(query, (error, results) => {
+                    if (error) {
+                    console.error('Error fetching high-demand books:', error);
+                    res.statusCode = 500;
+                    res.end('Internal Server Error');
+                    } else {
+                    res.statusCode = 200;
+                    res.setHeader('Content-Type', 'application/json');
+                    res.end(JSON.stringify(results));
+                    }
+                });
+                } catch (error) {
+                console.error('Error in /getHighDemandBooks route:', error);
+                res.statusCode = 500;
+                res.end('Internal Server Error');
+                }
+            }
             else if (pathname === '/catalog-hold') {
                 let body = '';
                 request.on('data', (chunk) => {
