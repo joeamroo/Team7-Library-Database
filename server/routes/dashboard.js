@@ -307,149 +307,139 @@ const query = "SELECT TV.transaction_Id AS 'Order #', " +
  */
 
   function getDashHoldsInfo(response, memberId) {
-
-    // Contains html formatted code
-    var html_books = '';
-    var html_movies = '';
-    var html_devices = '';
-    var html = '';
-
-    // Gets the movies
-    html_books = getDashBooks(memberId);
-    html_movies = getDashMovies(memberId);
-    html_devices = getDashDevices(memberId);
-    html = html_books + html_movies + html_devices;
-
-    console.log("Dashholds: " + html);
-
-    try {
-      response.writeHead(200, { 'Content-Type': 'text/html'});
-      response.end(html)
-    } catch (error) {
-      response.writeHead(402, { 'Content-Type': 'text/plain'});
-      responce.end('Failed to retrieve information.');
-    }
-  } // getDashHoldsInfo (ends)
-
-
-
+    Promise.all([
+      getDashBooks(memberId),
+      getDashMovies(memberId),
+      getDashDevices(memberId)
+    ])
+      .then(([htmlBooks, htmlMovies, htmlDevices]) => {
+        const html = htmlBooks + htmlMovies + htmlDevices;
+        console.log("Dashholds: " + html);
+        response.writeHead(200, { 'Content-Type': 'text/html' });
+        response.end(html);
+      })
+      .catch((error) => {
+        console.error(error);
+        response.writeHead(500, { 'Content-Type': 'text/plain' });
+        response.end('Failed to retrieve information.');
+      });
+  }
+  
   function getDashBooks(memberId) {
-    const query = 'SELECT CV.image_address, H.item_name, CV.isbn, CV.year_released, CV.authors, CV.genres, CV.languages, H.request_date, H.status ' +
-                  'FROM MEMBER AS M, HOLD_REQUEST AS H, CATALOG_VIEW AS CV ' +
-                  'WHERE M.member_id = H.member_id AND H.isbn = CV.asset_id AND M.member_id = ?';
-    const html = '';
-    
-    link.query(query, [memberId], (error, result) => {
-      if (error) {
-        response.writeHead(204, { 'Content-Type': 'text/plain'});
-        response.end('Failed to retrieve books.');
-      } else {
-
-       /* Dynamically creates a variable type
-       with the name being the ID of the query,
-       and the value being the key. */
-       for (const row of query) {
-        const variableName = row.id;
-        global[variableName] = row.key;
-
-        // Creates HTML from SQL
-        html += '<div class="poster-container>"';
-        html += '<img class="poster" src="' + image_address + '"';
-        html += '<div class="info">';
-        html += '<p id="item-title">' + item_name + ' (' + isbn + ')</p>';
-        html += '<p>Author: ' + authors + '</p>';
-        html += '<p>Release Year: ' + year_released + '</p>';
-        html += '<p>Genre: ' + genres + '</p>';
-        html += '<p>Languages: ' + languages + '</p>';
-        html += '</div>';
-
-        html += '<div>';
-        html += '<span id="request-date">Date Requested: <b>' + request_date + '</b></span><br>';
-        html += '<div id="item-status">Status: <span id="status">' + status + '</span></div></div></div>';
-      } // for loop ends
-      return html;
-      } // if statement ends
-    }); // query function ends
-    } // end of function
-
-  function getDashMovies(memberId) {
-    const query = 'SELECT CV.image_address, H.item_name, CV.year_released, CV.director_brand,' +
-                          'CV.genres, CV.rating, H.request_date, H.status' 
-                  'FROM MEMBER AS M, HOLD_REQUEST AS H, CATALOG_VIEW AS CV ' +
-                  'WHERE M.member_id = H.member_id AND H.movie_id = CV.asset_id AND M.member_id = (?);';
-    const html = '';
-    
-    link.query(query, [memberId], (error, result) => {
+    return new Promise((resolve, reject) => {
+      const query = `
+        SELECT CV.image_address, H.item_name, CV.isbn, CV.year_released, CV.authors, CV.genres, CV.languages, H.request_date, H.status
+        FROM MEMBER AS M
+        JOIN HOLD_REQUEST AS H ON M.member_id = H.member_id
+        JOIN CATALOG_VIEW AS CV ON H.isbn = CV.asset_id
+        WHERE M.member_id = ?
+      `;
+  
+      link.query(query, [memberId], (error, results) => {
         if (error) {
-          response.writeHead(204, { 'Content-Type': 'text/plain'});
-          response.end('Failed to retrieve movies.');
+          reject(error);
         } else {
-
-          /* Dynamically creates a variable type
-       with the name being the ID of the query,
-       and the value being the key. */
-        for (const row of query) {
-          const variableName = row.id;
-          global[variableName] = row.key;
-
-          // Creates HTML from SQL
-          html += '<div class="poster-container>"';
-          html += '<img class="poster" src="' + image_address + '"';
-          html += '<div class="info">';
-          html += '<p id="item-title">' + item_name + '</p>';
-          html += '<p>Director: ' + director_brand + '</p>';
-          html += '<p>Release Year: ' + year_released + '</p>';
-          html += '<p>Genre: ' + genres + '</p>';
-          html += '<p>Rating: ' + rating + '</p>';
-          html += '</div>';
-
-          html += '<div>';
-          html += '<span id="request-date">Date Requested: <b>' + request_date + '</b></span><br>';
-          html += '<div id="item-status">Status: <span id="status">' + status + '</span></div></div></div>';
+          let html = '';
+          for (const row of results) {
+            html += `
+              <div class="poster-container">
+                <img class="poster" src="${row.image_address}" alt="${row.item_name}">
+                <div class="info">
+                  <p id="item-title">${row.item_name} (${row.isbn})</p>
+                  <p>Author: ${row.authors}</p>
+                  <p>Release Year: ${row.year_released}</p>
+                  <p>Genre: ${row.genres}</p>
+                  <p>Languages: ${row.languages}</p>
+                </div>
+                <div>
+                  <span id="request-date">Date Requested: <b>${row.request_date}</b></span><br>
+                  <div id="item-status">Status: <span id="status">${row.status}</span></div>
+                </div>
+              </div>
+            `;
+          }
+          resolve(html);
         }
-        return html;
-      }
+      });
     });
   }
-
+  
+  function getDashMovies(memberId) {
+    return new Promise((resolve, reject) => {
+      const query = `
+        SELECT CV.image_address, H.item_name, CV.year_released, CV.director_brand, CV.genres, CV.rating, H.request_date, H.status
+        FROM MEMBER AS M
+        JOIN HOLD_REQUEST AS H ON M.member_id = H.member_id
+        JOIN CATALOG_VIEW AS CV ON H.movie_id = CV.asset_id
+        WHERE M.member_id = ?
+      `;
+  
+      link.query(query, [memberId], (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          let html = '';
+          for (const row of results) {
+            html += `
+              <div class="poster-container">
+                <img class="poster" src="${row.image_address}" alt="${row.item_name}">
+                <div class="info">
+                  <p id="item-title">${row.item_name}</p>
+                  <p>Director: ${row.director_brand}</p>
+                  <p>Release Year: ${row.year_released}</p>
+                  <p>Genre: ${row.genres}</p>
+                  <p>Rating: ${row.rating}</p>
+                </div>
+                <div>
+                  <span id="request-date">Date Requested: <b>${row.request_date}</b></span><br>
+                  <div id="item-status">Status: <span id="status">${row.status}</span></div>
+                </div>
+              </div>
+            `;
+          }
+          resolve(html);
+        }
+      });
+    });
+  }
+  
   function getDashDevices(memberId) {
-    const query = 'SELECT CV.image_address, H.item_name, CV.director_brand, CV.serial_number, CV.asset_condition ' +
-                  'FROM MEMBER AS M, HOLD_REQUEST AS H, CATALOG_VIEW AS CV ' +
-                  'WHERE M.member_id = H.member_id AND H.device_id = CV.asset_id AND member_id = ?;';
-
-    const html = '';
-
-    link.query(query, [memberId], (error, result) => {
-      if (error) {
-        response.writeHead(204, { 'Content-Type': 'text/plain'});
-        response.end('Failed to retrieve devices.');
-      } else {
-
-     /* Dynamically creates a variable type
-     with the name being the ID of the query,
-     and the value being the key. */
-      for (const row of query) {
-        const variableName = row.id;
-        global[variableName] = row.key;
-
-        // Creates HTML from SQL
-        html += '<div class="poster-container>"';
-        html += '<img class="poster" src="' + image_address + '"';
-        html += '<div class="info">';
-        html += '<p id="item-title">' + item_name + '</p>';
-        html += '<p>Brand: ' + director_brand + '</p>';
-        html += '<p>Serial #: ' + serial_number + '</p>';
-        html += '<p>Condition: ' + asset_condition + '</p>';
-        html += '</div>';
-
-        html += '<div>';
-        html += '<span id="request-date">Date Requested: <b>' + request_date + '</b></span><br>';
-        html += '<div id="item-status">Status: <span id="status">' + status + '</span></div></div></div>';
-      }
-      return html;
-    }
-  });
-}
+    return new Promise((resolve, reject) => {
+      const query = `
+        SELECT CV.image_address, H.item_name, CV.director_brand, CV.serial_number, CV.asset_condition
+        FROM MEMBER AS M
+        JOIN HOLD_REQUEST AS H ON M.member_id = H.member_id
+        JOIN CATALOG_VIEW AS CV ON H.device_id = CV.asset_id
+        WHERE M.member_id = ?
+      `;
+  
+      link.query(query, [memberId], (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          let html = '';
+          for (const row of results) {
+            html += `
+              <div class="poster-container">
+                <img class="poster" src="${row.image_address}" alt="${row.item_name}">
+                <div class="info">
+                  <p id="item-title">${row.item_name}</p>
+                  <p>Brand: ${row.director_brand}</p>
+                  <p>Serial #: ${row.serial_number}</p>
+                  <p>Condition: ${row.asset_condition}</p>
+                </div>
+                <div>
+                  <span id="request-date">Date Requested: <b>${row.request_date}</b></span><br>
+                  <div id="item-status">Status: <span id="status">${row.status}</span></div>
+                </div>
+              </div>
+            `;
+          }
+          resolve(html);
+        }
+      });
+    });
+  }
       
 
   /*<div class="settings holds">
