@@ -328,12 +328,20 @@ const query = "SELECT TV.transaction_Id AS 'Order #', " +
   function getDashBooks(memberId) {
     return new Promise((resolve, reject) => {
       const query = `
-        SELECT CV.image_address, H.item_name, CV.isbn, CV.year_released, CV.authors, CV.genres, CV.languages, H.request_date, H.status
-        FROM MEMBER AS M
-        JOIN HOLD_REQUEST AS H ON M.member_id = H.member_id
-        JOIN CATALOG_VIEW AS CV ON H.isbn = CV.asset_id
-        WHERE M.member_id = ?
-      `;
+          SELECT 
+              CV.image_address, 
+              H.item_name, 
+              CV.year_released, 
+              CV.authors,
+              CV.genres, 
+              CV.languages, 
+              H.status
+          FROM 
+              member AS M
+              INNER JOIN hold_request AS H ON M.member_id = H.member_id
+              INNER JOIN catalog_view AS CV ON H.isbn = CV.isbn;
+        `;
+
   
       link.query(query, [memberId], (error, results) => {
         if (error) {
@@ -415,12 +423,18 @@ const query = "SELECT TV.transaction_Id AS 'Order #', " +
   function getDashDevices(memberId) {
     return new Promise((resolve, reject) => {
       const query = `
-        SELECT CV.image_address, H.item_name, CV.director_brand, CV.serial_number, CV.asset_condition
-        FROM MEMBER AS M
-        JOIN HOLD_REQUEST AS H ON M.member_id = H.member_id
-        JOIN CATALOG_VIEW AS CV ON H.device_id = CV.asset_id
-        WHERE M.member_id = ?
+      SELECT 
+          CV.image_address, 
+          H.item_name, 
+          CV.director_brand, 
+          CV.serial_number, 
+          CV.asset_condition
+      FROM 
+          member AS M
+          INNER JOIN hold_request AS H ON M.member_id = H.member_id
+          INNER JOIN catalog_view AS CV ON H.device_id = CV.asset_id;
       `;
+      
   
       link.query(query, [memberId], (error, results) => {
         if (error) {
