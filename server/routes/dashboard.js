@@ -251,7 +251,7 @@ function getUserDashInfo(response, memberId) {
         response.writeHead(500, { 'Content-Type': 'text/html' });
         response.end('Internal Server Error', 'utf-8');
       } else {
-        console.log("Update:" + result);
+        //console.log("Update:" + result);
         response.writeHead(200, { 'Content-Type': 'text/html' });
         response.end('Profile settings successfully updated!', 'utf-8');
       }
@@ -285,7 +285,7 @@ function getUserOrderInfo(response, memberId) {
     ])
       .then(([htmlBooks, htmlMovies, htmlDevices]) => {
         const html = htmlBooks + htmlMovies + htmlDevices;
-        console.log("Dashholds: " + html);
+        //console.log("Dashholds: " + html);
         response.writeHead(200, { 'Content-Type': 'text/html' });
         response.end(html);
       })
@@ -327,6 +327,9 @@ function getUserOrderInfo(response, memberId) {
             if (row.languages === null) {
               row.languages = 'English';
             }
+
+            // Converts date
+            row.request_date = getDate(request_date);
 
 
             html += `
@@ -493,7 +496,7 @@ WHERE M.member_id = H.member_id AND H.movie_id = CV.asset_id;*/
         response.end('Error: Retrieving events');
       } else {
         const html = getEvents(results);
-        console.log("Events: " + html);
+        //console.log("Events: " + html);
         response.writeHead(200, { 'Content-Type': 'text/html' });
         response.end(html);
       }
