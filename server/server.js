@@ -159,7 +159,7 @@ const server = http.createServer((request, res) => {
                         // Fetch notifications from the alerts_for_staff table
             else if (pathname === '/getNotifications') {
                 try {
-                const query = 'SELECT * FROM alerts_for_staff WHERE continue_alerting = 1';
+                const query = 'SELECT * FROM librarydev.alerts_for_staff WHERE continue_alerting = 1';
                 connection.query(query, (error, results) => {
                     if (error) {
                     console.error('Error fetching notifications:', error);
@@ -181,7 +181,7 @@ const server = http.createServer((request, res) => {
             // Fetch holds from the alerts_for_staff table
             else if (pathname === '/getHolds') {
                 try {
-                const query = 'SELECT * FROM alerts_for_staff WHERE continue_alerting = 1';
+                const query = 'SELECT * FROM librarydev.alerts_for_staff WHERE continue_alerting = 1';
                 connection.query(query, (error, results) => {
                     if (error) {
                     console.error('Error fetching holds:', error);
@@ -235,15 +235,15 @@ const server = http.createServer((request, res) => {
                 try {
                   const query = `
                     SELECT 'Book' AS item_type, title AS item_name, current_holds 
-                    FROM book
+                    FROM librarydev.book
                     WHERE current_holds >= 7
                     UNION
                     SELECT 'Movie' AS item_type, title AS item_name, current_holds
-                    FROM movie
+                    FROM librarydev.movie
                     WHERE current_holds >= 7
                     UNION
                     SELECT 'Device' AS item_type, model AS item_name, current_holds
-                    FROM device
+                    FROM librarydev.device
                     WHERE current_holds >= 7
                   `;
                   connection.query(query, (error, results) => {
