@@ -349,6 +349,13 @@ const query = "SELECT TV.transaction_Id AS 'Order #', " +
         } else {
           let html = '';
           for (const row of results) {
+            
+            // English by Default
+            if (row.languages === null) {
+              row.languages = 'English';
+            }
+
+
             html += `
               <div class="poster-container">
                 <img class="poster" src="${row.image_address}" alt="${row.item_name}">
