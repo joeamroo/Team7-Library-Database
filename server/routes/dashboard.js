@@ -503,7 +503,7 @@ WHERE M.member_id = H.member_id AND H.movie_id = CV.asset_id;*/
 
   function getUserEventsInfo(response, memberId) {
     const query = `
-      SELECT E.event_name AS 'Event', E.date AS 'Date',
+      SELECT E.event_id AS 'ID', E.event_name AS 'Event', E.date AS 'Date',
              CONCAT(E.start_time, ' ', E.startAMPM, ' - ', E.end_time, ' ', E.endAMPM) AS 'Time',
              E.sponsor AS 'Sponsor', E.event_description AS 'Description'
       FROM member AS M
@@ -551,6 +551,7 @@ WHERE M.member_id = H.member_id AND H.movie_id = CV.asset_id;*/
       html += '<td>' + row.Time + '</td>';
       html += '<td>' + row.Sponsor + '</td>';
       html += '<td>' + row.Description + '</td>';
+      html += '<td><button id="' + row.ID + '" onClick="cancelEvent()">Cancel</button></td>';
       html += '</tr>';
     }
   
