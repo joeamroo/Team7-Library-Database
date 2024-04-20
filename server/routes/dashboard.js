@@ -551,7 +551,7 @@ WHERE M.member_id = H.member_id AND H.movie_id = CV.asset_id;*/
       html += '<td>' + row.Time + '</td>';
       html += '<td>' + row.Sponsor + '</td>';
       html += '<td>' + row.Description + '</td>';
-      html += '<td><button id="' + row.ID + '" onClick="cancelEvent()">Cancel</button></td>';
+      html += '<td><button class="event-cancel" id=" + row.ID + " onClick="cancelEvent()">Cancel</button></td>';
       html += '</tr>';
     }
   
